@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1EFDFD0A-E8B4-4D2B-BB1E-CC6E8459EAE9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1E7AEC8E-E50B-487A-A408-C82FE5B48F1F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunnySailAPI", "FunnySailAPI\FunnySailAPI.csproj", "{1C764BC5-BE0E-4560-AC43-AFB1EA41DC46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunnySailAPI.ApplicationCore", "FunnySailAPI.ApplicationCore\FunnySailAPI.ApplicationCore.csproj", "{6075BC11-EAD6-4CE7-A4E5-3B861D26F90C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunnySailAPI.Infrastructure", "FunnySailAPI.Infrastructure\FunnySailAPI.Infrastructure.csproj", "{5DBDDC3A-5536-45A5-8FBE-5CA17DC5307E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1C764BC5-BE0E-4560-AC43-AFB1EA41DC46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C764BC5-BE0E-4560-AC43-AFB1EA41DC46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C764BC5-BE0E-4560-AC43-AFB1EA41DC46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C764BC5-BE0E-4560-AC43-AFB1EA41DC46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6075BC11-EAD6-4CE7-A4E5-3B861D26F90C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6075BC11-EAD6-4CE7-A4E5-3B861D26F90C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6075BC11-EAD6-4CE7-A4E5-3B861D26F90C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6075BC11-EAD6-4CE7-A4E5-3B861D26F90C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DBDDC3A-5536-45A5-8FBE-5CA17DC5307E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DBDDC3A-5536-45A5-8FBE-5CA17DC5307E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DBDDC3A-5536-45A5-8FBE-5CA17DC5307E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DBDDC3A-5536-45A5-8FBE-5CA17DC5307E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1C764BC5-BE0E-4560-AC43-AFB1EA41DC46} = {1EFDFD0A-E8B4-4D2B-BB1E-CC6E8459EAE9}
+		{6075BC11-EAD6-4CE7-A4E5-3B861D26F90C} = {1EFDFD0A-E8B4-4D2B-BB1E-CC6E8459EAE9}
+		{5DBDDC3A-5536-45A5-8FBE-5CA17DC5307E} = {1EFDFD0A-E8B4-4D2B-BB1E-CC6E8459EAE9}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {889D62C4-AF21-4D71-A805-9A7493131E03}
+	EndGlobalSection
+EndGlobal
