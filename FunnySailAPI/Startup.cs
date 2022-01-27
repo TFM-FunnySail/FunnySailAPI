@@ -1,4 +1,6 @@
+using FunnySailAPI.ApplicationCore.Interfaces;
 using FunnySailAPI.Infrastructure;
+using FunnySailAPI.Infrastructure.CAD;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -34,6 +36,12 @@ namespace FunnySailAPI
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
+
+            #region Services
+
+            services.AddScoped<IBoatTypeCAD, BoatTypeCAD>();
+
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
