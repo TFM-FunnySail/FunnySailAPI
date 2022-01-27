@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,5 +13,7 @@ namespace FunnySailAPI.Infrastructure
             : base(options)
         {
         }
+
+        public DbSet<BoatTypeEN> BoatTypes { get; set; }
     }
 }
