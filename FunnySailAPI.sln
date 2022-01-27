@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{754C3D9C-8305-4AA5-8C8C-A86863A7FDBA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{A2E9AD93-9652-4D43-8A9F-F9D9DA7B4634}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunnySailAPI.ApplicationCore", "FunnySailAPI.ApplicationCore\FunnySailAPI.ApplicationCore.csproj", "{B3810EF5-A9AE-4407-A207-A5ED2657C374}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunnySailAPI.Infrastructure", "FunnySailAPI.Infrastructure\FunnySailAPI.Infrastructure.csproj", "{98F371EC-3354-4225-B893-9579AE7039F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunnySailAPI", "FunnySailAPI\FunnySailAPI.csproj", "{A30C6E96-62A6-468C-8A9A-D2BAF79C156B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B3810EF5-A9AE-4407-A207-A5ED2657C374}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3810EF5-A9AE-4407-A207-A5ED2657C374}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3810EF5-A9AE-4407-A207-A5ED2657C374}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3810EF5-A9AE-4407-A207-A5ED2657C374}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98F371EC-3354-4225-B893-9579AE7039F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98F371EC-3354-4225-B893-9579AE7039F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98F371EC-3354-4225-B893-9579AE7039F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98F371EC-3354-4225-B893-9579AE7039F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A30C6E96-62A6-468C-8A9A-D2BAF79C156B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A30C6E96-62A6-468C-8A9A-D2BAF79C156B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A30C6E96-62A6-468C-8A9A-D2BAF79C156B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A30C6E96-62A6-468C-8A9A-D2BAF79C156B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B3810EF5-A9AE-4407-A207-A5ED2657C374} = {754C3D9C-8305-4AA5-8C8C-A86863A7FDBA}
+		{98F371EC-3354-4225-B893-9579AE7039F7} = {754C3D9C-8305-4AA5-8C8C-A86863A7FDBA}
+		{A30C6E96-62A6-468C-8A9A-D2BAF79C156B} = {754C3D9C-8305-4AA5-8C8C-A86863A7FDBA}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {896CF321-6098-472D-AB39-FCC5FB06B982}
+	EndGlobalSection
+EndGlobal
