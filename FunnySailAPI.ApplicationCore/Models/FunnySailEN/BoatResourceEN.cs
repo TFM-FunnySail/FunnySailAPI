@@ -10,15 +10,14 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
     [Table("BoatResource")]
     public class BoatResourceEN
     {
-        [Key]
-        public int Id { get; set; }
-        public bool Main { get; set; }
+        public int BoatId { get; set; }
 
         [Required]
         public string Uri { get; set; }
+        public bool Main { get; set; }
         public BoatResourcesEnum Type { get; set; }
 
-        public int BoatId { get; set; }
+        
         public BoatEN Boat { get; set; }
     }
 }

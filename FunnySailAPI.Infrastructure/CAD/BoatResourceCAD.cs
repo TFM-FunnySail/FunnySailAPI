@@ -14,7 +14,7 @@ namespace FunnySailAPI.Infrastructure.CAD
         {
         }
 
-        public async Task<int> AddBoatResource(int boatId,string uri, bool main, BoatResourcesEnum type)
+        public async Task<string> AddBoatResource(int boatId,string uri, bool main, BoatResourcesEnum type)
         {
             BoatResourceEN boatResource = await AddAsync(new BoatResourceEN
             {
@@ -24,7 +24,7 @@ namespace FunnySailAPI.Infrastructure.CAD
                 BoatId = boatId
             });
 
-            return boatResource.Id;
+            return boatResource.Uri;
         }
     }
 }

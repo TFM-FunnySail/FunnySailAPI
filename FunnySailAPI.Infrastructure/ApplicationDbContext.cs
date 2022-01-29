@@ -14,6 +14,14 @@ namespace FunnySailAPI.Infrastructure
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<BoatResourceEN>()
+                .HasKey(m => new { m.BoatId, m.Uri });
+        }
+
         public DbSet<BoatTypeEN> BoatTypes { get; set; }
         public DbSet<BoatEN> Boats { get; set; }
         public DbSet<BoatResourceEN> BoatResources { get; set; }
