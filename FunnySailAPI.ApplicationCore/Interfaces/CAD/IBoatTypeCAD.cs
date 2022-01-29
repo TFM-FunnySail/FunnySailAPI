@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FunnySailAPI.ApplicationCore.Interfaces
+namespace FunnySailAPI.ApplicationCore.Interfaces.CAD
 {
     public interface IBoatTypeCAD : IBaseCAD<BoatTypeEN>
     {

@@ -1,4 +1,5 @@
 using FunnySailAPI.ApplicationCore.Interfaces;
+using FunnySailAPI.ApplicationCore.Interfaces.CAD;
 using FunnySailAPI.Infrastructure;
 using FunnySailAPI.Infrastructure.CAD;
 using Microsoft.AspNetCore.Builder;
@@ -40,6 +41,7 @@ namespace FunnySailAPI
             #region Services
 
             services.AddScoped<IBoatTypeCAD, BoatTypeCAD>();
+            services.AddScoped<IBoatCAD, BoatCAD>();
 
             #endregion
         }
