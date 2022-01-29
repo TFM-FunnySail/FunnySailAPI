@@ -15,5 +15,7 @@ namespace FunnySailAPI.Infrastructure
         }
 
         public DbSet<BoatTypeEN> BoatTypes { get; set; }
+        public DbSet<BoatEN> Boats { get; set; }
+        public DbSet<BoatResourceEN> BoatResources { get; set; }
     }
 }

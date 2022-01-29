@@ -25,4 +25,11 @@ namespace FunnySailAPI.ApplicationCore.Models.Globals
         Cancelled,
         Completed
     }
+
+    public enum BoatResourcesEnum
+    {
+        Image,
+        Video,
+        Audio
+    }
 }
