@@ -6,20 +6,18 @@ using System.Text;
 
 namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
 {
-    [Table("BoatType")]
-    public class BoatTypeEN
+    [Table("Boat")]
+    public class BoatEN
     {
         [Key]
         public int Id { get; set; }
+        public bool Active { get; set; }
+        public bool PendingToReview { get; set; }
 
-        [StringLength(100)]
         [Required]
-        public string Name { get; set; }
+        public DateTime CreatedDate { get; set; }
 
-        [StringLength(500)]
-        [Required]
-        public string Description { get; set; }
-
-        public List<BoatEN> Boats { get; set; }
+        public int BoatTypeId { get; set; }
+        public BoatTypeEN BoatType { get; set; }
     }
 }
