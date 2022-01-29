@@ -12,10 +12,11 @@ namespace FunnySailAPI.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Main = table.Column<bool>(nullable: false),
+                    BoatId = table.Column<int>(nullable: true),
                     Uri = table.Column<string>(nullable: false),
+                    Main = table.Column<bool>(nullable: false),
                     Type = table.Column<int>(nullable: false),
-                    BoatId = table.Column<int>(nullable: true)
+                    
                 },
                 constraints: table =>
                 {
