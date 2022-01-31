@@ -21,6 +21,7 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
         public BoatTypeEN BoatType { get; set; }
 
         public BoatInfoEN BoatInfo { get; set; }
+        public BoatPricesEN BoatPrices { get; set; }
         public List<BoatResourceEN> BoatResources { get; set; }
         public List<RequiredBoatTitleEN> RequiredBoatTitles { get; set; }
     }

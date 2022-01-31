@@ -47,6 +47,9 @@ namespace FunnySailAPI.Infrastructure
             modelBuilder.Entity<BoatTitlesEnumsEN>()
                 .Property(bt => bt.Name)
                 .HasConversion<string>();
+
+            modelBuilder.Entity<BoatPricesEN>()
+               .HasKey(bt => bt.BoatId);
         }
 
         public DbSet<BoatTypeEN> BoatTypes { get; set; }
