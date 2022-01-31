@@ -8,7 +8,7 @@ using System.Text;
 
 namespace FunnySailAPI.Infrastructure
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -52,6 +52,20 @@ namespace FunnySailAPI.Infrastructure
             {
                 bp.HasKey(bt => bt.BoatId);
             });
+
+            modelBuilder.Entity<ApplicationUser>(u =>
+            {
+                u.HasOne(i => i.Users)
+                .WithOne(i => i.ApplicationUser)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasForeignKey<UsersEN>(b => b.UserId);
+            });
+
+            modelBuilder.Entity<UsersEN>(u =>
+            {
+                u.HasKey(b => b.UserId);
+
+            });
         }
 
         public DbSet<BoatTypeEN> BoatTypes { get; set; }
@@ -60,5 +74,6 @@ namespace FunnySailAPI.Infrastructure
         public DbSet<BoatInfoEN> BoatInfos { get; set; }
         public DbSet<RequiredBoatTitleEN> RequiredBoatTitles { get; set; }
         public DbSet<BoatTitlesEnumsEN> BoatTitlesEnums { get; set; }
+        public DbSet<UsersEN> Users { get; set; }
     }
 }

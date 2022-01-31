@@ -9,10 +9,12 @@
     <Compile Remove="Migrations\20220129114823_AddBoatResources.Designer.cs" />
     <Compile Remove="Migrations\20220131111344_AddBoatInfo.cs" />
     <Compile Remove="Migrations\20220131111344_AddBoatInfo.Designer.cs" />
+    <Compile Remove="Migrations\20220131125044_AddUsers.cs" />
+    <Compile Remove="Migrations\20220131125044_AddUsers.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.19" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.21" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.21" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.19" />
   </ItemGroup>

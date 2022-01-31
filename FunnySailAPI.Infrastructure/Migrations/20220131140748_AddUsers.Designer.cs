@@ -4,14 +4,16 @@ using FunnySailAPI.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FunnySailAPI.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220131140748_AddUsers")]
+    partial class AddUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -256,9 +258,6 @@ namespace FunnySailAPI.Infrastructure.Migrations
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime?>("BirthDay")
-                        .HasColumnType("date");
 
                     b.Property<bool>("BoatOwner")
                         .HasColumnType("bit");
