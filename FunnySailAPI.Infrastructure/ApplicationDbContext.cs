@@ -25,31 +25,33 @@ namespace FunnySailAPI.Infrastructure
             modelBuilder.Entity<BoatInfoEN>()
                 .HasKey(b => b.BoatId);
 
-            modelBuilder.Entity<BoatEN>()
-            .HasOne(b => b.BoatInfo)
-            .WithOne(i => i.Boat)
-            .HasForeignKey<BoatInfoEN>(b => b.BoatId);
+            modelBuilder.Entity<BoatEN>(b =>
+            {
+                b.HasOne(i => i.BoatInfo)
+                .WithOne(i => i.Boat)
+                .HasForeignKey<BoatInfoEN>(b => b.BoatId);
+            });
 
-            modelBuilder.Entity<RequiredBoatTitleEN>()
-                .HasKey(b => new { b.BoatId,b.TitleId });
+            modelBuilder.Entity<RequiredBoatTitleEN>(rb => {
+                
+                rb.HasKey(b => new { b.BoatId, b.TitleId });
 
-            modelBuilder.Entity<RequiredBoatTitleEN>()
-                .Property(r => r.TitleId)
-                .HasConversion<int>();
+                rb.Property(r => r.TitleId).HasConversion<int>();
+            });
 
-            modelBuilder.Entity<BoatTitlesEnumsEN>()
-                .HasKey(bt => bt.TitleId);
+            modelBuilder.Entity<BoatTitlesEnumsEN>(bt => {
+                
+                bt.HasKey(bt => bt.TitleId);
 
-            modelBuilder.Entity<BoatTitlesEnumsEN>()
-                .Property(bt => bt.TitleId)
-                .HasConversion<int>();
+                bt.Property(bt => bt.TitleId).HasConversion<int>();
 
-            modelBuilder.Entity<BoatTitlesEnumsEN>()
-                .Property(bt => bt.Name)
-                .HasConversion<string>();
+                bt.Property(bt => bt.Name).HasConversion<string>();
+            });
 
-            modelBuilder.Entity<BoatPricesEN>()
-               .HasKey(bt => bt.BoatId);
+            modelBuilder.Entity<BoatPricesEN>(bp =>
+            {
+                bp.HasKey(bt => bt.BoatId);
+            });
         }
 
         public DbSet<BoatTypeEN> BoatTypes { get; set; }
