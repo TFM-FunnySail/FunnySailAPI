@@ -74,6 +74,6 @@ namespace FunnySailAPI.Infrastructure
         public DbSet<BoatInfoEN> BoatInfos { get; set; }
         public DbSet<RequiredBoatTitleEN> RequiredBoatTitles { get; set; }
         public DbSet<BoatTitlesEnumsEN> BoatTitlesEnums { get; set; }
-        public DbSet<UsersEN> Users { get; set; }
+        public DbSet<UsersEN> UsersInfo { get; set; }
     }
 }

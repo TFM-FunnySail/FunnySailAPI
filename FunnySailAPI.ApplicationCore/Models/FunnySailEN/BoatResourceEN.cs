@@ -7,7 +7,7 @@ using System.Text;
 
 namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
 {
-    [Table("BoatResource")]
+    [Table("BoatResources")]
     public class BoatResourceEN
     {
         public int BoatId { get; set; }

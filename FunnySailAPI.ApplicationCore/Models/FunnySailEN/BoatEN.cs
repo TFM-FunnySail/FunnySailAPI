@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
 {
-    [Table("Boat")]
+    [Table("Boats")]
     public class BoatEN
     {
         [Key]
