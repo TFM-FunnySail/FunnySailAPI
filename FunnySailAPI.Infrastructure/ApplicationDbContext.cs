@@ -20,10 +20,19 @@ namespace FunnySailAPI.Infrastructure
 
             modelBuilder.Entity<BoatResourceEN>()
                 .HasKey(m => new { m.BoatId, m.Uri });
+
+            modelBuilder.Entity<BoatInfoEN>()
+                .HasKey(b => b.BoatId);
+
+            modelBuilder.Entity<BoatEN>()
+            .HasOne(b => b.BoatInfo)
+            .WithOne(i => i.Boat)
+            .HasForeignKey<BoatInfoEN>(b => b.BoatId);
         }
 
         public DbSet<BoatTypeEN> BoatTypes { get; set; }
         public DbSet<BoatEN> Boats { get; set; }
         public DbSet<BoatResourceEN> BoatResources { get; set; }
+        public DbSet<BoatInfoEN> BoatInfos { get; set; }
     }
 }

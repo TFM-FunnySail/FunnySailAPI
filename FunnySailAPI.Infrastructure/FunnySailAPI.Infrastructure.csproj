@@ -7,6 +7,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20220129114823_AddBoatResources.cs" />
     <Compile Remove="Migrations\20220129114823_AddBoatResources.Designer.cs" />
+    <Compile Remove="Migrations\20220131111344_AddBoatInfo.cs" />
+    <Compile Remove="Migrations\20220131111344_AddBoatInfo.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
