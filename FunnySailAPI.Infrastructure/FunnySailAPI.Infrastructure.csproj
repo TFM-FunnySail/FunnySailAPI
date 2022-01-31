@@ -11,6 +11,10 @@
     <Compile Remove="Migrations\20220131111344_AddBoatInfo.Designer.cs" />
     <Compile Remove="Migrations\20220131125044_AddUsers.cs" />
     <Compile Remove="Migrations\20220131125044_AddUsers.Designer.cs" />
+    <Compile Remove="Migrations\20220131145310_AddTest.cs" />
+    <Compile Remove="Migrations\20220131145310_AddTest.Designer.cs" />
+    <Compile Remove="Migrations\20220131145506_AddTest.cs" />
+    <Compile Remove="Migrations\20220131145506_AddTest.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
