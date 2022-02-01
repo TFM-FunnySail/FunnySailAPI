@@ -66,6 +66,12 @@ namespace FunnySailAPI.Infrastructure
                 u.HasKey(b => b.UserId);
 
             });
+
+            modelBuilder.Entity<OrderRatesEN>(x =>
+            {
+                x.HasKey(b => new { b.OrderId, b.Currency});
+
+            });
         }
 
         public DbSet<BoatTypeEN> BoatTypes { get; set; }
@@ -75,5 +81,7 @@ namespace FunnySailAPI.Infrastructure
         public DbSet<RequiredBoatTitleEN> RequiredBoatTitles { get; set; }
         public DbSet<BoatTitlesEnumsEN> BoatTitlesEnums { get; set; }
         public DbSet<UsersEN> UsersInfo { get; set; }
+        public DbSet<OrderEN> Orders { get; set; }
+        public DbSet<OrderRatesEN> OrderRates { get; set; }
     }
 }

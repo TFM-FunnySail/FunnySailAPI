@@ -18,7 +18,7 @@ namespace FunnySailAPI.ApplicationCore.Models.Globals
         Admin
     }
 
-    public enum BookingStatusEnum
+    public enum OrderStatusEnum
     {
         Booking,
         Rented,
@@ -31,5 +31,11 @@ namespace FunnySailAPI.ApplicationCore.Models.Globals
         Image,
         Video,
         Audio
+    }
+
+    public enum CurrencyEnum
+    {
+        EUR,
+        USD
     }
 }
