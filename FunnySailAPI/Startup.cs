@@ -42,7 +42,7 @@ namespace FunnySailAPI
             services.AddRazorPages().AddRazorRuntimeCompilation();
 
 
-            #region Services
+            #region ServicesCAD
 
             services.AddScoped<IBoatTypeCAD, BoatTypeCAD>();
             services.AddScoped<IBoatCAD, BoatCAD>();
@@ -54,6 +54,19 @@ namespace FunnySailAPI
             services.AddScoped<IBookingCAD, BookingCAD>();
             services.AddScoped<IInvoiceLineCAD, InvoiceLineCAD>();
             services.AddScoped<IClientInvoiceCAD, ClientInvoiceCAD>();
+            services.AddScoped<IBoatBookingCAD, BoatBookingCAD>();
+
+            #endregion
+
+            #region ServicesCEN
+
+            #endregion
+
+            #region ServicesCP
+
+            #endregion
+
+            #region GeneralServices
 
             #endregion
         }
