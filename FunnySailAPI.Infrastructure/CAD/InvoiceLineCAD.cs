@@ -6,9 +6,9 @@ using System.Text;
 
 namespace FunnySailAPI.Infrastructure.CAD
 {
-    public class OrderRatesCAD : BaseCAD<OrderRatesEN>, IOrderRatesCAD
+    public class InvoiceLineCAD : BaseCAD<InvoiceLineEN>, IInvoiceLineCAD
     {
-        public OrderRatesCAD(ApplicationDbContext dbContext) : base(dbContext)
+        public InvoiceLineCAD(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
     }

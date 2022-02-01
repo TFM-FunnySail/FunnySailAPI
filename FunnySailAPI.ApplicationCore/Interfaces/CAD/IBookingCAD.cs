@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FunnySailAPI.ApplicationCore.Interfaces.CAD
 {
-    public interface IOrderCAD : IBaseCAD<OrderEN>
+    public interface IBookingCAD : IBaseCAD<BookingEN>
     {
     }
 }

@@ -67,10 +67,19 @@ namespace FunnySailAPI.Infrastructure
 
             });
 
-            modelBuilder.Entity<OrderRatesEN>(x =>
+            modelBuilder.Entity<InvoiceLineEN>(x =>
             {
-                x.HasKey(b => new { b.OrderId, b.Currency});
+                x.HasKey(b => new { b.BookingId});
 
+                x.Property(b => b.Currency).HasConversion<string>();
+            });
+
+            modelBuilder.Entity<BookingEN>(x =>
+            {
+                x.HasOne(i => i.InvoiceLine)
+                .WithOne(i => i.Booking)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasForeignKey<InvoiceLineEN>(b => b.BookingId);
             });
         }
 
@@ -81,7 +90,7 @@ namespace FunnySailAPI.Infrastructure
         public DbSet<RequiredBoatTitleEN> RequiredBoatTitles { get; set; }
         public DbSet<BoatTitlesEnumsEN> BoatTitlesEnums { get; set; }
         public DbSet<UsersEN> UsersInfo { get; set; }
-        public DbSet<OrderEN> Orders { get; set; }
-        public DbSet<OrderRatesEN> OrderRates { get; set; }
+        public DbSet<BookingEN> Bookings { get; set; }
+        public DbSet<InvoiceLineEN> InvoiceLines { get; set; }
     }
 }

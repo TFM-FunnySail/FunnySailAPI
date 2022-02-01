@@ -6,21 +6,15 @@ using System.Text;
 
 namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
 {
-    [Table("OrderRates")]
-    public class OrderRatesEN
+    [Table("InvoiceLines")]
+    public class InvoiceLineEN
     {
-        public int OrderId { get; set; }
+        public int BookingId { get; set; }
         public CurrencyEnum Currency { get; set; }
 
         [Column(TypeName = "money")]
         public decimal TotalAmount { get; set; }
 
-        [Column(TypeName = "money")]
-        public decimal AmountPaid { get; set; }
-
-        [Column(TypeName = "decimal(9,4)")]
-        public decimal TasaCurrency { get; set; }
-
-        public OrderEN Order { get; set; }
+        public BookingEN Booking { get; set; }
     }
 }

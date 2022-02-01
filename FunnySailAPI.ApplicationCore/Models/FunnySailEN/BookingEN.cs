@@ -7,8 +7,8 @@ using System.Text;
 
 namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
 {
-    [Table("Orders")]
-    public class OrderEN
+    [Table("Bookings")]
+    public class BookingEN
     {
         [Key]
         public int Id { get; set; }
@@ -19,9 +19,9 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
         public int TotalPeople { get; set; }
         public bool Paid { get; set; }
         public bool RequestCaptain { get; set; }
-        public OrderStatusEnum Status { get; set; }
+        public BookingStatusEnum Status { get; set; }
 
         public UsersEN Client { get; set; }
-        public List<OrderRatesEN> OrderRates { get; set; }
+        public InvoiceLineEN InvoiceLine { get; set; }
     }
 }
