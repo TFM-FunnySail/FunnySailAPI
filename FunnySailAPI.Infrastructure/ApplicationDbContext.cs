@@ -80,10 +80,12 @@ namespace FunnySailAPI.Infrastructure
                 .WithOne(i => i.Booking)
                 .OnDelete(DeleteBehavior.NoAction)
                 .HasForeignKey<InvoiceLineEN>(b => b.BookingId);
+
+                x.Property(b => b.Status).HasConversion<string>();
             });
 
-            modelBuilder.Entity<BoatBookingEN>(bb => {
-
+            modelBuilder.Entity<BoatBookingEN>(bb =>
+            {
                 bb.HasKey(b => new { b.BookingId,b.BoatId});
             });
         }
