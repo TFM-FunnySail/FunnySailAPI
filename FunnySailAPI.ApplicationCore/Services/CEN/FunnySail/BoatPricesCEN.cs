@@ -1,11 +1,12 @@
 ﻿using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
+using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 {
-    public class BoatPricesCEN
+    public class BoatPricesCEN : IBoatPricesCEN
     {
         private readonly IBoatPricesCAD _boatPricesCAD;
 

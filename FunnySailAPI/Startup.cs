@@ -1,7 +1,11 @@
 using FunnySailAPI.ApplicationCore.Interfaces;
 using FunnySailAPI.ApplicationCore.Interfaces.CAD;
 using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
+using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
+using FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
+using FunnySailAPI.ApplicationCore.Services.CEN.FunnySail;
+using FunnySailAPI.ApplicationCore.Services.CP.FunnySail;
 using FunnySailAPI.Infrastructure;
 using FunnySailAPI.Infrastructure.CAD;
 using FunnySailAPI.Infrastructure.CAD.FunnySail;
@@ -62,10 +66,17 @@ namespace FunnySailAPI
 
             #region ServicesCEN
 
+            services.AddScoped<IRequiredBoatTitlesCEN, RequiredBoatTitlesCEN>();
+            services.AddScoped<IBoatCEN, BoatCEN>();
+            services.AddScoped<IBoatInfoCEN, BoatInfoCEN>();
+            services.AddScoped<IBoatPricesCEN, BoatPricesCEN>();
+            services.AddScoped<IBoatResourceCEN, BoatResourceCEN>();
+            services.AddScoped<IBoatTypeCEN, BoatTypeCEN>();
             #endregion
 
             #region ServicesCP
 
+            services.AddScoped<IBoatCP, BoatCP>();
             #endregion
 
             #region GeneralServices

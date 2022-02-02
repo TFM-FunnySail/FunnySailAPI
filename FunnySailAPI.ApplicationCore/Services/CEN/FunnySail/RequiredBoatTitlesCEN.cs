@@ -6,13 +6,13 @@ using System.Text;
 
 namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 {
-    public class BoatTypeCEN : IBoatTypeCEN
+    public class RequiredBoatTitlesCEN : IRequiredBoatTitlesCEN
     {
-        private readonly IBoatTypeCAD _boatTypeCAD;
+        private readonly IRequiredBoatTitleCAD _requiredBoatTitleCAD;
 
-        public BoatTypeCEN(IBoatTypeCAD boatTypeCAD)
+        public RequiredBoatTitlesCEN(IRequiredBoatTitleCAD requiredBoatTitleCAD)
         {
-            _boatTypeCAD = boatTypeCAD;
+            _requiredBoatTitleCAD = requiredBoatTitleCAD;
         }
     }
 }

@@ -1,17 +1,18 @@
-﻿using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
+﻿using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
+using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 {
-    class BoatResourceCEN
+    public class BoatResourceCEN : IBoatResourceCEN
     {
-        private readonly IBoatResourceCEN _boatResourceCEN;
+        private readonly IBoatResourceCAD _boatResourceCAD;
 
-        public BoatResourceCEN(IBoatResourceCEN boatResourceCEN)
+        public BoatResourceCEN(IBoatResourceCAD boatResourceCAD)
         {
-            _boatResourceCEN = boatResourceCEN;
+            _boatResourceCAD = boatResourceCAD;
         }
     }
 }
