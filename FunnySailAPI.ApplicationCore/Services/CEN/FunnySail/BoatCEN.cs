@@ -2,9 +2,11 @@
 using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
+using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 {
@@ -17,6 +19,16 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             _boatCAD = boatCAD;
         }
 
+        public async Task<int> CreateBoat(BoatEN boatEN)
+        {
+            boatEN = await _boatCAD.AddAsync(boatEN);
 
+            return boatEN.Id;
+        }
+
+        public async Task<BoatEN> GetAllDataBoat(int boatId)
+        {
+            return await _boatCAD.FindByIdAllData(boatId);
+        }
     }
 }

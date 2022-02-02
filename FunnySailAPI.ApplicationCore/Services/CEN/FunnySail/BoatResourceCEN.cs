@@ -1,8 +1,10 @@
 ﻿using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
+using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 {
@@ -13,6 +15,13 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
         public BoatResourceCEN(IBoatResourceCAD boatResourceCAD)
         {
             _boatResourceCAD = boatResourceCAD;
+        }
+
+        public async Task<(int,string)> AddBoatResource(BoatResourceEN boatResourceEN)
+        {
+            boatResourceEN = await _boatResourceCAD.AddAsync(boatResourceEN);
+
+            return (boatResourceEN.BoatId, boatResourceEN.Uri);
         }
     }
 }
