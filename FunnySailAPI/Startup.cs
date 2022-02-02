@@ -80,7 +80,7 @@ namespace FunnySailAPI
             #endregion
 
             #region GeneralServices
-
+            services.AddScoped<IDatabaseTransactionFactory, DatabaseTransactionFactory>();
             #endregion
         }
 

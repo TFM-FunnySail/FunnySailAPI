@@ -1,4 +1,5 @@
-﻿using FunnySailAPI.ApplicationCore.Interfaces.CEN;
+﻿using FunnySailAPI.ApplicationCore.Interfaces;
+using FunnySailAPI.ApplicationCore.Interfaces.CEN;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.DTO;
@@ -21,13 +22,15 @@ namespace FunnySailAPI.ApplicationCore.Services.CP.FunnySail
         private readonly IBoatResourceCEN _boatResourceCEN;
         private readonly IBoatTypeCEN _boatTypeCEN;
         private readonly IRequiredBoatTitlesCEN _requiredBoatTitlesCEN;
+        private IDatabaseTransactionFactory _databaseTransactionFactory;
 
         public BoatCP(IBoatCEN boatCEN,
                       IBoatInfoCEN boatInfoCEN,
                       IBoatTypeCEN boatTypeCEN,
                       IBoatResourceCEN boatResourceCEN,
                       IBoatPricesCEN boatPricesCEN,
-                      IRequiredBoatTitlesCEN requiredBoatTitlesCEN)
+                      IRequiredBoatTitlesCEN requiredBoatTitlesCEN,
+                      IDatabaseTransactionFactory databaseTransactionFactory)
         {
             _boatCEN = boatCEN;
             _boatInfoCEN = boatInfoCEN;
@@ -35,75 +38,81 @@ namespace FunnySailAPI.ApplicationCore.Services.CP.FunnySail
             _boatResourceCEN = boatResourceCEN;
             _boatTypeCEN = boatTypeCEN;
             _requiredBoatTitlesCEN = requiredBoatTitlesCEN;
+            _databaseTransactionFactory = databaseTransactionFactory;
         }
 
         public async Task<BoatOutputDTO> CreateBoat(AddBoatInputDTO addBoatInput)
         {
             //Validar algunos datos
+            int boatId = 0;
 
             //Abrir transaccion
-            int boatId = 0;
-            try
+            using (var databaseTransaction = _databaseTransactionFactory.BeginTransaction())
             {
-                //Crear embarcacion
-                boatId = await _boatCEN.CreateBoat(new BoatEN
+                try
                 {
-                    Active = false,
-                    CreatedDate = DateTime.UtcNow,
-                    PendingToReview = true,
-                    BoatTypeId = addBoatInput.BoatTypeId
-                });
+                    //Crear embarcacion
+                    boatId = await _boatCEN.CreateBoat(new BoatEN
+                    {
+                        Active = false,
+                        CreatedDate = DateTime.UtcNow,
+                        PendingToReview = true,
+                        BoatTypeId = addBoatInput.BoatTypeId
+                    });
 
-                //Crear datos de embarcacion
-                await _boatInfoCEN.AddBoatInfo(new BoatInfoEN
-                {
-                    BoatId = boatId,
-                    Capacity = addBoatInput.Capacity,
-                    Description = addBoatInput.Description,
-                    Length = addBoatInput.Length,
-                    MooringPoint = addBoatInput.MooringPoint,
-                    MotorPower = addBoatInput.MotorPower,
-                    Name = addBoatInput.Name,
-                    Registration = addBoatInput.Registration,
-                    Sleeve = addBoatInput.Sleeve
-                });
-
-                //Crear precios de embarcacion
-                await _boatPricesCEN.AddBoatPrices(new BoatPricesEN
-                {
-                    BoatId = boatId,
-                    DayBasePrice = addBoatInput.DayBasePrice,
-                    HourBasePrice = addBoatInput.HourBasePrice,
-                    Supplement = addBoatInput.Supplement
-                });
-                //Crear imagenes de embarcacion
-                foreach(AddBoatResourcesInputDTO boatResource in addBoatInput.BoatResources)
-                {
-                    await _boatResourceCEN.AddBoatResource(new BoatResourceEN
+                    //Crear datos de embarcacion
+                    await _boatInfoCEN.AddBoatInfo(new BoatInfoEN
                     {
                         BoatId = boatId,
-                        Main = boatResource.Main,
-                        Type = boatResource.Type,
-                        Uri = boatResource.Uri
+                        Capacity = addBoatInput.Capacity,
+                        Description = addBoatInput.Description,
+                        Length = addBoatInput.Length,
+                        MooringPoint = addBoatInput.MooringPoint,
+                        MotorPower = addBoatInput.MotorPower,
+                        Name = addBoatInput.Name,
+                        Registration = addBoatInput.Registration,
+                        Sleeve = addBoatInput.Sleeve
                     });
-                }
 
-                //Crear titulacion requerida
-                foreach (AddRequiredBoatTitleInputDTO requiredBoatTitle in addBoatInput.RequiredBoatTitles)
-                {
-                    await _requiredBoatTitlesCEN.AddRequiredBoatTitle(new RequiredBoatTitleEN
+                    //Crear precios de embarcacion
+                    await _boatPricesCEN.AddBoatPrices(new BoatPricesEN
                     {
                         BoatId = boatId,
-                        TitleId = requiredBoatTitle.Title
+                        DayBasePrice = addBoatInput.DayBasePrice,
+                        HourBasePrice = addBoatInput.HourBasePrice,
+                        Supplement = addBoatInput.Supplement
                     });
+                    //Crear imagenes de embarcacion
+                    foreach (AddBoatResourcesInputDTO boatResource in addBoatInput.BoatResources)
+                    {
+                        await _boatResourceCEN.AddBoatResource(new BoatResourceEN
+                        {
+                            BoatId = boatId,
+                            Main = boatResource.Main,
+                            Type = boatResource.Type,
+                            Uri = boatResource.Uri
+                        });
+                    }
+
+                    //Crear titulacion requerida
+                    foreach (AddRequiredBoatTitleInputDTO requiredBoatTitle in addBoatInput.RequiredBoatTitles)
+                    {
+                        await _requiredBoatTitlesCEN.AddRequiredBoatTitle(new RequiredBoatTitleEN
+                        {
+                            BoatId = boatId,
+                            TitleId = requiredBoatTitle.Title
+                        });
+                    }
+
+                    await databaseTransaction.CommitAsync();
+                }
+                catch (Exception ex)
+                {
+                    await databaseTransaction.RollbackAsync();
+                    throw;
                 }
             }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-
+            
             BoatEN boatEN = await _boatCEN.GetAllDataBoat(boatId);
             return ConvertToBoatOutpuDTO(boatEN);
         }
