@@ -1,8 +1,10 @@
 using FunnySailAPI.ApplicationCore.Interfaces;
 using FunnySailAPI.ApplicationCore.Interfaces.CAD;
+using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.Infrastructure;
 using FunnySailAPI.Infrastructure.CAD;
+using FunnySailAPI.Infrastructure.CAD.FunnySail;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;

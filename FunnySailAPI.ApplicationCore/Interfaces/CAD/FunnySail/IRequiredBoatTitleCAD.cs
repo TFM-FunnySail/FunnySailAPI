@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FunnySailAPI.ApplicationCore.Interfaces.CAD
+namespace FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail
 {
-    public interface IBoatInfoCAD : IBaseCAD<BoatInfoEN>
+    public interface IRequiredBoatTitleCAD : IBaseCAD<RequiredBoatTitleEN>
     {
     }
 }

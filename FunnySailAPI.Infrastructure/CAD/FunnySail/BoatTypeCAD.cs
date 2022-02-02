@@ -1,12 +1,13 @@
 ﻿using FunnySailAPI.ApplicationCore.Interfaces;
 using FunnySailAPI.ApplicationCore.Interfaces.CAD;
+using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FunnySailAPI.Infrastructure.CAD
+namespace FunnySailAPI.Infrastructure.CAD.FunnySail
 {
     public class BoatTypeCAD : BaseCAD<BoatTypeEN>, IBoatTypeCAD
     {

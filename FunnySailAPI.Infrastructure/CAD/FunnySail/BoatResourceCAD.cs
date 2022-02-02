@@ -1,4 +1,5 @@
 ﻿using FunnySailAPI.ApplicationCore.Interfaces.CAD;
+using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
 using System;
@@ -6,7 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FunnySailAPI.Infrastructure.CAD
+namespace FunnySailAPI.Infrastructure.CAD.FunnySail
 {
     public class BoatResourceCAD : BaseCAD<BoatResourceEN>, IBoatResourceCAD
     {
