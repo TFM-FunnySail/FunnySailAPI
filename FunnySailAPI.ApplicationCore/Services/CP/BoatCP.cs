@@ -43,8 +43,17 @@ namespace FunnySailAPI.ApplicationCore.Services.CP.FunnySail
 
         public async Task<BoatOutputDTO> CreateBoat(AddBoatInputDTO addBoatInput)
         {
-            //Validar algunos datos
             int boatId = 0;
+
+            //Validar algunos datos, Las excepciones se cambiaran por una de aplicacion
+            if (!(await _boatTypeCEN.AnyBoatTypeById(addBoatInput.BoatTypeId)))
+                throw new Exception("Boat type not found");
+
+            if (!addBoatInput.BoatResources.Any(x => x.Main))
+                throw new Exception("Not found main resources");
+
+            if (addBoatInput.BoatResources.Count(x => x.Main) > 1)
+                throw new Exception("There can only be one main resource");
 
             //Abrir transaccion
             using (var databaseTransaction = _databaseTransactionFactory.BeginTransaction())
@@ -109,7 +118,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP.FunnySail
                 catch (Exception ex)
                 {
                     await databaseTransaction.RollbackAsync();
-                    throw;
+                    throw ex;
                 }
             }
             
@@ -120,41 +129,6 @@ namespace FunnySailAPI.ApplicationCore.Services.CP.FunnySail
         private BoatOutputDTO ConvertToBoatOutpuDTO(BoatEN boatEN)
         {
             return new BoatOutputDTO(boatEN);
-        }
-
-        private BoatOutputDTO ConvertToBoatOutpuDTOOld(BoatEN boatEN)
-        {
-            return new BoatOutputDTO
-            {
-                Id = boatEN.Id,
-                Supplement = boatEN.BoatPrices.Supplement,
-                BoatResources = boatEN.BoatResources.Select(x => new BoatResourcesOutputDTO
-                {
-                    Main = x.Main,
-                    Type = x.Type,
-                    Uri = x.Uri
-                }).ToList(),
-                BoatType = new BoatTypeOutputDTO
-                {
-                    Id = boatEN.BoatType.Id,
-                    Name = boatEN.BoatType.Name,
-                    Description = boatEN.BoatType.Description,
-                },
-                Capacity = boatEN.BoatInfo.Capacity,
-                Description = boatEN.BoatInfo.Description,
-                Name = boatEN.BoatInfo.Name,
-                MooringPoint = boatEN.BoatInfo.MooringPoint,
-                MotorPower = boatEN.BoatInfo.MotorPower,
-                Length = boatEN.BoatInfo.Length,
-                Sleeve = boatEN.BoatInfo.Sleeve,
-                Registration = boatEN.BoatInfo.Registration,
-                DayBasePrice = boatEN.BoatPrices.DayBasePrice,
-                HourBasePrice = boatEN.BoatPrices.HourBasePrice,
-                RequiredBoatTitles = boatEN.RequiredBoatTitles.Select(x => new RequiredBoatTitleOutputDTO
-                {
-                    TitleId = x.TitleId
-                }).ToList()
-            };
         }
     }
 }

@@ -51,5 +51,21 @@ namespace FunnySailAPI.Infrastructure.CAD
 
             return entity;
         }
+
+        public async Task<bool> Any(IQueryable<T> query)
+        {
+            return await query.AnyAsync();
+        }
+
+        public IQueryable<T> GetIQueryable()
+        {
+            DbSet<T> dbSet = _dbContext.Set<T>();
+            return dbSet.AsQueryable();
+        }
+
+        public async Task<IReadOnlyCollection<T>> GetAll(IQueryable<T> query, Pagination pagination)
+        {
+            return await query.Skip(pagination.First).Take(pagination.Size).ToListAsync();
+        }
     }
 }
