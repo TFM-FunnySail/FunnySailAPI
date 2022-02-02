@@ -1,4 +1,5 @@
-﻿using FunnySailAPI.ApplicationCore.Interfaces;
+﻿using FunnySailAPI.ApplicationCore.Exceptions;
+using FunnySailAPI.ApplicationCore.Interfaces;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail;
@@ -47,13 +48,16 @@ namespace FunnySailAPI.ApplicationCore.Services.CP.FunnySail
 
             //Validar algunos datos, Las excepciones se cambiaran por una de aplicacion
             if (!(await _boatTypeCEN.AnyBoatTypeById(addBoatInput.BoatTypeId)))
-                throw new Exception("Boat type not found");
+                throw new DataValidationException("Boat type not found.",
+                    "El tipo de embarcación no ha sido encontrado.");
 
             if (!addBoatInput.BoatResources.Any(x => x.Main))
-                throw new Exception("Not found main resources");
+                throw new DataValidationException("Not found main resources.",
+                    "No hay un recurso principal.");
 
             if (addBoatInput.BoatResources.Count(x => x.Main) > 1)
-                throw new Exception("There can only be one main resource");
+                throw new DataValidationException("There can only be one main resource.",
+                    "Solo puede haber un recurso principal.");
 
             //Abrir transaccion
             using (var databaseTransaction = _databaseTransactionFactory.BeginTransaction())

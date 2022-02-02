@@ -14,5 +14,6 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
         public int BoatId { get; set; }
 
         public BoatEN Boat { get; set; }
+        public BoatTitlesEnumsEN BoatTitles { get; set; }
     }
 }
