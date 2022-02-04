@@ -37,4 +37,11 @@ namespace FunnySailAPI.ApplicationCore.Models.Globals
     {
         EUR
     }
+
+    public enum MooringEnum
+    {
+        Small,
+        Medium,
+        Big
+    }
 }
