@@ -54,5 +54,10 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
             return boat;
         }
+
+        public IBoatCAD GetBoatCAD()
+        {
+            return _boatCAD;
+        }
     }
 }

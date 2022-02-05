@@ -23,6 +23,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP.FunnySail
         private readonly IBoatResourceCEN _boatResourceCEN;
         private readonly IBoatTypeCEN _boatTypeCEN;
         private readonly IRequiredBoatTitlesCEN _requiredBoatTitlesCEN;
+        private readonly IReviewCEN _reviewCEN;
         private IDatabaseTransactionFactory _databaseTransactionFactory;
 
         public BoatCP(IBoatCEN boatCEN,
@@ -31,7 +32,8 @@ namespace FunnySailAPI.ApplicationCore.Services.CP.FunnySail
                       IBoatResourceCEN boatResourceCEN,
                       IBoatPricesCEN boatPricesCEN,
                       IRequiredBoatTitlesCEN requiredBoatTitlesCEN,
-                      IDatabaseTransactionFactory databaseTransactionFactory)
+                      IDatabaseTransactionFactory databaseTransactionFactory,
+                      IReviewCEN reviewCEN)
         {
             _boatCEN = boatCEN;
             _boatInfoCEN = boatInfoCEN;
@@ -40,6 +42,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP.FunnySail
             _boatTypeCEN = boatTypeCEN;
             _requiredBoatTitlesCEN = requiredBoatTitlesCEN;
             _databaseTransactionFactory = databaseTransactionFactory;
+            _reviewCEN = reviewCEN;
         }
 
         public async Task<int> CreateBoat(AddBoatInputDTO addBoatInput)
@@ -129,5 +132,32 @@ namespace FunnySailAPI.ApplicationCore.Services.CP.FunnySail
             return boatId;
         }
 
+        public async Task<BoatEN> DisapproveBoat(DisapproveBoatInputDTO disapproveBoatInput)
+        {
+            BoatEN dbBoat = await _boatCEN.GetBoatCAD().FindById(disapproveBoatInput.BoatId);
+            //Validar datos
+            if (dbBoat == null)
+                throw new DataValidationException("Boat not found.",
+                    "La embarcación no se encuentra.");
+
+            using (var databaseTransaction = _databaseTransactionFactory.BeginTransaction())
+            {
+                try
+                {
+                    await _boatCEN.DisapproveBoat(disapproveBoatInput.BoatId);
+
+                    //Adicionar revision
+
+                    await databaseTransaction.CommitAsync();
+                }
+                catch (Exception ex)
+                {
+                    await databaseTransaction.RollbackAsync();
+                    throw ex;
+                }
+            }
+
+            return dbBoat;
+        }
     }
 }
