@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -24,21 +26,24 @@ namespace FunnySailAPI.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IUserCEN _userCEN;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IUserCEN userCEN)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _userCEN = userCEN;
         }
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public AddUserInputDTO Input { get; set; }
 
         public string ReturnUrl { get; set; }
 
@@ -76,7 +81,7 @@ namespace FunnySailAPI.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                var result = await _userCEN.CreateUser(user, Input);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
