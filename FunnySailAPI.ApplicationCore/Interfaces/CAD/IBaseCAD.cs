@@ -16,5 +16,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CAD
         Task<bool> Any(IQueryable<T> query);
         IQueryable<T> GetIQueryable();
         Task<IReadOnlyCollection<T>> GetAll(IQueryable<T> query,Pagination pagination);
+        Task<T> Update(T entity);
     }
 }
