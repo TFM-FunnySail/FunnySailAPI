@@ -61,6 +61,11 @@ namespace FunnySailAPI
             services.AddScoped<IInvoiceLineCAD, InvoiceLineCAD>();
             services.AddScoped<IClientInvoiceCAD, ClientInvoiceCAD>();
             services.AddScoped<IBoatBookingCAD, BoatBookingCAD>();
+            services.AddScoped<IServiceCAD, ServiceCAD>();
+            services.AddScoped<IServiceBookingCAD, ServiceBookingCAD>();
+            services.AddScoped<IPortCAD, PortCAD>();
+            services.AddScoped<IMooringCAD, MooringCAD>();
+            services.AddScoped<IReviewCAD, ReviewCAD>();
 
             #endregion
 
