@@ -42,5 +42,17 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
             return boat;
         }
+
+        public async Task<BoatEN> DisapproveBoat(int boatId)
+        {
+            BoatEN boat = await _boatCAD.FindById(boatId);
+
+            boat.PendingToReview = false;
+            boat.Active = false;
+
+            await _boatCAD.Update(boat);
+
+            return boat;
+        }
     }
 }
