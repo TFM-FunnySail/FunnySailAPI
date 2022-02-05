@@ -3,9 +3,11 @@ using FunnySailAPI.ApplicationCore.Interfaces.CAD;
 using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
+using FunnySailAPI.ApplicationCore.Models.DTO.Filters;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -64,5 +66,34 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
         {
             return _boatCAD;
         }
+
+        public IQueryable<BoatEN> FilterBoat(BoatFiltersDTO boatFilters)
+        {
+            IQueryable<BoatEN> boats = _boatCAD.GetIQueryable();
+
+            if (boatFilters == null)
+                return boats;
+
+            if (boatFilters.BoatId != 0)
+                boats = boats.Where(x => x.Id == boatFilters.BoatId);
+
+            if (boatFilters.BoatTypeId != 0)
+                boats = boats.Where(x => x.BoatTypeId == boatFilters.BoatTypeId);
+
+            if (boatFilters.Active != null)
+                boats = boats.Where(x => x.Active == boatFilters.Active);
+
+            if (boatFilters.PendingToReview != null)
+                boats = boats.Where(x => x.PendingToReview == boatFilters.PendingToReview);
+
+            if (boatFilters.CreatedDaysRange?.InitialDate != null)
+                boats = boats.Where(x => x.CreatedDate >= boatFilters.CreatedDaysRange.InitialDate);
+
+            if (boatFilters.CreatedDaysRange?.EndDate != null)
+                boats = boats.Where(x => x.CreatedDate < boatFilters.CreatedDaysRange.EndDate);
+
+            return boats;
+        }
+
     }
 }
