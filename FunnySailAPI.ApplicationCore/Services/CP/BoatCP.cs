@@ -42,7 +42,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP.FunnySail
             _databaseTransactionFactory = databaseTransactionFactory;
         }
 
-        public async Task<BoatOutputDTO> CreateBoat(AddBoatInputDTO addBoatInput)
+        public async Task<int> CreateBoat(AddBoatInputDTO addBoatInput)
         {
             int boatId = 0;
 
@@ -125,14 +125,9 @@ namespace FunnySailAPI.ApplicationCore.Services.CP.FunnySail
                     throw ex;
                 }
             }
-            
-            BoatEN boatEN = await _boatCEN.GetAllDataBoat(boatId);
-            return ConvertToBoatOutpuDTO(boatEN);
+
+            return boatId;
         }
 
-        private BoatOutputDTO ConvertToBoatOutpuDTO(BoatEN boatEN)
-        {
-            return new BoatOutputDTO(boatEN);
-        }
     }
 }
