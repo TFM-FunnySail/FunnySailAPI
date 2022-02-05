@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
 {
-    [Table("ServiceBooking")]
+    [Table("ServiceBookings")]
     public class ServiceBookingEN
     {
         public int ServiceId { get; set; }

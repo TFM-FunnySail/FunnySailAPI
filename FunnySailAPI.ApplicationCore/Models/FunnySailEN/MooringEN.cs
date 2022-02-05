@@ -7,12 +7,15 @@ using System.Text;
 
 namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
 {
-    [Table("Mooring")]
+    [Table("Moorings")]
     public class MooringEN
     {
         [Key]
         public int Id { get; set; }
+        public int PortId { get; set; }
         
         public MooringEnum Type { get; set; }
+
+        public PortEN Port { get; set; }
     }
 }

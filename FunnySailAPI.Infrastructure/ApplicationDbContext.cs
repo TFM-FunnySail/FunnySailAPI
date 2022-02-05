@@ -78,7 +78,7 @@ namespace FunnySailAPI.Infrastructure
             {
                 x.HasOne(i => i.InvoiceLine)
                 .WithOne(i => i.Booking)
-                .OnDelete(DeleteBehavior.NoAction)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasForeignKey<InvoiceLineEN>(b => b.BookingId);
 
                 x.Property(b => b.Status).HasConversion<string>();
@@ -87,6 +87,11 @@ namespace FunnySailAPI.Infrastructure
             modelBuilder.Entity<BoatBookingEN>(bb =>
             {
                 bb.HasKey(b => new { b.BookingId,b.BoatId});
+            });
+
+            modelBuilder.Entity<ServiceBookingEN>(bb =>
+            {
+                bb.HasKey(b => new { b.BookingId, b.ServiceId });
             });
         }
 
@@ -102,6 +107,11 @@ namespace FunnySailAPI.Infrastructure
         public DbSet<ClientInvoiceEN> ClientInvoices { get; set; }
         public DbSet<BoatBookingEN> BoatBookings { get; set; }
         public DbSet<ActivityEN> Activity { get; set; }
+        public DbSet<ReviewEN> Reviews { get; set; }
+        public DbSet<PortEN> Ports { get; set; }
+        public DbSet<MooringEN> Moorings { get; set; }
+        public DbSet<ServiceEN> Services { get; set; }
+        public DbSet<ServiceBookingEN> ServiceBookings { get; set; }
     
     }
 }

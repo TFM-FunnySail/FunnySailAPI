@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
 {
-    [Table("Service")]
+    [Table("Services")]
     public class ServiceEN
     {
         [Key]
@@ -18,5 +18,7 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
         
         [Column(TypeName = "money")]
         public decimal Price { get; set; }
+
+        public List<ServiceBookingEN> ServiceBookings { get; set; }
     }
 }

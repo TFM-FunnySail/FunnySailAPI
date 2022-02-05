@@ -6,16 +6,18 @@ using System.Text;
 
 namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
 {
-    [Table("Review")]
+    [Table("Reviews")]
     public class ReviewEN
     {
         [Key]
         public int Id;
+        public string AdminId; //Admin que hizo la revision
 
         [StringLength(500)]
         [Required]
         public string Description; 
 
         public BoatEN Boat { get; set; }
+        public UsersEN Admin { get; set; }
     }
 }
