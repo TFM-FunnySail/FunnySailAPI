@@ -5,6 +5,7 @@ using FunnySailAPI.ApplicationCore.Interfaces.CEN;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.DTO.Filters;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
+using FunnySailAPI.ApplicationCore.Models.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,33 +68,22 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             return _boatCAD;
         }
 
-        public IQueryable<BoatEN> FilterBoat(BoatFiltersDTO boatFilters)
+        public async Task<List<BoatEN>> GetAvailableBoats(Pagination pagination, DateTime initialDate, DateTime endDate)
         {
-            IQueryable<BoatEN> boats = _boatCAD.GetIQueryable();
+            List<int> idsNotAvailable = await _boatCAD.GetBoatIdsNotAvailable(initialDate, endDate);
 
-            if (boatFilters == null)
-                return boats;
+            IQueryable<BoatEN> boats = _boatCAD.GetBoatFiltered(new BoatFilters
+            {
+                Active = true,
+                CreatedDaysRange = new DaysRangeFilter
+                {
+                    EndDate = endDate,
+                    InitialDate = initialDate
+                },
+                ExclusiveBoatId = idsNotAvailable
+            });
 
-            if (boatFilters.BoatId != 0)
-                boats = boats.Where(x => x.Id == boatFilters.BoatId);
-
-            if (boatFilters.BoatTypeId != 0)
-                boats = boats.Where(x => x.BoatTypeId == boatFilters.BoatTypeId);
-
-            if (boatFilters.Active != null)
-                boats = boats.Where(x => x.Active == boatFilters.Active);
-
-            if (boatFilters.PendingToReview != null)
-                boats = boats.Where(x => x.PendingToReview == boatFilters.PendingToReview);
-
-            if (boatFilters.CreatedDaysRange?.InitialDate != null)
-                boats = boats.Where(x => x.CreatedDate >= boatFilters.CreatedDaysRange.InitialDate);
-
-            if (boatFilters.CreatedDaysRange?.EndDate != null)
-                boats = boats.Where(x => x.CreatedDate < boatFilters.CreatedDaysRange.EndDate);
-
-            return boats;
+            return await _boatCAD.GetAll(boats.OrderBy(x => x.Id), pagination);
         }
-
     }
 }
