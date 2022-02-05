@@ -1,4 +1,5 @@
-﻿using FunnySailAPI.ApplicationCore.Interfaces.CAD;
+﻿using FunnySailAPI.ApplicationCore.Exceptions;
+using FunnySailAPI.ApplicationCore.Interfaces.CAD;
 using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
@@ -33,14 +34,18 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
         public async Task<BoatEN> ApproveBoat(int boatId)
         {
-            BoatEN boat = await _boatCAD.FindById(boatId);
+            BoatEN dbBoat = await _boatCAD.FindById(boatId);
 
-            boat.PendingToReview = false;
-            boat.Active = true;
+            if (dbBoat == null)
+                throw new DataValidationException("Boat not found.",
+                    "La embarcación no se encuentra.");
 
-            await _boatCAD.Update(boat);
+            dbBoat.PendingToReview = false;
+            dbBoat.Active = true;
 
-            return boat;
+            await _boatCAD.Update(dbBoat);
+
+            return dbBoat;
         }
 
         public async Task<BoatEN> DisapproveBoat(int boatId)
