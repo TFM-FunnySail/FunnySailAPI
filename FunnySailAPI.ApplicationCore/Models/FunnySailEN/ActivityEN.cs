@@ -22,6 +22,6 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
         [Required]
         public string Description { get; set; }
 
-        public BookingEN Booking { get; set; }
+        public List<ActivityBookingEN> ActivityBookings { get; set; }
     }
 }
