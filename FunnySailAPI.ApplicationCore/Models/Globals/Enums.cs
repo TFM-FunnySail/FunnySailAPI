@@ -44,4 +44,10 @@ namespace FunnySailAPI.ApplicationCore.Models.Globals
         Medium,
         Big
     }
+
+    public enum ExceptionTypesEnum
+    {
+        NullValue,
+        NotFound
+    }
 }
