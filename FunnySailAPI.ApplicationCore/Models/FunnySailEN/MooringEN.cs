@@ -13,7 +13,10 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
         [Key]
         public int Id { get; set; }
         public int PortId { get; set; }
-        
+
+        [Required, StringLength(100)]
+        public int Name { get; set; }
+
         public MooringEnum Type { get; set; }
 
         public PortEN Port { get; set; }

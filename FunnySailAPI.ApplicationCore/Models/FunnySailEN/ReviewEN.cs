@@ -10,12 +10,12 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
     public class ReviewEN
     {
         [Key]
-        public int Id;
-        public string AdminId; //Admin que hizo la revision
+        public int Id { get; set; }
+        public int BoatId { get; set; }
+        public string AdminId { get; set; } //Admin que hizo la revision
 
-        [StringLength(500)]
-        [Required]
-        public string Description; 
+        [Required, StringLength(500)]
+        public string Description { get; set; }
 
         public BoatEN Boat { get; set; }
         public UsersEN Admin { get; set; }

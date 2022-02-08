@@ -11,7 +11,13 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
     {
         [Key]
         public int Id { get; set; }
-   
+
+        [Required,StringLength(100)]
+        public int Name { get; set; }
+
+        [Required, StringLength(1000)]
+        public int Location { get; set; }
+
         public List<MooringEN> Moorings { get; set; }
     }
 }
