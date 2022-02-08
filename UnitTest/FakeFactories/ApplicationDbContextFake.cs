@@ -15,7 +15,7 @@ namespace UnitTest.FakeFactories
         {
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
             builder.UseInMemoryDatabase("funnySail");
-            builder.EnableSensitiveDataLogging();
+
 
             _dbContextFake = new ApplicationDbContext(builder.Options);
         }

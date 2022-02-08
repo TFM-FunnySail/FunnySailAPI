@@ -91,12 +91,13 @@ namespace UnitTest.Features.CAD.BoatTypes
             testRunner.CollectScenarioErrors();
         }
         
-        public virtual void AdicionoUnTipoDeEmbarcacion(string name, string description, string[] exampleTags)
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Adiciono un tipo de embarcacion")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "boatType_persistence")]
+        public virtual void AdicionoUnTipoDeEmbarcacion()
         {
-            string[] tagsOfScenario = exampleTags;
+            string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            argumentsOfScenario.Add("name", name);
-            argumentsOfScenario.Add("description", description);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adiciono un tipo de embarcacion", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 3
 this.ScenarioInitialize(scenarioInfo);
@@ -119,7 +120,7 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 4
- testRunner.Given(string.Format("con nombre y descripción {0},{1}", name, description), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("con nombre y descripción <name>,<description>", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 5
  testRunner.When("se adiciona la embarcacion", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -131,42 +132,82 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
+        public virtual void AdicionoUnTipoDeEmbarcacionSinDescripcion(string name, string description, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("name", name);
+            argumentsOfScenario.Add("description", description);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adiciono un tipo de embarcacion sin descripcion", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 8
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 9
+ testRunner.Given(string.Format("con nombre {0}, sin descripcion", name), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 10
+ testRunner.When("se adiciona la embarcacion", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 11
+ testRunner.Then("devuelve un error porque la descripcion es requerida", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Adiciono un tipo de embarcacion: Buque")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Adiciono un tipo de embarcacion sin descripcion: Buque")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "boatType_persistence")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Buque")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:name", "Buque")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:description", "Descripcion de Buque")]
-        public virtual void AdicionoUnTipoDeEmbarcacion_Buque()
+        public virtual void AdicionoUnTipoDeEmbarcacionSinDescripcion_Buque()
         {
-#line 3
-this.AdicionoUnTipoDeEmbarcacion("Buque", "Descripcion de Buque", ((string[])(null)));
+#line 8
+this.AdicionoUnTipoDeEmbarcacionSinDescripcion("Buque", "Descripcion de Buque", ((string[])(null)));
 #line hidden
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Adiciono un tipo de embarcacion: Lancha")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Adiciono un tipo de embarcacion sin descripcion: Lancha")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "boatType_persistence")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Lancha")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:name", "Lancha")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:description", "Desc de lancha")]
-        public virtual void AdicionoUnTipoDeEmbarcacion_Lancha()
+        public virtual void AdicionoUnTipoDeEmbarcacionSinDescripcion_Lancha()
         {
-#line 3
-this.AdicionoUnTipoDeEmbarcacion("Lancha", "Desc de lancha", ((string[])(null)));
+#line 8
+this.AdicionoUnTipoDeEmbarcacionSinDescripcion("Lancha", "Desc de lancha", ((string[])(null)));
 #line hidden
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Adiciono un tipo de embarcacion: Kayac")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Adiciono un tipo de embarcacion sin descripcion: Kayac")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "boatType_persistence")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Kayac")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:name", "Kayac")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:description", "Descrip de Kayac")]
-        public virtual void AdicionoUnTipoDeEmbarcacion_Kayac()
+        public virtual void AdicionoUnTipoDeEmbarcacionSinDescripcion_Kayac()
         {
-#line 3
-this.AdicionoUnTipoDeEmbarcacion("Kayac", "Descrip de Kayac", ((string[])(null)));
+#line 8
+this.AdicionoUnTipoDeEmbarcacionSinDescripcion("Kayac", "Descrip de Kayac", ((string[])(null)));
 #line hidden
         }
     }

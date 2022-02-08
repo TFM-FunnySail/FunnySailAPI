@@ -14,12 +14,15 @@ namespace UnitTest.Steps.CAD
     [Binding]
     public class BoatTypePersistenceStep
     {
+        private ScenarioContext _scenarioContext;
         private IBoatTypeCAD _boatTypeCAD;
         private BoatTypeEN _newBoatType;
         private string _name;
         private string _description;
-        public BoatTypePersistenceStep()
+        public BoatTypePersistenceStep(ScenarioContext scenarioContext)
         {
+            _scenarioContext = scenarioContext;
+
             var applicationDbContextFake = new ApplicationDbContextFake();
             _boatTypeCAD = new BoatTypeCAD(applicationDbContextFake._dbContextFake);
 
@@ -35,8 +38,15 @@ namespace UnitTest.Steps.CAD
         [When(@"se adiciona la embarcacion")]
         public async Task WhenSeAdicionaLaEmbarcacion()
         {
-            int newBoatTypeId = await _boatTypeCAD.AddBoatType(_name, _description);
-            _newBoatType = await _boatTypeCAD.FindById(newBoatTypeId);
+            try
+            {
+                int newBoatTypeId = await _boatTypeCAD.AddBoatType(_name, _description);
+                _newBoatType = await _boatTypeCAD.FindById(newBoatTypeId);
+            }
+            catch (Exception ex)
+            {
+                _scenarioContext.Add("Exception_NullDesc", ex);
+            }
         }
 
         [Then(@"devuelve la embarcación creada en base de datos con los mismos valores")]
@@ -46,6 +56,22 @@ namespace UnitTest.Steps.CAD
             Assert.AreEqual(_description, _newBoatType.Description);
         }
 
+
+        [Given(@"con nombre (.*), sin descripcion")]
+        public void GivenConNombreSinDescripcion(string name)
+        {
+            _name = name;
+            _description = null;
+        }
+
+        [Then(@"devuelve un error porque la descripcion es requerida")]
+        public void ThenDevuelveUnErrorPorqueLaDescripcionEsRequerida()
+        {
+            Exception ex = _scenarioContext.Get<Exception> ("Exception_NullDesc");
+
+            Assert.IsNotNull(ex);
+            Assert.AreEqual("The name or the description is null", ex.Message);
+        }
 
     }
 }

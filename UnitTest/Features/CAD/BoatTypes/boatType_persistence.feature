@@ -5,7 +5,7 @@ Scenario: Adiciono un tipo de embarcacion
 	When se adiciona la embarcacion
 	Then devuelve la embarcación creada en base de datos con los mismos valores
 
-Scenario: Adiciono un tipo de embarcacion
+Scenario: Adiciono un tipo de embarcacion sin descripcion
 	Given con nombre <name>, sin descripcion
 	When se adiciona la embarcacion
 	Then devuelve un error porque la descripcion es requerida

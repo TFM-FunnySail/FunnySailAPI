@@ -20,6 +20,5 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
         [Required]
         public string Description { get; set; }
 
-        public List<BoatEN> Boats { get; set; }
     }
 }
