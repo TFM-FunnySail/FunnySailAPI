@@ -1,4 +1,5 @@
-﻿using FunnySailAPI.ApplicationCore.Models.DTO.Input;
+﻿using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -11,5 +12,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
     public interface IUserCEN
     {
         Task<IdentityResult> CreateUser(ApplicationUser user, AddUserInputDTO addUserInput);
+        IUserCAD GetUserCAD();
     }
 }

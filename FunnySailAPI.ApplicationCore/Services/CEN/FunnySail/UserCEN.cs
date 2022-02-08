@@ -85,5 +85,10 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
             return errors;
         }
+
+        public IUserCAD GetUserCAD()
+        {
+            return _userCAD;
+        }
     }
 }

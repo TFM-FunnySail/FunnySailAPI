@@ -24,6 +24,12 @@ namespace FunnySailAPI.Infrastructure.CAD
             return await dbSet.FindAsync(id);
         }
 
+        public virtual async Task<T> FindById(string id)
+        {
+            DbSet<T> dbSet = _dbContext.Set<T>();
+            return await dbSet.FindAsync(id);
+        }
+
         public virtual async Task<List<T>> GetAll(Pagination pagination)
         {
             DbSet<T> dbSet = _dbContext.Set<T>();

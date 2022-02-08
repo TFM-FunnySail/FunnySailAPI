@@ -7,6 +7,7 @@ using FunnySailAPI.ApplicationCore.Models.DTO;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 using FunnySailAPI.ApplicationCore.Models.DTO.Output;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
+using FunnySailAPI.ApplicationCore.Models.Globals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP.FunnySail
         private readonly IBoatTypeCEN _boatTypeCEN;
         private readonly IRequiredBoatTitlesCEN _requiredBoatTitlesCEN;
         private readonly IReviewCEN _reviewCEN;
+        private readonly IUserCEN _userCEN;
         private IDatabaseTransactionFactory _databaseTransactionFactory;
 
         public BoatCP(IBoatCEN boatCEN,
@@ -33,7 +35,8 @@ namespace FunnySailAPI.ApplicationCore.Services.CP.FunnySail
                       IBoatPricesCEN boatPricesCEN,
                       IRequiredBoatTitlesCEN requiredBoatTitlesCEN,
                       IDatabaseTransactionFactory databaseTransactionFactory,
-                      IReviewCEN reviewCEN)
+                      IReviewCEN reviewCEN,
+                      IUserCEN userCEN)
         {
             _boatCEN = boatCEN;
             _boatInfoCEN = boatInfoCEN;
@@ -43,6 +46,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP.FunnySail
             _requiredBoatTitlesCEN = requiredBoatTitlesCEN;
             _databaseTransactionFactory = databaseTransactionFactory;
             _reviewCEN = reviewCEN;
+            _userCEN = userCEN;
         }
 
         public async Task<int> CreateBoat(AddBoatInputDTO addBoatInput)
@@ -135,10 +139,19 @@ namespace FunnySailAPI.ApplicationCore.Services.CP.FunnySail
         public async Task<BoatEN> DisapproveBoat(DisapproveBoatInputDTO disapproveBoatInput)
         {
             BoatEN dbBoat = await _boatCEN.GetBoatCAD().FindById(disapproveBoatInput.BoatId);
+            UsersEN dbAdmin = await _userCEN.GetUserCAD().FindById(disapproveBoatInput.AdminId);
             //Validar datos
             if (dbBoat == null)
-                throw new DataValidationException("Boat not found.",
-                    "La embarcación no se encuentra.");
+                throw new DataValidationException("Boat","La embarcación",ExceptionTypesEnum.NotFound);
+            
+            if(disapproveBoatInput.AdminId == null)
+                throw new DataValidationException("AdminId","AdminId",ExceptionTypesEnum.NullValue);
+            
+            if (disapproveBoatInput.Observation == null)
+                throw new DataValidationException("Observation","Observation", ExceptionTypesEnum.NullValue);
+
+            if (dbAdmin == null)
+                throw new DataValidationException("Admin", "El administrador", ExceptionTypesEnum.NotFound);
 
             using (var databaseTransaction = _databaseTransactionFactory.BeginTransaction())
             {
@@ -147,6 +160,8 @@ namespace FunnySailAPI.ApplicationCore.Services.CP.FunnySail
                     await _boatCEN.DisapproveBoat(disapproveBoatInput.BoatId);
 
                     //Adicionar revision
+                    int newReview = await _reviewCEN.AddReview(disapproveBoatInput.BoatId, disapproveBoatInput.AdminId,
+                        disapproveBoatInput.Observation);
 
                     await databaseTransaction.CommitAsync();
                 }
