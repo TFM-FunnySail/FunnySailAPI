@@ -9,6 +9,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail
 {
     public interface IBoatCP
     {
-        Task<BoatOutputDTO> CreateBoat(AddBoatInputDTO addBoatInput);
+        Task<int> CreateBoat(AddBoatInputDTO addBoatInput);
     }
 }

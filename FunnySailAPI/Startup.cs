@@ -42,6 +42,7 @@ namespace FunnySailAPI
                     Configuration.GetConnectionString("DefaultConnection")));
             
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             
             services.AddControllersWithViews();
@@ -77,6 +78,8 @@ namespace FunnySailAPI
             services.AddScoped<IBoatPricesCEN, BoatPricesCEN>();
             services.AddScoped<IBoatResourceCEN, BoatResourceCEN>();
             services.AddScoped<IBoatTypeCEN, BoatTypeCEN>();
+            services.AddScoped<IReviewCEN, ReviewCEN>();
+            services.AddScoped<IUserCEN, UserCEN>();
             #endregion
 
             #region ServicesCP

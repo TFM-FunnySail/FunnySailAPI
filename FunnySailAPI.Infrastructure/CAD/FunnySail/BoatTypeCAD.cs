@@ -17,6 +17,9 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
 
         public async Task<int> AddBoatType(string name, string description)
         {
+            if (name == null || description == null)
+                throw new ArgumentException("The name or the description is null");
+
             BoatTypeEN boatType = await AddAsync(new BoatTypeEN
             {
                 Name = name,

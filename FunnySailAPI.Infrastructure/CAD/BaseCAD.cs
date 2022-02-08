@@ -24,7 +24,7 @@ namespace FunnySailAPI.Infrastructure.CAD
             return await dbSet.FindAsync(id);
         }
 
-        public virtual async Task<IReadOnlyCollection<T>> GetAll(Pagination pagination)
+        public virtual async Task<List<T>> GetAll(Pagination pagination)
         {
             DbSet<T> dbSet = _dbContext.Set<T>();
             return await dbSet.Skip(pagination.First).Take(pagination.Size).ToListAsync();
@@ -63,7 +63,7 @@ namespace FunnySailAPI.Infrastructure.CAD
             return dbSet.AsQueryable();
         }
 
-        public async Task<IReadOnlyCollection<T>> GetAll(IQueryable<T> query, Pagination pagination)
+        public async Task<List<T>> GetAll(IQueryable<T> query, Pagination pagination)
         {
             return await query.Skip(pagination.First).Take(pagination.Size).ToListAsync();
         }

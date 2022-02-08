@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -19,6 +19,8 @@
     <Compile Remove="Migrations\20220131151427_RenameUserInfo.Designer.cs" />
     <Compile Remove="Migrations\20220202185038_AddForeignKey.cs" />
     <Compile Remove="Migrations\20220202185038_AddForeignKey.Designer.cs" />
+    <Compile Remove="Migrations\20220208174856_RemoveNavigation.cs" />
+    <Compile Remove="Migrations\20220208174856_RemoveNavigation.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
