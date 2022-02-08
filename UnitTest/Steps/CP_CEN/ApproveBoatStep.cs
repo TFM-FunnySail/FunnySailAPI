@@ -1,6 +1,7 @@
 ﻿using FunnySailAPI.ApplicationCore.Exceptions;
 using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
+using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
 using FunnySailAPI.ApplicationCore.Services.CEN.FunnySail;
 using FunnySailAPI.Infrastructure.CAD.FunnySail;
@@ -19,6 +20,8 @@ namespace UnitTest.Steps.CP_CEN
     {
         private ScenarioContext _scenarioContext;
         private IBoatCEN _boatCEN;
+        private IBoatCAD _boatCAD;
+        private BoatEN _boatUpdated;
         private int _id;
 
         public ApproveBoatStep(ScenarioContext scenarioContext)
@@ -26,8 +29,8 @@ namespace UnitTest.Steps.CP_CEN
             _scenarioContext = scenarioContext;
 
             var applicationDbContextFake = new ApplicationDbContextFake();
-            IBoatCAD boatCAD = new BoatCAD(applicationDbContextFake._dbContextFake);
-            _boatCEN = new BoatCEN(boatCAD);
+            _boatCAD = new BoatCAD(applicationDbContextFake._dbContextFake);
+            _boatCEN = new BoatCEN(_boatCAD);
 
         }
 
@@ -37,12 +40,12 @@ namespace UnitTest.Steps.CP_CEN
             _id = id;
         }
 
-        [When(@"se adiciona el barco")]
-        public async Task WhenSeAdicionaElBarco()
+        [When(@"se aprueba el barco")]
+        public async Task WhenSeApruebaElBarco()
         {
             try
             {
-               await  _boatCEN.ApproveBoat(_id);
+                _boatUpdated = await _boatCEN.ApproveBoat(_id);
             }
             catch (DataValidationException ex)
             {
@@ -59,6 +62,32 @@ namespace UnitTest.Steps.CP_CEN
             Assert.IsNotNull(ex);
             Assert.AreEqual("Boat not found.", ex.EnMessage);
             Assert.AreEqual(ExceptionTypesEnum.NotFound, ex.ExceptionType);
+        }
+
+        [Given(@"que se quiere actualizar el barco de id (.*)")]
+        public void GivenQueSeQuiereActualizarElBarcoDeId(int id)
+        {
+            _id = id;
+
+            //Creando el barco de la prueba
+            _boatCAD.AddAsync(new BoatEN
+            {
+                PendingToReview = true,
+                Active = false,
+                CreatedDate = DateTime.UtcNow,
+                BoatType = new BoatTypeEN
+                {
+                    Name = "Tipo prueba",
+                    Description = "Desc prueba"
+                }
+            });
+        }
+
+        [Then(@"devuelve el barco aprobado")]
+        public void ThenDevuelveElBarcoAprobado()
+        {
+            Assert.AreEqual(_boatUpdated.Active,true);
+            Assert.AreEqual(_boatUpdated.PendingToReview,false);
         }
 
     }
