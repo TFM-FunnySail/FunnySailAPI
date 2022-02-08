@@ -5,6 +5,7 @@ using FunnySailAPI.ApplicationCore.Interfaces.CEN;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.DTO.Filters;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
+using FunnySailAPI.ApplicationCore.Models.Globals;
 using FunnySailAPI.ApplicationCore.Models.Utils;
 using System;
 using System.Collections.Generic;
@@ -40,8 +41,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             BoatEN dbBoat = await _boatCAD.FindById(boatId);
 
             if (dbBoat == null)
-                throw new DataValidationException("Boat not found.",
-                    "La embarcación no se encuentra.");
+                throw new DataValidationException("Boat", "La embarcación", ExceptionTypesEnum.NotFound);
 
             dbBoat.PendingToReview = false;
             dbBoat.Active = true;

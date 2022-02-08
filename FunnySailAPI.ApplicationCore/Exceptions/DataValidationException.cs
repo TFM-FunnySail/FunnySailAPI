@@ -10,6 +10,7 @@ namespace FunnySailAPI.ApplicationCore.Exceptions
     {
         public string EnMessage { get; }
         public string EsMessage { get; }
+        public ExceptionTypesEnum ExceptionType { get; }
 
         public DataValidationException() { }
 
@@ -49,6 +50,7 @@ namespace FunnySailAPI.ApplicationCore.Exceptions
 
             EnMessage = enMessage;
             EsMessage = esMessage;
+            ExceptionType = exceptionType;
         }
     }
 }
