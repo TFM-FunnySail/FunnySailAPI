@@ -98,6 +98,11 @@ namespace FunnySailAPI.Infrastructure
             {
                 bb.HasKey(b => new { b.BookingId, b.ActivityId });
             });
+            
+            modelBuilder.Entity<TechnicalServiceBoatEN>(bb =>
+            {
+                bb.HasKey(b => new { b.TechnicalServiceId, b.BoatId });
+            });
 
         }
 
@@ -118,6 +123,8 @@ namespace FunnySailAPI.Infrastructure
         public DbSet<MooringEN> Moorings { get; set; }
         public DbSet<ServiceEN> Services { get; set; }
         public DbSet<ServiceBookingEN> ServiceBookings { get; set; }
+        public DbSet<TechnicalServiceEN> TechnicalService { get; set; }
+        public DbSet<TechnicalServiceBoatEN> TechnicalServiceBoat { get; set; }
     
     }
 }
