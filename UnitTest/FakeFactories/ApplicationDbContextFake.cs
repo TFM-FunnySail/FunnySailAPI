@@ -87,6 +87,19 @@ namespace UnitTest.FakeFactories
                     }
                 }
             };
+
+        }
+
+        public void Add<T>(T newEntity)
+        {
+             _dbContextFake.Add(newEntity);
+             _dbContextFake.SaveChanges();
+        }
+
+        public void Remove<T>(List<T> entityList)
+        {
+            _dbContextFake.RemoveRange(entityList);
+            _dbContextFake.SaveChanges();
         }
     }
 }
