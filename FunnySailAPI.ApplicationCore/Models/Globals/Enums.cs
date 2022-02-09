@@ -47,7 +47,7 @@ namespace FunnySailAPI.ApplicationCore.Models.Globals
 
     public enum ExceptionTypesEnum
     {
-        NullValue,
+        IsRequired,
         NotFound
     }
 }

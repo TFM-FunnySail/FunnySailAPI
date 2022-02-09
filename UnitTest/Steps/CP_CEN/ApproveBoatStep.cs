@@ -68,19 +68,6 @@ namespace UnitTest.Steps.CP_CEN
         public void GivenQueSeQuiereActualizarElBarcoDeId(int id)
         {
             _id = id;
-
-            //Creando el barco de la prueba
-            _boatCAD.AddAsync(new BoatEN
-            {
-                PendingToReview = true,
-                Active = false,
-                CreatedDate = DateTime.UtcNow,
-                BoatType = new BoatTypeEN
-                {
-                    Name = "Tipo prueba",
-                    Description = "Desc prueba"
-                }
-            });
         }
 
         [Then(@"devuelve el barco aprobado")]

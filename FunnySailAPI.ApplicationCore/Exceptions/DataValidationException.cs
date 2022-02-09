@@ -40,9 +40,9 @@ namespace FunnySailAPI.ApplicationCore.Exceptions
                     esMessage = $"{esTitle} no existe.";
                     break;
 
-                case ExceptionTypesEnum.NullValue:
-                    enMessage = $"{enTitle} can't be null.";
-                    esMessage = $"{esTitle} no puede ser nulo.";
+                case ExceptionTypesEnum.IsRequired:
+                    enMessage = $"{enTitle} is required.";
+                    esMessage = $"{esTitle} es requerida.";
                     break;
 
                 default: throw new NotImplementedException("Exception type not implemented");

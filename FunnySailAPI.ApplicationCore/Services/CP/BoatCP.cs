@@ -145,10 +145,10 @@ namespace FunnySailAPI.ApplicationCore.Services.CP.FunnySail
                 throw new DataValidationException("Boat","La embarcación",ExceptionTypesEnum.NotFound);
             
             if(disapproveBoatInput.AdminId == null)
-                throw new DataValidationException("AdminId","AdminId",ExceptionTypesEnum.NullValue);
+                throw new DataValidationException("AdminId","AdminId",ExceptionTypesEnum.IsRequired);
             
             if (disapproveBoatInput.Observation == null)
-                throw new DataValidationException("Observation","Observation", ExceptionTypesEnum.NullValue);
+                throw new DataValidationException("Observation","Observation", ExceptionTypesEnum.IsRequired);
 
             if (dbAdmin == null)
                 throw new DataValidationException("Admin", "El administrador", ExceptionTypesEnum.NotFound);
