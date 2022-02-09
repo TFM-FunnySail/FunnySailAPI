@@ -75,11 +75,6 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             IQueryable<BoatEN> boats = _boatCAD.GetBoatFiltered(new BoatFilters
             {
                 Active = true,
-                CreatedDaysRange = new DaysRangeFilter
-                {
-                    EndDate = endDate,
-                    InitialDate = initialDate
-                },
                 ExclusiveBoatId = idsNotAvailable
             });
 
