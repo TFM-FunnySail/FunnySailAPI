@@ -542,11 +542,6 @@ namespace FunnySailAPI.Infrastructure.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
-
                     b.Property<bool>("ReceivePromotion")
                         .HasColumnType("bit");
 
@@ -723,7 +718,7 @@ namespace FunnySailAPI.Infrastructure.Migrations
             modelBuilder.Entity("FunnySailAPI.ApplicationCore.Models.FunnySailEN.BoatEN", b =>
                 {
                     b.HasOne("FunnySailAPI.ApplicationCore.Models.FunnySailEN.BoatTypeEN", "BoatType")
-                        .WithMany("Boats")
+                        .WithMany()
                         .HasForeignKey("BoatTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
