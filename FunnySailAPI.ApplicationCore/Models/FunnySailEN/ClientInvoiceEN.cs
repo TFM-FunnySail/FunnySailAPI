@@ -18,7 +18,7 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
         [Column(TypeName = "money")]
         public decimal TotalAmount { get; set; }
 
-        public int ClientId { get; set; }
+        public string ClientId { get; set; }
 
         public UsersEN Client { get; set; }
         public List<InvoiceLineEN> InvoiceLines { get; set; }

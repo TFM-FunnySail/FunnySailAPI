@@ -12,7 +12,7 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
     {
         [Key]
         public int Id { get; set; }
-        public int ClientId { get; set; }
+        public string ClientId { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime EntryDate { get; set; }
         public DateTime DepartureDate { get; set; }
