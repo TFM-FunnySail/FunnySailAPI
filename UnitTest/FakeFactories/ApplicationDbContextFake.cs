@@ -1,6 +1,7 @@
 ﻿using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,7 +16,8 @@ namespace UnitTest.FakeFactories
         public ApplicationDbContextFake()
         {
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            builder.UseInMemoryDatabase("funnySail");
+            builder.UseInMemoryDatabase("funnySail")
+            .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning));
 
             _dbContextFake = new ApplicationDbContext(builder.Options);
 
@@ -35,7 +37,25 @@ namespace UnitTest.FakeFactories
             //Agregando botes
             _dbContextFake.AddRange(BoatsFaker());
 
+            //Agregando user
+            _dbContextFake.AddRange(UserFaker());
+
             _dbContextFake.SaveChanges();
+        }
+
+        private List<UsersEN> UserFaker()
+        {
+            return new List<UsersEN>
+            {
+                new UsersEN
+                {
+                    UserId = "1",
+                    BoatOwner = false,
+                    LastName = "Merten",
+                    FirstName = "Pedro",
+                    ReceivePromotion = true
+                }
+            };
         }
 
         private List<BoatEN> BoatsFaker()
