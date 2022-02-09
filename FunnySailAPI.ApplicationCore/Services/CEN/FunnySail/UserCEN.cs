@@ -22,17 +22,14 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
         private readonly IUserCAD _userCAD;
         private readonly UserManager<ApplicationUser> _userManager;
         private IDatabaseTransactionFactory _databaseTransactionFactory;
-        private readonly IEmailSender _emailSender;
 
         public UserCEN(IUserCAD userCAD,
                        UserManager<ApplicationUser> userManager,
-                       IDatabaseTransactionFactory databaseTransactionFactory,
-                       IEmailSender emailSender)
+                       IDatabaseTransactionFactory databaseTransactionFactory)
         {
             _userCAD = userCAD;
             _userManager = userManager;
             _databaseTransactionFactory = databaseTransactionFactory;
-            _emailSender = emailSender;
         }
 
         public async Task<IdentityResult> CreateUser(ApplicationUser user,AddUserInputDTO addUserInput)
@@ -57,7 +54,6 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
                         BoatOwner = false,
                         FirstName = addUserInput.FirstName,
                         LastName = addUserInput.LastName,
-                        Name = addUserInput.Name,
                         ReceivePromotion = addUserInput.ReceivePromotion ?? false,
                     });
 

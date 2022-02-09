@@ -12,9 +12,6 @@ namespace FunnySailAPI.ApplicationCore.Models.DTO.Input
         public string Email { get; set; }
 
         [Required, StringLength(200)]
-        public string Name { get; set; }
-
-        [Required, StringLength(200)]
         public string FirstName { get; set; }
 
         [StringLength(200)]
