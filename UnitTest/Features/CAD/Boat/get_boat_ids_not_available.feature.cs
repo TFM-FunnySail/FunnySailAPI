@@ -119,8 +119,8 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 4
- testRunner.Given(string.Format("se piden los barcos disponibles para las fechas {0} y {1} y no hay reserva con es" +
-                            "a fecha", initialDate, endDate), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given(string.Format("se piden los barcos reservados para las fechas {0} y {1} y no hay reserva con esa" +
+                            " fecha", initialDate, endDate), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 5
  testRunner.When("se obtienen los barcos no disponibles", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -186,8 +186,8 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 14
- testRunner.Given(string.Format("se piden los barcos disponibles para las fechas {0} y {1} y los barcos 1 y 2 esta" +
-                            "n reservados para esas fechas", initialDate, endDate), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given(string.Format("se piden los barcos reservados para las fechas {0} y {1} y los barcos 1 y 2 estan" +
+                            " reservados para esas fechas", initialDate, endDate), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 15
  testRunner.When("se obtienen los barcos no disponibles", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

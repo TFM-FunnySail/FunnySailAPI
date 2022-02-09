@@ -31,8 +31,8 @@ namespace UnitTest.Steps.CAD
             _boatCAD = new BoatCAD(_applicationDbContextFake._dbContextFake);
         }
 
-        [Given(@"se piden los barcos disponibles para las fechas (.*) y (.*) y no hay reserva con esa fecha")]
-        public async Task GivenSePidenLosBarcosDisponiblesParaLasFechasYYNoHayReservaConEsaFecha(string initialDate, string endDate)
+        [Given(@"se piden los barcos reservados para las fechas (.*) y (.*) y no hay reserva con esa fecha")]
+        public void GivenSePidenLosBarcosDisponiblesParaLasFechasYYNoHayReservaConEsaFecha(string initialDate, string endDate)
         {
             _initialDate = DateTime.Parse(initialDate);
             _endDate = DateTime.Parse(endDate);
@@ -51,7 +51,7 @@ namespace UnitTest.Steps.CAD
             Assert.AreEqual(_boatsIds.Count, 0);
         }
 
-        [Given(@"se piden los barcos disponibles para las fechas (.*) y (.*) y los barcos (.*) y (.*) estan reservados para esas fechas")]
+        [Given(@"se piden los barcos reservados para las fechas (.*) y (.*) y los barcos (.*) y (.*) estan reservados para esas fechas")]
         public void GivenSePidenLosBarcosDisponiblesParaLasFechasYYLosBarcosYEstanReservadosParaEsasFechas(string initialDate, string endDate, int boatId1, int boatId2)
         {
             _initialDate = DateTime.Parse(initialDate);
