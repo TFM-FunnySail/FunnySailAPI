@@ -35,6 +35,19 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             return dbPort.Id;
         }
 
+        public async Task<PortEN> EditPort(int portId, string name, string location)
+        {
+
+            PortEN port = await _portCAD.FindById(portId);
+
+            port.Name = name;
+            port.Location = location;
+
+            await _portCAD.Update(port);
+
+            return port;
+        }
+
         public IPortCAD GetPortCAD()
         {
             return _portCAD;

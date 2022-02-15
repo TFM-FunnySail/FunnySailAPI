@@ -14,5 +14,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
     {
         Task<int> AddPort(string name, string location);
         IPortCAD GetPortCAD();
+        Task<PortEN> EditPort(int portId, string name, string location);
     }
 }
