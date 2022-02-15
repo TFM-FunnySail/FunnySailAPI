@@ -37,6 +37,21 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             return dbActivity.Id;
         }
 
+        public async Task<ActivityEN> EditActivity(int activityId, DateTime activityDate, string name, decimal price, string description)
+        {
+
+            ActivityEN activity = await _activityCAD.FindById(activityId);
+
+            activity.ActivityDate = activityDate;
+            activity.Name = name;
+            activity.Price = price;
+            activity.Description = description;
+
+            await _activityCAD.Update(activity);
+
+            return activity;
+        }
+
         public IActivityCAD GetActivityCAD()
         {
             return _activityCAD;

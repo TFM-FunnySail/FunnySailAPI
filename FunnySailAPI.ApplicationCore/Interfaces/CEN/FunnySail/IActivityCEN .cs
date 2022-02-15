@@ -14,5 +14,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
     {
         Task<int> AddActivity(DateTime activityDate, string name, decimal price, string description);
         IActivityCAD GetActivityCAD();
+        Task<ActivityEN> EditActivity(int activityId, DateTime activityDate, string name, decimal price, string description);
     }
 }
