@@ -8,6 +8,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
 {
     public interface IBoatResourceCEN
     {
-        Task<(int, string)> AddBoatResource(BoatResourceEN boatResourceEN);
+        Task<(int, int)> AddBoatResource(BoatResourceEN boatResourceEN);
     }
 }

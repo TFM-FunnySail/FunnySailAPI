@@ -103,16 +103,16 @@ namespace FunnySailAPI.ApplicationCore.Services.CP.FunnySail
                         Supplement = addBoatInput.Supplement
                     });
                     //Crear imagenes de embarcacion
-                    foreach (AddBoatResourcesInputDTO boatResource in addBoatInput.BoatResources)
-                    {
-                        await _boatResourceCEN.AddBoatResource(new BoatResourceEN
-                        {
-                            BoatId = boatId,
-                            Main = boatResource.Main,
-                            Type = boatResource.Type,
-                            Uri = boatResource.Uri
-                        });
-                    }
+                    //foreach (AddBoatResourcesInputDTO boatResource in addBoatInput.BoatResources)
+                    //{
+                    //    await _boatResourceCEN.AddBoatResource(new BoatResourceEN
+                    //    {
+                    //        BoatId = boatId,
+                    //        Main = boatResource.Main,
+                    //        Type = boatResource.Type,
+                    //        Uri = boatResource.Uri
+                    //    });
+                    //}
 
                     //Crear titulacion requerida
                     foreach (AddRequiredBoatTitleInputDTO requiredBoatTitle in addBoatInput.RequiredBoatTitles)

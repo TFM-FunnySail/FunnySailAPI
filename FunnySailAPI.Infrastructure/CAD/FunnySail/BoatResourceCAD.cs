@@ -15,17 +15,15 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
         {
         }
 
-        public async Task<string> AddBoatResource(int boatId,string uri, bool main, BoatResourcesEnum type)
+        public async Task<(int,int)> AddBoatResource(int boatId,int resourceId)
         {
             BoatResourceEN boatResource = await AddAsync(new BoatResourceEN
             {
-                Uri = uri,
-                Main = main,
-                Type = type,
+                ResourceId = resourceId,
                 BoatId = boatId
             });
 
-            return boatResource.Uri;
+            return (boatResource.BoatId,boatResource.ResourceId);
         }
     }
 }

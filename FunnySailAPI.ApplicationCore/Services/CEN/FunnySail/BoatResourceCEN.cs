@@ -17,11 +17,11 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             _boatResourceCAD = boatResourceCAD;
         }
 
-        public async Task<(int,string)> AddBoatResource(BoatResourceEN boatResourceEN)
+        public async Task<(int,int)> AddBoatResource(BoatResourceEN boatResourceEN)
         {
             boatResourceEN = await _boatResourceCAD.AddAsync(boatResourceEN);
 
-            return (boatResourceEN.BoatId, boatResourceEN.Uri);
+            return (boatResourceEN.BoatId, boatResourceEN.ResourceId);
         }
     }
 }

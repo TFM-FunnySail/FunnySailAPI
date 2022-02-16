@@ -6,6 +6,6 @@ namespace FunnySailAPI.ApplicationCore.Models.DTO.Output
     {
         public string Uri { get; set; }
         public bool Main { get; set; }
-        public BoatResourcesEnum Type { get; set; }
+        public ResourcesEnum Type { get; set; }
     }
 }

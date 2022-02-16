@@ -19,9 +19,6 @@ namespace FunnySailAPI.Infrastructure
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<BoatResourceEN>()
-                .HasKey(m => new { m.BoatId, m.Uri });
-
             modelBuilder.Entity<BoatInfoEN>()
                 .HasKey(b => b.BoatId);
 
@@ -99,6 +96,11 @@ namespace FunnySailAPI.Infrastructure
                 bb.HasKey(b => new { b.BookingId, b.ActivityId });
             });
 
+            modelBuilder.Entity<BoatResourceEN>()
+                .HasKey(m => new { m.BoatId, m.ResourceId });
+
+            modelBuilder.Entity<ActivityResourcesEN>()
+                .HasKey(m => new { m.ActivityId, m.ResourceId });
         }
 
         public DbSet<BoatTypeEN> BoatTypes { get; set; }
@@ -118,6 +120,8 @@ namespace FunnySailAPI.Infrastructure
         public DbSet<MooringEN> Moorings { get; set; }
         public DbSet<ServiceEN> Services { get; set; }
         public DbSet<ServiceBookingEN> ServiceBookings { get; set; }
+        public DbSet<ResourcesEN> Resources { get; set; }
+        public DbSet<ActivityResourcesEN> ActivityResources { get; set; }
     
     }
 }

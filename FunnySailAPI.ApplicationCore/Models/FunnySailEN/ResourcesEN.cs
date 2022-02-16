@@ -1,12 +1,17 @@
 ﻿using FunnySailAPI.ApplicationCore.Models.Globals;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 
-namespace FunnySailAPI.ApplicationCore.Models.DTO.Input
+namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
 {
-    public class AddBoatResourcesInputDTO
+    public class ResourcesEN
     {
+        [Key]
+        public int Id { get; set; }
+
         [Required]
-        [StringLength(450)]
         public string Uri { get; set; }
         public bool Main { get; set; }
         public ResourcesEnum Type { get; set; }

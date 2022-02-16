@@ -26,7 +26,7 @@ namespace FunnySailAPI.ApplicationCore.Models.Globals
         Completed
     }
 
-    public enum BoatResourcesEnum
+    public enum ResourcesEnum
     {
         Image,
         Video,
