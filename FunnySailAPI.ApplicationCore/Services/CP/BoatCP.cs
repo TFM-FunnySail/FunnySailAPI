@@ -58,13 +58,6 @@ namespace FunnySailAPI.ApplicationCore.Services.CP.FunnySail
                 throw new DataValidationException("Boat type not found.",
                     "El tipo de embarcación no ha sido encontrado.");
 
-            if (!addBoatInput.BoatResources.Any(x => x.Main))
-                throw new DataValidationException("Not found main resources.",
-                    "No hay un recurso principal.");
-
-            if (addBoatInput.BoatResources.Count(x => x.Main) > 1)
-                throw new DataValidationException("There can only be one main resource.",
-                    "Solo puede haber un recurso principal.");
 
             //Abrir transaccion
             using (var databaseTransaction = _databaseTransactionFactory.BeginTransaction())
@@ -102,17 +95,15 @@ namespace FunnySailAPI.ApplicationCore.Services.CP.FunnySail
                         HourBasePrice = addBoatInput.HourBasePrice,
                         Supplement = addBoatInput.Supplement
                     });
+
                     //Crear imagenes de embarcacion
-                    //foreach (AddBoatResourcesInputDTO boatResource in addBoatInput.BoatResources)
-                    //{
-                    //    await _boatResourceCEN.AddBoatResource(new BoatResourceEN
-                    //    {
-                    //        BoatId = boatId,
-                    //        Main = boatResource.Main,
-                    //        Type = boatResource.Type,
-                    //        Uri = boatResource.Uri
-                    //    });
-                    //}
+                    foreach (int resourceId in addBoatInput.ResourcesIdList)
+                    {
+                        await _boatResourceCEN.AddBoatResource(new BoatResourceEN { 
+                            BoatId = boatId,
+                            ResourceId = resourceId
+                        });
+                    }
 
                     //Crear titulacion requerida
                     foreach (AddRequiredBoatTitleInputDTO requiredBoatTitle in addBoatInput.RequiredBoatTitles)

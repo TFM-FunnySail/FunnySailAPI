@@ -68,6 +68,7 @@ namespace FunnySailAPI
             services.AddScoped<IMooringCAD, MooringCAD>();
             services.AddScoped<IReviewCAD, ReviewCAD>();
             services.AddScoped<IActivityCAD, ActivityCAD>();
+            services.AddScoped<IResourcesCAD, ResourcesCAD>();
 
             #endregion
 
@@ -83,6 +84,7 @@ namespace FunnySailAPI
             services.AddScoped<IUserCEN, UserCEN>();
             services.AddScoped<IActivityCEN, ActivityCEN>();
             services.AddScoped<IPortCEN, PortCEN>();
+            services.AddScoped<IResourcesCEN, ResourcesCEN>();
 
             #endregion
 

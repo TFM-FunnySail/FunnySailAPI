@@ -23,5 +23,6 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
             return (boatResourceEN.BoatId, boatResourceEN.ResourceId);
         }
+
     }
 }

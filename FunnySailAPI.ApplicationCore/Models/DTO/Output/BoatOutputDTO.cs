@@ -39,12 +39,6 @@ namespace FunnySailAPI.ApplicationCore.Models.DTO.Output
             Active = boatEN.Active;
             CreatedDate = boatEN.CreatedDate;
             PendingToReview = boatEN.PendingToReview;
-            //BoatResources = boatEN.BoatResources.Select(x => new BoatResourcesOutputDTO
-            //{
-            //    Main = x.Main,
-            //    Type = x.Type,
-            //    Uri = x.Uri
-            //}).ToList();
             BoatType = new BoatTypeOutputDTO
             {
                 Id = boatEN.BoatType.Id,

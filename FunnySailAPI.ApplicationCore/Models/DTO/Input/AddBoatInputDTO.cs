@@ -43,8 +43,7 @@ namespace FunnySailAPI.ApplicationCore.Models.DTO.Input
         [Required]
         public float Supplement { get; set; }
 
-        [Required, MinLength(1)]
-        public List<AddBoatResourcesInputDTO> BoatResources { get; set; }
+        public List<int> ResourcesIdList { get; set; }
         public List<AddRequiredBoatTitleInputDTO> RequiredBoatTitles { get; set; }
     }
 }
