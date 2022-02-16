@@ -68,5 +68,15 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             return _activityCAD;
         }
 
+        public async Task<List<ActivityEN>> GetAvailableActivity(Pagination pagination, DateTime initialDate, DateTime endDate)
+        {
+
+            IQueryable<ActivityEN> activitys = _activityCAD.GetActivityFiltered(new ActivityFilters
+            {
+                Active = true
+            });
+
+            return await _activityCAD.GetAll(activitys.OrderBy(x => x.Id), pagination);
+        }
     }
 }
