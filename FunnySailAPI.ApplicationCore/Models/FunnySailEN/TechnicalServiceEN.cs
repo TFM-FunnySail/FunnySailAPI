@@ -6,22 +6,19 @@ using System.Text;
 
 namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
 {
-    [Table("Services")]
-    public class ServiceEN
+    [Table("TechnicalService")]
+    public class TechnicalServiceEN
     {
         [Key]
         public int Id { get; set; }
-        
-        [StringLength(500)]
-        [Required]
-        public string Description { get; set; }
-        
+
         [Column(TypeName = "money")]
         public decimal Price { get; set; }
 
-        [StringLength(100)]
+        [StringLength(500)]
         [Required]
-        public string Name { get; set;  }
-        public List<ServiceBookingEN> ServiceBookings { get; set; }
+        public string Description { get; set; }
+
+        List<TechnicalServiceBoatEN> TechnicalServicesBoat { get; set; }
     }
 }

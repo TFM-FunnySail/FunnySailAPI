@@ -101,6 +101,9 @@ namespace FunnySailAPI.Infrastructure
 
             modelBuilder.Entity<ActivityResourcesEN>()
                 .HasKey(m => new { m.ActivityId, m.ResourceId });
+
+            modelBuilder.Entity<TechnicalServiceBoatEN>()
+               .HasKey(m => new { m.BoatId, m.TechnicalServiceId });
         }
 
         public DbSet<BoatTypeEN> BoatTypes { get; set; }
@@ -122,6 +125,10 @@ namespace FunnySailAPI.Infrastructure
         public DbSet<ServiceBookingEN> ServiceBookings { get; set; }
         public DbSet<ResourcesEN> Resources { get; set; }
         public DbSet<ActivityResourcesEN> ActivityResources { get; set; }
+
+        public DbSet<TechnicalServiceEN> TechnicalServices { get; set; }
+
+        public DbSet<TechnicalServiceBoatEN> TechnicalServiceBoat { get; set; }
     
     }
 }

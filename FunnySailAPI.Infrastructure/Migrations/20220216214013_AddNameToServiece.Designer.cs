@@ -4,14 +4,16 @@ using FunnySailAPI.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FunnySailAPI.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220216214013_AddNameToServiece")]
+    partial class AddNameToServiece
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -410,9 +412,8 @@ namespace FunnySailAPI.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Alias")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)")
+                    b.Property<int>("Name")
+                        .HasColumnType("int")
                         .HasMaxLength(100);
 
                     b.Property<int>("PortId")
@@ -555,53 +556,6 @@ namespace FunnySailAPI.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Services");
-                });
-
-            modelBuilder.Entity("FunnySailAPI.ApplicationCore.Models.FunnySailEN.TechnicalServiceBoatEN", b =>
-                {
-                    b.Property<int>("BoatId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TechnicalServiceId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Done")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("money");
-
-                    b.Property<DateTime>("ServiceDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("BoatId", "TechnicalServiceId");
-
-                    b.HasIndex("TechnicalServiceId");
-
-                    b.ToTable("TechnicalServiceBoat");
-                });
-
-            modelBuilder.Entity("FunnySailAPI.ApplicationCore.Models.FunnySailEN.TechnicalServiceEN", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(500)")
-                        .HasMaxLength(500);
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("money");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TechnicalService");
                 });
 
             modelBuilder.Entity("FunnySailAPI.ApplicationCore.Models.FunnySailEN.UsersEN", b =>
@@ -934,21 +888,6 @@ namespace FunnySailAPI.Infrastructure.Migrations
                     b.HasOne("FunnySailAPI.ApplicationCore.Models.FunnySailEN.ServiceEN", "service")
                         .WithMany("ServiceBookings")
                         .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FunnySailAPI.ApplicationCore.Models.FunnySailEN.TechnicalServiceBoatEN", b =>
-                {
-                    b.HasOne("FunnySailAPI.ApplicationCore.Models.FunnySailEN.BoatEN", "Boat")
-                        .WithMany()
-                        .HasForeignKey("BoatId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FunnySailAPI.ApplicationCore.Models.FunnySailEN.TechnicalServiceEN", "TechnicalService")
-                        .WithMany()
-                        .HasForeignKey("TechnicalServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

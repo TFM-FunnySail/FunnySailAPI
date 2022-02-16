@@ -21,6 +21,8 @@
     <Compile Remove="Migrations\20220202185038_AddForeignKey.Designer.cs" />
     <Compile Remove="Migrations\20220208174856_RemoveNavigation.cs" />
     <Compile Remove="Migrations\20220208174856_RemoveNavigation.Designer.cs" />
+    <Compile Remove="Migrations\20220216214316_FIXAliasToMooring.cs" />
+    <Compile Remove="Migrations\20220216214316_FIXAliasToMooring.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
