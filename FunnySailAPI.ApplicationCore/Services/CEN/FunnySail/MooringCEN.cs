@@ -1,4 +1,5 @@
-﻿using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
+﻿using FunnySailAPI.ApplicationCore.Exceptions;
+using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
@@ -29,5 +30,19 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
             return dbMooring.Id;
         }
+
+        public async Task DeleteMooring(int mooringId)
+        {
+            MooringEN dbMooring = await _mooringCAD.FindByIdAllData(mooringId,true);
+
+            if(dbMooring == null)
+                throw new DataValidationException("Mooring", "Amarre de puerto",
+                    ExceptionTypesEnum.NotFound);
+            if (dbMooring.Boat != null)
+                throw new DataValidationException("Cannot be removed because there is a boat in mooring port",
+                    "No se puede eliminar porque hay un puerto en el punto de amarre.");
+
+            await _mooringCAD.Delete(dbMooring);
+        } 
     }
 }

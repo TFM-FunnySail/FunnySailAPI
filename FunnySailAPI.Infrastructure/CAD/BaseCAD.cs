@@ -73,5 +73,11 @@ namespace FunnySailAPI.Infrastructure.CAD
         {
             return await query.Skip(pagination.First).Take(pagination.Size).ToListAsync();
         }
+
+        public virtual async Task Delete(T entity)
+        {
+            _dbContext.Remove(entity);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

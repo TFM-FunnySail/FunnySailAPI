@@ -18,5 +18,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CAD
         Task<List<T>> GetAll(IQueryable<T> query,Pagination pagination);
         Task<T> Update(T entity);
         Task<T> FindById(string id);
+        Task Delete(T entity);
     }
 }

@@ -2,10 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail
 {
     public interface IMooringCAD : IBaseCAD<MooringEN>
     {
+        Task<MooringEN> FindByIdAllData(int id, bool boat = false, bool port = false);
     }
 }
