@@ -27,6 +27,10 @@ namespace FunnySailAPI.Infrastructure
                 b.HasOne(i => i.BoatInfo)
                 .WithOne(i => i.Boat)
                 .HasForeignKey<BoatInfoEN>(b => b.BoatId);
+
+                b.HasOne(i => i.Mooring)
+                .WithOne(i => i.Boat)
+                .HasForeignKey<MooringEN>(b => b.BoatId);
             });
 
             modelBuilder.Entity<RequiredBoatTitleEN>(rb => {
@@ -104,6 +108,7 @@ namespace FunnySailAPI.Infrastructure
 
             modelBuilder.Entity<TechnicalServiceBoatEN>()
                .HasKey(m => new { m.BoatId, m.TechnicalServiceId });
+
         }
 
         public DbSet<BoatTypeEN> BoatTypes { get; set; }

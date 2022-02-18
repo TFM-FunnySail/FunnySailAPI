@@ -13,6 +13,7 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
         public int Id { get; set; }
         public bool Active { get; set; }
         public bool PendingToReview { get; set; }
+        public int MooringId { get; set; }
 
         [Required]
         public DateTime CreatedDate { get; set; }
@@ -22,6 +23,7 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
 
         public BoatInfoEN BoatInfo { get; set; }
         public BoatPricesEN BoatPrices { get; set; }
+        public MooringEN Mooring { get; set; }
         public List<BoatResourceEN> BoatResources { get; set; }
         public List<RequiredBoatTitleEN> RequiredBoatTitles { get; set; }
         public List<ReviewEN> reviews { get; set; }
