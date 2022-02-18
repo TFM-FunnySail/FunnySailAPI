@@ -53,5 +53,10 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             return _portCAD;
         }
 
+        public Task<bool> AnyPortById(int portId)
+        {
+            IQueryable<PortEN> port = _portCAD.GetIQueryable();
+            return _portCAD.Any(port.Where(x => x.Id == portId));
+        }
     }
 }
