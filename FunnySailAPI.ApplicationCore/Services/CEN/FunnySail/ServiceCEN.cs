@@ -50,6 +50,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             service.Name = updateServiceInput.Name;
             service.Price = updateServiceInput.Price;
             service.Description = updateServiceInput.Description;
+            service.Active = updateServiceInput.Active;
 
             await _serviceCAD.Update(service);
 

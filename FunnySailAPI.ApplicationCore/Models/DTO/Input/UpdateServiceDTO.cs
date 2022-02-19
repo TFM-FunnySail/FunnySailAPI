@@ -10,5 +10,6 @@ namespace FunnySailAPI.ApplicationCore.Models.DTO.Input
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
+        public bool Active { get; set; }
     }
 }

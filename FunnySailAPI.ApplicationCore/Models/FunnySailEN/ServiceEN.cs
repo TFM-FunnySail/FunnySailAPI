@@ -22,6 +22,10 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
         [StringLength(100)]
         [Required]
         public string Name { get; set;  }
+
+        [Required]
+        public bool Active { get; set; }
+
         public List<ServiceBookingEN> ServiceBookings { get; set; }
     }
 }
