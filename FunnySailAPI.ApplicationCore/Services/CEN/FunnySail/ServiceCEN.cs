@@ -14,9 +14,12 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
     public class ServiceCEN : IServiceCEN
     {
         private readonly IServiceCAD _serviceCAD;
-        public ServiceCEN(IServiceCAD serviceCAD)
+        private readonly IServiceBookingCAD _serviceBookingCAD;
+        public ServiceCEN(IServiceCAD serviceCAD,
+                          IServiceBookingCAD serviceBookingCAD)
         {
             _serviceCAD = serviceCAD;
+            _serviceBookingCAD = serviceBookingCAD;
         }
 
         public async Task<int> AddService(string name,decimal price,string description)
@@ -55,6 +58,27 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             await _serviceCAD.Update(service);
 
             return service;
+        }
+
+        public async Task DeleteService(int id)
+        {
+            ServiceEN service = await _serviceCAD.FindById(id);
+
+            if (service == null)
+                throw new DataValidationException("Service", "Servicio",
+                    ExceptionTypesEnum.NotFound);
+
+            bool serviceWithBooking = await _serviceBookingCAD.AnyServiceWithBooking(id);
+
+            if (serviceWithBooking)
+            {
+                service.Active = false;
+                await _serviceCAD.Update(service);
+            }
+            else
+            {
+                await _serviceCAD.Delete(service);
+            }
         }
     }
 }
