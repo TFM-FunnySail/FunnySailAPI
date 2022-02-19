@@ -140,6 +140,7 @@ namespace FunnySailAPI.Infrastructure
         public DbSet<TechnicalServiceBoatEN> TechnicalServiceBoat { get; set; }
         public DbSet<OwnerInvoiceEN> OwnerInvoices { get; set; }
         public DbSet<OwnerInvoiceLineEN> OwnerInvoiceLines { get; set; }
+        public DbSet<RefundEN> Refunds { get; set; }
 
     }
 }
