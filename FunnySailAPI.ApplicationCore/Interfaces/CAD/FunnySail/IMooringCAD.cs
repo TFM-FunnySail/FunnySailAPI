@@ -8,6 +8,7 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail
 {
     public interface IMooringCAD : IBaseCAD<MooringEN>
     {
-        Task<MooringEN> FindByIdAllData(int id, bool boat = false, bool port = false);
+        Task<MooringEN> FindByIdAllData(int id, bool port = false);
+        Task<bool> AnyBoatWithMooring(int mooringId);
     }
 }

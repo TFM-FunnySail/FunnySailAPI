@@ -1,6 +1,7 @@
 ﻿using FunnySailAPI.ApplicationCore.Exceptions;
 using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
 using System;
@@ -33,16 +34,38 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
         public async Task DeleteMooring(int mooringId)
         {
-            MooringEN dbMooring = await _mooringCAD.FindByIdAllData(mooringId,true);
+            MooringEN dbMooring = await _mooringCAD.FindByIdAllData(mooringId);
 
             if(dbMooring == null)
                 throw new DataValidationException("Mooring", "Amarre de puerto",
                     ExceptionTypesEnum.NotFound);
-            if (dbMooring.Boat != null)
+
+            if (await _mooringCAD.AnyBoatWithMooring(mooringId))
                 throw new DataValidationException("Cannot be removed because there is a boat in mooring port",
                     "No se puede eliminar porque hay un puerto en el punto de amarre.");
 
             await _mooringCAD.Delete(dbMooring);
-        } 
+        }
+
+        public async Task<MooringEN> UpdateMooring(UpdateMooringDTO updateMooringInput)
+        {
+            if(updateMooringInput.MooringId == 0)
+                throw new DataValidationException("Mooring id", "Amarre de puerto",
+                    ExceptionTypesEnum.IsRequired);
+
+            MooringEN dbMooring = await _mooringCAD.FindById(updateMooringInput.MooringId);
+
+            if (dbMooring == null)
+                throw new DataValidationException("Mooring", "Amarre de puerto",
+                    ExceptionTypesEnum.NotFound);
+
+            dbMooring.Alias = updateMooringInput.Alias;
+            dbMooring.PortId = updateMooringInput.PortId;
+            dbMooring.Type = updateMooringInput.Type;
+
+            await _mooringCAD.Update(dbMooring);
+
+            return dbMooring;
+        }
     }
 }

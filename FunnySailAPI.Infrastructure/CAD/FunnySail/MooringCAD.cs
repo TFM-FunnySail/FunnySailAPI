@@ -15,12 +15,14 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
         {
         }
 
-        public async Task<MooringEN> FindByIdAllData(int id,bool boat = false,bool port = false)
+        public Task<bool> AnyBoatWithMooring(int mooringId)
+        {
+            return _dbContext.Boats.AnyAsync(x => x.MooringId == mooringId);
+        }
+
+        public async Task<MooringEN> FindByIdAllData(int id,bool port = false)
         {
             IQueryable<MooringEN> moorings = GetIQueryable();
-
-            if (boat)
-                moorings = moorings.Include(x => x.Boat);
 
             if (port)
                 moorings = moorings.Include(x => x.Port);
