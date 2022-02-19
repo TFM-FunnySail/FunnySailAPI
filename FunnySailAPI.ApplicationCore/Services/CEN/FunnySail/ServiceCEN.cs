@@ -1,6 +1,7 @@
 ﻿using FunnySailAPI.ApplicationCore.Exceptions;
 using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
 using System;
@@ -36,6 +37,23 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             });
 
             return service.Id;
-        } 
+        }
+
+        public async Task<ServiceEN> UpdateService(UpdateServiceDTO updateServiceInput)
+        {
+            ServiceEN service = await _serviceCAD.FindById(updateServiceInput.Id);
+
+            if (service == null)
+                throw new DataValidationException("Service", "Servicio",
+                    ExceptionTypesEnum.NotFound);
+
+            service.Name = updateServiceInput.Name;
+            service.Price = updateServiceInput.Price;
+            service.Description = updateServiceInput.Description;
+
+            await _serviceCAD.Update(service);
+
+            return service;
+        }
     }
 }
