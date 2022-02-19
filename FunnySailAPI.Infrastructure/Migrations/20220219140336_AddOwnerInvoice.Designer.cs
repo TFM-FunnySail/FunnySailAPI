@@ -4,14 +4,16 @@ using FunnySailAPI.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FunnySailAPI.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220219140336_AddOwnerInvoice")]
+    partial class AddOwnerInvoice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -455,27 +457,6 @@ namespace FunnySailAPI.Infrastructure.Migrations
                     b.ToTable("OwnerInvoice");
                 });
 
-            modelBuilder.Entity("FunnySailAPI.ApplicationCore.Models.FunnySailEN.OwnerInvoiceLineEN", b =>
-                {
-                    b.Property<int>("BookingId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OwnerInvoiceId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("money");
-
-                    b.HasKey("BookingId", "OwnerInvoiceId");
-
-                    b.HasIndex("BookingId")
-                        .IsUnique();
-
-                    b.HasIndex("OwnerInvoiceId");
-
-                    b.ToTable("OwnerInvoiceLine");
-                });
-
             modelBuilder.Entity("FunnySailAPI.ApplicationCore.Models.FunnySailEN.PortEN", b =>
                 {
                     b.Property<int>("Id")
@@ -619,9 +600,6 @@ namespace FunnySailAPI.Infrastructure.Migrations
                     b.Property<bool>("Done")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("OwnerInvoiceId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("money");
 
@@ -629,8 +607,6 @@ namespace FunnySailAPI.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("BoatId", "TechnicalServiceId");
-
-                    b.HasIndex("OwnerInvoiceId");
 
                     b.HasIndex("TechnicalServiceId");
 
@@ -948,21 +924,6 @@ namespace FunnySailAPI.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FunnySailAPI.ApplicationCore.Models.FunnySailEN.OwnerInvoiceLineEN", b =>
-                {
-                    b.HasOne("FunnySailAPI.ApplicationCore.Models.FunnySailEN.BookingEN", "Booking")
-                        .WithOne("OwnerInvoiceLine")
-                        .HasForeignKey("FunnySailAPI.ApplicationCore.Models.FunnySailEN.OwnerInvoiceLineEN", "BookingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FunnySailAPI.ApplicationCore.Models.FunnySailEN.OwnerInvoiceEN", "OwnerInvoice")
-                        .WithMany("OwnerInvoiceLines")
-                        .HasForeignKey("OwnerInvoiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("FunnySailAPI.ApplicationCore.Models.FunnySailEN.RequiredBoatTitleEN", b =>
                 {
                     b.HasOne("FunnySailAPI.ApplicationCore.Models.FunnySailEN.BoatEN", "Boat")
@@ -1013,10 +974,6 @@ namespace FunnySailAPI.Infrastructure.Migrations
                         .HasForeignKey("BoatId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("FunnySailAPI.ApplicationCore.Models.FunnySailEN.OwnerInvoiceEN", "OwnerInvoice")
-                        .WithMany("TechnicalServiceBoats")
-                        .HasForeignKey("OwnerInvoiceId");
 
                     b.HasOne("FunnySailAPI.ApplicationCore.Models.FunnySailEN.TechnicalServiceEN", "TechnicalService")
                         .WithMany()
