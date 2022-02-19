@@ -23,9 +23,13 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
 
         [Column(TypeName = "money")]
         public decimal Price { get; set; }
-        
+
+        public int? OwnerInvoiceId { get; set; }
+
         public BoatEN Boat { get; set; }
 
         public TechnicalServiceEN TechnicalService { get; set; }
+
+        public OwnerInvoiceEN OwnerInvoice { get; set; }
     }
 }

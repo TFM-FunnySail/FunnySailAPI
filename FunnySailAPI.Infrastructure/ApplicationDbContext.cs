@@ -30,19 +30,18 @@ namespace FunnySailAPI.Infrastructure
 
             });
 
-            modelBuilder.Entity<RequiredBoatTitleEN>(rb => {
-                
+               
+            modelBuilder.Entity<RequiredBoatTitleEN>(rb => 
+            {
                 rb.HasKey(b => new { b.BoatId, b.TitleId });
-
                 rb.Property(r => r.TitleId).HasConversion<int>();
             });
 
-            modelBuilder.Entity<BoatTitlesEnumsEN>(bt => {
                 
+            modelBuilder.Entity<BoatTitlesEnumsEN>(bt => 
+            {    
                 bt.HasKey(bt => bt.TitleId);
-
                 bt.Property(bt => bt.TitleId).HasConversion<int>();
-
                 bt.Property(bt => bt.Name).HasConversion<string>();
             });
 
@@ -62,13 +61,11 @@ namespace FunnySailAPI.Infrastructure
             modelBuilder.Entity<UsersEN>(u =>
             {
                 u.HasKey(b => b.UserId);
-
             });
 
             modelBuilder.Entity<InvoiceLineEN>(x =>
             {
                 x.HasKey(b => b.BookingId);
-
                 x.Property(b => b.Currency).HasConversion<string>();
             });
 
@@ -97,14 +94,28 @@ namespace FunnySailAPI.Infrastructure
                 bb.HasKey(b => new { b.BookingId, b.ActivityId });
             });
 
-            modelBuilder.Entity<BoatResourceEN>()
-                .HasKey(m => new { m.BoatId, m.ResourceId });
+            modelBuilder.Entity<BoatResourceEN>(br =>
+            {
+                br.HasKey(m => new { m.BoatId, m.ResourceId });
+            });
 
-            modelBuilder.Entity<ActivityResourcesEN>()
-                .HasKey(m => new { m.ActivityId, m.ResourceId });
 
-            modelBuilder.Entity<TechnicalServiceBoatEN>()
-               .HasKey(m => new { m.BoatId, m.TechnicalServiceId });
+            modelBuilder.Entity<ActivityResourcesEN>(ar => 
+            {
+                ar.HasKey(m => new { m.ActivityId, m.ResourceId });
+            });
+
+
+            modelBuilder.Entity<TechnicalServiceBoatEN>(tsb=> 
+            {
+                tsb.HasKey(m => new { m.BoatId, m.TechnicalServiceId });
+            });
+
+
+            modelBuilder.Entity<OwnerInvoiceLineEN>(oil =>
+            {
+                oil.HasKey(m => new { m.BookingId, m.OwnerInvoiceId });
+            });
 
         }
 
@@ -127,10 +138,11 @@ namespace FunnySailAPI.Infrastructure
         public DbSet<ServiceBookingEN> ServiceBookings { get; set; }
         public DbSet<ResourcesEN> Resources { get; set; }
         public DbSet<ActivityResourcesEN> ActivityResources { get; set; }
-
         public DbSet<TechnicalServiceEN> TechnicalServices { get; set; }
-
         public DbSet<TechnicalServiceBoatEN> TechnicalServiceBoat { get; set; }
-    
+        public DbSet<OwnerInvoiceEN> OwnerInvoices { get; set; }
+        public DbSet<OwnerInvoiceLineEN> OwnerInvoiceLines { get; set; }
+        public DbSet<RefundEN> Refunds { get; set; }
+
     }
 }

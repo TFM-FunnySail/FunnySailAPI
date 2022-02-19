@@ -4,14 +4,16 @@ using FunnySailAPI.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FunnySailAPI.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220219163327_AddRefound")]
+    partial class AddRefound
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -180,9 +182,6 @@ namespace FunnySailAPI.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("MooringId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("PendingToReview")
                         .HasColumnType("bit");
 
@@ -192,8 +191,6 @@ namespace FunnySailAPI.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BoatTypeId");
-
-                    b.HasIndex("MooringId");
 
                     b.HasIndex("UsersENUserId");
 
@@ -909,12 +906,6 @@ namespace FunnySailAPI.Infrastructure.Migrations
                     b.HasOne("FunnySailAPI.ApplicationCore.Models.FunnySailEN.BoatTypeEN", "BoatType")
                         .WithMany()
                         .HasForeignKey("BoatTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FunnySailAPI.ApplicationCore.Models.FunnySailEN.MooringEN", "Mooring")
-                        .WithMany()
-                        .HasForeignKey("MooringId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
