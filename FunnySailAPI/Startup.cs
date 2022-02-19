@@ -1,6 +1,7 @@
 using FunnySailAPI.ApplicationCore.Interfaces;
 using FunnySailAPI.ApplicationCore.Interfaces.CAD;
 using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
+using FunnySailAPI.ApplicationCore.Interfaces.CEN;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
@@ -91,6 +92,7 @@ namespace FunnySailAPI
             services.AddScoped<IPortCEN, PortCEN>();
             services.AddScoped<IResourcesCEN, ResourcesCEN>();
             services.AddScoped<IMooringCEN, MooringCEN>();
+            services.AddScoped<IServiceCEN, ServiceCEN>();
 
             #endregion
 
