@@ -21,13 +21,16 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
     {
         private readonly IUserCAD _userCAD;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private IDatabaseTransactionFactory _databaseTransactionFactory;
 
         public UserCEN(IUserCAD userCAD,
-                       UserManager<ApplicationUser> userManager,
+                       SignInManager<ApplicationUser> signInManager,
+                       UserManager<ApplicationUser> userManager,    
                        IDatabaseTransactionFactory databaseTransactionFactory)
         {
             _userCAD = userCAD;
+            _signInManager = signInManager;
             _userManager = userManager;
             _databaseTransactionFactory = databaseTransactionFactory;
         }
@@ -62,6 +65,94 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
                     await databaseTransaction.CommitAsync();
 
                     return result;
+                }
+                catch (Exception ex)
+                {
+                    await databaseTransaction.RollbackAsync();
+                    throw ex;
+                }
+            }
+        }
+
+        public async Task<IdentityResult> EditUser(ApplicationUser user, AddUserInputDTO addUserInput)
+        {
+            user.PhoneNumber = addUserInput.PhoneNumber;
+            user.Email = addUserInput.Email;
+
+            using (var databaseTransaction = _databaseTransactionFactory.BeginTransaction())
+            {
+                try
+                {
+                    var result = await _userManager.UpdateAsync(user);
+
+                    if (!result.Succeeded)
+                    {
+                        await databaseTransaction.RollbackAsync();
+                        return result;
+                    }
+
+                    UsersEN userInfo = await _userCAD.FindById(user.Id);
+
+                    userInfo.BirthDay = addUserInput.BirthDay;
+                    userInfo.FirstName = addUserInput.FirstName;
+                    userInfo.LastName = addUserInput.LastName;
+                    userInfo.ReceivePromotion = addUserInput.ReceivePromotion ?? false;
+
+                    await _userCAD.Update(userInfo);
+
+                    //await _userManager.AddToRoleAsync(user, Globals.UserRoles[addUserInput.UserRole]);
+
+                    await databaseTransaction.CommitAsync();
+
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    await databaseTransaction.RollbackAsync();
+                    throw ex;
+                }
+            }
+        }
+
+        public async Task<IdentityResult> LoginUser(ApplicationUser user, LoginUserInputDTO loginUserInput)
+        {
+
+            using (var databaseTransaction = _databaseTransactionFactory.BeginTransaction())
+            {
+                try
+                {
+                    var result = await _signInManager.PasswordSignInAsync(loginUserInput.Email, loginUserInput.Password, loginUserInput.RememberMe, lockoutOnFailure: false);
+
+                    if (!result.Succeeded)
+                    {
+                        await databaseTransaction.RollbackAsync();
+                        return null;
+                    }
+
+                    await databaseTransaction.CommitAsync();
+
+                    return null;
+                }
+                catch (Exception ex)
+                {
+                    await databaseTransaction.RollbackAsync();
+                    throw ex;
+                }
+            }
+        }
+
+        public async Task<IdentityResult> LogoutUser(ApplicationUser user, LoginUserInputDTO loginUserInput)
+        {
+
+            using (var databaseTransaction = _databaseTransactionFactory.BeginTransaction())
+            {
+                try
+                {
+                    await _signInManager.SignOutAsync();
+
+                    await databaseTransaction.CommitAsync();
+
+                    return null;
                 }
                 catch (Exception ex)
                 {
