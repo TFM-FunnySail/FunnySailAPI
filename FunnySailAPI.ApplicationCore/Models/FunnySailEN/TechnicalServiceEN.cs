@@ -19,6 +19,9 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
         [Required]
         public string Description { get; set; }
 
+        [Required]
+        public bool Active { get; set; }
+
         List<TechnicalServiceBoatEN> TechnicalServicesBoat { get; set; }
     }
 }

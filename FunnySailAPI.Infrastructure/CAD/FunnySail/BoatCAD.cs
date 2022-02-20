@@ -18,6 +18,32 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
         {
         }
 
+        #region AnyQuery
+
+        public async Task<bool> AnyById(int boatID)
+        {
+            return await _dbContext.Boats.AnyAsync(x => x.Id == boatID);
+        }
+
+        public async Task<bool> IsBoatBusy(int boatId, DateTime serviceDate)
+        {
+            bool technicalServiceBusy = await _dbContext.TechnicalServiceBoat.
+                AnyAsync(x => x.BoatId == boatId && x.ServiceDate == serviceDate);
+
+            if (technicalServiceBusy)
+                return technicalServiceBusy;
+
+            return await _dbContext.BoatBookings.Where(x => x.BoatId == boatId)
+                .Join(_dbContext.Bookings.
+                Where(x => x.EntryDate < serviceDate && x.DepartureDate > serviceDate),
+                bb => bb.BookingId,
+                b => b.Id,
+                (bb, b) => bb.BoatId).AnyAsync();
+        }
+        #endregion
+
+        #region GetQuery
+
         public async Task<BoatEN> FindByIdAllData(int boatId)
         {
             return await _dbContext.Boats
@@ -26,10 +52,10 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
                 .Include(x => x.BoatType)
                 .Include(x => x.BoatResources)
                 .Include(x => x.RequiredBoatTitles)
-                .FirstOrDefaultAsync(x=> x.Id == boatId);
+                .FirstOrDefaultAsync(x => x.Id == boatId);
         }
 
-        public async Task<List<int>> GetBoatIdsNotAvailable(DateTime initialDate,DateTime endDate)
+        public async Task<List<int>> GetBoatIdsNotAvailable(DateTime initialDate, DateTime endDate)
         {
             return await _dbContext.Bookings.
                 Where(x => (x.EntryDate >= initialDate && x.EntryDate <= endDate) ||
@@ -39,7 +65,9 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
                 (booking, boatBooking) => boatBooking.BoatId)
                 .Distinct().ToListAsync();
         }
+        #endregion
 
+        #region Filter
         public IQueryable<BoatEN> GetBoatFiltered(BoatFilters boatFilters)
         {
             IQueryable<BoatEN> boats = GetIQueryable();
@@ -70,6 +98,6 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
 
             return boats;
         }
-
+        #endregion
     }
 }

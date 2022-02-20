@@ -79,5 +79,6 @@ namespace FunnySailAPI.Infrastructure.CAD
             _dbContext.Remove(entity);
             await _dbContext.SaveChangesAsync();
         }
+
     }
 }

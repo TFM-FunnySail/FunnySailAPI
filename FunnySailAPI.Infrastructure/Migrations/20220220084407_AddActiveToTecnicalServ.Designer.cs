@@ -4,14 +4,16 @@ using FunnySailAPI.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FunnySailAPI.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220220084407_AddActiveToTecnicalServ")]
+    partial class AddActiveToTecnicalServ
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -648,12 +650,10 @@ namespace FunnySailAPI.Infrastructure.Migrations
 
             modelBuilder.Entity("FunnySailAPI.ApplicationCore.Models.FunnySailEN.TechnicalServiceBoatEN", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<int>("BoatId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TechnicalServiceId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
@@ -671,12 +671,7 @@ namespace FunnySailAPI.Infrastructure.Migrations
                     b.Property<DateTime>("ServiceDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("TechnicalServiceId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BoatId");
+                    b.HasKey("BoatId", "TechnicalServiceId");
 
                     b.HasIndex("OwnerInvoiceId");
 
