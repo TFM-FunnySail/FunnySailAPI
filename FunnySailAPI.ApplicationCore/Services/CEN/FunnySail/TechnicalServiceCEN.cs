@@ -15,17 +15,21 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
     {
         private readonly ITechnicalServiceCAD _technicalServiceCAD;
         private readonly ITechnicalServiceBoatCAD _technicalServiceBoatCAD;
+        private readonly string _enName;
+        private readonly string _esName;
         public TechnicalServiceCEN(ITechnicalServiceCAD technicalServiceCAD,
                           ITechnicalServiceBoatCAD technicalServiceBoatCAD)
         {
             _technicalServiceCAD = technicalServiceCAD;
             _technicalServiceBoatCAD = technicalServiceBoatCAD;
+            _enName = "Technical service";
+            _esName = "Servicio técnico";
         }
 
         public async Task<int> AddTechnicalService(decimal price, string description)
         {
             if (description == null)
-                throw new DataValidationException("Technical service description", "Descripción del servicio técnico",
+                throw new DataValidationException($"{_enName} description", $"Descripción del {_esName}",
                     ExceptionTypesEnum.IsRequired);
 
             TechnicalServiceEN service = await _technicalServiceCAD.AddAsync(new TechnicalServiceEN
@@ -42,7 +46,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             TechnicalServiceEN service = await _technicalServiceCAD.FindById(updateServiceInput.Id);
 
             if (service == null)
-                throw new DataValidationException("Technical service", "Servicio técnico",
+                throw new DataValidationException(_enName, _esName,
                     ExceptionTypesEnum.NotFound);
 
             service.Price = updateServiceInput.Price;
@@ -52,6 +56,27 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             await _technicalServiceCAD.Update(service);
 
             return service;
+        }
+
+        public async Task DeleteService(int id)
+        {
+            TechnicalServiceEN service = await _technicalServiceCAD.FindById(id);
+
+            if (service == null)
+                throw new DataValidationException(_enName, _esName,
+                    ExceptionTypesEnum.NotFound);
+
+            bool serviceWithBoat = await _technicalServiceBoatCAD.AnyServiceWithBoat(id);
+
+            if (serviceWithBoat)
+            {
+                service.Active = false;
+                await _technicalServiceCAD.Update(service);
+            }
+            else
+            {
+                await _technicalServiceCAD.Delete(service);
+            }
         }
     }
 }
