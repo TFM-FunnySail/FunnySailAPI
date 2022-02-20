@@ -79,5 +79,32 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             }
         }
 
+        public async Task<int> AddTechnicalServiceBoat(ScheduleTechnicalServiceDTO scheduleTechnicalService)
+        {
+            TechnicalServiceEN service = await _technicalServiceCAD.
+                FindById(scheduleTechnicalService.TechnicalServiceId);
+
+            if (service == null)
+                throw new DataValidationException(_enName, _esName,
+                    ExceptionTypesEnum.NotFound);
+
+            bool technicalServiceBusy = await _technicalServiceBoatCAD.IsServiceBusy(scheduleTechnicalService.TechnicalServiceId,
+                scheduleTechnicalService.ServiceDate);
+            if (technicalServiceBusy)
+                throw new DataValidationException("Technical support is not available for the requested date",
+                    "El servicio técnico no está disponible para la fecha solicitada");
+
+            TechnicalServiceBoatEN technicalServiceBoat = await _technicalServiceBoatCAD.AddAsync(new TechnicalServiceBoatEN
+            {
+                Done = false,
+                CreatedDate = DateTime.UtcNow,
+                BoatId = scheduleTechnicalService.BoatId,
+                Price = scheduleTechnicalService.Price,
+                ServiceDate = scheduleTechnicalService.ServiceDate,
+                TechnicalServiceId = service.Id
+            });
+
+            return technicalServiceBoat.Id;
+        }
     }
 }

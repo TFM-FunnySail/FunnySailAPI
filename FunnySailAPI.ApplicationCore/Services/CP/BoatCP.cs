@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FunnySailAPI.ApplicationCore.Services.CP.FunnySail
+namespace FunnySailAPI.ApplicationCore.Services.CP
 {
     public class BoatCP : IBoatCP
     {

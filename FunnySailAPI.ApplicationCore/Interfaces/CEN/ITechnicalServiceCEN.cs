@@ -12,5 +12,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN
         Task<int> AddTechnicalService(decimal price, string description);
         Task<TechnicalServiceEN> UpdateTechnicalService(UpdateTechnicalServiceDTO updateServiceInput);
         Task DeleteService(int id);
+        Task<int> AddTechnicalServiceBoat(ScheduleTechnicalServiceDTO scheduleTechnicalService);
     }
 }

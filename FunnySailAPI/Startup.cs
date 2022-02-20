@@ -6,7 +6,7 @@ using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Services.CEN.FunnySail;
-using FunnySailAPI.ApplicationCore.Services.CP.FunnySail;
+using FunnySailAPI.ApplicationCore.Services.CP;
 using FunnySailAPI.Infrastructure;
 using FunnySailAPI.Infrastructure.CAD;
 using FunnySailAPI.Infrastructure.CAD.FunnySail;
@@ -100,6 +100,8 @@ namespace FunnySailAPI
             #region ServicesCP
 
             services.AddScoped<IBoatCP, BoatCP>();
+            services.AddScoped<ITechnicalServiceCP, TechnicalServiceCP>();
+            services.AddScoped<IPortMooringCP, PortMooringCP>();
             #endregion
 
             #region GeneralServices

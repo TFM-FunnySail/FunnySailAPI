@@ -1,6 +1,7 @@
 ﻿using FunnySailAPI.ApplicationCore.Exceptions;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CP;
+using FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.Globals;
 using System;
 using System.Collections.Generic;
@@ -9,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace FunnySailAPI.ApplicationCore.Services.CP
 {
-    public class BoatMooringCP : IBoatMooringCP
+    public class PortMooringCP : IPortMooringCP
     {
         private readonly IPortCEN _portCEN;
         private readonly IMooringCEN _mooringCEN;
-        public BoatMooringCP(IMooringCEN mooringCEN,
+        public PortMooringCP(IMooringCEN mooringCEN,
                              IPortCEN portCEN)
         {
             _mooringCEN = mooringCEN;
