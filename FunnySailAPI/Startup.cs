@@ -93,6 +93,7 @@ namespace FunnySailAPI
             services.AddScoped<IResourcesCEN, ResourcesCEN>();
             services.AddScoped<IMooringCEN, MooringCEN>();
             services.AddScoped<IServiceCEN, ServiceCEN>();
+            services.AddScoped<ITechnicalServiceCEN, TechnicalServiceCEN>();
 
             #endregion
 
