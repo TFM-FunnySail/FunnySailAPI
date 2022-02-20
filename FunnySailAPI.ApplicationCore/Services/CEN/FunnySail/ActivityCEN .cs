@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 
 namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 {
@@ -24,28 +25,34 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             _activityCAD = activityCAD;
         }
 
-        public async Task<int> AddActivity(DateTime activityDate, string name, decimal price, string description)
+        public async Task<int> AddActivity(AddActivityInputDTO addActivityInput)
         {
             ActivityEN dbActivity = await _activityCAD.AddAsync(new ActivityEN
             {
-                ActivityDate = activityDate,
-                Name = name,
-                Price = price,
-                Description = description
+                ActivityDate = addActivityInput.ActivityDate,
+                Name = addActivityInput.Name,
+                Price = addActivityInput.Price,
+                Description = addActivityInput.Description,
+                Active = addActivityInput.Active
             });
 
             return dbActivity.Id;
         }
 
-        public async Task<ActivityEN> EditActivity(int activityId, DateTime activityDate, string name, decimal price, string description)
+        public async Task<ActivityEN> EditActivity(UpdateAcitivityDTO updateAcitivityInput)
         {
 
-            ActivityEN activity = await _activityCAD.FindById(activityId);
+            ActivityEN activity = await _activityCAD.FindById(updateAcitivityInput.Id);
 
-            activity.ActivityDate = activityDate;
-            activity.Name = name;
-            activity.Price = price;
-            activity.Description = description;
+            if (activity == null)
+                throw new DataValidationException("Activity", "Actividad",
+                    ExceptionTypesEnum.NotFound);
+
+            activity.ActivityDate = updateAcitivityInput.ActivityDate;
+            activity.Name = updateAcitivityInput.Name;
+            activity.Price = updateAcitivityInput.Price;
+            activity.Description = updateAcitivityInput.Description;
+            activity.Active = updateAcitivityInput.Active;
 
             await _activityCAD.Update(activity);
 
