@@ -9,5 +9,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail
     public interface ITechnicalServiceBoatCAD : IBaseCAD<TechnicalServiceBoatEN>
     {
         Task<bool> AnyServiceWithBoat(int id);
+        Task<bool> IsServiceBusy(int technicalServiceId, DateTime serviceDate);
     }
 }
