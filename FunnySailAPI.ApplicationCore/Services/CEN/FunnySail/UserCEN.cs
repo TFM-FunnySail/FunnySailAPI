@@ -71,6 +71,46 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             }
         }
 
+        public async Task<IdentityResult> EditUser(ApplicationUser user, AddUserInputDTO addUserInput)
+        {
+            user.PhoneNumber = addUserInput.PhoneNumber;
+            user.Email = addUserInput.Email;
+
+            using (var databaseTransaction = _databaseTransactionFactory.BeginTransaction())
+            {
+                try
+                {
+                    var result = await _userManager.UpdateAsync(user);
+
+                    if (!result.Succeeded)
+                    {
+                        await databaseTransaction.RollbackAsync();
+                        return result;
+                    }
+
+                    UsersEN userInfo = await _userCAD.FindById(user.Id);
+
+                    userInfo.BirthDay = addUserInput.BirthDay;
+                    userInfo.FirstName = addUserInput.FirstName;
+                    userInfo.LastName = addUserInput.LastName;
+                    userInfo.ReceivePromotion = addUserInput.ReceivePromotion ?? false;
+
+                    await _userCAD.Update(userInfo);
+
+                    //await _userManager.AddToRoleAsync(user, Globals.UserRoles[addUserInput.UserRole]);
+
+                    await databaseTransaction.CommitAsync();
+
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    await databaseTransaction.RollbackAsync();
+                    throw ex;
+                }
+            }
+        }
+
         private string ProccessIdentityError(IdentityResult result)
         {
             string errors = "";

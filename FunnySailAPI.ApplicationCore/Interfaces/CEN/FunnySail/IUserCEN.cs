@@ -13,5 +13,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
     {
         Task<IdentityResult> CreateUser(ApplicationUser user, AddUserInputDTO addUserInput);
         IUserCAD GetUserCAD();
+        Task<IdentityResult> EditUser(ApplicationUser user, AddUserInputDTO addUserInput);
     }
 }
