@@ -14,9 +14,9 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
         {
         }
 
-        public async Task<bool> AnyServiceWithBoat(int technicalServiceId)
+        public Task<bool> AnyServiceWithBoat(int technicalServiceId)
         {
-            return await _dbContext.TechnicalServiceBoat.AnyAsync(x => x.TechnicalServiceId == technicalServiceId);
+            return _dbContext.TechnicalServiceBoat.AnyAsync(x => x.TechnicalServiceId == technicalServiceId);
         }
     }
 }

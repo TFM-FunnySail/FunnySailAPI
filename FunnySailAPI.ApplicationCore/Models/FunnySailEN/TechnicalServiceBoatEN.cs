@@ -9,8 +9,10 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
     [Table("TechnicalServiceBoat")]
     public class TechnicalServiceBoatEN
     {
-        public int BoatId { get; set; }
+        [Key]
+        public int Id { get; set; }
 
+        public int BoatId { get; set; }
         public int TechnicalServiceId { get; set; }
 
         [Required]

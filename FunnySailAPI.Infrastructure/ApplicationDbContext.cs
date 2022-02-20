@@ -106,12 +106,6 @@ namespace FunnySailAPI.Infrastructure
             });
 
 
-            modelBuilder.Entity<TechnicalServiceBoatEN>(tsb=> 
-            {
-                tsb.HasKey(m => new { m.BoatId, m.TechnicalServiceId });
-            });
-
-
             modelBuilder.Entity<OwnerInvoiceLineEN>(oil =>
             {
                 oil.HasKey(m => new { m.BookingId, m.OwnerInvoiceId });

@@ -78,5 +78,6 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
                 await _technicalServiceCAD.Delete(service);
             }
         }
+
     }
 }
