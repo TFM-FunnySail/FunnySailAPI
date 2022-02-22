@@ -1,4 +1,5 @@
-﻿using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
+﻿using FunnySailAPI.ApplicationCore.Models.DTO.Input;
+using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,5 +10,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
     public interface IBoatInfoCEN
     {
         Task<int> AddBoatInfo(BoatInfoEN boatInfoEN);
+        Task<BoatInfoEN> UpdateBoat(UpdateBoatInfoInputDTO updateBoatInput);
     }
 }

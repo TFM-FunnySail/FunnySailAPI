@@ -70,7 +70,8 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                         Active = false,
                         CreatedDate = DateTime.UtcNow,
                         PendingToReview = true,
-                        BoatTypeId = addBoatInput.BoatTypeId
+                        BoatTypeId = addBoatInput.BoatTypeId,
+                        MooringId = addBoatInput.MooringId
                     });
 
                     //Crear datos de embarcacion
@@ -96,7 +97,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                         Supplement = addBoatInput.Supplement
                     });
 
-                    //Crear imagenes de embarcacion
+                    //Adicionar recursos de embarcacion
                     foreach (int resourceId in addBoatInput.ResourcesIdList)
                     {
                         await _boatResourceCEN.AddBoatResource(new BoatResourceEN { 
