@@ -10,6 +10,7 @@ using FunnySailAPI.ApplicationCore.Services.CP;
 using FunnySailAPI.Infrastructure;
 using FunnySailAPI.Infrastructure.CAD;
 using FunnySailAPI.Infrastructure.CAD.FunnySail;
+using FunnySailAPI.Infrastructure.Initialize;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -106,11 +107,12 @@ namespace FunnySailAPI
 
             #region GeneralServices
             services.AddScoped<IDatabaseTransactionFactory, DatabaseTransactionFactory>();
+            services.AddScoped<IInitializeDB, InitializeDB>();
             #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IInitializeDB initializeDB)
         {
             if (env.IsDevelopment())
             {
@@ -127,6 +129,8 @@ namespace FunnySailAPI
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            initializeDB.Initialize();
 
             app.UseAuthentication();
             app.UseAuthorization();
