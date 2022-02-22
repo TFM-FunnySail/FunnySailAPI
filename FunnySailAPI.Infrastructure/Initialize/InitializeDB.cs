@@ -1,4 +1,5 @@
-﻿using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
+﻿using FunnySailAPI.ApplicationCore.Constants;
+using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -27,18 +28,33 @@ namespace FunnySailAPI.Infrastructure.Initialize
 
         public async Task Initialize()
         {
-            if (_dbContext.Database.GetPendingMigrations().Count() > 0)
+            try
             {
-                _dbContext.Database.Migrate();
+                if (_dbContext.Database.GetPendingMigrations().Count() > 0)
+                {
+                    _dbContext.Database.Migrate();
+                }
+
+                if (_dbContext.Roles.Any(ro => ro.Name == UserRoleEnum.Admin.ToString())) return;
+
+                await _roleManager.CreateAsync(new IdentityRole(UserRolesConstant.CLIENT));
+                await _roleManager.CreateAsync(new IdentityRole(UserRolesConstant.ADMIN));
+                await _roleManager.CreateAsync(new IdentityRole(UserRolesConstant.BOAT_OWNER));
+
+                IdentityResult identityResult = await _userManager.CreateAsync(new ApplicationUser
+                {
+                    UserName = "admin",
+                    Email = "admin@funnysail.com",
+                    NormalizedUserName = "ADMIN"
+                }, "Admin1234*");
+
+                var user = await _userManager.FindByNameAsync("admin");
+                await _userManager.AddToRoleAsync(user, UserRolesConstant.ADMIN);
             }
+            catch (Exception)
+            {
 
-            if (_dbContext.Roles.Any(ro => ro.Name == UserRoleEnum.Admin.ToString())) return;
-
-            await _roleManager.CreateAsync(new IdentityRole(UserRoleEnum.Client.ToString()));
-            await _roleManager.CreateAsync(new IdentityRole(UserRoleEnum.BoatOwner.ToString()));
-            await _roleManager.CreateAsync(new IdentityRole(UserRoleEnum.Admin.ToString()));
-
-
+            }
         }
     }
 
