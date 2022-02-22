@@ -111,6 +111,24 @@ namespace FunnySailAPI.Infrastructure
                 oil.HasKey(m => new { m.BookingId, m.OwnerInvoiceId });
             });
 
+            //Inicialización de datos
+            modelBuilder.Entity<BoatTitlesEnumsEN>().HasData(
+                new BoatTitlesEnumsEN
+                {
+                    TitleId = BoatTiteEnum.Captaincy,
+                    Name = BoatTiteEnum.Captaincy,
+                    Description = "Titulación de capitanía"
+                }, new BoatTitlesEnumsEN
+                {
+                    TitleId = BoatTiteEnum.NavigationLicence,
+                    Name = BoatTiteEnum.NavigationLicence,
+                    Description = "Licencia de navegación"
+                }, new BoatTitlesEnumsEN
+                {
+                    TitleId = BoatTiteEnum.Patronja,
+                    Name = BoatTiteEnum.Patronja,
+                    Description = "Titulación de patron/a de embarcaciones"
+                });
         }
 
         public DbSet<BoatTypeEN> BoatTypes { get; set; }
