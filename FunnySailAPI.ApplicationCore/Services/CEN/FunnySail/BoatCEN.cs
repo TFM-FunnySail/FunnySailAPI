@@ -21,6 +21,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
         private readonly IBoatCAD _boatCAD;
         private readonly string _enName;
         private readonly string _esName;
+
         public BoatCEN(IBoatCAD boatCAD)
         {
             _boatCAD = boatCAD;
