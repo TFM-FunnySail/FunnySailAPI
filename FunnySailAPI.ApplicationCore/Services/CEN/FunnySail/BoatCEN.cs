@@ -16,17 +16,13 @@ using System.Threading.Tasks;
 
 namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 {
-    public class BoatCEN : IBoatCEN
+    public class BoatCEN : BoatBaseCEN, IBoatCEN
     {
         private readonly IBoatCAD _boatCAD;
-        private readonly string _enName;
-        private readonly string _esName;
 
         public BoatCEN(IBoatCAD boatCAD)
         {
             _boatCAD = boatCAD;
-            _enName = "Boat";
-            _esName = "La embarcación";
         }
 
         public async Task<int> CreateBoat(BoatEN boatEN)
