@@ -4,6 +4,7 @@ using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.DTO.Filters;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
 using FunnySailAPI.ApplicationCore.Models.Utils;
@@ -18,10 +19,13 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
     public class BoatCEN : IBoatCEN
     {
         private readonly IBoatCAD _boatCAD;
-
+        private readonly string _enName;
+        private readonly string _esName;
         public BoatCEN(IBoatCAD boatCAD)
         {
             _boatCAD = boatCAD;
+            _enName = "Boat";
+            _esName = "La embarcación";
         }
 
         public async Task<int> CreateBoat(BoatEN boatEN)
@@ -36,7 +40,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             BoatEN dbBoat = await _boatCAD.FindById(boatId);
 
             if (dbBoat == null)
-                throw new DataValidationException("Boat", "La embarcación", ExceptionTypesEnum.NotFound);
+                throw new DataValidationException(_enName, _esName, ExceptionTypesEnum.NotFound);
 
             dbBoat.PendingToReview = false;
             dbBoat.Active = true;
@@ -74,6 +78,21 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             });
 
             return await _boatCAD.GetAll(boats.OrderBy(x => x.Id), pagination);
+        }
+
+        public async Task<BoatEN> UpdateBoat(UpdateBoatInputDTO updateBoatInput)
+        {
+            BoatEN boat = await _boatCAD.FindById(updateBoatInput.BoatId);
+
+            if (boat == null)
+                throw new DataValidationException(_enName, _esName, ExceptionTypesEnum.NotFound);
+
+            boat.MooringId = updateBoatInput.MooringId;
+            boat.BoatTypeId = updateBoatInput.BoatTypeId;
+
+            await _boatCAD.Update(boat);
+
+            return boat;
         }
     }
 }

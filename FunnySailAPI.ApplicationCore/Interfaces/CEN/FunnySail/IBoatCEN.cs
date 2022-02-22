@@ -1,5 +1,6 @@
 ﻿using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.DTO.Filters;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Utils;
 using System;
@@ -17,5 +18,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
         Task<BoatEN> DisapproveBoat(int boatId);
         IBoatCAD GetBoatCAD();
         Task<List<BoatEN>> GetAvailableBoats(Pagination pagination, DateTime initialDate, DateTime endDate);
+        Task<BoatEN> UpdateBoat(UpdateBoatInputDTO updateBoatInput);
     }
 }
