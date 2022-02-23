@@ -6,6 +6,7 @@ using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Services.CEN.FunnySail;
+using FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.OwnerInvoicesTypes;
 using FunnySailAPI.ApplicationCore.Services.CP;
 using FunnySailAPI.Infrastructure;
 using FunnySailAPI.Infrastructure.CAD;
@@ -116,11 +117,13 @@ namespace FunnySailAPI
             services.AddScoped<IPortMooringCP, PortMooringCP>();
             services.AddScoped<IBookingCP, BookingCP>();
 
+            services.AddScoped<IOwnerInvoiceCP, OwnerInvoiceCP>();
             #endregion
 
             #region GeneralServices
             services.AddScoped<IDatabaseTransactionFactory, DatabaseTransactionFactory>();
             services.AddScoped<IInitializeDB, InitializeDB>();
+            services.AddScoped<IOwnerInvoiceTypeFactory, OwnerInvoiceTypeFactory>();
             #endregion
         }
 
