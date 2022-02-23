@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 
 namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
 {
@@ -14,7 +15,7 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
     {
         Task<int> AddPort(string name, string location);
         IPortCAD GetPortCAD();
-        Task<PortEN> EditPort(int portId, string name, string location);
+        Task<PortEN> EditPort(UpdatePortDTO updatePortInput);
         Task<bool> AnyPortById(int portId);
     }
 }

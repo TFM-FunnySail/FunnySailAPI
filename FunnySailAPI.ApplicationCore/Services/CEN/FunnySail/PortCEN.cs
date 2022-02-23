@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 
 namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 {
@@ -35,17 +36,32 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             return dbPort.Id;
         }
 
-        public async Task<PortEN> EditPort(int portId, string name, string location)
+        public async Task<PortEN> EditPort(UpdatePortDTO updatePortInput)
         {
 
-            PortEN port = await _portCAD.FindById(portId);
+            PortEN port = await _portCAD.FindById(updatePortInput.Id);
 
-            port.Name = name;
-            port.Location = location;
+            if (port == null)
+                throw new DataValidationException("Port", "Puerto",
+                    ExceptionTypesEnum.NotFound);
+
+            port.Name = updatePortInput.Name;
+            port.Location = updatePortInput.Location;
 
             await _portCAD.Update(port);
 
             return port;
+        }
+
+        public async Task DeletePort(int id)
+        {
+            PortEN port = await _portCAD.FindById(id);
+
+            if (port == null)
+                throw new DataValidationException("Port", "Puerto",
+                    ExceptionTypesEnum.NotFound);
+
+                await _portCAD.Delete(port);  
         }
 
         public IPortCAD GetPortCAD()
