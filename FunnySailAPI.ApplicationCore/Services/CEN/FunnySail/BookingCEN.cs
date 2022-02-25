@@ -32,5 +32,10 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
         {
             return _bookingCAD;
         }
+
+        public async Task<BookingEN> UpdateBooking(BookingEN bookingEN)
+        {
+            return await _bookingCAD.Update(bookingEN);
+        }
     }
 }

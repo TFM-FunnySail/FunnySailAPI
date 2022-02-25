@@ -10,6 +10,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail
     {
         Task<int> CreateBooking(AddBookingInputDTO addBookingInput);
         Task<int> PayBooking(int idBooking);
-        Task<int> CancelBooking(int idBooking);
+        Task CancelBooking(int idBooking);
     }
 }

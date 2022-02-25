@@ -1,4 +1,5 @@
 ﻿using FunnySailAPI.ApplicationCore.Exceptions;
+using FunnySailAPI.ApplicationCore.Interfaces;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.DTO.Filters;
@@ -28,6 +29,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
         private readonly IServiceCEN _serviceCEN;
         private readonly IBoatCP _boatCP;
         private readonly IClientInvoiceCEN _clientInvoiceCEN;
+        private IDatabaseTransactionFactory _databaseTransactionFactory;
 
         public BookingCP(IBookingCEN bookingCEN,
                          IUserCEN userCEN,
@@ -40,7 +42,8 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                          IBoatCEN boatCEN,
                          IServiceCEN serviceCEN,
                          IBoatCP boatCP,
-                         IClientInvoiceCEN clientInvoiceCEN) 
+                         IClientInvoiceCEN clientInvoiceCEN,
+                         IDatabaseTransactionFactory databaseTransactionFactory) 
         {
             _bookingCEN = bookingCEN;
             _userCEN = userCEN;
@@ -54,6 +57,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             _serviceCEN = serviceCEN;
             _boatCP = boatCP;
             _clientInvoiceCEN = clientInvoiceCEN;
+            _databaseTransactionFactory = databaseTransactionFactory;
         }
         public async Task<int> CreateBooking(AddBookingInputDTO addBookingInput)
         {
@@ -117,151 +121,179 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                 activities = await _activityCEN.GetActivityCAD().GetServiceFilteredList(
                                     new ActivityFilters { ActivityIdList = addBookingInput.ActivityIds });
             }
-            
-            if (boats.Count > 0 || services.Count > 0 || activities.Count > 0) 
+
+            if (boats.Count == 0 && services.Count == 0 && activities.Count == 0)
+                throw new DataValidationException("You must create the order with at least one activity, service or boat",
+                    "Debe crear la orden con al menos una actividad, servicio o embarcación");
+
+            using (var databaseTransaction = _databaseTransactionFactory.BeginTransaction())
             {
-                Task<int> idBooking = _bookingCEN.CreateBooking(new BookingEN{ 
-                    ClientId = addBookingInput.ClientId,
-                    CreatedDate = DateTime.Today,
-                    RequestCaptain = addBookingInput.RequestCaptain,
-                    EntryDate = addBookingInput.EntryDate,
-                    DepartureDate = addBookingInput.DepartureDate,
-                    TotalPeople = addBookingInput.TotalPeople
-                });
-                bookingId = idBooking.Result;
-
-                BookingEN bookingEN = _bookingCEN.GetBookingCAD().FindById(bookingId).Result;
-
-                Task<Tuple<int, int?>> invoiceLine = _invoiceLineCEN.CreateInvoiceLine(new InvoiceLineEN
+                try
                 {
-                    BookingId = bookingId
-                });
-
-                InvoiceLineEN invoiceLineEN = _invoiceLineCEN.GetInvoiceLineCAD().FindByIds(invoiceLine.Result.Item1, invoiceLine.Result.Item2).Result;
-                bookingEN.InvoiceLine = invoiceLineEN;
-
-                if (boats.Count > 0) {
-                    List<BoatBookingEN> boatBookings = new List<BoatBookingEN>(); 
-                    foreach (var boat in boats) 
+                    bookingId = await _bookingCEN.CreateBooking(new BookingEN
                     {
-                        Task<decimal> price = _boatCP.CalculatePrice();
-                        Task<Tuple<int, int>> boatBooking = _boatBookingCEN.CreateBoatBooking(new BoatBookingEN
-                        {
-                            BoatId = boat.Id,
-                            BookingId = bookingId,
-                            Price = price.Result
-                        });
-                        boatBookings.Add(_boatBookingCEN.GetBoatBookingCAD().FindByIds(boat.Id, bookingId).Result);
-                        invoiceLineEN.TotalAmount += price.Result;
-                    }
-                    bookingEN.BoatBookings = boatBookings;
-                }
+                        ClientId = addBookingInput.ClientId,
+                        CreatedDate = DateTime.Today,
+                        RequestCaptain = addBookingInput.RequestCaptain,
+                        EntryDate = addBookingInput.EntryDate,
+                        DepartureDate = addBookingInput.DepartureDate,
+                        TotalPeople = addBookingInput.TotalPeople
+                    });
 
-                if (services.Count > 0)
+                    BookingEN bookingEN = await _bookingCEN.GetBookingCAD().FindById(bookingId);
+
+                    int invoiceLineId = await _invoiceLineCEN.CreateInvoiceLine(new InvoiceLineEN
+                    {
+                        BookingId = bookingId
+                    });
+
+                    InvoiceLineEN invoiceLineEN = await _invoiceLineCEN.GetInvoiceLineCAD().FindById(invoiceLineId);
+                    bookingEN.InvoiceLine = invoiceLineEN;
+
+                    if (boats.Count > 0)
+                    {
+                        List<BoatBookingEN> boatBookings = new List<BoatBookingEN>();
+                        foreach (var boat in boats)
+                        {
+                            decimal price = await _boatCP.CalculatePrice();
+                            await _boatBookingCEN.CreateBoatBooking(new BoatBookingEN
+                            {
+                                BoatId = boat.Id,
+                                BookingId = bookingId,
+                                Price = price
+                            });
+                            boatBookings.Add(await _boatBookingCEN.GetBoatBookingCAD().FindByIds(boat.Id, bookingId));
+                            invoiceLineEN.TotalAmount += price;
+                        }
+                        bookingEN.BoatBookings = boatBookings;
+                    }
+
+                    if (services.Count > 0)
+                    {
+                        List<ServiceBookingEN> serviceBookings = new List<ServiceBookingEN>();
+                        foreach (var service in services)
+                        {
+                            await _serviceBookingCEN.CreateServiceBooking(new ServiceBookingEN
+                            {
+                                ServiceId = service.Id,
+                                BookingId = bookingId,
+                                Price = service.Price
+                            });
+                            serviceBookings.Add(await _serviceBookingCEN.GetServiceBookingCAD().FindByIds(service.Id, bookingId));
+                            invoiceLineEN.TotalAmount += service.Price;
+                        }
+                        bookingEN.ServiceBookings = serviceBookings;
+                    }
+
+                    if (activities.Count > 0)
+                    {
+                        List<ActivityBookingEN> activityBookings = new List<ActivityBookingEN>();
+                        foreach (var activity in activities)
+                        {
+                            await _activityBookingCEN.CreateActivityBooking(new ActivityBookingEN
+                            {
+                                ActivityId = activity.Id,
+                                BookingId = bookingId,
+                                Price = activity.Price
+                            });
+                            activityBookings.Add(await _activityBookingCEN.GetActivityBookingCAD().FindByIds(activity.Id, bookingId));
+                            invoiceLineEN.TotalAmount += activity.Price;
+                        }
+                        bookingEN.ActivityBookings = activityBookings;
+                    }
+
+                    await databaseTransaction.CommitAsync();
+                }
+                catch (Exception ex)
                 {
-                    List<ServiceBookingEN> serviceBookings = new List<ServiceBookingEN>();
-                    foreach (var service in services)
-                    {
-                        Task<Tuple<int, int>> serviceBooking = _serviceBookingCEN.CreateServiceBooking(new ServiceBookingEN
-                        {
-                            ServiceId = service.Id,
-                            BookingId = bookingId,
-                            Price = service.Price
-                        });
-                        serviceBookings.Add(_serviceBookingCEN.GetServiceBookingCAD().FindByIds(service.Id, bookingId).Result);
-                        invoiceLineEN.TotalAmount += service.Price;
-                    }
-                    bookingEN.ServiceBookings = serviceBookings; 
+                    await databaseTransaction.RollbackAsync();
+                    throw ex;
                 }
-
-                if (activities.Count > 0)
-                {
-                    List<ActivityBookingEN> activityBookings = new List<ActivityBookingEN>();
-                    foreach (var activity in activities)
-                    {
-                        Task<Tuple<int, int>> activityBooking = _activityBookingCEN.CreateActivityBooking(new ActivityBookingEN
-                        {
-                            ActivityId = activity.Id,
-                            BookingId = bookingId,
-                            Price = activity.Price
-                        });
-                        activityBookings.Add(_activityBookingCEN.GetActivityBookingCAD().FindByIds(activity.Id, bookingId).Result);
-                        invoiceLineEN.TotalAmount += activity.Price;
-                    }
-                    bookingEN.ActivityBookings = activityBookings;
-                }
-
             }
 
             
+
 
             return bookingId;
         }
 
         public async Task<int> PayBooking(int idBooking) 
         {
-            BookingEN bookingEN = _bookingCEN.GetBookingCAD().FindById(idBooking)?.Result;
+            BookingEN bookingEN = await _bookingCEN.GetBookingCAD().FindById(idBooking);
 
             if (bookingEN == null)
                 throw new DataValidationException("Booking Id",
                    "Id Booking", ExceptionTypesEnum.NotFound);
 
-            bookingEN.Paid = true;
+            if (bookingEN.Paid)
+                throw new DataValidationException("The reservation has already been paid",
+                    "La reserva ya ha sido pagada");
 
-            List<InvoiceLineEN> invoiceLines = new List<InvoiceLineEN>();
+            int clientInvoice = 0;
 
-            invoiceLines.Add(bookingEN.InvoiceLine);
+            using (var databaseTransaction = _databaseTransactionFactory.BeginTransaction())
+            {
+                try
+                {
+                    List<InvoiceLineEN> invoiceLines = new List<InvoiceLineEN>();
 
-            int clientInvoice = await _clientInvoiceCEN.CreateClientInvoice(new ClientInvoiceEN {
-                ClientId = bookingEN.ClientId,
-                CreatedDate = DateTime.Now,
-                InvoiceLines = invoiceLines,
-                TotalAmount = invoiceLines[0].TotalAmount
-            });
+                    invoiceLines.Add(bookingEN.InvoiceLine);
 
+                    clientInvoice = await _clientInvoiceCEN.CreateClientInvoice(new ClientInvoiceEN
+                    {
+                        ClientId = bookingEN.ClientId,
+                        CreatedDate = DateTime.Now,
+                        InvoiceLines = invoiceLines,
+                        TotalAmount = invoiceLines.Sum(x=>x.TotalAmount)
+                    });
+
+                    bookingEN.Paid = true;
+                    await _bookingCEN.UpdateBooking(bookingEN);
+
+                    await databaseTransaction.CommitAsync();
+                }
+                catch (Exception ex)
+                {
+                    await databaseTransaction.RollbackAsync();
+                    throw ex;
+                }
+            }
+                
             return clientInvoice;
         }
 
-        public async Task<int> CancelBooking(int idBooking)
+        public async Task CancelBooking(int idBooking)
         {
-
-            BookingEN bookingEN = _bookingCEN.GetBookingCAD().FindById(idBooking)?.Result;
+            BookingEN bookingEN = await _bookingCEN.GetBookingCAD().FindById(idBooking);
 
             if (bookingEN == null)
                 throw new DataValidationException("Booking Id",
                    "Id Booking", ExceptionTypesEnum.NotFound);
 
-            bookingEN.Status = BookingStatusEnum.Cancelled;
-
             if (bookingEN.Paid)
-            {
-                //REFOUND!
-            }
+                throw new DataValidationException("The reservation has already been paid, it cannot be canceled",
+                    "La reserva ya ha sido pagada, no se puede cancelar");
 
-            if (bookingEN.ActivityBookings.Count > 0) 
+            using (var databaseTransaction = _databaseTransactionFactory.BeginTransaction())
             {
-                foreach (var activityBooking in bookingEN.ActivityBookings) {
-                    await _activityBookingCEN.GetActivityBookingCAD().Delete(activityBooking);   
-                }
-            }
-
-            if (bookingEN.BoatBookings.Count > 0)
-            {
-                foreach (var boatBooking in bookingEN.BoatBookings)
+                try
                 {
-                    await _boatBookingCEN.GetBoatBookingCAD().Delete(boatBooking);
-                }
-            }
+                    if (bookingEN.Paid)
+                    {
+                        //REFOUND!
+                    }
 
-            if (bookingEN.ServiceBookings.Count > 0)
-            {
-                foreach (var serviceBooking in bookingEN.ServiceBookings)
+                    bookingEN.Status = BookingStatusEnum.Cancelled;
+                    await _bookingCEN.UpdateBooking(bookingEN);
+
+                    await databaseTransaction.CommitAsync();
+                }
+                catch (Exception ex)
                 {
-                    await _serviceBookingCEN.GetServiceBookingCAD().Delete(serviceBooking);
+                    await databaseTransaction.RollbackAsync();
+                    throw ex;
                 }
             }
-
-            return 0;// ???
         }
 
     }
