@@ -246,7 +246,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             return clientInvoice;
         }
 
-        public async Task<int> CancelBooking(int idBooking)
+        public async Task CancelBooking(int idBooking)
         {
 
             BookingEN bookingEN = _bookingCEN.GetBookingCAD().FindById(idBooking)?.Result;
@@ -254,6 +254,10 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             if (bookingEN == null)
                 throw new DataValidationException("Booking Id",
                    "Id Booking", ExceptionTypesEnum.NotFound);
+
+            if (bookingEN.Paid)
+                throw new DataValidationException("The reservation has already been paid, it cannot be canceled",
+                    "La reserva ya ha sido pagada, no se puede cancelar");
 
             bookingEN.Status = BookingStatusEnum.Cancelled;
 
@@ -285,7 +289,6 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                 }
             }
 
-            return 0;// ???
         }
 
     }
