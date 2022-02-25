@@ -29,6 +29,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
         private readonly IServiceCEN _serviceCEN;
         private readonly IBoatCP _boatCP;
         private readonly IClientInvoiceCEN _clientInvoiceCEN;
+        private readonly IRefundCEN _refundCEN;
         private IDatabaseTransactionFactory _databaseTransactionFactory;
 
         public BookingCP(IBookingCEN bookingCEN,
@@ -43,7 +44,8 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                          IServiceCEN serviceCEN,
                          IBoatCP boatCP,
                          IClientInvoiceCEN clientInvoiceCEN,
-                         IDatabaseTransactionFactory databaseTransactionFactory) 
+                         IDatabaseTransactionFactory databaseTransactionFactory,
+                         IRefundCEN refundCEN) 
         {
             _bookingCEN = bookingCEN;
             _userCEN = userCEN;
@@ -58,6 +60,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             _boatCP = boatCP;
             _clientInvoiceCEN = clientInvoiceCEN;
             _databaseTransactionFactory = databaseTransactionFactory;
+            _refundCEN = refundCEN;
         }
         public async Task<int> CreateBooking(AddBookingInputDTO addBookingInput)
         {
@@ -264,7 +267,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
 
         public async Task CancelBooking(int idBooking)
         {
-            BookingEN bookingEN = await _bookingCEN.GetBookingCAD().FindById(idBooking);
+            BookingEN bookingEN = await _bookingCEN.GetBookingCAD().FindByIdAllData(idBooking);
 
             if (bookingEN == null)
                 throw new DataValidationException("Booking Id",
@@ -280,7 +283,9 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                 {
                     if (bookingEN.Paid)
                     {
-                        //REFOUND!
+                        await _refundCEN.CreateRefund(bookingEN.Id,
+                                                "Orden cancelada",
+                                                bookingEN.InvoiceLine.TotalAmount);
                     }
 
                     bookingEN.Status = BookingStatusEnum.Cancelled;

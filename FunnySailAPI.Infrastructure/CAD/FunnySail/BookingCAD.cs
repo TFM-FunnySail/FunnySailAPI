@@ -18,14 +18,11 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
         public async Task<BookingEN> FindByIdAllData(int bookingId)
         {
             return await _dbContext.Bookings
-                .Include(x => x.ClientId)
-                .Include(x => x.CreatedDate)
-                .Include(x => x.EntryDate)
-                .Include(x => x.DepartureDate)
-                .Include(x => x.TotalPeople)
-                .Include(x => x.Paid)
-                .Include(x => x.RequestCaptain)
-                .Include(x => x.Status)
+                .Include(x => x.InvoiceLine)
+                .Include(x => x.OwnerInvoiceLine)
+                .Include(x => x.ServiceBookings)
+                .Include(x => x.ActivityBookings)
+                .Include(x => x.BoatBookings)
                 .FirstOrDefaultAsync(x => x.Id == bookingId);
         }
     }
