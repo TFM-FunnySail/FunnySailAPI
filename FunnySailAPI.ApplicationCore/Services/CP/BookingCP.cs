@@ -259,36 +259,49 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                 throw new DataValidationException("The reservation has already been paid, it cannot be canceled",
                     "La reserva ya ha sido pagada, no se puede cancelar");
 
-            bookingEN.Status = BookingStatusEnum.Cancelled;
-
-            if (bookingEN.Paid)
+            using (var databaseTransaction = _databaseTransactionFactory.BeginTransaction())
             {
-                //REFOUND!
-            }
-
-            if (bookingEN.ActivityBookings.Count > 0) 
-            {
-                foreach (var activityBooking in bookingEN.ActivityBookings) {
-                    await _activityBookingCEN.GetActivityBookingCAD().Delete(activityBooking);   
-                }
-            }
-
-            if (bookingEN.BoatBookings.Count > 0)
-            {
-                foreach (var boatBooking in bookingEN.BoatBookings)
+                try
                 {
-                    await _boatBookingCEN.GetBoatBookingCAD().Delete(boatBooking);
-                }
-            }
+                    bookingEN.Status = BookingStatusEnum.Cancelled;
 
-            if (bookingEN.ServiceBookings.Count > 0)
-            {
-                foreach (var serviceBooking in bookingEN.ServiceBookings)
+                    if (bookingEN.Paid)
+                    {
+                        //REFOUND!
+                    }
+
+                    if (bookingEN.ActivityBookings.Count > 0)
+                    {
+                        foreach (var activityBooking in bookingEN.ActivityBookings)
+                        {
+                            await _activityBookingCEN.GetActivityBookingCAD().Delete(activityBooking);
+                        }
+                    }
+
+                    if (bookingEN.BoatBookings.Count > 0)
+                    {
+                        foreach (var boatBooking in bookingEN.BoatBookings)
+                        {
+                            await _boatBookingCEN.GetBoatBookingCAD().Delete(boatBooking);
+                        }
+                    }
+
+                    if (bookingEN.ServiceBookings.Count > 0)
+                    {
+                        foreach (var serviceBooking in bookingEN.ServiceBookings)
+                        {
+                            await _serviceBookingCEN.GetServiceBookingCAD().Delete(serviceBooking);
+                        }
+                    }
+
+                    await databaseTransaction.CommitAsync();
+                }
+                catch (Exception ex)
                 {
-                    await _serviceBookingCEN.GetServiceBookingCAD().Delete(serviceBooking);
+                    await databaseTransaction.RollbackAsync();
+                    throw ex;
                 }
             }
-
         }
 
     }
