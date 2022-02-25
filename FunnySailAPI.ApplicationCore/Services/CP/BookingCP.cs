@@ -273,9 +273,9 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                 throw new DataValidationException("Booking Id",
                    "Id Booking", ExceptionTypesEnum.NotFound);
 
-            if (bookingEN.Paid)
-                throw new DataValidationException("The reservation has already been paid, it cannot be canceled",
-                    "La reserva ya ha sido pagada, no se puede cancelar");
+            if (bookingEN.Status == BookingStatusEnum.Completed)
+                throw new DataValidationException("The reservation has already been completed, it cannot be canceled",
+                    "La reserva ya ha sido completada, no se puede cancelar");
 
             using (var databaseTransaction = _databaseTransactionFactory.BeginTransaction())
             {
