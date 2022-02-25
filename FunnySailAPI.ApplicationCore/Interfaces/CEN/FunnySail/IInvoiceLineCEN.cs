@@ -9,7 +9,7 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
 {
     public interface IInvoiceLineCEN
     {
-        Task<Tuple<int, int?>> CreateInvoiceLine(InvoiceLineEN invoiceLineEN);
+        Task<int> CreateInvoiceLine(InvoiceLineEN invoiceLineEN);
         IInvoiceLineCAD GetInvoiceLineCAD();
     }
 }

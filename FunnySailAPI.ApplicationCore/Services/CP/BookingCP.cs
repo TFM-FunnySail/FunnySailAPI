@@ -135,12 +135,12 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
 
                 BookingEN bookingEN = await _bookingCEN.GetBookingCAD().FindById(bookingId);
 
-                Tuple<int, int?>  invoiceLine = await _invoiceLineCEN.CreateInvoiceLine(new InvoiceLineEN
+                int invoiceLineId = await _invoiceLineCEN.CreateInvoiceLine(new InvoiceLineEN
                 {
                     BookingId = bookingId
                 });
 
-                InvoiceLineEN invoiceLineEN = await _invoiceLineCEN.GetInvoiceLineCAD().FindByIds(invoiceLine.Item1, invoiceLine.Item2);
+                InvoiceLineEN invoiceLineEN = await _invoiceLineCEN.GetInvoiceLineCAD().FindById(invoiceLineId);
                 bookingEN.InvoiceLine = invoiceLineEN;
 
                 if (boats.Count > 0) {

@@ -17,11 +17,11 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             _invoiceLineCAD = invoiceLineCAD;
         }
 
-        public async Task<Tuple<int, int?>> CreateInvoiceLine(InvoiceLineEN invoiceLineEN)
+        public async Task<int> CreateInvoiceLine(InvoiceLineEN invoiceLineEN)
         {
             invoiceLineEN = await _invoiceLineCAD.AddAsync(invoiceLineEN);
 
-            return new Tuple<int, int?>(invoiceLineEN.BookingId, invoiceLineEN.ClientInvoiceId);
+            return invoiceLineEN.BookingId;
         }
 
         public IInvoiceLineCAD GetInvoiceLineCAD()
