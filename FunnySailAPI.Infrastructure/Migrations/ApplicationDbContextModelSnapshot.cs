@@ -183,6 +183,9 @@ namespace FunnySailAPI.Infrastructure.Migrations
                     b.Property<int>("MooringId")
                         .HasColumnType("int");
 
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("PendingToReview")
                         .HasColumnType("bit");
 
