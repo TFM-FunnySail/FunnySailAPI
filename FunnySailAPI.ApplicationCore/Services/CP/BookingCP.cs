@@ -249,7 +249,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
         public async Task CancelBooking(int idBooking)
         {
 
-            BookingEN bookingEN = _bookingCEN.GetBookingCAD().FindById(idBooking)?.Result;
+            BookingEN bookingEN = await _bookingCEN.GetBookingCAD().FindById(idBooking);
 
             if (bookingEN == null)
                 throw new DataValidationException("Booking Id",
@@ -263,36 +263,13 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             {
                 try
                 {
-                    bookingEN.Status = BookingStatusEnum.Cancelled;
-
                     if (bookingEN.Paid)
                     {
                         //REFOUND!
                     }
 
-                    if (bookingEN.ActivityBookings.Count > 0)
-                    {
-                        foreach (var activityBooking in bookingEN.ActivityBookings)
-                        {
-                            await _activityBookingCEN.GetActivityBookingCAD().Delete(activityBooking);
-                        }
-                    }
-
-                    if (bookingEN.BoatBookings.Count > 0)
-                    {
-                        foreach (var boatBooking in bookingEN.BoatBookings)
-                        {
-                            await _boatBookingCEN.GetBoatBookingCAD().Delete(boatBooking);
-                        }
-                    }
-
-                    if (bookingEN.ServiceBookings.Count > 0)
-                    {
-                        foreach (var serviceBooking in bookingEN.ServiceBookings)
-                        {
-                            await _serviceBookingCEN.GetServiceBookingCAD().Delete(serviceBooking);
-                        }
-                    }
+                    bookingEN.Status = BookingStatusEnum.Cancelled;
+                    await _bookingCEN.UpdateBooking(bookingEN);
 
                     await databaseTransaction.CommitAsync();
                 }
