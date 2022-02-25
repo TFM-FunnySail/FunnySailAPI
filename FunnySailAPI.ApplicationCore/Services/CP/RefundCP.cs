@@ -21,13 +21,5 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             _databaseTransactionFactory = databaseTransactionFactory;
         }
 
-        public async Task<int> CreateRefund(AddRefundInputDTO addRefundInput)
-        {
-            int newRefund = await _refundCEN.CreateRefund(addRefundInput.BookingId,
-                                                    addRefundInput.description,
-                                                    addRefundInput.amountToReturn);
-
-            return newRefund;
-        }
     }
 }
