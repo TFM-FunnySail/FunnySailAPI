@@ -19,14 +19,23 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
     public class ActivityCEN : IActivityCEN
     {
         private readonly IActivityCAD _activityCAD;
+        private readonly string _enName;
+        private readonly string _esName;
 
         public ActivityCEN(IActivityCAD activityCAD)
         {
             _activityCAD = activityCAD;
+            _enName = "Activity";
+            _esName = "Actividad";
         }
 
         public async Task<int> AddActivity(AddActivityInputDTO addActivityInput)
         {
+            if (addActivityInput.Name == null)
+                throw new DataValidationException($"{_enName} name", $"Nombre del {_esName}",
+                    ExceptionTypesEnum.IsRequired);
+
+
             ActivityEN dbActivity = await _activityCAD.AddAsync(new ActivityEN
             {
                 ActivityDate = addActivityInput.ActivityDate,
@@ -41,6 +50,9 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
         public async Task<ActivityEN> EditActivity(UpdateAcitivityDTO updateAcitivityInput)
         {
+            if (updateAcitivityInput.Name == null)
+                throw new DataValidationException($"{_enName} name", $"Nombre del {_esName}",
+                    ExceptionTypesEnum.IsRequired);
 
             ActivityEN activity = await _activityCAD.FindById(updateAcitivityInput.Id);
 
@@ -75,12 +87,17 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             return _activityCAD;
         }
 
-        public async Task<List<ActivityEN>> GetAvailableActivity(Pagination pagination, DateTime initialDate, DateTime endDate)
+        public async Task<List<ActivityEN>> GetAvailableActivity(Pagination pagination, DateTime? initialDate, DateTime? endDate, decimal? minPrice, decimal? maxPrice, String name)
         {
 
             IQueryable<ActivityEN> activitys = _activityCAD.GetActivityFiltered(new ActivityFilters
             {
-                Active = true
+                Active = true,
+                MinPrice = minPrice,
+                MaxPrice = maxPrice,
+                InitialDate = initialDate,
+                EndDate = endDate,
+                Name = name
             });
 
             return await _activityCAD.GetAll(activitys.OrderBy(x => x.Id), pagination);
