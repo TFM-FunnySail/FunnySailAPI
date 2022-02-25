@@ -12,6 +12,8 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
         [Key]
         public int Id { get; set; }
 
+        public string OwnerId { get; set; }
+
         public bool ToCollet { get; set; }
 
         [Column(TypeName = "money")]
@@ -23,6 +25,7 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
 
         public DateTime Date { get; set; }
 
+        public UsersEN Owner { get; set; }
         public List<OwnerInvoiceLineEN> OwnerInvoiceLines { get; set; }
         public List<TechnicalServiceBoatEN> TechnicalServiceBoats { get; set; }
     }

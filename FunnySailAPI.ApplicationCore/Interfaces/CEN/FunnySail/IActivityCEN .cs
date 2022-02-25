@@ -7,14 +7,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 
 namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
 {
     public interface IActivityCEN
     {
-        Task<int> CreateActivity(DateTime activityDate, string name, decimal price, string description);
+        Task<int> AddActivity(AddActivityInputDTO addActivityInput);
         IActivityCAD GetActivityCAD();
-        Task<ActivityEN> EditActivity(int activityId, DateTime activityDate, string name, decimal price, string description);
+        Task<ActivityEN> EditActivity(UpdateAcitivityDTO updateAcitivityInput);
         Task<ActivityEN> DeactivateActivity(int activityId);
     }
 }

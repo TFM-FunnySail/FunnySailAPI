@@ -7,7 +7,7 @@ using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
 using FunnySailAPI.ApplicationCore.Services.CEN.FunnySail;
-using FunnySailAPI.ApplicationCore.Services.CP.FunnySail;
+using FunnySailAPI.ApplicationCore.Services.CP;
 using FunnySailAPI.Infrastructure;
 using FunnySailAPI.Infrastructure.CAD.FunnySail;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -50,7 +50,7 @@ namespace UnitTest.Steps.CP_CEN
             //Construyendo los CEN necesarios
             IBoatCEN boatCEN = new BoatCEN(boatCAD);
             IReviewCEN reviewCEN = new ReviewCEN(reviewCAD);
-            IUserCEN userCEN = new UserCEN(userCAD, null, databaseTransactionFactory);
+            IUserCEN userCEN = new UserCEN(userCAD, null,null, databaseTransactionFactory);
 
 
             _boatCP = new BoatCP(boatCEN, null, null, null, null, null, databaseTransactionFactory,
