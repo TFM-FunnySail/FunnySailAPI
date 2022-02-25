@@ -17,7 +17,7 @@ using UnitTest.FakeFactories;
 namespace UnitTest.Features.CAD.Activitys
 {
     [Binding]
-    public class GetAvailableActivitysSteps
+    public class GetAvailableActivitysStep
     {
         private ScenarioContext _scenarioContext;
         private ApplicationDbContextFake _applicationDbContextFake;
@@ -31,7 +31,7 @@ namespace UnitTest.Features.CAD.Activitys
         private String _name;
 
 
-        public GetAvailableActivitysSteps(ScenarioContext scenarioContext)
+        public GetAvailableActivitysStep(ScenarioContext scenarioContext)
         {
             _name = "";
 

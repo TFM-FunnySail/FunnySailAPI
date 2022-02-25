@@ -43,6 +43,9 @@ namespace UnitTest.FakeFactories
             //Agregando activities
             _dbContextFake.AddRange(ActivitiesFaker());
 
+            //Agregando ports
+            _dbContextFake.AddRange(PortsFaker());
+
             _dbContextFake.SaveChanges();
         }
 
@@ -144,6 +147,26 @@ namespace UnitTest.FakeFactories
                 },
             };
         }
+
+        private List<PortEN> PortsFaker()
+        {
+            return new List<PortEN>
+            {
+                new PortEN
+                {
+                    Id = 1,
+                    Name = "Puerto de la felicidad",
+                    Location = "c/Río Tajo"
+                },
+                new PortEN
+                {
+                    Id = 2,
+                    Name = "Puerto de la tristeza",
+                    Location = "c/Río Ebro"
+                }
+            };
+        }
+
         public void Add<T>(T newEntity)
         {
              _dbContextFake.Add(newEntity);

@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace UnitTest.Features.CAD.Activity
+namespace UnitTest.Features.CP_CEN.Port
 {
     using TechTalk.SpecFlow;
     using System;
@@ -20,7 +20,7 @@ namespace UnitTest.Features.CAD.Activity
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute()]
-    public partial class Edit_Activity_PersitenceFeature
+    public partial class Edit_Port_PersitenceFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -29,7 +29,7 @@ namespace UnitTest.Features.CAD.Activity
         
         private string[] _featureTags = ((string[])(null));
         
-#line 1 "edit_activity_persistence.feature"
+#line 1 "edit_port_persistence.feature"
 #line hidden
         
         public virtual Microsoft.VisualStudio.TestTools.UnitTesting.TestContext TestContext
@@ -48,7 +48,7 @@ namespace UnitTest.Features.CAD.Activity
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/CAD/Activity", "edit_activity_persitence", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/CP_CEN/Port", "edit_port_persitence", null, ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -63,9 +63,9 @@ namespace UnitTest.Features.CAD.Activity
         public virtual void TestInitialize()
         {
             if (((testRunner.FeatureContext != null) 
-                        && (testRunner.FeatureContext.FeatureInfo.Title != "edit_activity_persitence")))
+                        && (testRunner.FeatureContext.FeatureInfo.Title != "edit_port_persitence")))
             {
-                global::UnitTest.Features.CAD.Activity.Edit_Activity_PersitenceFeature.FeatureSetup(null);
+                global::UnitTest.Features.CP_CEN.Port.Edit_Port_PersitenceFeature.FeatureSetup(null);
             }
         }
         
@@ -91,13 +91,14 @@ namespace UnitTest.Features.CAD.Activity
             testRunner.CollectScenarioErrors();
         }
         
-        public virtual void EditoUnaActividad(string id, string name, string[] exampleTags)
+        public virtual void EditoUnPuerto(string id, string name, string location, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("id", id);
             argumentsOfScenario.Add("name", name);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Edito una actividad", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            argumentsOfScenario.Add("location", location);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Edito un puerto", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 3
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -119,51 +120,40 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 4
- testRunner.Given(string.Format("se pretende editar el <nombre> de la actividad con {0}", id), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given(string.Format("se pretende editar el <nombre> y {0} del puerto con {1}", location, id), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 5
- testRunner.When("se edita la actividad", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("se edita el puerto", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 6
- testRunner.Then("devuelve la actividad editada en base de datos con los valores actualizados", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("devuelve el puerto editado en base de datos con los valores actualizados", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Edito una actividad: 1")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "edit_activity_persitence")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Edito un puerto: 1")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "edit_port_persitence")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "1")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:id", "1")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:name", "Wakeboard")]
-        public virtual void EditoUnaActividad_1()
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:name", "Puerto de la amargura")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:location", "c/Río Tajo")]
+        public virtual void EditoUnPuerto_1()
         {
 #line 3
-this.EditoUnaActividad("1", "Wakeboard", ((string[])(null)));
+this.EditoUnPuerto("1", "Puerto de la amargura", "c/Río Tajo", ((string[])(null)));
 #line hidden
         }
         
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Edito una actividad: 2")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "edit_activity_persitence")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "2")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:id", "2")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:name", "Navegar")]
-        public virtual void EditoUnaActividad_2()
-        {
-#line 3
-this.EditoUnaActividad("2", "Navegar", ((string[])(null)));
-#line hidden
-        }
-        
-        public virtual void EditoUnaActividadConNombreVacio(string id, string[] exampleTags)
+        public virtual void EditoUnPuertoConNombreVacio(string id, string name, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("id", id);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Edito una actividad con nombre vacio", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 13
+            argumentsOfScenario.Add("name", name);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Edito un puerto con nombre vacio", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 12
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -183,40 +173,29 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
+#line 13
+ testRunner.Given(string.Format("se pretende editar un puerto con {0} y {1} dejando la localización vacia", id, name), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
 #line 14
- testRunner.Given(string.Format("se pretende editar la actividad con {0} dejando el nombre vacio", id), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.When("se edita el puerto", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 15
- testRunner.When("se edita la actividad", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 16
- testRunner.Then("devuelve un error porque el nombre de la actividad es requerido", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("devuelve un error porque la localizacion del puerto es requerida", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Edito una actividad con nombre vacio: 1")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "edit_activity_persitence")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Edito un puerto con nombre vacio: 1")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "edit_port_persitence")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "1")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:id", "1")]
-        public virtual void EditoUnaActividadConNombreVacio_1()
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:name", "Puerto de la amargura")]
+        public virtual void EditoUnPuertoConNombreVacio_1()
         {
-#line 13
-this.EditoUnaActividadConNombreVacio("1", ((string[])(null)));
-#line hidden
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Edito una actividad con nombre vacio: 2")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "edit_activity_persitence")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "2")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:id", "2")]
-        public virtual void EditoUnaActividadConNombreVacio_2()
-        {
-#line 13
-this.EditoUnaActividadConNombreVacio("2", ((string[])(null)));
+#line 12
+this.EditoUnPuertoConNombreVacio("1", "Puerto de la amargura", ((string[])(null)));
 #line hidden
         }
     }
