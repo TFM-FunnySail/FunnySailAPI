@@ -40,6 +40,9 @@ namespace UnitTest.FakeFactories
             //Agregando user
             _dbContextFake.AddRange(UserFaker());
 
+            //Agregando activities
+            _dbContextFake.AddRange(ActivitiesFaker());
+
             _dbContextFake.SaveChanges();
         }
 
@@ -90,6 +93,39 @@ namespace UnitTest.FakeFactories
 
         }
 
+        private List<ActivityEN> ActivitiesFaker()
+        {
+            return new List<ActivityEN>
+            {
+                new ActivityEN
+                {
+                    Id = 1,
+                    Active = true,
+                    ActivityDate = DateTime.UtcNow,
+                    Name = "Buceo",
+                    Price = 330,
+                    Description = "Actividad de prueba 1"
+                },
+                new ActivityEN
+                {
+                    Id = 2,
+                    Active = true,
+                    ActivityDate = DateTime.UtcNow,
+                    Name = "Pesca",
+                    Price = 430,
+                    Description = "Actividad de prueba 2"
+                },
+                new ActivityEN
+                {
+                    Id = 3,
+                    Active = true,
+                    ActivityDate = DateTime.UtcNow,
+                    Name = "Pesca",
+                    Price = 350,
+                    Description = "Actividad de prueba 3"
+                },
+            };
+        }
         public void Add<T>(T newEntity)
         {
              _dbContextFake.Add(newEntity);

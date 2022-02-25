@@ -75,12 +75,17 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             return _activityCAD;
         }
 
-        public async Task<List<ActivityEN>> GetAvailableActivity(Pagination pagination, DateTime initialDate, DateTime endDate)
+        public async Task<List<ActivityEN>> GetAvailableActivity(Pagination pagination, DateTime? initialDate, DateTime? endDate, decimal? minPrice, decimal? maxPrice, String name)
         {
 
             IQueryable<ActivityEN> activitys = _activityCAD.GetActivityFiltered(new ActivityFilters
             {
-                Active = true
+                Active = true,
+                MinPrice = minPrice,
+                MaxPrice = maxPrice,
+                InitialDate = initialDate,
+                EndDate = endDate,
+                Name = name
             });
 
             return await _activityCAD.GetAll(activitys.OrderBy(x => x.Id), pagination);
