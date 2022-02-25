@@ -17,5 +17,7 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
         IPortCAD GetPortCAD();
         Task<PortEN> EditPort(UpdatePortDTO updatePortInput);
         Task<bool> AnyPortById(int portId);
+
+        Task DeletePort(int id);
     }
 }

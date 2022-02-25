@@ -1,4 +1,5 @@
 ﻿using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
+using FunnySailAPI.ApplicationCore.Models.Globals;
 using FunnySailAPI.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -39,6 +40,15 @@ namespace UnitTest.FakeFactories
 
             //Agregando user
             _dbContextFake.AddRange(UserFaker());
+
+            //Agregando OwnerInvoice
+            _dbContextFake.AddRange(OwnerInvoiceFaker());
+
+            //Agregando Mooring
+            _dbContextFake.AddRange(MooringFaker());
+
+            //Agregando Port
+            _dbContextFake.AddRange(PortFaker());
 
             _dbContextFake.SaveChanges();
         }
@@ -88,6 +98,49 @@ namespace UnitTest.FakeFactories
                 }
             };
 
+        }
+
+        private List<OwnerInvoiceEN> OwnerInvoiceFaker()
+        {
+            return new List<OwnerInvoiceEN>
+            {
+                new OwnerInvoiceEN
+                {
+                    OwnerId = "1",
+                    Id = 1,
+                    IsCanceled = true,
+                    Amount = 10, 
+                    IsPaid = false,
+                    Date = DateTime.Now
+                }
+            };
+        }
+
+        private List<MooringEN> MooringFaker()
+        {
+            return new List<MooringEN>
+            {
+                new MooringEN
+                {
+                    Id = 1,
+                    Alias = "mooring1",
+                    PortId = 1,
+                    Type = MooringEnum.Small
+                }
+            };
+        }
+
+        private List<PortEN> PortFaker()
+        {
+            return new List<PortEN>
+            {
+                new PortEN
+                {
+                    Id = 1,
+                    Name = "puerto",
+                    Location = "puerto1"
+                }
+            };
         }
 
         public void Add<T>(T newEntity)

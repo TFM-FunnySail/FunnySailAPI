@@ -22,6 +22,12 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
         public async Task<int> AddMooring(int portId,string alias, MooringEnum type)
         {
+            if (portId < 0)
+                throw new DataValidationException("Port Id cant be small than 0", "Id Puert no puede ser menor que 0 ");
+
+            if (alias == "")
+                throw new DataValidationException("the alias" , " el alias" , ExceptionTypesEnum.IsRequired);
+
             MooringEN dbMooring = await _mooringCAD.AddAsync(new MooringEN
             {
                 Alias = alias,
