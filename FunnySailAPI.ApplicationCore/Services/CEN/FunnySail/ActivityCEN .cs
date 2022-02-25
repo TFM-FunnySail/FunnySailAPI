@@ -50,6 +50,9 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
         public async Task<ActivityEN> EditActivity(UpdateAcitivityDTO updateAcitivityInput)
         {
+            if (updateAcitivityInput.Name == null)
+                throw new DataValidationException($"{_enName} name", $"Nombre del {_esName}",
+                    ExceptionTypesEnum.IsRequired);
 
             ActivityEN activity = await _activityCAD.FindById(updateAcitivityInput.Id);
 

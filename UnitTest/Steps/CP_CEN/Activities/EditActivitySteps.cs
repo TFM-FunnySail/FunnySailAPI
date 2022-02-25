@@ -16,19 +16,17 @@ using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 namespace UnitTest.Steps.CP_CEN.Activities
 {
     [Binding]
-    public class CreateActivityStep
+    public class EditActivityStep
     {
         private ScenarioContext _scenarioContext;
         private IActivityCEN _activityCEN;
         private IActivityCAD _activityCAD;
         private IActivityBookingCAD _activityBookingCAD;
-        private ActivityEN _newActivity;
-        private decimal _price;
-        private string _description;
+        private ActivityEN _activityUpdated;
         private string _name;
-        private DateTime _activityDate;
+        private int _id;
 
-        public CreateActivityStep(ScenarioContext scenarioContext)
+        public EditActivityStep(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
 
@@ -39,37 +37,30 @@ namespace UnitTest.Steps.CP_CEN.Activities
 
         }
 
-        [Given(@"con (.*), (.*),(.*) y (.*)")]
-        public void GivenConNombrePrecioYDescripcion(string name, string price, string desc, DateTime activityDate)
+        [Given(@"se pretende editar el (.*) de la actividad con (.*)")]
+        public void GivenSePretendeEditarElDeLaActividadCon(string name, int id)
         {
             _name = name;
-            _description = desc;
-            _price = Decimal.Parse(price);
-            _activityDate = activityDate;
+            _id = id;
         }
         
-        [Given(@"con precio (.*), (.*), (.*) y sin nombre")]
-        public void GivenConPrecioYSinNombre(string price, string desc, DateTime activityDate)
+        [Given(@"se pretende editar la actividad con (.*) dejando el nombre vacio")]
+        public void GivenSePretendeEditarLaActividadConDejandoElNombreVacio(int id)
         {
-            _description = desc;
-            _price = Decimal.Parse(price);
-            _activityDate = activityDate;
+            _id = id;
+            _name = null;
         }
         
-        [When(@"se adiciona la actividad")]
-        public async Task WhenSeAdicionaLaActividadAsync()
+        [When(@"se edita la actividad")]
+        public async Task WhenSeEditaLaActividadAsync()
         {
             try
             {
-                int id = await _activityCEN.AddActivity(new AddActivityInputDTO
+                _activityUpdated = await _activityCEN.EditActivity(new UpdateAcitivityDTO
                 {
-                    Active = true,
-                    Price = _price,
-                    Description = _description,
-                    Name = _name,
-                    ActivityDate = _activityDate
+                    Id = _id,
+                    Name = _name
                 });
-                _newActivity = await _activityCAD.FindById(id);
             }
             catch (DataValidationException ex)
             {
@@ -77,17 +68,14 @@ namespace UnitTest.Steps.CP_CEN.Activities
             }
         }
         
-        [Then(@"devuelve la actividad creada en base de datos con los mismos valores")]
-        public void ThenDevuelveLaActividadCreadaEnBaseDeDatosConLosMismosValores()
+        [Then(@"devuelve la actividad editada en base de datos con los valores actualizados")]
+        public void ThenDevuelveLaActividadEditadaEnBaseDeDatosConLosValoresActualizados()
         {
-            Assert.AreEqual(_price, _newActivity.Price);
-            Assert.AreEqual(_description, _newActivity.Description);
-            Assert.AreEqual(_name, _newActivity.Name);
-            Assert.AreEqual(_activityDate, _newActivity.ActivityDate);
+            Assert.AreEqual(_activityUpdated.Name, _name);
         }
         
-        [Then(@"devuelve un error porque el nombre de la actividad es requerida")]
-        public void ThenDevuelveUnErrorPorqueElNombreDeLaActividadEsRequerida()
+        [Then(@"devuelve un error porque el nombre de la actividad es requerido")]
+        public void ThenDevuelveUnErrorPorqueElNombreDeLaActividadEsRequerido()
         {
             DataValidationException ex = _scenarioContext.Get<DataValidationException>("Exception_NullName");
             Assert.IsNotNull(ex);
