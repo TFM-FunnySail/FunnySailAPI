@@ -120,7 +120,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             
             if (boats.Count > 0 || services.Count > 0 || activities.Count > 0) 
             {
-                Task<int> idBooking = _bookingCEN.CreateBooking(new BookingEN{ 
+                 bookingId = await _bookingCEN.CreateBooking(new BookingEN{ 
                     ClientId = addBookingInput.ClientId,
                     CreatedDate = DateTime.Today,
                     RequestCaptain = addBookingInput.RequestCaptain,
@@ -128,31 +128,30 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                     DepartureDate = addBookingInput.DepartureDate,
                     TotalPeople = addBookingInput.TotalPeople
                 });
-                bookingId = idBooking.Result;
 
-                BookingEN bookingEN = _bookingCEN.GetBookingCAD().FindById(bookingId).Result;
+                BookingEN bookingEN = await _bookingCEN.GetBookingCAD().FindById(bookingId);
 
-                Task<Tuple<int, int?>> invoiceLine = _invoiceLineCEN.CreateInvoiceLine(new InvoiceLineEN
+                Tuple<int, int?>  invoiceLine = await _invoiceLineCEN.CreateInvoiceLine(new InvoiceLineEN
                 {
                     BookingId = bookingId
                 });
 
-                InvoiceLineEN invoiceLineEN = _invoiceLineCEN.GetInvoiceLineCAD().FindByIds(invoiceLine.Result.Item1, invoiceLine.Result.Item2).Result;
+                InvoiceLineEN invoiceLineEN = await _invoiceLineCEN.GetInvoiceLineCAD().FindByIds(invoiceLine.Item1, invoiceLine.Item2);
                 bookingEN.InvoiceLine = invoiceLineEN;
 
                 if (boats.Count > 0) {
                     List<BoatBookingEN> boatBookings = new List<BoatBookingEN>(); 
                     foreach (var boat in boats) 
                     {
-                        Task<decimal> price = _boatCP.CalculatePrice();
-                        Task<Tuple<int, int>> boatBooking = _boatBookingCEN.CreateBoatBooking(new BoatBookingEN
+                        decimal price = await _boatCP.CalculatePrice();
+                        await _boatBookingCEN.CreateBoatBooking(new BoatBookingEN
                         {
                             BoatId = boat.Id,
                             BookingId = bookingId,
-                            Price = price.Result
+                            Price = price
                         });
-                        boatBookings.Add(_boatBookingCEN.GetBoatBookingCAD().FindByIds(boat.Id, bookingId).Result);
-                        invoiceLineEN.TotalAmount += price.Result;
+                        boatBookings.Add(await _boatBookingCEN.GetBoatBookingCAD().FindByIds(boat.Id, bookingId));
+                        invoiceLineEN.TotalAmount += price;
                     }
                     bookingEN.BoatBookings = boatBookings;
                 }
@@ -162,13 +161,13 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                     List<ServiceBookingEN> serviceBookings = new List<ServiceBookingEN>();
                     foreach (var service in services)
                     {
-                        Task<Tuple<int, int>> serviceBooking = _serviceBookingCEN.CreateServiceBooking(new ServiceBookingEN
+                        await _serviceBookingCEN.CreateServiceBooking(new ServiceBookingEN
                         {
                             ServiceId = service.Id,
                             BookingId = bookingId,
                             Price = service.Price
                         });
-                        serviceBookings.Add(_serviceBookingCEN.GetServiceBookingCAD().FindByIds(service.Id, bookingId).Result);
+                        serviceBookings.Add(await _serviceBookingCEN.GetServiceBookingCAD().FindByIds(service.Id, bookingId));
                         invoiceLineEN.TotalAmount += service.Price;
                     }
                     bookingEN.ServiceBookings = serviceBookings; 
@@ -179,13 +178,13 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                     List<ActivityBookingEN> activityBookings = new List<ActivityBookingEN>();
                     foreach (var activity in activities)
                     {
-                        Task<Tuple<int, int>> activityBooking = _activityBookingCEN.CreateActivityBooking(new ActivityBookingEN
+                        await _activityBookingCEN.CreateActivityBooking(new ActivityBookingEN
                         {
                             ActivityId = activity.Id,
                             BookingId = bookingId,
                             Price = activity.Price
                         });
-                        activityBookings.Add(_activityBookingCEN.GetActivityBookingCAD().FindByIds(activity.Id, bookingId).Result);
+                        activityBookings.Add(await _activityBookingCEN.GetActivityBookingCAD().FindByIds(activity.Id, bookingId));
                         invoiceLineEN.TotalAmount += activity.Price;
                     }
                     bookingEN.ActivityBookings = activityBookings;
