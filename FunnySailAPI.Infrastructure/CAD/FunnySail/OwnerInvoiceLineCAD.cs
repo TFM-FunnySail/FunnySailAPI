@@ -39,5 +39,11 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
 
             return await Get(ownerInvoiceLines,orderBy,includeProperties,pagination);
         }
+
+        public async Task SetOwnerInvoice(List<OwnerInvoiceLineEN> ownerInvoiceLines, int newOwnerInvoice)
+        {
+            ownerInvoiceLines.ForEach(x => x.OwnerInvoiceId = newOwnerInvoice);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

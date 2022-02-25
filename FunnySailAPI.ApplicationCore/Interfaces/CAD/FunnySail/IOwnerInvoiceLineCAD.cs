@@ -15,5 +15,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail
                                             Func<IQueryable<OwnerInvoiceLineEN>, IOrderedQueryable<OwnerInvoiceLineEN>> orderBy = null,
                                             string includeProperties = "",
                                             Pagination pagination = null);
+        Task SetOwnerInvoice(List<OwnerInvoiceLineEN> ownerInvoiceLines, int newOwnerInvoice);
     }
 }
