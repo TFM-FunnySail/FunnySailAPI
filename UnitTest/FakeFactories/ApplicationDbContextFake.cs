@@ -46,6 +46,10 @@ namespace UnitTest.FakeFactories
             //Agregando ports
             _dbContextFake.AddRange(PortsFaker());
 
+            //Agregando services
+            _dbContextFake.AddRange(ServicesFaker());
+            _dbContextFake.AddRange(ServicesBookingFaker());
+            
             _dbContextFake.SaveChanges();
         }
 
@@ -166,6 +170,41 @@ namespace UnitTest.FakeFactories
                 }
             };
         }
+
+        private List<ServiceEN> ServicesFaker()
+        {
+            return new List<ServiceEN>
+            {
+                new ServiceEN
+                {
+                    Id = 1,
+                    Active = true,
+                    Name = "Servicio 1",
+                    Price = 100,
+                    Description = "Descripcion servicio 1"
+                },
+                new ServiceEN
+                {
+                    Id = 2,
+                    Active = true,
+                    Name = "Servicio 2",
+                    Price = 80,
+                    Description = "Descripcion servicio 2"
+                },       
+            };
+        }
+
+        private List<ServiceBookingEN> ServicesBookingFaker()
+        {
+            return new List<ServiceBookingEN>
+            {
+                new ServiceBookingEN
+                {
+                    ServiceId = 2   
+                },
+            };
+        }
+
 
         public void Add<T>(T newEntity)
         {

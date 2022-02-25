@@ -11,6 +11,8 @@
     <SpecFlowObsoleteCodeBehindFiles Remove="Features\CP_CEN\Port\edit_activity_persistence.feature.cs" />
     <SpecFlowObsoleteCodeBehindFiles Remove="Features\CP_CEN\Activity\activity_persistence - Copia.feature.cs" />
     <SpecFlowObsoleteCodeBehindFiles Remove="Features\CP_CEN\Activity\get_available_activity - Copia.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="Features\CP_CEN\Service\activity_persistence.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="Features\CP_CEN\Service\edit_activity_persistence.feature.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +46,12 @@
     <Compile Update="Features\CP_CEN\Activity\activity_persistence.feature.cs">
       <DependentUpon>activity_persistence.feature</DependentUpon>
     </Compile>
+    <Compile Update="Features\CP_CEN\Service\edit_service_persistence.feature.cs">
+      <DependentUpon>edit_service_persistence.feature</DependentUpon>
+    </Compile>
+    <Compile Update="Features\CP_CEN\Service\service_persistence.feature.cs">
+      <DependentUpon>service_persistence.feature</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -64,6 +72,14 @@
       <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
     </SpecFlowFeatureFiles>
     <SpecFlowFeatureFiles Update="Features\CP_CEN\Activity\activity_persistence.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="Features\CP_CEN\Service\edit_service_persistence.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="Features\CP_CEN\Service\service_persistence.feature">
       <Visible>$(UsingMicrosoftNETSdk)</Visible>
       <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
     </SpecFlowFeatureFiles>
