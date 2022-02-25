@@ -14,6 +14,7 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
         public bool Active { get; set; }
         public bool PendingToReview { get; set; }
         public int MooringId { get; set; }
+        public string OwnerId { get; set; }
 
         [Required]
         public DateTime CreatedDate { get; set; }

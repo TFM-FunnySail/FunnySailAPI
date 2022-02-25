@@ -16,17 +16,15 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.OwnerInvoicesTypes
 {
     public class BookingOwnerInvoiceType : OwnerInvoiceCEN,IOwnerInvoiceTypes
     {
-        private readonly IBookingCEN _bookingCEN;
         private string _ownerID;
         private decimal _amount;
         private IList<OwnerInvoiceLineEN> _ownerInvoiceLines;
 
         public BookingOwnerInvoiceType(IOwnerInvoiceCAD ownerInvoiceCAD,
-                                      IOwnerInvoiceLineCAD ownerInvoiceLineCAD,
-                                      IBookingCEN bookingCEN) : base(ownerInvoiceCAD,
+                                      IOwnerInvoiceLineCAD ownerInvoiceLineCAD) : base(ownerInvoiceCAD,
                                                                      ownerInvoiceLineCAD)
         {
-            _bookingCEN = bookingCEN;
+            
         }
 
         public async Task<int> CreateOwnerInvoice()
