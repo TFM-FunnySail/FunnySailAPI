@@ -29,10 +29,17 @@
     <Compile Update="Features\CAD\Activity\deactivate_activity.feature.cs">
       <DependentUpon>deactivate_activity.feature</DependentUpon>
     </Compile>
+    <Compile Update="Features\CAD\Activity\activity_persistence.feature.cs">
+      <DependentUpon>activity_persistence.feature</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <SpecFlowFeatureFiles Update="Features\CAD\Activity\deactivate_activity.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="Features\CAD\Activity\activity_persistence.feature">
       <Visible>$(UsingMicrosoftNETSdk)</Visible>
       <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
     </SpecFlowFeatureFiles>

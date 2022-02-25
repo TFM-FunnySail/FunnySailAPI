@@ -19,14 +19,23 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
     public class ActivityCEN : IActivityCEN
     {
         private readonly IActivityCAD _activityCAD;
+        private readonly string _enName;
+        private readonly string _esName;
 
         public ActivityCEN(IActivityCAD activityCAD)
         {
             _activityCAD = activityCAD;
+            _enName = "Activity";
+            _esName = "Actividad";
         }
 
         public async Task<int> AddActivity(AddActivityInputDTO addActivityInput)
         {
+            if (addActivityInput.Name == null)
+                throw new DataValidationException($"{_enName} name", $"Nombre del {_esName}",
+                    ExceptionTypesEnum.IsRequired);
+
+
             ActivityEN dbActivity = await _activityCAD.AddAsync(new ActivityEN
             {
                 ActivityDate = addActivityInput.ActivityDate,
