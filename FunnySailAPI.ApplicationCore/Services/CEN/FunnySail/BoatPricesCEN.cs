@@ -22,6 +22,9 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
         public async Task<int> AddBoatPrices(BoatPricesEN boatPricesEN)
         {
+            if (boatPricesEN.BoatId == 0)
+                throw new DataValidationException("Boat id", "Boat id", ExceptionTypesEnum.IsRequired);
+
             boatPricesEN = await _boatPricesCAD.AddAsync(boatPricesEN);
 
             return boatPricesEN.BoatId;
