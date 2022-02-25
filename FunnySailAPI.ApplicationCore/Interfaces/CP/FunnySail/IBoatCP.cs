@@ -12,5 +12,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail
     {
         Task<int> CreateBoat(AddBoatInputDTO addBoatInput);
         Task<BoatEN> DisapproveBoat(DisapproveBoatInputDTO disapproveBoatInput);
+        Task<decimal> CalculatePrice();
     }
 }

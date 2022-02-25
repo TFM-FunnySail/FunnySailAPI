@@ -12,5 +12,6 @@ namespace FunnySailAPI.ApplicationCore.Models.DTO.Filters
         public int BoatTypeId { get; set; }
         public DaysRangeFilter CreatedDaysRange { get; set; }
         public List<int> ExclusiveBoatId { get; set; }
+        public List<int> BoatIdList { get; set; }
     }
 }

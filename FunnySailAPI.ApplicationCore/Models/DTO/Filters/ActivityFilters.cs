@@ -12,5 +12,6 @@ namespace FunnySailAPI.ApplicationCore.Models.DTO.Filters
         public PriceRangeFilter PriceRange { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public List<int> ActivityIdList { get; set; }
     }
 }

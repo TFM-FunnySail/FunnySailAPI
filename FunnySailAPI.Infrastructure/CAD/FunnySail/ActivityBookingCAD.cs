@@ -13,5 +13,10 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
         public ActivityBookingCAD(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
+
+        public async Task<ActivityBookingEN> FindByIds(int idActivity, int idBooking)
+        {
+            return await _dbContext.ActivityBookings.FindAsync(idActivity, idBooking);
+        }
     }
 }

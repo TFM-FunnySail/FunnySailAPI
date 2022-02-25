@@ -155,6 +155,7 @@ namespace FunnySailAPI.Infrastructure
         public DbSet<OwnerInvoiceEN> OwnerInvoices { get; set; }
         public DbSet<OwnerInvoiceLineEN> OwnerInvoiceLines { get; set; }
         public DbSet<RefundEN> Refunds { get; set; }
+        public DbSet<ActivityBookingEN> ActivityBookings { get; set; }
 
     }
 }

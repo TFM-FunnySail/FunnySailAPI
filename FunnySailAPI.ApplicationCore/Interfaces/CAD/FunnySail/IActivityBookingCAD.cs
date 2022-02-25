@@ -8,5 +8,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail
 {
     public interface IActivityBookingCAD : IBaseCAD<ActivityBookingEN>
     {
+        Task<ActivityBookingEN> FindByIds(int idActivity, int idBooking);
     }
 }
