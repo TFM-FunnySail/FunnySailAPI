@@ -203,7 +203,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
 
         public async Task<int> PayBooking(int idBooking) 
         {
-            BookingEN bookingEN = _bookingCEN.GetBookingCAD().FindById(idBooking)?.Result;
+            BookingEN bookingEN = await _bookingCEN.GetBookingCAD().FindById(idBooking);
 
             if (bookingEN == null)
                 throw new DataValidationException("Booking Id",
@@ -228,7 +228,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                         ClientId = bookingEN.ClientId,
                         CreatedDate = DateTime.Now,
                         InvoiceLines = invoiceLines,
-                        TotalAmount = invoiceLines[0].TotalAmount
+                        TotalAmount = invoiceLines.Sum(x=>x.TotalAmount)
                     });
 
                     bookingEN.Paid = true;
@@ -248,7 +248,6 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
 
         public async Task CancelBooking(int idBooking)
         {
-
             BookingEN bookingEN = await _bookingCEN.GetBookingCAD().FindById(idBooking);
 
             if (bookingEN == null)
