@@ -121,82 +121,98 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                 activities = await _activityCEN.GetActivityCAD().GetServiceFilteredList(
                                     new ActivityFilters { ActivityIdList = addBookingInput.ActivityIds });
             }
-            
-            if (boats.Count > 0 || services.Count > 0 || activities.Count > 0) 
+
+            if (boats.Count == 0 && services.Count == 0 && activities.Count == 0)
+                throw new DataValidationException("You must create the order with at least one activity, service or boat",
+                    "Debe crear la orden con al menos una actividad, servicio o embarcación");
+
+            using (var databaseTransaction = _databaseTransactionFactory.BeginTransaction())
             {
-                 bookingId = await _bookingCEN.CreateBooking(new BookingEN{ 
-                    ClientId = addBookingInput.ClientId,
-                    CreatedDate = DateTime.Today,
-                    RequestCaptain = addBookingInput.RequestCaptain,
-                    EntryDate = addBookingInput.EntryDate,
-                    DepartureDate = addBookingInput.DepartureDate,
-                    TotalPeople = addBookingInput.TotalPeople
-                });
-
-                BookingEN bookingEN = await _bookingCEN.GetBookingCAD().FindById(bookingId);
-
-                int invoiceLineId = await _invoiceLineCEN.CreateInvoiceLine(new InvoiceLineEN
+                try
                 {
-                    BookingId = bookingId
-                });
-
-                InvoiceLineEN invoiceLineEN = await _invoiceLineCEN.GetInvoiceLineCAD().FindById(invoiceLineId);
-                bookingEN.InvoiceLine = invoiceLineEN;
-
-                if (boats.Count > 0) {
-                    List<BoatBookingEN> boatBookings = new List<BoatBookingEN>(); 
-                    foreach (var boat in boats) 
+                    bookingId = await _bookingCEN.CreateBooking(new BookingEN
                     {
-                        decimal price = await _boatCP.CalculatePrice();
-                        await _boatBookingCEN.CreateBoatBooking(new BoatBookingEN
-                        {
-                            BoatId = boat.Id,
-                            BookingId = bookingId,
-                            Price = price
-                        });
-                        boatBookings.Add(await _boatBookingCEN.GetBoatBookingCAD().FindByIds(boat.Id, bookingId));
-                        invoiceLineEN.TotalAmount += price;
-                    }
-                    bookingEN.BoatBookings = boatBookings;
-                }
+                        ClientId = addBookingInput.ClientId,
+                        CreatedDate = DateTime.Today,
+                        RequestCaptain = addBookingInput.RequestCaptain,
+                        EntryDate = addBookingInput.EntryDate,
+                        DepartureDate = addBookingInput.DepartureDate,
+                        TotalPeople = addBookingInput.TotalPeople
+                    });
 
-                if (services.Count > 0)
+                    BookingEN bookingEN = await _bookingCEN.GetBookingCAD().FindById(bookingId);
+
+                    int invoiceLineId = await _invoiceLineCEN.CreateInvoiceLine(new InvoiceLineEN
+                    {
+                        BookingId = bookingId
+                    });
+
+                    InvoiceLineEN invoiceLineEN = await _invoiceLineCEN.GetInvoiceLineCAD().FindById(invoiceLineId);
+                    bookingEN.InvoiceLine = invoiceLineEN;
+
+                    if (boats.Count > 0)
+                    {
+                        List<BoatBookingEN> boatBookings = new List<BoatBookingEN>();
+                        foreach (var boat in boats)
+                        {
+                            decimal price = await _boatCP.CalculatePrice();
+                            await _boatBookingCEN.CreateBoatBooking(new BoatBookingEN
+                            {
+                                BoatId = boat.Id,
+                                BookingId = bookingId,
+                                Price = price
+                            });
+                            boatBookings.Add(await _boatBookingCEN.GetBoatBookingCAD().FindByIds(boat.Id, bookingId));
+                            invoiceLineEN.TotalAmount += price;
+                        }
+                        bookingEN.BoatBookings = boatBookings;
+                    }
+
+                    if (services.Count > 0)
+                    {
+                        List<ServiceBookingEN> serviceBookings = new List<ServiceBookingEN>();
+                        foreach (var service in services)
+                        {
+                            await _serviceBookingCEN.CreateServiceBooking(new ServiceBookingEN
+                            {
+                                ServiceId = service.Id,
+                                BookingId = bookingId,
+                                Price = service.Price
+                            });
+                            serviceBookings.Add(await _serviceBookingCEN.GetServiceBookingCAD().FindByIds(service.Id, bookingId));
+                            invoiceLineEN.TotalAmount += service.Price;
+                        }
+                        bookingEN.ServiceBookings = serviceBookings;
+                    }
+
+                    if (activities.Count > 0)
+                    {
+                        List<ActivityBookingEN> activityBookings = new List<ActivityBookingEN>();
+                        foreach (var activity in activities)
+                        {
+                            await _activityBookingCEN.CreateActivityBooking(new ActivityBookingEN
+                            {
+                                ActivityId = activity.Id,
+                                BookingId = bookingId,
+                                Price = activity.Price
+                            });
+                            activityBookings.Add(await _activityBookingCEN.GetActivityBookingCAD().FindByIds(activity.Id, bookingId));
+                            invoiceLineEN.TotalAmount += activity.Price;
+                        }
+                        bookingEN.ActivityBookings = activityBookings;
+                    }
+
+                    await databaseTransaction.CommitAsync();
+                }
+                catch (Exception ex)
                 {
-                    List<ServiceBookingEN> serviceBookings = new List<ServiceBookingEN>();
-                    foreach (var service in services)
-                    {
-                        await _serviceBookingCEN.CreateServiceBooking(new ServiceBookingEN
-                        {
-                            ServiceId = service.Id,
-                            BookingId = bookingId,
-                            Price = service.Price
-                        });
-                        serviceBookings.Add(await _serviceBookingCEN.GetServiceBookingCAD().FindByIds(service.Id, bookingId));
-                        invoiceLineEN.TotalAmount += service.Price;
-                    }
-                    bookingEN.ServiceBookings = serviceBookings; 
+                    await databaseTransaction.RollbackAsync();
+                    throw ex;
                 }
-
-                if (activities.Count > 0)
-                {
-                    List<ActivityBookingEN> activityBookings = new List<ActivityBookingEN>();
-                    foreach (var activity in activities)
-                    {
-                        await _activityBookingCEN.CreateActivityBooking(new ActivityBookingEN
-                        {
-                            ActivityId = activity.Id,
-                            BookingId = bookingId,
-                            Price = activity.Price
-                        });
-                        activityBookings.Add(await _activityBookingCEN.GetActivityBookingCAD().FindByIds(activity.Id, bookingId));
-                        invoiceLineEN.TotalAmount += activity.Price;
-                    }
-                    bookingEN.ActivityBookings = activityBookings;
-                }
-
             }
 
             
+
 
             return bookingId;
         }
