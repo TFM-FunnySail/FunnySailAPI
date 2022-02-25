@@ -1,5 +1,6 @@
 ﻿using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN;
+using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.Globals;
 using System;
 using System.Collections.Generic;
@@ -11,15 +12,15 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.OwnerInvoicesTypes
     {
         private readonly IOwnerInvoiceCAD _ownerInvoiceCAD;
         private readonly IOwnerInvoiceLineCAD _ownerInvoiceLineCAD;
-        private readonly IBookingCAD _bookingCAD;
+        private readonly IBookingCEN _bookingCEN;
 
         public OwnerInvoiceTypeFactory(IOwnerInvoiceCAD ownerInvoiceCAD,
                                        IOwnerInvoiceLineCAD ownerInvoiceLineCAD,
-                                       IBookingCAD bookingCAD)
+                                       IBookingCEN bookingCEN)
         {
             _ownerInvoiceCAD = ownerInvoiceCAD;
             _ownerInvoiceLineCAD = ownerInvoiceLineCAD;
-            _bookingCAD = bookingCAD;
+            _bookingCEN = bookingCEN;
         }
 
         public IOwnerInvoiceTypes GetOwnerInvoiceType(OwnerInvoicesEnum type)
@@ -27,7 +28,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.OwnerInvoicesTypes
             switch (type)
             {
                 case OwnerInvoicesEnum.Booking:
-                    return new BookingOwnerInvoiceType(_ownerInvoiceCAD, _ownerInvoiceLineCAD, _bookingCAD);
+                    return new BookingOwnerInvoiceType(_ownerInvoiceCAD, _ownerInvoiceLineCAD, _bookingCEN);
 
                 case OwnerInvoicesEnum.TechnicalService:
                     return new TecServiceOwnerInvoiceType(_ownerInvoiceCAD, _ownerInvoiceLineCAD);

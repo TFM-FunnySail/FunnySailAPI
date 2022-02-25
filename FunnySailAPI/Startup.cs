@@ -107,6 +107,7 @@ namespace FunnySailAPI
             services.AddScoped<IClientInvoiceCEN, ClientInvoiceCEN>();
             services.AddScoped<IOwnerInvoiceLineCEN, OwnerInvoiceLineCEN>();
             services.AddScoped<IBoatBaseCEN, BoatBaseCEN>();
+            services.AddScoped<IRefundCEN, RefundCEN>();
 
             #endregion
 
@@ -116,7 +117,7 @@ namespace FunnySailAPI
             services.AddScoped<ITechnicalServiceCP, TechnicalServiceCP>();
             services.AddScoped<IPortMooringCP, PortMooringCP>();
             services.AddScoped<IBookingCP, BookingCP>();
-
+            services.AddScoped<IRefundCP, RefundCP>();
             services.AddScoped<IOwnerInvoiceCP, OwnerInvoiceCP>();
             #endregion
 
