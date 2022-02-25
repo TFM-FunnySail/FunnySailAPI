@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace UnitTest.Features.CAD.Activity
+namespace UnitTest.Features.CP_CEN.Activity
 {
     using TechTalk.SpecFlow;
     using System;
@@ -48,7 +48,7 @@ namespace UnitTest.Features.CAD.Activity
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/CAD/Activity", "activity_persitence", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/CP_CEN/Activity", "activity_persitence", null, ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -65,7 +65,7 @@ namespace UnitTest.Features.CAD.Activity
             if (((testRunner.FeatureContext != null) 
                         && (testRunner.FeatureContext.FeatureInfo.Title != "activity_persitence")))
             {
-                global::UnitTest.Features.CAD.Activity.Activity_PersitenceFeature.FeatureSetup(null);
+                global::UnitTest.Features.CP_CEN.Activity.Activity_PersitenceFeature.FeatureSetup(null);
             }
         }
         

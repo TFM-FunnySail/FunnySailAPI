@@ -12,7 +12,7 @@ using UnitTest.FakeFactories;
 namespace UnitTest.Features.CP_CEN.Activities
 {
     [Binding]
-    public class Deactivate_ActivitySteps
+    public class DeactivateActivityStep
     {
   
         private ScenarioContext _scenarioContext;
@@ -21,7 +21,7 @@ namespace UnitTest.Features.CP_CEN.Activities
         private ActivityEN _activityUpdated;
         private int _id;
 
-        public Deactivate_ActivitySteps(ScenarioContext scenarioContext)
+        public DeactivateActivityStep(ScenarioContext scenarioContext)
         {
 
             _scenarioContext = scenarioContext;

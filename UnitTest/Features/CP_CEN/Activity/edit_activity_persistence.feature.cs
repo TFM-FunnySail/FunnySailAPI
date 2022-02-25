@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace UnitTest.Features.CAD.Activity
+namespace UnitTest.Features.CP_CEN.Activity
 {
     using TechTalk.SpecFlow;
     using System;
@@ -20,7 +20,7 @@ namespace UnitTest.Features.CAD.Activity
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute()]
-    public partial class Deactivate_ActivityFeature
+    public partial class Edit_Activity_PersitenceFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -29,7 +29,7 @@ namespace UnitTest.Features.CAD.Activity
         
         private string[] _featureTags = ((string[])(null));
         
-#line 1 "deactivate_activity.feature"
+#line 1 "edit_activity_persistence.feature"
 #line hidden
         
         public virtual Microsoft.VisualStudio.TestTools.UnitTesting.TestContext TestContext
@@ -48,7 +48,7 @@ namespace UnitTest.Features.CAD.Activity
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/CAD/Activity", "deactivate_activity", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/CP_CEN/Activity", "edit_activity_persitence", null, ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -63,9 +63,9 @@ namespace UnitTest.Features.CAD.Activity
         public virtual void TestInitialize()
         {
             if (((testRunner.FeatureContext != null) 
-                        && (testRunner.FeatureContext.FeatureInfo.Title != "deactivate_activity")))
+                        && (testRunner.FeatureContext.FeatureInfo.Title != "edit_activity_persitence")))
             {
-                global::UnitTest.Features.CAD.Activity.Deactivate_ActivityFeature.FeatureSetup(null);
+                global::UnitTest.Features.CP_CEN.Activity.Edit_Activity_PersitenceFeature.FeatureSetup(null);
             }
         }
         
@@ -91,13 +91,14 @@ namespace UnitTest.Features.CAD.Activity
             testRunner.CollectScenarioErrors();
         }
         
-        public virtual void DesactivarUnaActividadQueSeEncontrabaActivada(string id, string[] exampleTags)
+        public virtual void EditoUnaActividad(string id, string name, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("id", id);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Desactivar una actividad que se encontraba activada", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 4
+            argumentsOfScenario.Add("name", name);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Edito una actividad", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 3
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -117,62 +118,52 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
+#line 4
+ testRunner.Given(string.Format("se pretende editar el <nombre> de la actividad con {0}", id), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
 #line 5
- testRunner.Given(string.Format("se pide desactivar una actividad con {0}", id), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.When("se edita la actividad", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 6
- testRunner.When("se desactiva la actividad seleccionada", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 7
- testRunner.Then(string.Format("el resultado debe ser que la actividad con {0} se encuentra ahora desactivada", id), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("devuelve la actividad editada en base de datos con los valores actualizados", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Desactivar una actividad que se encontraba activada: 1")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "deactivate_activity")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Edito una actividad: 1")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "edit_activity_persitence")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "1")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:id", "1")]
-        public virtual void DesactivarUnaActividadQueSeEncontrabaActivada_1()
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:name", "Wakeboard")]
+        public virtual void EditoUnaActividad_1()
         {
-#line 4
-this.DesactivarUnaActividadQueSeEncontrabaActivada("1", ((string[])(null)));
+#line 3
+this.EditoUnaActividad("1", "Wakeboard", ((string[])(null)));
 #line hidden
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Desactivar una actividad que se encontraba activada: 2")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "deactivate_activity")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Edito una actividad: 2")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "edit_activity_persitence")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "2")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:id", "2")]
-        public virtual void DesactivarUnaActividadQueSeEncontrabaActivada_2()
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:name", "Navegar")]
+        public virtual void EditoUnaActividad_2()
         {
-#line 4
-this.DesactivarUnaActividadQueSeEncontrabaActivada("2", ((string[])(null)));
+#line 3
+this.EditoUnaActividad("2", "Navegar", ((string[])(null)));
 #line hidden
         }
         
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Desactivar una actividad que se encontraba activada: 3")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "deactivate_activity")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "3")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:id", "3")]
-        public virtual void DesactivarUnaActividadQueSeEncontrabaActivada_3()
-        {
-#line 4
-this.DesactivarUnaActividadQueSeEncontrabaActivada("3", ((string[])(null)));
-#line hidden
-        }
-        
-        public virtual void DesactivarUnaActividadQueSeEncontrabaDesactivada(string id, string[] exampleTags)
+        public virtual void EditoUnaActividadConNombreVacio(string id, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("id", id);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Desactivar una actividad que se encontraba desactivada", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 15
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Edito una actividad con nombre vacio", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 13
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -192,40 +183,40 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
+#line 14
+ testRunner.Given(string.Format("se pretende editar la actividad con {0} dejando el nombre vacio", id), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 15
+ testRunner.When("se edita la actividad", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
 #line 16
- testRunner.Given(string.Format("se pide desactivar una actividad con {0}", id), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 17
- testRunner.When("se desactiva la actividad seleccionada", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 18
- testRunner.Then(string.Format("el resultado debe ser que la actividad con {0} se encuentra ahora desactivada", id), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("devuelve un error porque el nombre de la actividad es requerido", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Desactivar una actividad que se encontraba desactivada: 4")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "deactivate_activity")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "4")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:id", "4")]
-        public virtual void DesactivarUnaActividadQueSeEncontrabaDesactivada_4()
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Edito una actividad con nombre vacio: 1")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "edit_activity_persitence")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "1")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:id", "1")]
+        public virtual void EditoUnaActividadConNombreVacio_1()
         {
-#line 15
-this.DesactivarUnaActividadQueSeEncontrabaDesactivada("4", ((string[])(null)));
+#line 13
+this.EditoUnaActividadConNombreVacio("1", ((string[])(null)));
 #line hidden
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Desactivar una actividad que se encontraba desactivada: 5")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "deactivate_activity")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "5")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:id", "5")]
-        public virtual void DesactivarUnaActividadQueSeEncontrabaDesactivada_5()
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Edito una actividad con nombre vacio: 2")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "edit_activity_persitence")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "2")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:id", "2")]
+        public virtual void EditoUnaActividadConNombreVacio_2()
         {
-#line 15
-this.DesactivarUnaActividadQueSeEncontrabaDesactivada("5", ((string[])(null)));
+#line 13
+this.EditoUnaActividadConNombreVacio("2", ((string[])(null)));
 #line hidden
         }
     }

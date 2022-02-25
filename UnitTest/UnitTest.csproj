@@ -7,8 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <SpecFlowObsoleteCodeBehindFiles Remove="Features\CAD\Activity\activity_persistence - Copia.feature.cs" />
-    <SpecFlowObsoleteCodeBehindFiles Remove="Features\CAD\Activity\get_available_activity - Copia.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="Features\CP_CEN\Port\activity_persistence.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="Features\CP_CEN\Port\edit_activity_persistence.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="Features\CP_CEN\Activity\activity_persistence - Copia.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="Features\CP_CEN\Activity\get_available_activity - Copia.feature.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,27 +29,41 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Features\CAD\Activity\edit_activity_persistence.feature.cs">
+    <Compile Update="Features\CP_CEN\Port\port_persistence.feature.cs">
+      <DependentUpon>port_persistence.feature</DependentUpon>
+    </Compile>
+    <Compile Update="Features\CP_CEN\Port\edit_port_persistence.feature.cs">
+      <DependentUpon>edit_port_persistence.feature</DependentUpon>
+    </Compile>
+    <Compile Update="Features\CP_CEN\Activity\edit_activity_persistence.feature.cs">
       <DependentUpon>edit_activity_persistence.feature</DependentUpon>
     </Compile>
-    <Compile Update="Features\CAD\Activity\deactivate_activity.feature.cs">
+    <Compile Update="Features\CP_CEN\Activity\deactivate_activity.feature.cs">
       <DependentUpon>deactivate_activity.feature</DependentUpon>
     </Compile>
-    <Compile Update="Features\CAD\Activity\activity_persistence.feature.cs">
+    <Compile Update="Features\CP_CEN\Activity\activity_persistence.feature.cs">
       <DependentUpon>activity_persistence.feature</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <SpecFlowFeatureFiles Update="Features\CAD\Activity\edit_activity_persistence.feature">
+    <SpecFlowFeatureFiles Update="Features\CP_CEN\Port\port_persistence.feature">
       <Visible>$(UsingMicrosoftNETSdk)</Visible>
       <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
     </SpecFlowFeatureFiles>
-    <SpecFlowFeatureFiles Update="Features\CAD\Activity\deactivate_activity.feature">
+    <SpecFlowFeatureFiles Update="Features\CP_CEN\Port\edit_port_persistence.feature">
       <Visible>$(UsingMicrosoftNETSdk)</Visible>
       <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
     </SpecFlowFeatureFiles>
-    <SpecFlowFeatureFiles Update="Features\CAD\Activity\activity_persistence.feature">
+    <SpecFlowFeatureFiles Update="Features\CP_CEN\Activity\edit_activity_persistence.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="Features\CP_CEN\Activity\deactivate_activity.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
+    <SpecFlowFeatureFiles Update="Features\CP_CEN\Activity\activity_persistence.feature">
       <Visible>$(UsingMicrosoftNETSdk)</Visible>
       <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
     </SpecFlowFeatureFiles>
