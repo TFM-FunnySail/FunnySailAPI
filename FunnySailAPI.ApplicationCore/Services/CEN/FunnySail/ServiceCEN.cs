@@ -1,6 +1,6 @@
 ﻿using FunnySailAPI.ApplicationCore.Exceptions;
 using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
-using FunnySailAPI.ApplicationCore.Interfaces.CEN;
+using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
@@ -22,7 +22,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             _serviceBookingCAD = serviceBookingCAD;
         }
 
-        public async Task<int> AddService(string name,decimal price,string description)
+        public async Task<int> CreateService(string name,decimal price,string description)
         {
             if(name == null)
                 throw new DataValidationException("Service name", "Nombre del servicio",
@@ -79,6 +79,11 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             {
                 await _serviceCAD.Delete(service);
             }
+        }
+
+        public IServiceCAD GetServiceCAD()
+        {
+            return _serviceCAD;
         }
     }
 }

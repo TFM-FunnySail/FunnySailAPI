@@ -65,6 +65,18 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
                 (booking, boatBooking) => boatBooking.BoatId)
                 .Distinct().ToListAsync();
         }
+
+        public async Task<List<int>> GetBoatIdsNotAvailable(DateTime initialDate, DateTime endDate,List<int> ids)
+        {
+            return await _dbContext.Bookings.
+                Where(x => (x.EntryDate >= initialDate && x.EntryDate <= endDate) ||
+                (x.DepartureDate > initialDate && x.DepartureDate <= endDate))
+                .Join(_dbContext.BoatBookings.Where(x=> ids.Contains(x.BoatId)),
+                b => b.Id, bb => bb.BookingId,
+                (booking, boatBooking) => boatBooking.BoatId)
+                .Distinct().ToListAsync();
+        }
+
         #endregion
 
         #region Filter
@@ -96,7 +108,17 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
             if (boatFilters.ExclusiveBoatId?.Count > 0)
                 boats = boats.Where(x => !boatFilters.ExclusiveBoatId.Contains(x.Id));
 
+            if (boatFilters.BoatIdList?.Count > 0)
+                boats = boats.Where(x => boatFilters.BoatIdList.Contains(x.Id));
+
             return boats;
+        }
+
+        public async Task<List<BoatEN>> GetBoatFilteredList(BoatFilters boatFilters)
+        {
+            IQueryable<BoatEN> boats = GetBoatFiltered(boatFilters);
+
+            return await boats.ToListAsync();
         }
         #endregion
     }

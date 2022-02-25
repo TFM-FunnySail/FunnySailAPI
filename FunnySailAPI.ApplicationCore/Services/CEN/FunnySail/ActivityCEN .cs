@@ -24,7 +24,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             _activityCAD = activityCAD;
         }
 
-        public async Task<int> AddActivity(DateTime activityDate, string name, decimal price, string description)
+        public async Task<int> CreateActivity(DateTime activityDate, string name, decimal price, string description)
         {
             ActivityEN dbActivity = await _activityCAD.AddAsync(new ActivityEN
             {

@@ -61,9 +61,10 @@ namespace FunnySailAPI
             services.AddScoped<IBoatPricesCAD, BoatPricesCAD>();
             services.AddScoped<IUserCAD, UsersCAD>();
             services.AddScoped<IBookingCAD, BookingCAD>();
+            services.AddScoped<IBoatBookingCAD, BoatBookingCAD>();
+            services.AddScoped<IActivityBookingCAD, ActivityBookingCAD>();
             services.AddScoped<IInvoiceLineCAD, InvoiceLineCAD>();
             services.AddScoped<IClientInvoiceCAD, ClientInvoiceCAD>();
-            services.AddScoped<IBoatBookingCAD, BoatBookingCAD>();
             services.AddScoped<IServiceCAD, ServiceCAD>();
             services.AddScoped<IServiceBookingCAD, ServiceBookingCAD>();
             services.AddScoped<IPortCAD, PortCAD>();
@@ -87,6 +88,7 @@ namespace FunnySailAPI
             services.AddScoped<IBoatPricesCEN, BoatPricesCEN>();
             services.AddScoped<IBoatResourceCEN, BoatResourceCEN>();
             services.AddScoped<IBoatTypeCEN, BoatTypeCEN>();
+            services.AddScoped<IBoatBaseCEN, BoatBaseCEN>();
             services.AddScoped<IReviewCEN, ReviewCEN>();
             services.AddScoped<IUserCEN, UserCEN>();
             services.AddScoped<IActivityCEN, ActivityCEN>();
@@ -95,7 +97,13 @@ namespace FunnySailAPI
             services.AddScoped<IMooringCEN, MooringCEN>();
             services.AddScoped<IServiceCEN, ServiceCEN>();
             services.AddScoped<ITechnicalServiceCEN, TechnicalServiceCEN>();
-            services.AddScoped<IBoatBaseCEN, BoatBaseCEN>();
+            services.AddScoped<IBookingCEN, BookingCEN>();
+            services.AddScoped<IActivityBookingCEN, ActivityBookingCEN>();
+            services.AddScoped<IServiceBookingCEN, ServiceBookingCEN>();
+            services.AddScoped<IBoatBookingCEN, BoatBookingCEN>();
+            services.AddScoped<IInvoiceLineCEN, InvoiceLineCEN>();
+            services.AddScoped<IClientInvoiceCEN, ClientInvoiceCEN>();
+            services.AddScoped<IOwnerInvoiceLineCEN, OwnerInvoiceLineCEN>();
 
             #endregion
 
@@ -104,6 +112,8 @@ namespace FunnySailAPI
             services.AddScoped<IBoatCP, BoatCP>();
             services.AddScoped<ITechnicalServiceCP, TechnicalServiceCP>();
             services.AddScoped<IPortMooringCP, PortMooringCP>();
+            services.AddScoped<IBookingCP, BookingCP>();
+
             #endregion
 
             #region GeneralServices

@@ -18,5 +18,10 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
         {
             return await _dbContext.ServiceBookings.AnyAsync(x => x.ServiceId == serviceId);
         }
+
+        public async Task<ServiceBookingEN> FindByIds(int idService, int idBooking)
+        {
+            return await _dbContext.ServiceBookings.FindAsync(idService, idBooking);
+        }
     }
 }

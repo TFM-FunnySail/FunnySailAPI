@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail
 {
-    public interface IBookingCAD : IBaseCAD<BookingEN>
+    public interface IActivityBookingCAD : IBaseCAD<ActivityBookingEN>
     {
-        Task<BookingEN> FindByIdAllData(int bookingId);
+        Task<ActivityBookingEN> FindByIds(int idActivity, int idBooking);
     }
 }
