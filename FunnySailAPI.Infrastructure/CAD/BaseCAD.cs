@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -81,5 +82,28 @@ namespace FunnySailAPI.Infrastructure.CAD
             await _dbContext.SaveChangesAsync();
         }
 
+        public virtual async Task<IList<T>> Get(
+            IQueryable<T> query = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+            string includeProperties = "",
+            Pagination pagination = null)
+        {
+
+            foreach (var includeProperty in includeProperties.Split
+                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            if (orderBy != null)
+            {
+                query = orderBy(query);
+            }
+
+            if (pagination != null)
+                return await query.Skip(pagination.First).Take(pagination.Size).ToListAsync();
+            else
+                return await query.ToListAsync();
+        }
     }
 }

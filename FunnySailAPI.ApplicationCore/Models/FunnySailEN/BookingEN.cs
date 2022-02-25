@@ -23,7 +23,7 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
 
         public UsersEN Client { get; set; }
         public InvoiceLineEN InvoiceLine { get; set; }
-        public OwnerInvoiceLineEN OwnerInvoiceLine { get; set; }
+        public List<OwnerInvoiceLineEN> OwnerInvoiceLines { get; set; }
         public List<BoatBookingEN> BoatBookings { get; set; }
         public List<ServiceBookingEN> ServiceBookings { get; set; }
         public List<ActivityBookingEN> ActivityBookings { get; set; }

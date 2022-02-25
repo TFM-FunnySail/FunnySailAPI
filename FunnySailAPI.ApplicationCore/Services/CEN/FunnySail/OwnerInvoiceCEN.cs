@@ -12,14 +12,17 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 {
     public class OwnerInvoiceCEN : IOwnerInvoiceCEN
     {
-        private readonly IOwnerInvoiceCAD _ownerInvoiceCAD;
+        protected readonly IOwnerInvoiceCAD _ownerInvoiceCAD;
+        protected readonly IOwnerInvoiceLineCAD _ownerInvoiceLineCAD;
         private readonly string _enName;
         private readonly string _esName;
-        public OwnerInvoiceCEN(IOwnerInvoiceCAD ownerInvoiceCAD)
+        public OwnerInvoiceCEN(IOwnerInvoiceCAD ownerInvoiceCAD,
+                               IOwnerInvoiceLineCAD ownerInvoiceLineCAD)
         {
             _ownerInvoiceCAD = ownerInvoiceCAD;
             _enName = "Owner invoice";
             _esName = "Factura de propietario";
+            _ownerInvoiceLineCAD = ownerInvoiceLineCAD;
         }
 
         public async Task<OwnerInvoiceEN> CancelOwnerInvoice(int ownerInvoiceId)
@@ -40,6 +43,26 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             await _ownerInvoiceCAD.Update(ownerInvoiceEN);
 
             return ownerInvoiceEN;
+        }
+
+        protected async Task<int> CreateOwnerInvoice(string ownerId,decimal amount,bool toCollet)
+        {
+            OwnerInvoiceEN ownerInvoiceEN = await _ownerInvoiceCAD.AddAsync(new OwnerInvoiceEN
+            {
+                Date = DateTime.UtcNow,
+                Amount = amount,
+                IsCanceled = false,
+                IsPaid = false,
+                ToCollet = toCollet,
+                OwnerId = ownerId
+            });
+
+            return ownerInvoiceEN.Id;
+        }
+
+        public IOwnerInvoiceLineCAD GetOwnerInvoiceLineCAD()
+        {
+            return _ownerInvoiceLineCAD;
         }
     }
 }

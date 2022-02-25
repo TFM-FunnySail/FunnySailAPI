@@ -19,7 +19,7 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
         {
             return await _dbContext.Bookings
                 .Include(x => x.InvoiceLine)
-                .Include(x => x.OwnerInvoiceLine)
+                .Include(x => x.OwnerInvoiceLines)
                 .Include(x => x.ServiceBookings)
                 .Include(x => x.ActivityBookings)
                 .Include(x => x.BoatBookings)

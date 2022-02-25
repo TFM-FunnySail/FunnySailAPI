@@ -108,7 +108,7 @@ namespace FunnySailAPI.Infrastructure
 
             modelBuilder.Entity<OwnerInvoiceLineEN>(oil =>
             {
-                oil.HasKey(m => new { m.BookingId, m.OwnerInvoiceId });
+                oil.HasKey(m => new { m.BookingId, m.OwnerId });
             });
 
             //Inicialización de datos

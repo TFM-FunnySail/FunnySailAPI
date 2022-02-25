@@ -50,4 +50,10 @@ namespace FunnySailAPI.ApplicationCore.Models.Globals
         IsRequired,
         NotFound
     }
+
+    public enum OwnerInvoicesEnum
+    {
+        Booking,
+        TechnicalService
+    }
 }
