@@ -1,4 +1,5 @@
 ﻿using FunnySailAPI.ApplicationCore.Exceptions;
+using FunnySailAPI.ApplicationCore.Interfaces;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.DTO.Filters;
@@ -28,6 +29,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
         private readonly IServiceCEN _serviceCEN;
         private readonly IBoatCP _boatCP;
         private readonly IClientInvoiceCEN _clientInvoiceCEN;
+        private IDatabaseTransactionFactory _databaseTransactionFactory;
 
         public BookingCP(IBookingCEN bookingCEN,
                          IUserCEN userCEN,
@@ -40,7 +42,8 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                          IBoatCEN boatCEN,
                          IServiceCEN serviceCEN,
                          IBoatCP boatCP,
-                         IClientInvoiceCEN clientInvoiceCEN) 
+                         IClientInvoiceCEN clientInvoiceCEN,
+                         IDatabaseTransactionFactory databaseTransactionFactory) 
         {
             _bookingCEN = bookingCEN;
             _userCEN = userCEN;
@@ -54,6 +57,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             _serviceCEN = serviceCEN;
             _boatCP = boatCP;
             _clientInvoiceCEN = clientInvoiceCEN;
+            _databaseTransactionFactory = databaseTransactionFactory;
         }
         public async Task<int> CreateBooking(AddBookingInputDTO addBookingInput)
         {
@@ -205,19 +209,40 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                 throw new DataValidationException("Booking Id",
                    "Id Booking", ExceptionTypesEnum.NotFound);
 
-            bookingEN.Paid = true;
+            if (bookingEN.Paid)
+                throw new DataValidationException("The reservation has already been paid",
+                    "La reserva ya ha sido pagada");
 
-            List<InvoiceLineEN> invoiceLines = new List<InvoiceLineEN>();
+            int clientInvoice = 0;
 
-            invoiceLines.Add(bookingEN.InvoiceLine);
+            using (var databaseTransaction = _databaseTransactionFactory.BeginTransaction())
+            {
+                try
+                {
+                    List<InvoiceLineEN> invoiceLines = new List<InvoiceLineEN>();
 
-            int clientInvoice = await _clientInvoiceCEN.CreateClientInvoice(new ClientInvoiceEN {
-                ClientId = bookingEN.ClientId,
-                CreatedDate = DateTime.Now,
-                InvoiceLines = invoiceLines,
-                TotalAmount = invoiceLines[0].TotalAmount
-            });
+                    invoiceLines.Add(bookingEN.InvoiceLine);
 
+                    clientInvoice = await _clientInvoiceCEN.CreateClientInvoice(new ClientInvoiceEN
+                    {
+                        ClientId = bookingEN.ClientId,
+                        CreatedDate = DateTime.Now,
+                        InvoiceLines = invoiceLines,
+                        TotalAmount = invoiceLines[0].TotalAmount
+                    });
+
+                    bookingEN.Paid = true;
+                    await _bookingCEN.UpdateBooking(bookingEN);
+
+                    await databaseTransaction.CommitAsync();
+                }
+                catch (Exception ex)
+                {
+                    await databaseTransaction.RollbackAsync();
+                    throw ex;
+                }
+            }
+                
             return clientInvoice;
         }
 
