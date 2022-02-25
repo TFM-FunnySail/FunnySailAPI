@@ -124,6 +124,24 @@ namespace UnitTest.FakeFactories
                     Price = 350,
                     Description = "Actividad de prueba 3"
                 },
+                  new ActivityEN
+                {
+                    Id = 4,
+                    Active = false,
+                    ActivityDate = DateTime.UtcNow,
+                    Name = "Buceo",
+                    Price = 280,
+                    Description = "Actividad de prueba 4"
+                },
+                    new ActivityEN
+                {
+                    Id = 5,
+                    Active = false,
+                    ActivityDate = DateTime.UtcNow,
+                    Name = "Pesca",
+                    Price = 250,
+                    Description = "Actividad de prueba 5"
+                },
             };
         }
         public void Add<T>(T newEntity)
