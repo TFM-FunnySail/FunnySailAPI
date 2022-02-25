@@ -19,14 +19,29 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
     public class PortCEN : IPortCEN
     {
         private readonly IPortCAD _portCAD;
+        private readonly string _enName;
+        private readonly string _esName;
 
         public PortCEN(IPortCAD portCAD)
         {
             _portCAD = portCAD;
+            _enName = "Port";
+            _esName = "Puerto";
         }
 
         public async Task<int> AddPort(string name, string location)
         {
+            if (name == null)
+            {
+                throw new DataValidationException($"{_enName} name", $"Nombre del {_esName}",
+                    ExceptionTypesEnum.IsRequired);
+            }
+            else if (location == null)
+            {
+                throw new DataValidationException($"{_enName} location", $"Localización del {_esName}",
+                   ExceptionTypesEnum.IsRequired);
+            }
+
             PortEN dbPort = await _portCAD.AddAsync(new PortEN
             {
                 Name = name,
@@ -38,6 +53,16 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
         public async Task<PortEN> EditPort(UpdatePortDTO updatePortInput)
         {
+            if (updatePortInput.Name == null)
+            {
+                throw new DataValidationException($"{_enName} name", $"Nombre del {_esName}",
+                    ExceptionTypesEnum.IsRequired);
+            }
+            else if (updatePortInput.Location == null)
+            {
+                throw new DataValidationException($"{_enName} location", $"Localización del {_esName}",
+                   ExceptionTypesEnum.IsRequired);
+            }
 
             PortEN port = await _portCAD.FindById(updatePortInput.Id);
 
@@ -61,7 +86,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
                 throw new DataValidationException("Port", "Puerto",
                     ExceptionTypesEnum.NotFound);
 
-                await _portCAD.Delete(port);  
+            await _portCAD.Delete(port);
         }
 
         public IPortCAD GetPortCAD()

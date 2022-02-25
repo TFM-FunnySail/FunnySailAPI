@@ -183,6 +183,9 @@ namespace FunnySailAPI.Infrastructure.Migrations
                     b.Property<int>("MooringId")
                         .HasColumnType("int");
 
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("PendingToReview")
                         .HasColumnType("bit");
 
@@ -490,16 +493,16 @@ namespace FunnySailAPI.Infrastructure.Migrations
                     b.Property<int>("BookingId")
                         .HasColumnType("int");
 
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int?>("OwnerInvoiceId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("money");
 
-                    b.HasKey("BookingId", "OwnerInvoiceId");
-
-                    b.HasIndex("BookingId")
-                        .IsUnique();
+                    b.HasKey("BookingId", "OwnerId");
 
                     b.HasIndex("OwnerInvoiceId");
 
@@ -1040,16 +1043,14 @@ namespace FunnySailAPI.Infrastructure.Migrations
             modelBuilder.Entity("FunnySailAPI.ApplicationCore.Models.FunnySailEN.OwnerInvoiceLineEN", b =>
                 {
                     b.HasOne("FunnySailAPI.ApplicationCore.Models.FunnySailEN.BookingEN", "Booking")
-                        .WithOne("OwnerInvoiceLine")
-                        .HasForeignKey("FunnySailAPI.ApplicationCore.Models.FunnySailEN.OwnerInvoiceLineEN", "BookingId")
+                        .WithMany("OwnerInvoiceLines")
+                        .HasForeignKey("BookingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("FunnySailAPI.ApplicationCore.Models.FunnySailEN.OwnerInvoiceEN", "OwnerInvoice")
                         .WithMany("OwnerInvoiceLines")
-                        .HasForeignKey("OwnerInvoiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OwnerInvoiceId");
                 });
 
             modelBuilder.Entity("FunnySailAPI.ApplicationCore.Models.FunnySailEN.RefundEN", b =>

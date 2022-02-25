@@ -21,6 +21,7 @@ namespace UnitTest.Steps.CP_CEN
         private ScenarioContext _scenarioContext;
         private IOwnerInvoiceCEN _ownerInvoiceCEN;
         private IOwnerInvoiceCAD _ownerInvoiceCAD;
+        private IOwnerInvoiceLineCAD _ownerInvoiceLineCAD;
         private OwnerInvoiceEN _OwnerInvoiceEN;
         private int _id;
 
@@ -30,7 +31,8 @@ namespace UnitTest.Steps.CP_CEN
 
             var applicationDbContextFake = new ApplicationDbContextFake();
             _ownerInvoiceCAD = new OwnerInvoiceCAD(applicationDbContextFake._dbContextFake);
-            _ownerInvoiceCEN = new OwnerInvoiceCEN(_ownerInvoiceCAD);     
+            _ownerInvoiceLineCAD = new OwnerInvoiceLineCAD(applicationDbContextFake._dbContextFake);
+            _ownerInvoiceCEN = new OwnerInvoiceCEN(_ownerInvoiceCAD, _ownerInvoiceLineCAD);     
         }
 
         [Given(@"que se quiere cancelar una factura de un propietario id (.*)")]

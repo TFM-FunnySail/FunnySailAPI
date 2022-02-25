@@ -50,6 +50,14 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
                 throw new DataValidationException("Service", "Servicio",
                     ExceptionTypesEnum.NotFound);
 
+            if (updateServiceInput.Name == null)
+                throw new DataValidationException("Service name", "Nombre del servicio",
+                    ExceptionTypesEnum.IsRequired);
+
+            if (updateServiceInput.Description == null)
+                throw new DataValidationException("Service description", "Descripción del servicio",
+                    ExceptionTypesEnum.IsRequired);
+
             service.Name = updateServiceInput.Name;
             service.Price = updateServiceInput.Price;
             service.Description = updateServiceInput.Description;

@@ -64,17 +64,20 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
             if (activityFilters.Active != null)
                 activities = activities.Where(x => x.Active == activityFilters.Active);
 
-            if (activityFilters.PriceRange?.MinPrice != null)
-                activities = activities.Where(x => x.Price >= activityFilters.PriceRange.MinPrice);
+            if (activityFilters.MinPrice != 0)
+                activities = activities.Where(x => x.Price >= activityFilters.MinPrice);
 
-            if (activityFilters.PriceRange?.MaxPrice != null)
-                activities = activities.Where(x => x.Price < activityFilters.PriceRange.MaxPrice);
+            if (activityFilters.MaxPrice != 0)
+                activities = activities.Where(x => x.Price < activityFilters.MaxPrice);
 
-            if (activityFilters.ActivityDateRange?.InitialDate != null)
-                activities = activities.Where(x => x.ActivityDate >= activityFilters.ActivityDateRange.InitialDate);
+            if (activityFilters.InitialDate != null)
+                activities = activities.Where(x => x.ActivityDate >= activityFilters.InitialDate);
 
-            if (activityFilters.ActivityDateRange?.EndDate != null)
-                activities = activities.Where(x => x.ActivityDate < activityFilters.ActivityDateRange.EndDate);
+            if (activityFilters.EndDate != null)
+                activities = activities.Where(x => x.ActivityDate < activityFilters.EndDate);
+
+            if (activityFilters.Name != "")
+                activities = activities.Where(x => x.Name == activityFilters.Name);
 
             if (activityFilters.ActivityIdList?.Count > 0)
                 activities = activities.Where(x => activityFilters.ActivityIdList.Contains(x.Id));

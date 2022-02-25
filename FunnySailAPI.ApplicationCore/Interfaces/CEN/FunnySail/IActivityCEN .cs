@@ -17,5 +17,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
         IActivityCAD GetActivityCAD();
         Task<ActivityEN> EditActivity(UpdateAcitivityDTO updateAcitivityInput);
         Task<ActivityEN> DeactivateActivity(int activityId);
+        Task<List<ActivityEN>> GetAvailableActivity(Pagination pagination, DateTime? initialDate, DateTime? endDate, decimal? minPrice, decimal? maxPrice, String name);
     }
 }

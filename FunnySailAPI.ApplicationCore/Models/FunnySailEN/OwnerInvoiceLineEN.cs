@@ -10,6 +10,7 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
     public class OwnerInvoiceLineEN
     {
         public int BookingId { get; set; }
+        public string OwnerId { get; set; }
         public int? OwnerInvoiceId { get; set; }
         
         [Column(TypeName = "money")]
