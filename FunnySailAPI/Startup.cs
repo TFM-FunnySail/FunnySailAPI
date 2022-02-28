@@ -5,6 +5,7 @@ using FunnySailAPI.ApplicationCore.Interfaces.CEN;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
+using FunnySailAPI.ApplicationCore.Services;
 using FunnySailAPI.ApplicationCore.Services.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.OwnerInvoicesTypes;
 using FunnySailAPI.ApplicationCore.Services.CP;
@@ -109,6 +110,7 @@ namespace FunnySailAPI
             services.AddScoped<IOwnerInvoiceLineCEN, OwnerInvoiceLineCEN>();
             services.AddScoped<IBoatBaseCEN, BoatBaseCEN>();
             services.AddScoped<IRefundCEN, RefundCEN>();
+            services.AddScoped<IOwnerInvoiceCEN, OwnerInvoiceCEN>();
 
             #endregion
 
@@ -126,6 +128,7 @@ namespace FunnySailAPI
             services.AddScoped<IDatabaseTransactionFactory, DatabaseTransactionFactory>();
             services.AddScoped<IInitializeDB, InitializeDB>();
             services.AddScoped<IOwnerInvoiceTypeFactory, OwnerInvoiceTypeFactory>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             #endregion
 
             services.AddSwaggerGen(c =>
