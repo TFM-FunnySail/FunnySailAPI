@@ -1,6 +1,6 @@
 ﻿using FunnySailAPI.ApplicationCore.Models.Globals;
 
-namespace FunnySailAPI.ApplicationCore.Models.DTO.Output.Boat
+namespace FunnySailAPI.DTO.Output.Boat
 {
     public class RequiredBoatTitleOutputDTO
     {

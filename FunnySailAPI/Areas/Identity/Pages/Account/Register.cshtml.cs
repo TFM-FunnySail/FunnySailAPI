@@ -7,6 +7,7 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input.User;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;

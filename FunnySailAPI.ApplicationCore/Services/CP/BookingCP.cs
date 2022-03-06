@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input.Booking;
 
 namespace FunnySailAPI.ApplicationCore.Services.CP
 {

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input.Activity;
 
 namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
 {

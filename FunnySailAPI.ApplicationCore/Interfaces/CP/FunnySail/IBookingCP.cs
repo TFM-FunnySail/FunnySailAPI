@@ -1,4 +1,5 @@
 ﻿using FunnySailAPI.ApplicationCore.Models.DTO.Input;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input.Booking;
 using System;
 using System.Collections.Generic;
 using System.Text;

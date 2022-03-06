@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FunnySailAPI.ApplicationCore.Models.DTO.Input
+namespace FunnySailAPI.ApplicationCore.Models.DTO.Input.OwnerInvoice
 {
     public class AddOwnerInvoiceInputDTO
     {

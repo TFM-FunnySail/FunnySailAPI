@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FunnySailAPI.ApplicationCore.Models.DTO.Input
+namespace FunnySailAPI.ApplicationCore.Models.DTO.Input.Activity
 {
-    public class UpdateServiceDTO
+    public class UpdateAcitivityDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
         public bool Active { get; set; }
+        public DateTime ActivityDate { get; set; }
+
     }
 }

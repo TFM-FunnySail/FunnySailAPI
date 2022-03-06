@@ -2,6 +2,7 @@
 using FunnySailAPI.ApplicationCore.Interfaces.CEN;
 using FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input.OwnerInvoice;
 using System;
 using System.Collections.Generic;
 using System.Text;

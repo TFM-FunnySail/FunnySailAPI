@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FunnySailAPI.ApplicationCore.Models.DTO.Output.Boat
+namespace FunnySailAPI.DTO.Output.Boat
 {
     public class BoatOutputDTO
     {

@@ -1,4 +1,5 @@
 ﻿using FunnySailAPI.ApplicationCore.Models.DTO.Input;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input.OwnerInvoice;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FunnySailAPI.ApplicationCore.Models.DTO.Input
+namespace FunnySailAPI.ApplicationCore.Models.DTO.Input.Port
 {
     public class UpdatePortDTO
     {

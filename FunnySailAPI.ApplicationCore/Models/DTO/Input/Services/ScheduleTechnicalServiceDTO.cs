@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace FunnySailAPI.ApplicationCore.Models.DTO.Input
+namespace FunnySailAPI.ApplicationCore.Models.DTO.Input.Services
 {
     public class ScheduleTechnicalServiceDTO
     {
