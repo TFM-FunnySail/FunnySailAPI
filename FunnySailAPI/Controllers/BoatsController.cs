@@ -30,19 +30,15 @@ namespace FunnySailAPI.Controllers
 
         // GET: api/Boats
         [HttpGet]
-        public async Task<ActionResult<GenericResponseDTO<BoatOutputDTO>>> GetBoats(int? limit, int? offset)
+        public async Task<ActionResult<GenericResponseDTO<BoatOutputDTO>>> GetBoats([FromQuery] BoatFilters filters,[FromQuery] Pagination pagination)
         {
             try
             {
-                var pagination = new Pagination
-                {
-                    Limit = limit ?? 20,
-                    Offset = offset ?? 0
-                };
+                var boatTotal = await _unitOfWork.BoatCEN.GetTotal(filters);
 
-                var boatTotal = await _unitOfWork.BoatCEN.GetTotal();
-
-                var boats = (await _unitOfWork.BoatCEN.GetAll(pagination: pagination,
+                var boats = (await _unitOfWork.BoatCEN.GetAll(
+                    filters: filters,
+                    pagination: pagination ?? new Pagination(),
                     includeProperties: source=>source.Include(x=>x.BoatInfo)
                                         .Include(x => x.BoatPrices)
                                         .Include(x=>x.RequiredBoatTitles)
