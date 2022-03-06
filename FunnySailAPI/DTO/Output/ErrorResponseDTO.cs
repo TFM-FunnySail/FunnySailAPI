@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FunnySailAPI.ApplicationCore.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,6 +23,13 @@ namespace FunnySailAPI.DTO.Output
         {
             EnMessage = enMessage;
             EsMessage = esMessage;
+            Success = false;
+        }
+
+        public ErrorResponseDTO(DataValidationException dataValidation)
+        {
+            EnMessage = dataValidation.EnMessage;
+            EsMessage = dataValidation.EsMessage;
             Success = false;
         }
     }

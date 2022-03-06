@@ -14,6 +14,7 @@ using FunnySailAPI.ApplicationCore.Models.Utils;
 using FunnySailAPI.DTO.Output.Boat;
 using FunnySailAPI.Assemblers;
 using FunnySailAPI.DTO.Output;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 
 namespace FunnySailAPI.Controllers
 {
@@ -59,7 +60,7 @@ namespace FunnySailAPI.Controllers
 
         // GET: api/Boats/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<BoatOutputDTO>> GetBoatEN(int id)
+        public async Task<ActionResult<BoatOutputDTO>> GetBoat(int id)
         {
             try
             {
@@ -166,33 +167,29 @@ namespace FunnySailAPI.Controllers
         //    }
         //}
 
-        //// POST: api/Boats
-        //// To protect from overposting attacks, enable the specific properties you want to bind to, for
-        //// more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        //[HttpPost]
-        //public async Task<ActionResult<BoatEN>> PostBoatEN(BoatEN boatEN)
-        //{
-        //    _context.Boats.Add(boatEN);
-        //    await _context.SaveChangesAsync();
+        // POST: api/Boats
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPost]
+        public async Task<ActionResult<BoatEN>> PostBoat(AddBoatInputDTO boatInput)
+        {
+            try
+            {
+                int boatId = await _unitOfWork.BoatCP.CreateBoat(boatInput);
 
-        //    return CreatedAtAction("GetBoatEN", new { id = boatEN.Id }, boatEN);
-        //}
+                return CreatedAtAction("GetBoat", new { id = boatId });
+            }
+            catch (DataValidationException dataValidation)
+            {
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, new ErrorResponseDTO(dataValidation));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+            
+        }
 
-        //// DELETE: api/Boats/5
-        //[HttpDelete("{id}")]
-        //public async Task<ActionResult<BoatEN>> DeleteBoatEN(int id)
-        //{
-        //    var boatEN = await _context.Boats.FindAsync(id);
-        //    if (boatEN == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    _context.Boats.Remove(boatEN);
-        //    await _context.SaveChangesAsync();
-
-        //    return boatEN;
-        //}
 
     }
 }
