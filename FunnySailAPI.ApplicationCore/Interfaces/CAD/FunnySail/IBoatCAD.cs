@@ -1,4 +1,4 @@
-﻿using FunnySailAPI.ApplicationCore.Models.DTO.Filters;
+﻿using FunnySailAPI.ApplicationCore.Models.Filters;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Utils;
 using System;

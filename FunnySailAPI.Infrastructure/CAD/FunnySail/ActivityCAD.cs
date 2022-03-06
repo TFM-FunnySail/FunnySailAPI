@@ -1,6 +1,6 @@
 ﻿using FunnySailAPI.ApplicationCore.Interfaces.CAD;
 using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
-using FunnySailAPI.ApplicationCore.Models.DTO.Filters;
+using FunnySailAPI.ApplicationCore.Models.Filters;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Utils;
 using Microsoft.EntityFrameworkCore;
