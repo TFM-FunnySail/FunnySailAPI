@@ -6,7 +6,13 @@ namespace FunnySailAPI.ApplicationCore.Models.Utils
 {
     public class Pagination
     {
-        public int First { get; set; }
-        public int Size { get; set; }
+        public int Limit { get; set; }
+        public int Offset { get; set; }
+
+        public Pagination()
+        {
+            Limit = 20;
+            Offset = 0;
+        }
     }
 }

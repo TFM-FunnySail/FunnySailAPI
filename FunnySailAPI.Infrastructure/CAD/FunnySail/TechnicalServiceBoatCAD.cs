@@ -1,8 +1,9 @@
 ﻿using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
-using FunnySailAPI.ApplicationCore.Models.DTO.Filters;
+using FunnySailAPI.ApplicationCore.Models.Filters;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Utils;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
 
         public async Task<IList<TechnicalServiceBoatEN>> Get(TechnicalServiceBoatFilters filters,
                                             Func<IQueryable<TechnicalServiceBoatEN>, IOrderedQueryable<TechnicalServiceBoatEN>> orderBy = null,
-                                            string includeProperties = "",
+                                            Func<IQueryable<TechnicalServiceBoatEN>, IIncludableQueryable<TechnicalServiceBoatEN, object>> includeProperties = null,
                                             Pagination pagination = null)
         {
             IQueryable<TechnicalServiceBoatEN> technicalServiceBoats = Filter(filters);

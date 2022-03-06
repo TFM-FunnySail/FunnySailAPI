@@ -219,11 +219,6 @@ namespace FunnySailAPI.Infrastructure.Migrations
                     b.Property<decimal>("Length")
                         .HasColumnType("decimal(9, 2)");
 
-                    b.Property<string>("MooringPoint")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
                     b.Property<int>("MotorPower")
                         .HasColumnType("int");
 

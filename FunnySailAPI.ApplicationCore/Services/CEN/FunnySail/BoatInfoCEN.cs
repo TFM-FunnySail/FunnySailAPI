@@ -31,9 +31,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             if (boatInfoEN.Registration == null)
                 throw new DataValidationException("Boat Registration ", " el registro de Barco ", ExceptionTypesEnum.IsRequired);
 
-            if (boatInfoEN.MooringPoint == null)
-                throw new DataValidationException("Boat MooringPoint ", " el punto de amarre de Barco ", ExceptionTypesEnum.IsRequired);
-
+            
             boatInfoEN = await _boatInfoCAD.AddAsync(boatInfoEN);
 
             return boatInfoEN.BoatId;
@@ -46,13 +44,13 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             if (boatInfo == null)
                 throw new DataValidationException(_enName, _esName, ExceptionTypesEnum.NotFound);
 
-            boatInfo.Capacity = updateBoatInput.Capacity;
-            boatInfo.Description = updateBoatInput.Description;
-            boatInfo.Length = updateBoatInput.Length;
-            boatInfo.MotorPower = updateBoatInput.MotorPower;
-            boatInfo.Name = updateBoatInput.Name;
-            boatInfo.Registration = updateBoatInput.Registration;
-            boatInfo.Sleeve = updateBoatInput.Sleeve;
+            boatInfo.Capacity = updateBoatInput.Capacity ?? boatInfo.Capacity;
+            boatInfo.Description = updateBoatInput.Description ?? boatInfo.Description;
+            boatInfo.Length = updateBoatInput.Length ?? boatInfo.Length;
+            boatInfo.MotorPower = updateBoatInput.MotorPower ?? boatInfo.MotorPower;
+            boatInfo.Name = updateBoatInput.Name ?? boatInfo.Name;
+            boatInfo.Registration = updateBoatInput.Registration ?? boatInfo.Registration;
+            boatInfo.Sleeve = updateBoatInput.Sleeve ?? boatInfo.Sleeve;
 
             await _boatInfoCAD.Update(boatInfo);
 

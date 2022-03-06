@@ -3,7 +3,7 @@ using FunnySailAPI.ApplicationCore.Interfaces.CAD;
 using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
-using FunnySailAPI.ApplicationCore.Models.DTO.Filters;
+using FunnySailAPI.ApplicationCore.Models.Filters;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 {
@@ -64,7 +65,9 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             return _boatCAD;
         }
 
-        public async Task<List<BoatEN>> GetAvailableBoats(Pagination pagination, DateTime initialDate, DateTime endDate)
+        public async Task<IList<BoatEN>> GetAvailableBoats(Pagination pagination, DateTime initialDate, DateTime endDate,
+            Func<IQueryable<BoatEN>, IOrderedQueryable<BoatEN>> orderBy = null,
+            Func<IQueryable<BoatEN>, IIncludableQueryable<BoatEN, object>> includeProperties = null)
         {
             List<int> idsNotAvailable = await _boatCAD.GetBoatIdsNotAvailable(initialDate, endDate);
 
@@ -74,7 +77,10 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
                 ExclusiveBoatId = idsNotAvailable
             });
 
-            return await _boatCAD.GetAll(boats.OrderBy(x => x.Id), pagination);
+            if (orderBy == null)
+                orderBy = b => b.OrderBy(x => x.Id);
+
+            return await _boatCAD.Get(boats, orderBy, includeProperties, pagination);
         }
 
         public async Task<BoatEN> UpdateBoat(UpdateBoatInputDTO updateBoatInput)
@@ -84,12 +90,34 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             if (boat == null)
                 throw new DataValidationException(_enName, _esName, ExceptionTypesEnum.NotFound);
 
-            boat.MooringId = updateBoatInput.MooringId;
-            boat.BoatTypeId = updateBoatInput.BoatTypeId;
+            boat.MooringId = updateBoatInput.MooringId ?? boat.MooringId;
+            boat.BoatTypeId = updateBoatInput.BoatTypeId ?? boat.BoatTypeId;
+            boat.Active = updateBoatInput.Active ?? boat.Active;
+            boat.PendingToReview = updateBoatInput.PendingToReview ?? boat.PendingToReview;
 
             await _boatCAD.Update(boat);
 
             return boat;
+        }
+
+        public async Task<IList<BoatEN>> GetAll(BoatFilters filters = null,
+            Pagination pagination = null,
+            Func<IQueryable<BoatEN>, IOrderedQueryable<BoatEN>> orderBy = null,
+            Func<IQueryable<BoatEN>, IIncludableQueryable<BoatEN, object>> includeProperties = null)
+        {
+            var boats = _boatCAD.GetBoatFiltered(filters);
+
+            if (orderBy == null)
+                orderBy = b => b.OrderBy(x => x.Id);
+
+            return await _boatCAD.Get(boats, orderBy, includeProperties, pagination);
+        }
+
+        public async Task<int> GetTotal(BoatFilters filters = null)
+        {
+            var boats = _boatCAD.GetBoatFiltered(filters);
+
+            return await _boatCAD.GetCounter(boats);
         }
     }
 }

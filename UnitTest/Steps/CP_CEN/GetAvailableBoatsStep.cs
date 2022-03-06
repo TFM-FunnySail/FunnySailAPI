@@ -44,15 +44,15 @@ namespace UnitTest.Steps.CP_CEN
             _endDate = DateTime.Parse(endDate);
             _pagination = new Pagination
             {
-                First = 0,
-                Size = 1000
+                Offset = 0,
+                Limit = 1000
             };
         }
 
         [When(@"se obtienen los barcos disponibles")]
         public async Task WhenSeObtienenLosBarcosDisponibles()
         {
-            _boats = await _boatCEN.GetAvailableBoats(_pagination,_initialDate,_endDate);
+            _boats = (await _boatCEN.GetAvailableBoats(_pagination,_initialDate,_endDate)).ToList();
         }
 
         [Then(@"el resultado debe ser una lista con todos los barcos activos")]
@@ -70,8 +70,8 @@ namespace UnitTest.Steps.CP_CEN
             _endDate = DateTime.Parse(endDate);
             _pagination = new Pagination
             {
-                First = 0,
-                Size = 1000
+                Offset = 0,
+                Limit = 1000
             };
             //Creando las reservas
             _applicationDbContextFake.Add<BookingEN>(new BookingEN
@@ -113,8 +113,8 @@ namespace UnitTest.Steps.CP_CEN
             _endDate = DateTime.Parse(endDate);
             _pagination = new Pagination
             {
-                First = 0,
-                Size = 1
+                Offset = 0,
+                Limit = 1
             };
         }
 

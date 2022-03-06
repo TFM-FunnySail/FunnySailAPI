@@ -5,7 +5,7 @@ using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.DTO;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input;
-using FunnySailAPI.ApplicationCore.Models.DTO.Output;
+using FunnySailAPI.ApplicationCore.Models.Filters;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
 using System;
@@ -26,6 +26,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
         private readonly IRequiredBoatTitlesCEN _requiredBoatTitlesCEN;
         private readonly IReviewCEN _reviewCEN;
         private readonly IUserCEN _userCEN;
+        private readonly IMooringCEN _mooringCEN;
         private IDatabaseTransactionFactory _databaseTransactionFactory;
 
         public BoatCP(IBoatCEN boatCEN,
@@ -36,7 +37,8 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                       IRequiredBoatTitlesCEN requiredBoatTitlesCEN,
                       IDatabaseTransactionFactory databaseTransactionFactory,
                       IReviewCEN reviewCEN,
-                      IUserCEN userCEN)
+                      IUserCEN userCEN,
+                      IMooringCEN mooringCEN)
         {
             _boatCEN = boatCEN;
             _boatInfoCEN = boatInfoCEN;
@@ -47,6 +49,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             _databaseTransactionFactory = databaseTransactionFactory;
             _reviewCEN = reviewCEN;
             _userCEN = userCEN;
+            _mooringCEN = mooringCEN;
         }
 
         public async Task<int> CreateBoat(AddBoatInputDTO addBoatInput)
@@ -55,8 +58,15 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
 
             //Validar algunos datos, Las excepciones se cambiaran por una de aplicacion
             if (!(await _boatTypeCEN.AnyBoatTypeById(addBoatInput.BoatTypeId)))
-                throw new DataValidationException("Boat type not found.",
-                    "El tipo de embarcación no ha sido encontrado.");
+                throw new DataValidationException("Boat type",
+                    "El tipo de embarcación", ExceptionTypesEnum.DontExists);
+
+            if (!(await _mooringCEN.Any(new MooringFilters
+            {
+                MooringId = addBoatInput.MooringId
+            })))
+                throw new DataValidationException("Mooring.",
+                    "Amarre de puerto.", ExceptionTypesEnum.DontExists);
 
 
             //Abrir transaccion
@@ -81,7 +91,6 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                         Capacity = addBoatInput.Capacity,
                         Description = addBoatInput.Description,
                         Length = addBoatInput.Length,
-                        MooringPoint = addBoatInput.MooringPoint,
                         MotorPower = addBoatInput.MotorPower,
                         Name = addBoatInput.Name,
                         Registration = addBoatInput.Registration,
@@ -128,9 +137,9 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             return boatId;
         }
 
-        public async Task<BoatEN> DisapproveBoat(DisapproveBoatInputDTO disapproveBoatInput)
+        public async Task<BoatEN> DisapproveBoat(int boatId, DisapproveBoatInputDTO disapproveBoatInput)
         {
-            BoatEN dbBoat = await _boatCEN.GetBoatCAD().FindById(disapproveBoatInput.BoatId);
+            BoatEN dbBoat = await _boatCEN.GetBoatCAD().FindById(boatId);
             UsersEN dbAdmin = await _userCEN.GetUserCAD().FindById(disapproveBoatInput.AdminId);
             //Validar datos
             if (dbBoat == null)
@@ -149,10 +158,10 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             {
                 try
                 {
-                    await _boatCEN.DisapproveBoat(disapproveBoatInput.BoatId);
+                    await _boatCEN.DisapproveBoat(boatId);
 
                     //Adicionar revision
-                    int newReview = await _reviewCEN.AddReview(disapproveBoatInput.BoatId, disapproveBoatInput.AdminId,
+                    int newReview = await _reviewCEN.AddReview(boatId, disapproveBoatInput.AdminId,
                         disapproveBoatInput.Observation);
 
                     await databaseTransaction.CommitAsync();
@@ -170,6 +179,63 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
         public Task<decimal> CalculatePrice()
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<BoatEN> UpdateBoat(UpdateBoatInputDTO updateBoatInput)
+        {
+            BoatEN boat = null;
+            //Validar algunos datos, Las excepciones se cambiaran por una de aplicacion
+            if(updateBoatInput.BoatTypeId != null)
+            {
+                if (!(await _boatTypeCEN.AnyBoatTypeById((int)updateBoatInput.BoatTypeId)))
+                    throw new DataValidationException("Boat type",
+                    "El tipo de embarcación", ExceptionTypesEnum.DontExists);
+            }
+
+            if (updateBoatInput.MooringId != null)
+            {
+                if (!(await _mooringCEN.Any( new MooringFilters { 
+                    MooringId = updateBoatInput.MooringId
+                })))
+                    throw new DataValidationException("Mooring.",
+                        "Amarre de puerto.", ExceptionTypesEnum.DontExists);
+            }
+
+            //Abrir transaccion
+            using (var databaseTransaction = _databaseTransactionFactory.BeginTransaction())
+            {
+                try
+                {
+                    boat = await _boatCEN.UpdateBoat(updateBoatInput);
+
+                    if(updateBoatInput.BoatInfo != null)
+                    {
+                        updateBoatInput.BoatInfo.BoatId = updateBoatInput.BoatId;
+                        boat.BoatInfo = await _boatInfoCEN.UpdateBoat(updateBoatInput.BoatInfo);
+                    }
+
+                    if (updateBoatInput.Prices != null)
+                    {
+                        updateBoatInput.Prices.BoatId = updateBoatInput.BoatId;
+                        boat.BoatPrices = await _boatPricesCEN.UpdateBoat(updateBoatInput.Prices);
+                    }
+
+                    if (updateBoatInput.RequiredTitles != null)
+                    {
+                        updateBoatInput.RequiredTitles.BoatId = updateBoatInput.BoatId;
+                        await _requiredBoatTitlesCEN.UpdateRequiredBoatTitle(updateBoatInput.RequiredTitles);
+                    }
+
+                    await databaseTransaction.CommitAsync();
+                }
+                catch (Exception ex)
+                {
+                    await databaseTransaction.RollbackAsync();
+                    throw ex;
+                }
+            }
+
+            return boat;
         }
     }
 }

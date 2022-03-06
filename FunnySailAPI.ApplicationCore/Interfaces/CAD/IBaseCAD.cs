@@ -1,4 +1,5 @@
 ﻿using FunnySailAPI.ApplicationCore.Models.Utils;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +20,11 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CAD
         Task<List<T>> GetAll(IQueryable<T> query,Pagination pagination);
         Task<IList<T>> Get(IQueryable<T> query=null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-            string includeProperties = "", Pagination pagination = null);
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> includeProperties = null,
+            Pagination pagination = null);
         Task<T> Update(T entity);
         Task<T> FindById(string id);
         Task Delete(T entity);
+        Task<int> GetCounter(IQueryable<T> query);
     }
 }

@@ -46,15 +46,17 @@ namespace UnitTest.Steps.CP_CEN
             IBoatCAD boatCAD = new BoatCAD(applicationDbContextFake._dbContextFake);
             IReviewCAD reviewCAD = new ReviewCAD(applicationDbContextFake._dbContextFake);
             IUserCAD userCAD = new UsersCAD(applicationDbContextFake._dbContextFake);
+            IMooringCAD mooringCAD = new MooringCAD(applicationDbContextFake._dbContextFake);
 
             //Construyendo los CEN necesarios
             IBoatCEN boatCEN = new BoatCEN(boatCAD);
             IReviewCEN reviewCEN = new ReviewCEN(reviewCAD);
+            IMooringCEN mooringCEN = new MooringCEN(mooringCAD);
             IUserCEN userCEN = new UserCEN(userCAD, null,null, databaseTransactionFactory);
 
 
             _boatCP = new BoatCP(boatCEN, null, null, null, null, null, databaseTransactionFactory,
-                reviewCEN, userCEN);
+                reviewCEN, userCEN, mooringCEN);
         }
 
         [Given(@"que se quiere desaprobar el barco de id (.*), el admin de id (.*)")]
@@ -70,10 +72,9 @@ namespace UnitTest.Steps.CP_CEN
         {
             try
             {
-                _boatUpdated = await _boatCP.DisapproveBoat(new DisapproveBoatInputDTO
+                _boatUpdated = await _boatCP.DisapproveBoat(_id,new DisapproveBoatInputDTO
                 {
                     AdminId = _adminId,
-                    BoatId = _id,
                     Observation = _observ
                 });
                 _lastReview = _boatUpdated.reviews.LastOrDefault();
