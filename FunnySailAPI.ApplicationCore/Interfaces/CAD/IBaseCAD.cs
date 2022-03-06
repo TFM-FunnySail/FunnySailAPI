@@ -23,5 +23,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CAD
         Task<T> Update(T entity);
         Task<T> FindById(string id);
         Task Delete(T entity);
+        Task<int> GetCounter(IQueryable<T> query);
     }
 }
