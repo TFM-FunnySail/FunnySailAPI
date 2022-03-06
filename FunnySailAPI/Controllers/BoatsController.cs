@@ -15,6 +15,7 @@ using FunnySailAPI.DTO.Output.Boat;
 using FunnySailAPI.Assemblers;
 using FunnySailAPI.DTO.Output;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input;
+using FunnySailAPI.ApplicationCore.Models.Globals;
 
 namespace FunnySailAPI.Controllers
 {
@@ -122,50 +123,33 @@ namespace FunnySailAPI.Controllers
             }
         }
 
-        //// PUT: api/Boats/5
-        //// To protect from overposting attacks, enable the specific properties you want to bind to, for
-        //// more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutBoatEN(int id, BoatEN boatEN)
-        //{
-        //    try
-        //    {
-        //        if (id != boatEN.Id)
-        //        {
-        //            return BadRequest();
-        //        }
+        // PUT: api/Boats/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutBoatEN(int id, UpdateBoatInputDTO updateBoatInput)
+        {
+            try
+            {
+                if (id != updateBoatInput.BoatId)
+                    return BadRequest();
 
-        //        _context.Entry(boatEN).State = EntityState.Modified;
+                await _unitOfWork.BoatCP.UpdateBoat(updateBoatInput);
 
-        //        try
-        //        {
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!BoatENExists(id))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
+                return NoContent();
+            }
+            catch (DataValidationException dataValidation)
+            {
+                if(dataValidation.ExceptionType == ExceptionTypesEnum.NotFound)
+                    return NotFound();
 
-        //        return NoContent();
-        //    }
-        //    catch (DataValidationException ex)
-        //    {
-
-        //        throw;
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        throw;
-        //    }
-        //}
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, new ErrorResponseDTO(dataValidation));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
 
         // POST: api/Boats
         // To protect from overposting attacks, enable the specific properties you want to bind to, for

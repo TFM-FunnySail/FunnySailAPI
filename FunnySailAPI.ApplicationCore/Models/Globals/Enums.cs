@@ -48,7 +48,8 @@ namespace FunnySailAPI.ApplicationCore.Models.Globals
     public enum ExceptionTypesEnum
     {
         IsRequired,
-        NotFound
+        NotFound,
+        DontExist
     }
 
     public enum OwnerInvoicesEnum

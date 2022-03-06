@@ -25,6 +25,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
         private readonly IRequiredBoatTitlesCEN _requiredBoatTitlesCEN;
         private readonly IReviewCEN _reviewCEN;
         private readonly IUserCEN _userCEN;
+        private readonly IMooringCEN _mooringCEN;
         private IDatabaseTransactionFactory _databaseTransactionFactory;
 
         public BoatCP(IBoatCEN boatCEN,
@@ -35,7 +36,8 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                       IRequiredBoatTitlesCEN requiredBoatTitlesCEN,
                       IDatabaseTransactionFactory databaseTransactionFactory,
                       IReviewCEN reviewCEN,
-                      IUserCEN userCEN)
+                      IUserCEN userCEN,
+                      IMooringCEN mooringCEN)
         {
             _boatCEN = boatCEN;
             _boatInfoCEN = boatInfoCEN;
@@ -46,6 +48,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             _databaseTransactionFactory = databaseTransactionFactory;
             _reviewCEN = reviewCEN;
             _userCEN = userCEN;
+            _mooringCEN = mooringCEN;
         }
 
         public async Task<int> CreateBoat(AddBoatInputDTO addBoatInput)
@@ -168,6 +171,54 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
         public Task<decimal> CalculatePrice()
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<BoatEN> UpdateBoat(UpdateBoatInputDTO updateBoatInput)
+        {
+            BoatEN boat = null;
+            //Validar algunos datos, Las excepciones se cambiaran por una de aplicacion
+            if(updateBoatInput.BoatTypeId != null)
+            {
+                if (!(await _boatTypeCEN.AnyBoatTypeById((int)updateBoatInput.BoatTypeId)))
+                    throw new DataValidationException("Boat type not found.",
+                        "El tipo de embarcación no ha sido encontrado.");
+            }
+
+            //Abrir transaccion
+            using (var databaseTransaction = _databaseTransactionFactory.BeginTransaction())
+            {
+                try
+                {
+                    boat = await _boatCEN.UpdateBoat(updateBoatInput);
+
+                    if(updateBoatInput.BoatInfo != null)
+                    {
+                        updateBoatInput.BoatInfo.BoatId = updateBoatInput.BoatId;
+                        boat.BoatInfo = await _boatInfoCEN.UpdateBoat(updateBoatInput.BoatInfo);
+                    }
+
+                    if (updateBoatInput.Prices != null)
+                    {
+                        updateBoatInput.Prices.BoatId = updateBoatInput.BoatId;
+                        boat.BoatPrices = await _boatPricesCEN.UpdateBoat(updateBoatInput.Prices);
+                    }
+
+                    if (updateBoatInput.RequiredTitles != null)
+                    {
+                        updateBoatInput.RequiredTitles.BoatId = updateBoatInput.BoatId;
+                        await _requiredBoatTitlesCEN.UpdateRequiredBoatTitle(updateBoatInput.RequiredTitles);
+                    }
+
+                    await databaseTransaction.CommitAsync();
+                }
+                catch (Exception ex)
+                {
+                    await databaseTransaction.RollbackAsync();
+                    throw ex;
+                }
+            }
+
+            return boat;
         }
     }
 }

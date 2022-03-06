@@ -37,9 +37,9 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             if (boatPrices == null)
                 throw new DataValidationException(_enName, _esName, ExceptionTypesEnum.NotFound);
 
-            boatPrices.DayBasePrice = updateBoatInput.DayBasePrice;
-            boatPrices.HourBasePrice = updateBoatInput.HourBasePrice;
-            boatPrices.Supplement = updateBoatInput.Supplement;
+            boatPrices.DayBasePrice = updateBoatInput.DayBasePrice ?? boatPrices.DayBasePrice;
+            boatPrices.HourBasePrice = updateBoatInput.HourBasePrice ?? boatPrices.HourBasePrice;
+            boatPrices.Supplement = updateBoatInput.Supplement ?? boatPrices.Supplement;
 
             await _boatPricesCAD.Update(boatPrices);
 

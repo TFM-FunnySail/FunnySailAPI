@@ -90,8 +90,10 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             if (boat == null)
                 throw new DataValidationException(_enName, _esName, ExceptionTypesEnum.NotFound);
 
-            boat.MooringId = updateBoatInput.MooringId;
-            boat.BoatTypeId = updateBoatInput.BoatTypeId;
+            boat.MooringId = updateBoatInput.MooringId ?? boat.MooringId;
+            boat.BoatTypeId = updateBoatInput.BoatTypeId ?? boat.BoatTypeId;
+            boat.Active = updateBoatInput.Active ?? boat.Active;
+            boat.PendingToReview = updateBoatInput.PendingToReview ?? boat.PendingToReview;
 
             await _boatCAD.Update(boat);
 
