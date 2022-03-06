@@ -129,9 +129,9 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             return boatId;
         }
 
-        public async Task<BoatEN> DisapproveBoat(DisapproveBoatInputDTO disapproveBoatInput)
+        public async Task<BoatEN> DisapproveBoat(int boatId, DisapproveBoatInputDTO disapproveBoatInput)
         {
-            BoatEN dbBoat = await _boatCEN.GetBoatCAD().FindById(disapproveBoatInput.BoatId);
+            BoatEN dbBoat = await _boatCEN.GetBoatCAD().FindById(boatId);
             UsersEN dbAdmin = await _userCEN.GetUserCAD().FindById(disapproveBoatInput.AdminId);
             //Validar datos
             if (dbBoat == null)
@@ -150,10 +150,10 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             {
                 try
                 {
-                    await _boatCEN.DisapproveBoat(disapproveBoatInput.BoatId);
+                    await _boatCEN.DisapproveBoat(boatId);
 
                     //Adicionar revision
-                    int newReview = await _reviewCEN.AddReview(disapproveBoatInput.BoatId, disapproveBoatInput.AdminId,
+                    int newReview = await _reviewCEN.AddReview(boatId, disapproveBoatInput.AdminId,
                         disapproveBoatInput.Observation);
 
                     await databaseTransaction.CommitAsync();

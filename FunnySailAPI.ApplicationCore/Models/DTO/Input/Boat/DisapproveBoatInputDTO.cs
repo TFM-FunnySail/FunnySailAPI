@@ -7,9 +7,6 @@ namespace FunnySailAPI.ApplicationCore.Models.DTO.Input
 {
     public class DisapproveBoatInputDTO
     {
-        public int BoatId { get; set; }
-
-        [Required]
         public string AdminId { get; set; }
 
         [Required]

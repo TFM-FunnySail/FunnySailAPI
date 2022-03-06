@@ -131,6 +131,9 @@ namespace FunnySailAPI.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
                 if (id != updateBoatInput.BoatId)
                     return BadRequest();
 
@@ -159,6 +162,9 @@ namespace FunnySailAPI.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
                 int boatId = await _unitOfWork.BoatCP.CreateBoat(boatInput);
 
                 return CreatedAtAction("GetBoat", new { id = boatId });
@@ -181,6 +187,35 @@ namespace FunnySailAPI.Controllers
             try
             {
                 await _unitOfWork.BoatCEN.ApproveBoat(id);
+
+                return NoContent();
+            }
+            catch (DataValidationException dataValidation)
+            {
+                if (dataValidation.ExceptionType == ExceptionTypesEnum.NotFound)
+                    return NotFound();
+
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, new ErrorResponseDTO(dataValidation));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
+
+        // PUT: api/Boats/5/disapprove 
+        [HttpPut("{id}/disapprove")]
+        public async Task<IActionResult> PutDisapproveBoat(int boatId,DisapproveBoatInputDTO disapproveBoatInput)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                //Obtengo el id del admin por el token
+                //disapproveBoatInput.AdminId = 
+
+                await _unitOfWork.BoatCP.DisapproveBoat(boatId,disapproveBoatInput);
 
                 return NoContent();
             }
