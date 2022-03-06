@@ -52,8 +52,7 @@ namespace FunnySailAPI.Controllers
             }
             catch (Exception ex)
             {
-
-                throw;
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
             }
         }
 
@@ -82,8 +81,7 @@ namespace FunnySailAPI.Controllers
             }
             catch (Exception ex)
             {
-
-                throw;
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
             }
         }
 
