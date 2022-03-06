@@ -96,18 +96,34 @@ namespace FunnySailAPI.Controllers
             }
         }
 
-        //[HttpGet("availableBoats")]
-        //public async Task<ActionResult<BoatEN>> GetBoatEN(int id)
-        //{
-        //    var boatEN = await _context.Boats.FindAsync(id);
+        // GET: api/Boats/availableBoats
+        [HttpGet("availableBoats")]
+        public async Task<ActionResult<GenericResponseDTO<BoatOutputDTO>>> GetAvailableBoats(DateTime initialDate,DateTime endDate,[FromQuery]Pagination pagination)
+        {
+            try
+            {
+                var boatTotal = await _unitOfWork.BoatCEN.GetTotal();
 
-        //    if (boatEN == null)
-        //    {
-        //        return NotFound();
-        //    }
+                var boats = (await _unitOfWork.BoatCEN.GetAvailableBoats(pagination: pagination ?? new Pagination(),
+                    initialDate: initialDate, 
+                    endDate: endDate,
+                    includeProperties: source => source.Include(x => x.BoatInfo)
+                                        .Include(x => x.BoatPrices)
+                                        .Include(x => x.RequiredBoatTitles)
+                                        .Include(x => x.Mooring)
+                                        .ThenInclude(x => x.Port)
+                                        .Include(x => x.BoatResources)
+                                        .ThenInclude(x => x.Resource)
+                     ))
+                    .Select(x => BoatAssemblers.Convert(x));
 
-        //    return boatEN;
-        //}
+                return new GenericResponseDTO<BoatOutputDTO>(boats, pagination.Limit, pagination.Offset, boatTotal);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
 
         //// PUT: api/Boats/5
         //// To protect from overposting attacks, enable the specific properties you want to bind to, for

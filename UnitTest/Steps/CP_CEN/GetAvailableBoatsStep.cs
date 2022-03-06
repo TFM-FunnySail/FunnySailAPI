@@ -52,7 +52,7 @@ namespace UnitTest.Steps.CP_CEN
         [When(@"se obtienen los barcos disponibles")]
         public async Task WhenSeObtienenLosBarcosDisponibles()
         {
-            _boats = await _boatCEN.GetAvailableBoats(_pagination,_initialDate,_endDate);
+            _boats = (await _boatCEN.GetAvailableBoats(_pagination,_initialDate,_endDate)).ToList();
         }
 
         [Then(@"el resultado debe ser una lista con todos los barcos activos")]

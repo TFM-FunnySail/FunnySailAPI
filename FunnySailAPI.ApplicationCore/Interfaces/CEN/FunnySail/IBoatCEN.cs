@@ -18,8 +18,9 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
         Task<BoatEN> ApproveBoat(int boatId);
         Task<BoatEN> DisapproveBoat(int boatId);
         IBoatCAD GetBoatCAD();
-        Task<List<BoatEN>> GetAvailableBoats(Pagination pagination, DateTime initialDate, DateTime endDate);
-        Task<BoatEN> UpdateBoat(UpdateBoatInputDTO updateBoatInput);
+        Task<IList<BoatEN>> GetAvailableBoats(Pagination pagination, DateTime initialDate, DateTime endDate,
+            Func<IQueryable<BoatEN>, IOrderedQueryable<BoatEN>> orderBy = null,
+            Func<IQueryable<BoatEN>, IIncludableQueryable<BoatEN, object>> includeProperties = null); Task<BoatEN> UpdateBoat(UpdateBoatInputDTO updateBoatInput);
         Task<IList<BoatEN>> GetAll(BoatFilters filters = null,
             Pagination pagination = null,
             Func<IQueryable<BoatEN>, IOrderedQueryable<BoatEN>> orderBy = null,

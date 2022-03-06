@@ -51,8 +51,8 @@ namespace UnitTest.Features.CAD.Activitys
             _maxPrice = maxPrice;
             _pagination = new Pagination
             {
-                First = 0,
-                Size = 1000
+                Offset = 0,
+                Limit = 1000
             };
         }
 
@@ -77,8 +77,8 @@ namespace UnitTest.Features.CAD.Activitys
             _endDate = DateTime.Parse(endDate);
             _pagination = new Pagination
             {
-                First = 0,
-                Size = 1000
+                Offset = 0,
+                Limit = 1000
             };
         }
 
@@ -102,8 +102,8 @@ namespace UnitTest.Features.CAD.Activitys
             _name = name;
             _pagination = new Pagination
             {
-                First = 0,
-                Size = 1000
+                Offset = 0,
+                Limit = 1000
             };
         }
 
