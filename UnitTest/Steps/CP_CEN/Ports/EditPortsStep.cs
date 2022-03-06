@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 using UnitTest.FakeFactories;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input.Port;
 
 namespace UnitTest.Steps.CP_CEN.Port
 {
