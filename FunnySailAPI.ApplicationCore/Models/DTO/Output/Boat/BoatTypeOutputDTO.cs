@@ -1,4 +1,4 @@
-﻿namespace FunnySailAPI.ApplicationCore.Models.DTO.Output
+﻿namespace FunnySailAPI.ApplicationCore.Models.DTO.Output.Boat
 {
     public class BoatTypeOutputDTO
     {
