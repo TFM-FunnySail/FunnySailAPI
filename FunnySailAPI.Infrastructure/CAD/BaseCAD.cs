@@ -35,13 +35,18 @@ namespace FunnySailAPI.Infrastructure.CAD
         public virtual async Task<List<T>> GetAll(Pagination pagination)
         {
             DbSet<T> dbSet = _dbContext.Set<T>();
-            return await dbSet.Skip(pagination.First).Take(pagination.Size).ToListAsync();
+            return await dbSet.Skip(pagination.Offset).Take(pagination.Limit).ToListAsync();
         }
 
         public virtual async Task<int> GetCounter()
         {
             DbSet<T> dbSet = _dbContext.Set<T>();
             return await dbSet.CountAsync();
+        }
+
+        public virtual async Task<int> GetCounter(IQueryable<T> query)
+        {
+            return await query.CountAsync();
         }
 
         public virtual async Task<T> AddAsync(T newEntity)
@@ -73,7 +78,7 @@ namespace FunnySailAPI.Infrastructure.CAD
 
         public async Task<List<T>> GetAll(IQueryable<T> query, Pagination pagination)
         {
-            return await query.Skip(pagination.First).Take(pagination.Size).ToListAsync();
+            return await query.Skip(pagination.Offset).Take(pagination.Limit).ToListAsync();
         }
 
         public virtual async Task Delete(T entity)
@@ -101,7 +106,7 @@ namespace FunnySailAPI.Infrastructure.CAD
             }
 
             if (pagination != null)
-                return await query.Skip(pagination.First).Take(pagination.Size).ToListAsync();
+                return await query.Skip(pagination.Offset).Take(pagination.Limit).ToListAsync();
             else
                 return await query.ToListAsync();
         }
