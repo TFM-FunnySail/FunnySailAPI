@@ -120,6 +120,19 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
 
             return await boats.ToListAsync();
         }
+
+        public async Task<IList<BoatEN>> GetAll(BoatFilters filters = null,
+            Pagination pagination = null,
+            Func<IQueryable<BoatEN>, IOrderedQueryable<BoatEN>> orderBy = null,
+            string includeProperties = "")
+        {
+            IQueryable<BoatEN> boats = GetBoatFiltered(filters);
+
+            if (orderBy == null)
+                orderBy = b => b.OrderBy(x => x.Id);
+
+            return await Get(boats, orderBy,includeProperties,pagination);
+        }
         #endregion
     }
 }

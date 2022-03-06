@@ -18,5 +18,9 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail
         Task<bool> IsBoatBusy(int boatId, DateTime serviceDate);
         Task<List<int>> GetBoatIdsNotAvailable(DateTime initialDate, DateTime endDate, List<int> ids);
         Task<List<BoatEN>> GetBoatFilteredList(BoatFilters boatFilters);
+        Task<IList<BoatEN>> GetAll(BoatFilters boatFilters = null,
+            Pagination pagination = null,
+            Func<IQueryable<BoatEN>, IOrderedQueryable<BoatEN>> orderBy = null,
+            string includeProperties = "");
     }
 }

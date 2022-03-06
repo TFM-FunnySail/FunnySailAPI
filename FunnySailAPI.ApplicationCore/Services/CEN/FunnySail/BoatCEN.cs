@@ -91,5 +91,21 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
             return boat;
         }
+
+        public async Task<IList<BoatEN>> GetAll(BoatFilters filters = null,
+            Pagination pagination = null,
+            Func<IQueryable<BoatEN>, IOrderedQueryable<BoatEN>> orderBy = null,
+            string includeProperties = "")
+        {
+
+            return await _boatCAD.GetAll(filters, pagination,orderBy, includeProperties);
+        }
+
+        public async Task<int> GetTotal(BoatFilters filters = null)
+        {
+            var boats = _boatCAD.GetBoatFiltered(filters);
+
+            return await _boatCAD.GetCounter(boats);
+        }
     }
 }

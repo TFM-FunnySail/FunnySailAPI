@@ -9,6 +9,11 @@ using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.Infrastructure;
 using FunnySailAPI.ApplicationCore.Interfaces;
 using FunnySailAPI.ApplicationCore.Exceptions;
+using FunnySailAPI.ApplicationCore.Models.Filters;
+using FunnySailAPI.ApplicationCore.Models.Utils;
+using FunnySailAPI.DTO.Output.Boat;
+using FunnySailAPI.Assemblers;
+using FunnySailAPI.DTO.Output;
 
 namespace FunnySailAPI.Controllers
 {
@@ -23,34 +28,64 @@ namespace FunnySailAPI.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        //// GET: api/Boats
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<BoatEN>>> GetBoats()
-        //{
-        //    try
-        //    {
-        //        return await _unitOfWork.BoatCEN.GetAll();
-        //    }
-        //    catch (Exception ex)
-        //    {
+        // GET: api/Boats
+        [HttpGet]
+        public async Task<ActionResult<GenericResponseDTO<BoatOutputDTO>>> GetBoats(int? limit, int? offset)
+        {
+            try
+            {
+                var boatTotal = await _unitOfWork.BoatCEN.GetTotal();
 
-        //        throw;
-        //    }
-        //}
+                if (boatTotal == 0)
+                    return NoContent();
 
-        //// GET: api/Boats/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<BoatEN>> GetBoatEN(int id)
-        //{
-        //    var boatEN = await _context.Boats.FindAsync(id);
+                var pagination = new Pagination
+                {
+                    Limit = limit ?? 20,
+                    Offset = offset ?? 0
+                };
 
-        //    if (boatEN == null)
-        //    {
-        //        return NotFound();
-        //    }
+                var boats = (await _unitOfWork.BoatCEN.GetAll(pagination: pagination))
+                    .Select(x=> BoatAssemblers.Convert(x));
 
-        //    return boatEN;
-        //}
+                return new GenericResponseDTO<BoatOutputDTO>(boats,pagination.Limit,pagination.Offset,boatTotal);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        // GET: api/Boats/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<BoatOutputDTO>> GetBoatEN(int id)
+        {
+            try
+            {
+                var boats = await _unitOfWork.BoatCEN.GetAll(pagination: new Pagination
+                {
+                    Limit = 1,
+                    Offset = 0
+                }, filters: new BoatFilters
+                {
+                    BoatId = id
+                });
+
+                var boat = boats.Select(x => BoatAssemblers.Convert(x)).FirstOrDefault();
+                if (boat == null)
+                {
+                    return NotFound();
+                }
+
+                return boat;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
 
         //[HttpGet("availableBoats")]
         //public async Task<ActionResult<BoatEN>> GetBoatEN(int id)
