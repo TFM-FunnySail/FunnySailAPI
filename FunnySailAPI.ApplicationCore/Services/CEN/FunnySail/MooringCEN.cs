@@ -3,6 +3,7 @@ using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input.Mooring;
+using FunnySailAPI.ApplicationCore.Models.Filters;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
 using System;
@@ -73,6 +74,13 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             await _mooringCAD.Update(dbMooring);
 
             return dbMooring;
+        }
+
+        public async Task<bool> Any(MooringFilters filter)
+        {
+            var query = _mooringCAD.GetFiltered(filter);
+
+            return await _mooringCAD.Any(query);
         }
     }
 }

@@ -49,7 +49,7 @@ namespace FunnySailAPI.ApplicationCore.Models.Globals
     {
         IsRequired,
         NotFound,
-        DontExist
+        DontExists
     }
 
     public enum OwnerInvoicesEnum

@@ -1,5 +1,6 @@
 ﻿using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input.Mooring;
+using FunnySailAPI.ApplicationCore.Models.Filters;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
 using System;
@@ -14,5 +15,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
         Task<int> AddMooring(int portId, string alias, MooringEnum type);
         Task DeleteMooring(int mooringId);
         Task<MooringEN> UpdateMooring(UpdateMooringDTO updateMooringInput);
+        Task<bool> Any(MooringFilters filter);
     }
 }

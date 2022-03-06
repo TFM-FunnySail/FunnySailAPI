@@ -5,6 +5,7 @@ using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.DTO;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input;
+using FunnySailAPI.ApplicationCore.Models.Filters;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
 using System;
@@ -57,8 +58,15 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
 
             //Validar algunos datos, Las excepciones se cambiaran por una de aplicacion
             if (!(await _boatTypeCEN.AnyBoatTypeById(addBoatInput.BoatTypeId)))
-                throw new DataValidationException("Boat type not found.",
-                    "El tipo de embarcación no ha sido encontrado.");
+                throw new DataValidationException("Boat type",
+                    "El tipo de embarcación", ExceptionTypesEnum.DontExists);
+
+            if (!(await _mooringCEN.Any(new MooringFilters
+            {
+                MooringId = addBoatInput.MooringId
+            })))
+                throw new DataValidationException("Mooring.",
+                    "Amarre de puerto.", ExceptionTypesEnum.DontExists);
 
 
             //Abrir transaccion
@@ -180,8 +188,17 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             if(updateBoatInput.BoatTypeId != null)
             {
                 if (!(await _boatTypeCEN.AnyBoatTypeById((int)updateBoatInput.BoatTypeId)))
-                    throw new DataValidationException("Boat type not found.",
-                        "El tipo de embarcación no ha sido encontrado.");
+                    throw new DataValidationException("Boat type",
+                    "El tipo de embarcación", ExceptionTypesEnum.DontExists);
+            }
+
+            if (updateBoatInput.MooringId != null)
+            {
+                if (!(await _mooringCEN.Any( new MooringFilters { 
+                    MooringId = updateBoatInput.MooringId
+                })))
+                    throw new DataValidationException("Mooring.",
+                        "Amarre de puerto.", ExceptionTypesEnum.DontExists);
             }
 
             //Abrir transaccion
