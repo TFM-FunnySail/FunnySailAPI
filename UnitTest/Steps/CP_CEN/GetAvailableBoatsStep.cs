@@ -44,8 +44,8 @@ namespace UnitTest.Steps.CP_CEN
             _endDate = DateTime.Parse(endDate);
             _pagination = new Pagination
             {
-                First = 0,
-                Size = 1000
+                Offset = 0,
+                Limit = 1000
             };
         }
 
@@ -70,8 +70,8 @@ namespace UnitTest.Steps.CP_CEN
             _endDate = DateTime.Parse(endDate);
             _pagination = new Pagination
             {
-                First = 0,
-                Size = 1000
+                Offset = 0,
+                Limit = 1000
             };
             //Creando las reservas
             _applicationDbContextFake.Add<BookingEN>(new BookingEN
@@ -113,8 +113,8 @@ namespace UnitTest.Steps.CP_CEN
             _endDate = DateTime.Parse(endDate);
             _pagination = new Pagination
             {
-                First = 0,
-                Size = 1
+                Offset = 0,
+                Limit = 1
             };
         }
 

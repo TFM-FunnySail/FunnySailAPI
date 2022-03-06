@@ -1,6 +1,7 @@
 ﻿using FunnySailAPI.ApplicationCore.Models.Filters;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Utils;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail
         Task<bool> IsServiceBusy(int technicalServiceId, DateTime serviceDate);
         Task<IList<TechnicalServiceBoatEN>> Get(TechnicalServiceBoatFilters filters,
                                             Func<IQueryable<TechnicalServiceBoatEN>, IOrderedQueryable<TechnicalServiceBoatEN>> orderBy = null,
-                                            string includeProperties = "",
+                                            Func<IQueryable<TechnicalServiceBoatEN>, IIncludableQueryable<TechnicalServiceBoatEN, object>> includeProperties = null,
                                             Pagination pagination = null);
         Task SetOwnerInvoice(List<TechnicalServiceBoatEN> technicalServiceBoats, int newOwnerInvoice);
     }

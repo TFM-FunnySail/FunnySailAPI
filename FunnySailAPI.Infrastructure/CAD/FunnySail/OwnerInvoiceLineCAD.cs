@@ -2,6 +2,7 @@
 using FunnySailAPI.ApplicationCore.Models.Filters;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Utils;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
 
         public async Task<IList<OwnerInvoiceLineEN>> Get(OwnerInvoiceLineFilters filters,
                                             Func<IQueryable<OwnerInvoiceLineEN>, IOrderedQueryable<OwnerInvoiceLineEN>> orderBy = null,
-                                            string includeProperties = "",
+                                            Func<IQueryable<OwnerInvoiceLineEN>, IIncludableQueryable<OwnerInvoiceLineEN, object>> includeProperties = null,
                                             Pagination pagination = null)
         {
             IQueryable<OwnerInvoiceLineEN> ownerInvoiceLines = GetOwnerInvoiceLineFiltered(filters);

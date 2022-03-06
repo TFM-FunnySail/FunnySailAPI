@@ -2,6 +2,7 @@
 using FunnySailAPI.ApplicationCore.Interfaces.CAD;
 using FunnySailAPI.ApplicationCore.Models.Utils;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -90,14 +91,12 @@ namespace FunnySailAPI.Infrastructure.CAD
         public virtual async Task<IList<T>> Get(
             IQueryable<T> query = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-            string includeProperties = "",
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> includeProperties = null,
             Pagination pagination = null)
         {
-
-            foreach (var includeProperty in includeProperties.Split
-                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            if (includeProperties != null)
             {
-                query = query.Include(includeProperty);
+                query = includeProperties(query);
             }
 
             if (orderBy != null)

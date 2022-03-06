@@ -34,18 +34,23 @@ namespace FunnySailAPI.Controllers
         {
             try
             {
-                var boatTotal = await _unitOfWork.BoatCEN.GetTotal();
-
-                if (boatTotal == 0)
-                    return NoContent();
-
                 var pagination = new Pagination
                 {
                     Limit = limit ?? 20,
                     Offset = offset ?? 0
                 };
 
-                var boats = (await _unitOfWork.BoatCEN.GetAll(pagination: pagination))
+                var boatTotal = await _unitOfWork.BoatCEN.GetTotal();
+
+                var boats = (await _unitOfWork.BoatCEN.GetAll(pagination: pagination,
+                    includeProperties: source=>source.Include(x=>x.BoatInfo)
+                                        .Include(x => x.BoatPrices)
+                                        .Include(x=>x.RequiredBoatTitles)
+                                        .Include(x => x.Mooring)
+                                        .ThenInclude(x => x.Port)
+                                        .Include(x => x.BoatResources)
+                                        .ThenInclude(x=>x.Resource)
+                     ))
                     .Select(x=> BoatAssemblers.Convert(x));
 
                 return new GenericResponseDTO<BoatOutputDTO>(boats,pagination.Limit,pagination.Offset,boatTotal);
@@ -69,7 +74,13 @@ namespace FunnySailAPI.Controllers
                 }, filters: new BoatFilters
                 {
                     BoatId = id
-                });
+                }, includeProperties: source => source.Include(x => x.BoatInfo)
+                                         .Include(x => x.BoatPrices)
+                                         .Include(x => x.RequiredBoatTitles)
+                                         .Include(x => x.Mooring)
+                                         .ThenInclude(x => x.Port)
+                                         .Include(x => x.BoatResources)
+                                         .ThenInclude(x => x.Resource));
 
                 var boat = boats.Select(x => BoatAssemblers.Convert(x)).FirstOrDefault();
                 if (boat == null)

@@ -4,6 +4,7 @@ using FunnySailAPI.ApplicationCore.Models.Filters;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Utils;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -121,18 +122,6 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
             return await boats.ToListAsync();
         }
 
-        public async Task<IList<BoatEN>> GetAll(BoatFilters filters = null,
-            Pagination pagination = null,
-            Func<IQueryable<BoatEN>, IOrderedQueryable<BoatEN>> orderBy = null,
-            string includeProperties = "")
-        {
-            IQueryable<BoatEN> boats = GetBoatFiltered(filters);
-
-            if (orderBy == null)
-                orderBy = b => b.OrderBy(x => x.Id);
-
-            return await Get(boats, orderBy,includeProperties,pagination);
-        }
         #endregion
     }
 }

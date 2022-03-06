@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input.OwnerInvoice;
+using Microsoft.EntityFrameworkCore;
 
 namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.OwnerInvoicesTypes
 {
@@ -43,7 +44,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.OwnerInvoicesTypes
             _technicalServiceBoats = (await _technicalServiceBoatCAD.Get(filters: new TechnicalServiceBoatFilters
             {
                 IdList = addOwnerInvoiceInput.InvoiceLinesIds
-            },includeProperties:"Boat,")).ToList();
+            },includeProperties: source => source.Include(x => x.Boat))).ToList();
 
             if (_technicalServiceBoats.Count != addOwnerInvoiceInput.InvoiceLinesIds.Count)
                 throw new DataValidationException("The invoice lines of the reservation have not been created",

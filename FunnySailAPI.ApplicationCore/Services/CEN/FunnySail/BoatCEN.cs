@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 {
@@ -95,10 +96,11 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
         public async Task<IList<BoatEN>> GetAll(BoatFilters filters = null,
             Pagination pagination = null,
             Func<IQueryable<BoatEN>, IOrderedQueryable<BoatEN>> orderBy = null,
-            string includeProperties = "")
+            Func<IQueryable<BoatEN>, IIncludableQueryable<BoatEN, object>> includeProperties = null)
         {
+            var boats = _boatCAD.GetBoatFiltered(filters);
 
-            return await _boatCAD.GetAll(filters, pagination,orderBy, includeProperties);
+            return await _boatCAD.Get(boats, orderBy, includeProperties, pagination);
         }
 
         public async Task<int> GetTotal(BoatFilters filters = null)
