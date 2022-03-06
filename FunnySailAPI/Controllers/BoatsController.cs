@@ -174,6 +174,28 @@ namespace FunnySailAPI.Controllers
             
         }
 
+        // PUT: api/Boats/5/approve 
+        [HttpPut("{id}/approve")]
+        public async Task<IActionResult> PutApproveBoat(int id)
+        {
+            try
+            {
+                await _unitOfWork.BoatCEN.ApproveBoat(id);
+
+                return NoContent();
+            }
+            catch (DataValidationException dataValidation)
+            {
+                if (dataValidation.ExceptionType == ExceptionTypesEnum.NotFound)
+                    return NotFound();
+
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, new ErrorResponseDTO(dataValidation));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
 
     }
 }
