@@ -5,7 +5,6 @@ using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.DTO;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input;
-using FunnySailAPI.ApplicationCore.Models.DTO.Output;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
 using System;
@@ -81,7 +80,6 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                         Capacity = addBoatInput.Capacity,
                         Description = addBoatInput.Description,
                         Length = addBoatInput.Length,
-                        MooringPoint = addBoatInput.MooringPoint,
                         MotorPower = addBoatInput.MotorPower,
                         Name = addBoatInput.Name,
                         Registration = addBoatInput.Registration,

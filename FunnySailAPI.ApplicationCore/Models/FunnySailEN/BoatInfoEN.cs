@@ -23,10 +23,6 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
         [StringLength(50)]
         public string Registration { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        public string MooringPoint { get; set; }
-
         [Column(TypeName = "decimal(9, 2)")]
         public decimal Length { get; set; }
 

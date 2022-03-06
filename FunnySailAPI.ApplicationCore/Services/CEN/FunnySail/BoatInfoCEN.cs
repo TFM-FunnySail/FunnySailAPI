@@ -31,9 +31,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             if (boatInfoEN.Registration == null)
                 throw new DataValidationException("Boat Registration ", " el registro de Barco ", ExceptionTypesEnum.IsRequired);
 
-            if (boatInfoEN.MooringPoint == null)
-                throw new DataValidationException("Boat MooringPoint ", " el punto de amarre de Barco ", ExceptionTypesEnum.IsRequired);
-
+            
             boatInfoEN = await _boatInfoCAD.AddAsync(boatInfoEN);
 
             return boatInfoEN.BoatId;
