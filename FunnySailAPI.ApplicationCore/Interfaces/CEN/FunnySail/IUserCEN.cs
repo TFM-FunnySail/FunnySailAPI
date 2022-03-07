@@ -19,8 +19,8 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
         Task<IdentityResult> CreateUser(ApplicationUser user, AddUserInputDTO addUserInput);
         IUserCAD GetUserCAD();
         Task<IdentityResult> EditUser(ApplicationUser user, AddUserInputDTO addUserInput);
-        Task<IdentityResult> LoginUser(ApplicationUser user, LoginUserInputDTO loginUserInput);
-        Task<IdentityResult> LogoutUser(ApplicationUser user, LoginUserInputDTO loginUserInput);
+        Task<SignInResult> LoginUser(ApplicationUser user, LoginUserInputDTO loginUserInput);
+        Task LogoutUser(ApplicationUser user, LoginUserInputDTO loginUserInput);
         Task<int> GetTotal(UsersFilters filters);
         Task<IList<UsersEN>> GetAll(UsersFilters filters = null,
             Pagination pagination = null,

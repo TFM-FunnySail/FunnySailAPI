@@ -119,52 +119,15 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             }
         }
 
-        public async Task<IdentityResult> LoginUser(ApplicationUser user, LoginUserInputDTO loginUserInput)
+        public async Task<SignInResult> LoginUser(ApplicationUser user, LoginUserInputDTO loginUserInput)
         {
-
-            using (var databaseTransaction = _databaseTransactionFactory.BeginTransaction())
-            {
-                try
-                {
-                    var result = await _signInManager.PasswordSignInAsync(loginUserInput.Email, loginUserInput.Password, loginUserInput.RememberMe, lockoutOnFailure: false);
-
-                    if (!result.Succeeded)
-                    {
-                        await databaseTransaction.RollbackAsync();
-                        return null;
-                    }
-
-                    await databaseTransaction.CommitAsync();
-
-                    return null;
-                }
-                catch (Exception ex)
-                {
-                    await databaseTransaction.RollbackAsync();
-                    throw ex;
-                }
-            }
+            var result = await _signInManager.PasswordSignInAsync(loginUserInput.Email, loginUserInput.Password, loginUserInput.RememberMe, lockoutOnFailure: false);
+            return result;
         }
 
-        public async Task<IdentityResult> LogoutUser(ApplicationUser user, LoginUserInputDTO loginUserInput)
+        public async Task LogoutUser(ApplicationUser user, LoginUserInputDTO loginUserInput)
         {
-
-            using (var databaseTransaction = _databaseTransactionFactory.BeginTransaction())
-            {
-                try
-                {
-                    await _signInManager.SignOutAsync();
-
-                    await databaseTransaction.CommitAsync();
-
-                    return null;
-                }
-                catch (Exception ex)
-                {
-                    await databaseTransaction.RollbackAsync();
-                    throw ex;
-                }
-            }
+             await _signInManager.SignOutAsync();
         }
 
         private string ProccessIdentityError(IdentityResult result)
