@@ -4,14 +4,18 @@ using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input.User;
+using FunnySailAPI.ApplicationCore.Models.Filters;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
+using FunnySailAPI.ApplicationCore.Models.Utils;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -177,6 +181,26 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
         public IUserCAD GetUserCAD()
         {
             return _userCAD;
+        }
+
+        public async Task<int> GetTotal(UsersFilters filters)
+        {
+            var query = _userCAD.GetFiltered(filters);
+
+            return await _userCAD.GetCounter(query);
+        }
+
+        public async Task<IList<UsersEN>> GetAll(UsersFilters filters = null,
+            Pagination pagination = null,
+            Func<IQueryable<UsersEN>, IOrderedQueryable<UsersEN>> orderBy = null,
+            Func<IQueryable<UsersEN>, IIncludableQueryable<UsersEN, object>> includeProperties = null)
+        {
+            var query = _userCAD.GetFiltered(filters);
+
+            if (orderBy == null)
+                orderBy = b => b.OrderBy(x => x.UserId);
+
+            return await _userCAD.Get(query, orderBy, includeProperties, pagination);
         }
     }
 }
