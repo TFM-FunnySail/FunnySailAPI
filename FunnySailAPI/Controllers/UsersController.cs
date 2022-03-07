@@ -13,6 +13,9 @@ using FunnySailAPI.ApplicationCore.Models.Utils;
 using FunnySailAPI.DTO.Output;
 using FunnySailAPI.Assemblers;
 using FunnySailAPI.DTO.Output.User;
+using FunnySailAPI.ApplicationCore.Models.Globals;
+using FunnySailAPI.ApplicationCore.Exceptions;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input.User;
 
 namespace FunnySailAPI.Controllers
 {
@@ -78,37 +81,37 @@ namespace FunnySailAPI.Controllers
             }
         }
 
-        //// PUT: api/Users/5
-        //// To protect from overposting attacks, enable the specific properties you want to bind to, for
-        //// more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutUsersEN(string id, UsersEN usersEN)
-        //{
-        //    if (id != usersEN.UserId)
-        //    {
-        //        return BadRequest();
-        //    }
+        // PUT: api/Users/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutUsersEN(string id, AddUserInputDTO userInput)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
 
-        //    _context.Entry(usersEN).State = EntityState.Modified;
+                //if (id != idToken)
+                //    return BadRequest();
 
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!UsersENExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
+                //Falta el usuario que se obtiene por el token
+                await _unitOfWork.UserCEN.EditUser(null,userInput);
 
-        //    return NoContent();
-        //}
+                return NoContent();
+            }
+            catch (DataValidationException dataValidation)
+            {
+                if (dataValidation.ExceptionType == ExceptionTypesEnum.NotFound)
+                    return NotFound();
+
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, new ErrorResponseDTO(dataValidation));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
 
         //// POST: api/Users
         //// To protect from overposting attacks, enable the specific properties you want to bind to, for
