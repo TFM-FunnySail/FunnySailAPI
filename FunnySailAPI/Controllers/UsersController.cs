@@ -49,19 +49,34 @@ namespace FunnySailAPI.Controllers
             }
         }
 
-        //// GET: api/Users/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<UsersEN>> GetUsersEN(string id)
-        //{
-        //    var usersEN = await _context.UsersInfo.FindAsync(id);
+        // GET: api/Users/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<UserOutputDTO>> GetUsersEN(string id)
+        {
+            try
+            {
+                var users = await _unitOfWork.UserCEN.GetAll(pagination: new Pagination
+                {
+                    Limit = 1,
+                    Offset = 0
+                }, filters: new UsersFilters
+                {
+                    UserId = id
+                }, includeProperties: source => source.Include(x => x.ApplicationUser));
 
-        //    if (usersEN == null)
-        //    {
-        //        return NotFound();
-        //    }
+                var user = users.Select(x => UserAssemblers.Convert(x)).FirstOrDefault();
+                if (user == null)
+                {
+                    return NotFound();
+                }
 
-        //    return usersEN;
-        //}
+                return user;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
 
         //// PUT: api/Users/5
         //// To protect from overposting attacks, enable the specific properties you want to bind to, for
