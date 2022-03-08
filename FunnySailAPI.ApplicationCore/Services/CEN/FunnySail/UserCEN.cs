@@ -119,7 +119,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             }
         }
 
-        public async Task<SignInResult> LoginUser(ApplicationUser user, LoginUserInputDTO loginUserInput)
+        public async Task<SignInResult> LoginUser(LoginUserInputDTO loginUserInput)
         {
             var result = await _signInManager.PasswordSignInAsync(loginUserInput.Email, loginUserInput.Password, loginUserInput.RememberMe, lockoutOnFailure: false);
             return result;
