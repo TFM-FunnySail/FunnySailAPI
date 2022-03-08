@@ -129,6 +129,7 @@ namespace FunnySailAPI
             services.AddScoped<IInitializeDB, InitializeDB>();
             services.AddScoped<IOwnerInvoiceTypeFactory, OwnerInvoiceTypeFactory>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IAccountService, AccountService>();
             #endregion
 
             services.AddSwaggerGen(c =>
