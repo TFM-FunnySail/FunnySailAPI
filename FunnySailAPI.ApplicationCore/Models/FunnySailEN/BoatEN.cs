@@ -25,6 +25,7 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
         public BoatInfoEN BoatInfo { get; set; }
         public BoatPricesEN BoatPrices { get; set; }
         public MooringEN Mooring { get; set; }
+        public UsersEN Owner { get; set; }
         public List<BoatResourceEN> BoatResources { get; set; }
         public List<RequiredBoatTitleEN> RequiredBoatTitles { get; set; }
         public List<ReviewEN> reviews { get; set; }
