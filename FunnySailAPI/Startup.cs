@@ -9,6 +9,7 @@ using FunnySailAPI.ApplicationCore.Services;
 using FunnySailAPI.ApplicationCore.Services.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.OwnerInvoicesTypes;
 using FunnySailAPI.ApplicationCore.Services.CP;
+using FunnySailAPI.Helpers;
 using FunnySailAPI.Infrastructure;
 using FunnySailAPI.Infrastructure.CAD;
 using FunnySailAPI.Infrastructure.CAD.FunnySail;
@@ -132,9 +133,9 @@ namespace FunnySailAPI
             services.AddScoped<IAccountService, AccountService>();
             #endregion
 
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(options =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo
+                options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "FunnySail API",
                     Version = "v1",
@@ -146,6 +147,23 @@ namespace FunnySailAPI
                     },
                 });
             });
+
+            var builder = services.AddIdentityServer(options =>
+            {
+                options.Events.RaiseErrorEvents = true;
+                options.Events.RaiseInformationEvents = true;
+                options.Events.RaiseFailureEvents = true;
+                options.Events.RaiseSuccessEvents = true;
+
+                // see https://identityserver4.readthedocs.io/en/latest/topics/resources.html
+                options.EmitStaticAudienceClaim = true;
+            }).AddInMemoryIdentityResources(OauthConfig.IdentityResources)
+            .AddInMemoryApiScopes(OauthConfig.ApiScopes)
+            .AddInMemoryClients(OauthConfig.Clients)
+            .AddAspNetIdentity<ApplicationUser>();
+
+            services.AddAuthentication();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -170,10 +188,11 @@ namespace FunnySailAPI
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "FunnySail API V1");
+                //c.SwaggerEndpoint("/.well-known/openid-configuration", "Identity Server V1");
+                
 
-
-                // To serve SwaggerUI at application's root page, set the RoutePrefix property to an empty string.
-                c.RoutePrefix = "swagger";
+            // To serve SwaggerUI at application's root page, set the RoutePrefix property to an empty string.
+            c.RoutePrefix = "swagger";
             });
 
             app.UseHttpsRedirection();
@@ -182,6 +201,8 @@ namespace FunnySailAPI
             app.UseRouting();
 
             initializeDB.Initialize();
+
+            app.UseIdentityServer();    
 
             app.UseAuthentication();
             app.UseAuthorization();
