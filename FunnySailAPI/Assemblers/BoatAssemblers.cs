@@ -2,6 +2,7 @@
 using FunnySailAPI.DTO.Output.Boat;
 using FunnySailAPI.DTO.Output.Mooring;
 using FunnySailAPI.DTO.Output.Port;
+using FunnySailAPI.DTO.Output.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,12 +21,6 @@ namespace FunnySailAPI.Assemblers
                 Active = boatEN.Active,
                 CreatedDate = boatEN.CreatedDate,
                 PendingToReview = boatEN.PendingToReview,
-                BoatType = new BoatTypeOutputDTO
-                {
-                    Id = boatEN.BoatType.Id,
-                    Name = boatEN.BoatType.Name,
-                    Description = boatEN.BoatType.Description,
-                },
                 Capacity = boatEN.BoatInfo.Capacity,
                 Description = boatEN.BoatInfo.Description,
                 Name = boatEN.BoatInfo.Name,
@@ -34,20 +29,36 @@ namespace FunnySailAPI.Assemblers
                 Sleeve = boatEN.BoatInfo.Sleeve,
                 Registration = boatEN.BoatInfo.Registration,
                 DayBasePrice = boatEN.BoatPrices.DayBasePrice,
-                HourBasePrice = boatEN.BoatPrices.HourBasePrice,
+                HourBasePrice = boatEN.BoatPrices.HourBasePrice
             };
 
-            boatOutput.RequiredBoatTitles = boatEN.RequiredBoatTitles.Select(x => new RequiredBoatTitleOutputDTO
+            if(boatEN.BoatType != null)
             {
-                TitleId = x.TitleId
-            }).ToList();
+                boatOutput.BoatType = new BoatTypeOutputDTO
+                {
+                    Id = boatEN.BoatType.Id,
+                    Name = boatEN.BoatType.Name,
+                    Description = boatEN.BoatType.Description,
+                };
+            }
 
-            boatOutput.BoatResources = boatEN.BoatResources.Select(x => new BoatResourcesOutputDTO
+            if(boatEN.RequiredBoatTitles != null)
             {
-                Uri = x.Resource.Uri,
-                Main = x.Resource.Main,
-                Type = x.Resource.Type
-            }).ToList();
+                boatOutput.RequiredBoatTitles = boatEN.RequiredBoatTitles.Select(x => new RequiredBoatTitleOutputDTO
+                {
+                    TitleId = x.TitleId
+                }).ToList();
+            }
+
+            if(boatEN.BoatResources != null)
+            {
+                boatOutput.BoatResources = boatEN.BoatResources.Select(x => new BoatResourcesOutputDTO
+                {
+                    Uri = x.Resource.Uri,
+                    Main = x.Resource.Main,
+                    Type = x.Resource.Type
+                }).ToList();
+            }
 
             if(boatEN.Mooring != null)
             {
@@ -57,14 +68,19 @@ namespace FunnySailAPI.Assemblers
                     Alias = boatEN.Mooring.Alias,
                     Type = boatEN.Mooring.Type.ToString(),
                     PortId = boatEN.Mooring.PortId,
-                    Port = new PortOutputDTO
+                };
+
+                if(boatEN.Mooring.Port != null)
+                {
+                    boatOutput.Mooring.Port = new PortOutputDTO
                     {
                         Location = boatEN.Mooring.Port.Location,
                         Id = boatEN.Mooring.Port.Id,
                         Name = boatEN.Mooring.Port.Name,
-                    }
-                };
+                    };
+                }
             }
+
 
             return boatOutput;
         }

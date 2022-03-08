@@ -1,5 +1,6 @@
 ﻿using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.DTO.Output.Mooring;
+using FunnySailAPI.DTO.Output.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
