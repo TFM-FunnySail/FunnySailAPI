@@ -14,11 +14,13 @@ using FunnySailAPI.Infrastructure;
 using FunnySailAPI.Infrastructure.CAD;
 using FunnySailAPI.Infrastructure.CAD.FunnySail;
 using FunnySailAPI.Infrastructure.Initialize;
+using FunnySailAPI.SwaggerIdentityServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -146,6 +148,8 @@ namespace FunnySailAPI
                         Email = string.Empty
                     },
                 });
+
+                options.DocumentFilter<IdentityServerDocumentFilter>("");
             });
 
             var builder = services.AddIdentityServer(options =>
@@ -181,6 +185,16 @@ namespace FunnySailAPI
                 app.UseHsts();
             }
 
+            var routeBuilder = new RouteBuilder(app);
+
+            routeBuilder.MapMiddlewareGet("/.well-known/openid-configuration", appBuilder =>
+            {
+                appBuilder.UseMiddleware<OpenAPIMiddleware>();
+            });
+
+            var routes = routeBuilder.Build();
+            app.UseRouter(routes);
+
             app.UseSwagger();
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
@@ -188,12 +202,14 @@ namespace FunnySailAPI
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "FunnySail API V1");
-                //c.SwaggerEndpoint("/.well-known/openid-configuration", "Identity Server V1");
+                c.SwaggerEndpoint("/.well-known/openid-configuration", "Identity Server V4");
                 
 
             // To serve SwaggerUI at application's root page, set the RoutePrefix property to an empty string.
             c.RoutePrefix = "swagger";
             });
+
+            
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
