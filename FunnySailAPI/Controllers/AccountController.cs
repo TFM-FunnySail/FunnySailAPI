@@ -47,6 +47,29 @@ namespace FunnySailAPI.Controllers
             }
         }
 
+        [HttpPost("refresh-token")]
+        public async Task<ActionResult<AuthenticateResponseDTO>> RefreshToken()
+        {
+            try
+            {
+                var refreshToken = Request.Cookies["refreshToken"];
+                AuthenticateResponseDTO response = await _accountService.RefreshToken(refreshToken,
+                    _requestUtilityService.ipAddress(Request, HttpContext));
+                setTokenCookie(response.RefreshToken);
+                return Ok(response);
+            }
+            catch (DataValidationException dataValidation)
+            {
+                return StatusCode(StatusCodes.Status422UnprocessableEntity,
+                    new ErrorResponseDTO(dataValidation));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    new ErrorResponseDTO(ex));
+            }
+        }
+
         private void setTokenCookie(string token)
         {
             var cookieOptions = new CookieOptions

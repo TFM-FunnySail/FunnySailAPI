@@ -5,6 +5,7 @@ using FunnySailAPI.ApplicationCore.Interfaces.CEN;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
+using FunnySailAPI.ApplicationCore.Models.Globals;
 using FunnySailAPI.ApplicationCore.Services;
 using FunnySailAPI.ApplicationCore.Services.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.OwnerInvoicesTypes;
@@ -54,6 +55,7 @@ namespace FunnySailAPI
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
 
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
             #region ServicesCAD
 
@@ -82,7 +84,7 @@ namespace FunnySailAPI
             services.AddScoped<IOwnerInvoiceCAD, OwnerInvoiceCAD>();
             services.AddScoped<IOwnerInvoiceLineCAD, OwnerInvoiceLineCAD>();
             services.AddScoped<IRefundCAD, RefundCAD>();
-            services.AddScoped<IAuthRefreshTokenRepository, AuthRefreshTokenRepository>();
+            services.AddScoped<IAuthRefreshTokenCAD, AuthRefreshTokenCAD>();
 
             #endregion
 
@@ -113,6 +115,7 @@ namespace FunnySailAPI
             services.AddScoped<IBoatBaseCEN, BoatBaseCEN>();
             services.AddScoped<IRefundCEN, RefundCEN>();
             services.AddScoped<IOwnerInvoiceCEN, OwnerInvoiceCEN>();
+            services.AddScoped<IAuthRefreshTokenCEN, AuthRefreshTokenCEN>();
 
             #endregion
 

@@ -12,5 +12,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces
     public interface IAccountService
     {
         Task<AuthenticateResponseDTO> LoginUser(LoginUserInputDTO loginUserInput, string ipAddress);
+        Task<AuthenticateResponseDTO> RefreshToken(string token, string ipAddress);
     }
 }

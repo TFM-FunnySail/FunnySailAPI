@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail
 {
-    public interface IAuthRefreshTokenRepository : IBaseCAD<AuthRefreshToken>
+    public interface IAuthRefreshTokenCAD : IBaseCAD<AuthRefreshToken>
     {
-        Task<AuthRefreshToken> generateRefreshTokens(ApplicationUser user, string ipAddress, int refreshTokenTTL);
+        Task<AuthRefreshToken> GetRefreshToken(string token);
+        Task RemoveOldRefreshTokens(ApplicationUser user, int refreshTokenTTL);
     }
 }
