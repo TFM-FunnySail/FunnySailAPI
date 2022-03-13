@@ -15,6 +15,7 @@ using FunnySailAPI.Infrastructure;
 using FunnySailAPI.Infrastructure.CAD;
 using FunnySailAPI.Infrastructure.CAD.FunnySail;
 using FunnySailAPI.Infrastructure.Initialize;
+using FunnySailAPI.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -191,6 +192,9 @@ namespace FunnySailAPI
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseMiddleware<JwtMiddleware>();
+
 
             app.UseEndpoints(endpoints =>
             {
