@@ -8,5 +8,6 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
     public class ApplicationUser : IdentityUser
     {
         public UsersEN Users { get; set; }
+        public List<AuthRefreshToken> RefreshTokens { get; set; }
     }
 }
