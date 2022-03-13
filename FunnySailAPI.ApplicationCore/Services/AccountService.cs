@@ -37,6 +37,11 @@ namespace FunnySailAPI.ApplicationCore.Services
             _authRefreshTokenCEN = authRefreshTokenCEN;
         }
 
+        public async Task<bool> IsOwnsToken(UsersEN user, string token)
+        {
+            return await _authRefreshTokenCEN.GetAuthRefreshTokenCAD()
+                .AnyUserWithToken(user.UserId,token);
+        }
 
         public async Task<AuthenticateResponseDTO> LoginUser(LoginUserInputDTO loginUserInput,
                                                              string ipAddress)
@@ -83,6 +88,11 @@ namespace FunnySailAPI.ApplicationCore.Services
                 RefreshToken = newRefreshToken.Token,
                 Created = newRefreshToken.Created
             };
+        }
+
+        public async Task RevokeToken(string token, string ipAddress)
+        {
+            await _authRefreshTokenCEN.RevokeToken(token, ipAddress);
         }
 
         private string generateJwtToken(ApplicationUser user)

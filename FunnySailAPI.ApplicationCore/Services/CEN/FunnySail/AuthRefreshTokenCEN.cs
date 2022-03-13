@@ -72,5 +72,15 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
         {
             return _authRefreshTokenCAD;
         }
+
+        public async Task RevokeToken(string token, string ipAddress)
+        {
+            AuthRefreshToken refreshToken = await _authRefreshTokenCAD.GetRefreshToken(token);
+
+            refreshToken.Revoked = DateTime.UtcNow;
+            refreshToken.RevokedByIp = ipAddress;
+
+            await _authRefreshTokenCAD.Update(refreshToken);
+        }
     }
 }

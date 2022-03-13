@@ -10,5 +10,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail
     {
         Task<AuthRefreshToken> GetRefreshToken(string token);
         Task RemoveOldRefreshTokens(ApplicationUser user, int refreshTokenTTL);
+        Task<bool> AnyUserWithToken(string userId, string token);
     }
 }

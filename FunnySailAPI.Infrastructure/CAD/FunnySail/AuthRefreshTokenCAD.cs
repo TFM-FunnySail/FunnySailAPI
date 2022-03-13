@@ -30,5 +30,10 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
             _dbContext.AuthRefreshTokens.RemoveRange(refrehsTokenToDelete);
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task<bool> AnyUserWithToken(string userId,string token)
+        {
+            return await _dbContext.AuthRefreshTokens.AnyAsync(x => x.Token == token && x.UserId == userId);
+        }
     }
 }
