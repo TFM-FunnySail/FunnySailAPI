@@ -3,6 +3,7 @@ using FunnySailAPI.ApplicationCore.Interfaces;
 using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input.Account;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input.User;
 using FunnySailAPI.ApplicationCore.Models.Filters;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
@@ -117,12 +118,6 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
                     throw ex;
                 }
             }
-        }
-
-        public async Task<SignInResult> LoginUser(LoginUserInputDTO loginUserInput)
-        {
-            var result = await _signInManager.PasswordSignInAsync(loginUserInput.Email, loginUserInput.Password, loginUserInput.RememberMe, lockoutOnFailure: false);
-            return result;
         }
 
         public async Task LogoutUser(ApplicationUser user, LoginUserInputDTO loginUserInput)

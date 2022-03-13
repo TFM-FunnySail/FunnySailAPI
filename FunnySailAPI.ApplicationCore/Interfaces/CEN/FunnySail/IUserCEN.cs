@@ -1,5 +1,6 @@
 ﻿using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input.Account;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input.User;
 using FunnySailAPI.ApplicationCore.Models.Filters;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
@@ -19,7 +20,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
         Task<IdentityResult> CreateUser(ApplicationUser user, AddUserInputDTO addUserInput);
         IUserCAD GetUserCAD();
         Task<IdentityResult> EditUser(ApplicationUser user, AddUserInputDTO addUserInput);
-        Task<SignInResult> LoginUser(LoginUserInputDTO loginUserInput);
         Task LogoutUser(ApplicationUser user, LoginUserInputDTO loginUserInput);
         Task<int> GetTotal(UsersFilters filters);
         Task<IList<UsersEN>> GetAll(UsersFilters filters = null,

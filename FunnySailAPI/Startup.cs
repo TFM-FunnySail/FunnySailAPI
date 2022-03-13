@@ -9,6 +9,7 @@ using FunnySailAPI.ApplicationCore.Services;
 using FunnySailAPI.ApplicationCore.Services.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.OwnerInvoicesTypes;
 using FunnySailAPI.ApplicationCore.Services.CP;
+using FunnySailAPI.Helpers;
 using FunnySailAPI.Infrastructure;
 using FunnySailAPI.Infrastructure.CAD;
 using FunnySailAPI.Infrastructure.CAD.FunnySail;
@@ -130,6 +131,7 @@ namespace FunnySailAPI
             services.AddScoped<IOwnerInvoiceTypeFactory, OwnerInvoiceTypeFactory>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IRequestUtilityService, RequestUtilityService>();
             #endregion
 
             services.AddSwaggerGen(c =>
