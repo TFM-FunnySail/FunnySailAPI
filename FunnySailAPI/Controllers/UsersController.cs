@@ -16,21 +16,27 @@ using FunnySailAPI.DTO.Output.User;
 using FunnySailAPI.ApplicationCore.Models.Globals;
 using FunnySailAPI.ApplicationCore.Exceptions;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input.User;
+using FunnySailAPI.Helpers;
+using FunnySailAPI.ApplicationCore.Constants;
 
 namespace FunnySailAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersController : BaseController
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IRequestUtilityService _requestUtilityService;
 
-        public UsersController(IUnitOfWork unitOfWork)
+        public UsersController(IUnitOfWork unitOfWork,
+                               IRequestUtilityService requestUtilityService)
         {
             _unitOfWork = unitOfWork;
+            _requestUtilityService = requestUtilityService;
         }
 
         // GET: api/Users
+        [CustomAuthorize(UserRolesConstant.ADMIN)]
         [HttpGet]
         public async Task<ActionResult<GenericResponseDTO<UserOutputDTO>>> GetUsersInfo([FromQuery] UsersFilters filters,[FromQuery] Pagination pagination)
         {
@@ -92,11 +98,21 @@ namespace FunnySailAPI.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest();
 
-                //if (id != idToken)
-                //    return BadRequest();
+                ApplicationUser user;
+                if (!_requestUtilityService.AnyRole(UserRoles, UserRolesConstant.ADMIN))
+                {
+                    if (id != User.UserId)
+                        return BadRequest();
+
+                    user = User.ApplicationUser;
+                }
+                else
+                {
+                    user = await _unitOfWork.UserManager.FindByEmailAsync(userInput.Email);
+                }
 
                 //Falta el usuario que se obtiene por el token
-                await _unitOfWork.UserCEN.EditUser(null,userInput);
+                await _unitOfWork.UserCEN.EditUser(user, userInput);
 
                 return NoContent();
             }
@@ -139,21 +155,6 @@ namespace FunnySailAPI.Controllers
         //    return CreatedAtAction("GetUsersEN", new { id = usersEN.UserId }, usersEN);
         //}
 
-        //// DELETE: api/Users/5
-        //[HttpDelete("{id}")]
-        //public async Task<ActionResult<UsersEN>> DeleteUsersEN(string id)
-        //{
-        //    var usersEN = await _context.UsersInfo.FindAsync(id);
-        //    if (usersEN == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    _context.UsersInfo.Remove(usersEN);
-        //    await _context.SaveChangesAsync();
-
-        //    return usersEN;
-        //}
 
     }
 }

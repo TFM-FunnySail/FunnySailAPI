@@ -1,5 +1,7 @@
 ﻿using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail;
+using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -29,5 +31,7 @@ namespace FunnySailAPI.ApplicationCore.Interfaces
         public IServiceCEN ServiceCEN { get;  }
         public ITechnicalServiceCEN TechnicalServiceCEN { get;  }
         public IUserCEN UserCEN { get;  }
+        public UserManager<ApplicationUser> UserManager { get; }
+        public SignInManager<ApplicationUser> SignInManager { get; }
     }
 }

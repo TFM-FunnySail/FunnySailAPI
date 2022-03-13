@@ -1,6 +1,8 @@
 ﻿using FunnySailAPI.ApplicationCore.Interfaces;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail;
+using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,6 +32,8 @@ namespace FunnySailAPI.ApplicationCore.Services
         public IServiceCEN ServiceCEN { get; private set; }
         public ITechnicalServiceCEN TechnicalServiceCEN { get; private set; }
         public IUserCEN UserCEN { get; private set; }
+        public UserManager<ApplicationUser> UserManager { get; }
+        public SignInManager<ApplicationUser> SignInManager { get;}
 
         public UnitOfWork(IBoatCP BoatCP,
                           IBookingCP BookingCP,
@@ -51,7 +55,9 @@ namespace FunnySailAPI.ApplicationCore.Services
                           IReviewCEN ReviewCEN,
                           IServiceCEN ServiceCEN,
                           ITechnicalServiceCEN TechnicalServiceCEN,
-                          IUserCEN UserCEN)
+                          IUserCEN UserCEN,
+                          UserManager<ApplicationUser> UserManager,
+                          SignInManager<ApplicationUser> SignInManager)
         {
             this.BoatCP = BoatCP;
             this.BookingCP = BookingCP;
@@ -74,6 +80,8 @@ namespace FunnySailAPI.ApplicationCore.Services
             this.ServiceCEN = ServiceCEN;
             this.TechnicalServiceCEN = TechnicalServiceCEN;
             this.UserCEN = UserCEN;
+            this.UserManager = UserManager;
+            this.SignInManager = SignInManager;
         }
     }
 }
