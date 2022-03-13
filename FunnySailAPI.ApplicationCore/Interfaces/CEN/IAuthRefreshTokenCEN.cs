@@ -12,5 +12,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN
         Task<AuthRefreshToken> RevokeToken(AuthRefreshToken refreshToken, string ipAddress, string newToken);
         Task<AuthRefreshToken> GenerateRefreshTokens(ApplicationUser user, string ipAddress, AuthRefreshToken oldRefreshToken);
         IAuthRefreshTokenCAD GetAuthRefreshTokenCAD();
+        Task RevokeToken(string token, string ipAddress);
     }
 }

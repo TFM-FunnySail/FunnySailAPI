@@ -16,7 +16,7 @@ namespace FunnySailAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : AccountBaseController
+    public class AccountController : BaseController
     {
         private readonly IAccountService _accountService;
         private readonly IRequestUtilityService _requestUtilityService;
@@ -85,8 +85,8 @@ namespace FunnySailAPI.Controllers
                     return BadRequest(new { message = "Token is required" });
 
                 // users can revoke their own tokens and admins can revoke any tokens
-                if (!(await _accountService.IsOwnsToken(User,token)) && 
-                    UserRoles().Contains(UserRolesConstant.ADMIN))
+                if (!(await _accountService.IsOwnsToken(User, token)) &&
+                    UserRoles.Contains(UserRolesConstant.ADMIN))
                     return Unauthorized(new { message = "Unauthorized" });
 
                 await _accountService.RevokeToken(token, _requestUtilityService.ipAddress(Request, HttpContext));
