@@ -1,4 +1,5 @@
-﻿using FunnySailAPI.ApplicationCore.Exceptions;
+﻿using FunnySailAPI.ApplicationCore.Constants;
+using FunnySailAPI.ApplicationCore.Exceptions;
 using FunnySailAPI.ApplicationCore.Interfaces;
 using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
@@ -41,9 +42,14 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             _databaseTransactionFactory = databaseTransactionFactory;
         }
 
-        public async Task<IdentityResult> CreateUser(ApplicationUser user,AddUserInputDTO addUserInput)
+        public async Task<(IdentityResult, ApplicationUser)> CreateUser(AddUserInputDTO addUserInput)
         {
-            user.PhoneNumber = addUserInput.PhoneNumber;
+            var user = new ApplicationUser
+            {
+                Email = addUserInput.Email,
+                UserName = addUserInput.Email,
+                PhoneNumber = addUserInput.PhoneNumber,
+            };
 
             using (var databaseTransaction = _databaseTransactionFactory.BeginTransaction())
             {
@@ -54,7 +60,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
                     if (!result.Succeeded)
                     {
                         await databaseTransaction.RollbackAsync();
-                        return result; 
+                        return (result,user); 
                     }
 
                     UsersEN userInfo = await _userCAD.AddAsync(new UsersEN { 
@@ -66,11 +72,11 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
                         ReceivePromotion = addUserInput.ReceivePromotion ?? false,
                     });
 
-                    //await _userManager.AddToRoleAsync(user, Globals.UserRoles[addUserInput.UserRole]);
+                    await _userManager.AddToRoleAsync(user, UserRolesConstant.CLIENT);
 
                     await databaseTransaction.CommitAsync();
 
-                    return result;
+                    return (result, user);
                 }
                 catch (Exception ex)
                 {

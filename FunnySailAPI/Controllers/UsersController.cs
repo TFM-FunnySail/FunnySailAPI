@@ -18,6 +18,7 @@ using FunnySailAPI.ApplicationCore.Exceptions;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input.User;
 using FunnySailAPI.Helpers;
 using FunnySailAPI.ApplicationCore.Constants;
+using Microsoft.AspNetCore.Identity;
 
 namespace FunnySailAPI.Controllers
 {
@@ -111,7 +112,6 @@ namespace FunnySailAPI.Controllers
                     user = await _unitOfWork.UserManager.FindByEmailAsync(userInput.Email);
                 }
 
-                //Falta el usuario que se obtiene por el token
                 await _unitOfWork.UserCEN.EditUser(user, userInput);
 
                 return NoContent();
@@ -129,31 +129,40 @@ namespace FunnySailAPI.Controllers
             }
         }
 
-        //// POST: api/Users
-        //// To protect from overposting attacks, enable the specific properties you want to bind to, for
-        //// more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        //[HttpPost]
-        //public async Task<ActionResult<UsersEN>> PostUsersEN(UsersEN usersEN)
-        //{
-        //    _context.UsersInfo.Add(usersEN);
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateException)
-        //    {
-        //        if (UsersENExists(usersEN.UserId))
-        //        {
-        //            return Conflict();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
+        // POST: api/Users
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPost]
+        public async Task<ActionResult<UsersEN>> PostUsersEN(AddUserInputDTO addUserInput)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
 
-        //    return CreatedAtAction("GetUsersEN", new { id = usersEN.UserId }, usersEN);
-        //}
+
+                (IdentityResult result, ApplicationUser user) = await _unitOfWork.UserCEN.CreateUser(addUserInput);
+
+                if (!result.Succeeded)
+                    return StatusCode(StatusCodes.Status500InternalServerError,
+                        new ErrorResponseDTO("User could not be created", 
+                        "El usuario no pudo ser creado"));
+
+                return CreatedAtAction("GetUsersEN", new { id = user.Id });
+            }
+            catch (DataValidationException dataValidation)
+            {
+                if (dataValidation.ExceptionType == ExceptionTypesEnum.NotFound)
+                    return NotFound();
+
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, new ErrorResponseDTO(dataValidation));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+            
+        }
 
 
     }

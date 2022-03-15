@@ -81,8 +81,7 @@ namespace FunnySailAPI.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
-                var result = await _userCEN.CreateUser(user, Input);
+                (IdentityResult result, ApplicationUser user) = await _userCEN.CreateUser(Input);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");

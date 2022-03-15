@@ -26,7 +26,6 @@ namespace FunnySailAPI.ApplicationCore.Models.DTO.Input.User
         public string ConfirmPassword { get; set; }
         public bool? ReceivePromotion { get; set; }
         public DateTime? BirthDay { get; set; }
-        public UserRoleEnum UserRole { get; set; }
 
         [StringLength(20)]
         public string PhoneNumber { get; set; }
