@@ -20,8 +20,8 @@ namespace FunnySailAPI.Helpers
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            var user = (UsersEN)context.HttpContext.Items["Account"];
-            var userRoles = (IList<string>)context.HttpContext.Items["Account"];
+            var user = (UsersEN)context.HttpContext.Items["User"];
+            var userRoles = (IList<string>)context.HttpContext.Items["Roles"];
             if (user == null || (_roles.Any() && !AnyRole(userRoles)))
             {
                 // not logged in or role not authorized
