@@ -16,12 +16,15 @@ using FunnySailAPI.Assemblers;
 using FunnySailAPI.DTO.Output;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 using FunnySailAPI.ApplicationCore.Models.Globals;
+using FunnySailAPI.Helpers;
+using FunnySailAPI.ApplicationCore.Constants;
+using FunnySailAPI.ApplicationCore.Helpers;
 
 namespace FunnySailAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BoatsController : ControllerBase
+    public class BoatsController : BaseController
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -126,6 +129,7 @@ namespace FunnySailAPI.Controllers
         // PUT: api/Boats/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [CustomAuthorize(UserRolesConstant.ADMIN, UserRolesConstant.BOAT_OWNER)]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBoatEN(int id, UpdateBoatInputDTO updateBoatInput)
         {
@@ -157,6 +161,7 @@ namespace FunnySailAPI.Controllers
         // POST: api/Boats
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [CustomAuthorize]
         [HttpPost]
         public async Task<ActionResult<BoatEN>> PostBoat(AddBoatInputDTO boatInput)
         {
@@ -164,6 +169,17 @@ namespace FunnySailAPI.Controllers
             {
                 if (!ModelState.IsValid)
                     return BadRequest();
+
+                ApplicationUser user;
+                if (!RolesHelpers.AnyRole(UserRoles, UserRolesConstant.ADMIN))
+                {
+                    user = User.ApplicationUser;
+                }
+                else
+                {
+                    user = await _unitOfWork.UserManager.FindByIdAsync(boatInput.OwnerId);
+                }
+                boatInput.OwnerId = user.Id;
 
                 int boatId = await _unitOfWork.BoatCP.CreateBoat(boatInput);
 
@@ -181,6 +197,7 @@ namespace FunnySailAPI.Controllers
         }
 
         // PUT: api/Boats/5/approve 
+        [CustomAuthorize(UserRolesConstant.ADMIN)]
         [HttpPut("{id}/approve")]
         public async Task<IActionResult> PutApproveBoat(int id)
         {
@@ -204,8 +221,9 @@ namespace FunnySailAPI.Controllers
         }
 
         // PUT: api/Boats/5/disapprove 
+        [CustomAuthorize(UserRolesConstant.ADMIN)]
         [HttpPut("{id}/disapprove")]
-        public async Task<IActionResult> PutDisapproveBoat(int boatId,DisapproveBoatInputDTO disapproveBoatInput)
+        public async Task<IActionResult> PutDisapproveBoat(int id,DisapproveBoatInputDTO disapproveBoatInput)
         {
             try
             {
@@ -213,9 +231,9 @@ namespace FunnySailAPI.Controllers
                     return BadRequest();
 
                 //Obtengo el id del admin por el token
-                //disapproveBoatInput.AdminId = 
+                disapproveBoatInput.AdminId = User.UserId;
 
-                await _unitOfWork.BoatCP.DisapproveBoat(boatId,disapproveBoatInput);
+                await _unitOfWork.BoatCP.DisapproveBoat(id,disapproveBoatInput);
 
                 return NoContent();
             }

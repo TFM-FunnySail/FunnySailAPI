@@ -1,5 +1,6 @@
 ﻿using FunnySailAPI.ApplicationCore.Constants;
 using FunnySailAPI.ApplicationCore.Exceptions;
+using FunnySailAPI.ApplicationCore.Helpers;
 using FunnySailAPI.ApplicationCore.Interfaces;
 using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
@@ -82,9 +83,9 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
         public async Task AddRole(string id, string[] roles)
         {
-            if (roles.Any(x=> !UserRolesConstant.ExistRole(x)))
+            if (roles.Any(x=> !RolesHelpers.ExistRole(x)))
             {
-                string rolesNotFound = String.Join(",", roles.Where(x => !UserRolesConstant.ExistRole(x))
+                string rolesNotFound = String.Join(",", roles.Where(x => !RolesHelpers.ExistRole(x))
                     .ToList());
                 throw new DataValidationException(rolesNotFound, rolesNotFound,
                     ExceptionTypesEnum.DontExists);
@@ -99,9 +100,9 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
         public async Task DeleteRole(string id, string[] roles)
         {
-            if (roles.Any(x => !UserRolesConstant.ExistRole(x)))
+            if (roles.Any(x => !RolesHelpers.ExistRole(x)))
             {
-                string rolesNotFound = String.Join(",", roles.Where(x => !UserRolesConstant.ExistRole(x))
+                string rolesNotFound = String.Join(",", roles.Where(x => !RolesHelpers.ExistRole(x))
                     .ToList());
                 throw new DataValidationException(rolesNotFound, rolesNotFound,
                     ExceptionTypesEnum.DontExists);

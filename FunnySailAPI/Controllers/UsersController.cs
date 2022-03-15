@@ -19,6 +19,7 @@ using FunnySailAPI.ApplicationCore.Models.DTO.Input.User;
 using FunnySailAPI.Helpers;
 using FunnySailAPI.ApplicationCore.Constants;
 using Microsoft.AspNetCore.Identity;
+using FunnySailAPI.ApplicationCore.Helpers;
 
 namespace FunnySailAPI.Controllers
 {
@@ -100,7 +101,7 @@ namespace FunnySailAPI.Controllers
                     return BadRequest();
 
                 ApplicationUser user;
-                if (!_requestUtilityService.AnyRole(UserRoles, UserRolesConstant.ADMIN))
+                if (!RolesHelpers.AnyRole(UserRoles, UserRolesConstant.ADMIN))
                 {
                     if (id != User.UserId)
                         return BadRequest();

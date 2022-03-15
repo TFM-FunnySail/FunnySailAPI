@@ -81,7 +81,8 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                         CreatedDate = DateTime.UtcNow,
                         PendingToReview = true,
                         BoatTypeId = addBoatInput.BoatTypeId,
-                        MooringId = addBoatInput.MooringId
+                        MooringId = addBoatInput.MooringId,
+                        OwnerId = addBoatInput.OwnerId
                     });
 
                     //Crear datos de embarcacion
