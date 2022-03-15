@@ -166,5 +166,18 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
             return await _userCAD.Get(query, orderBy, includeProperties, pagination);
         }
+
+        public async Task AddRole(string id, string[] roles)
+        {
+            if (roles.Any(x=> !UserRolesConstant.ExistRole(x)))
+            {
+                string rolesNotFound = String.Join(",", roles.Where(x => !UserRolesConstant.ExistRole(x))
+                    .ToList());
+                throw new DataValidationException(rolesNotFound, rolesNotFound,
+                    ExceptionTypesEnum.DontExists);
+            }
+            ApplicationUser user = await _userManager.FindByIdAsync(id);
+            await _userManager.AddToRolesAsync(user, roles);
+        }
     }
 }

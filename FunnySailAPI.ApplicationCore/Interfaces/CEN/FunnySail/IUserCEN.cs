@@ -26,5 +26,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
             Pagination pagination = null,
             Func<IQueryable<UsersEN>, IOrderedQueryable<UsersEN>> orderBy = null,
             Func<IQueryable<UsersEN>, IIncludableQueryable<UsersEN, object>> includeProperties = null);
+        Task AddRole(string id, string[] roles);
     }
 }
