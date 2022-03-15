@@ -128,6 +128,7 @@ namespace FunnySailAPI
             services.AddScoped<IBookingCP, BookingCP>();
             services.AddScoped<IRefundCP, RefundCP>();
             services.AddScoped<IOwnerInvoiceCP, OwnerInvoiceCP>();
+            services.AddScoped<IUserCP, UserCP>();
             #endregion
 
             #region GeneralServices

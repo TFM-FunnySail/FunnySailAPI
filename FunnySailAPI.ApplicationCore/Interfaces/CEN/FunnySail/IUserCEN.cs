@@ -17,9 +17,7 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
 {
     public interface IUserCEN
     {
-        Task<(IdentityResult, ApplicationUser)> CreateUser(AddUserInputDTO addUserInput);
         IUserCAD GetUserCAD();
-        Task<IdentityResult> EditUser(ApplicationUser user, AddUserInputDTO addUserInput);
         Task LogoutUser(ApplicationUser user, LoginUserInputDTO loginUserInput);
         Task<int> GetTotal(UsersFilters filters);
         Task<IList<UsersEN>> GetAll(UsersFilters filters = null,

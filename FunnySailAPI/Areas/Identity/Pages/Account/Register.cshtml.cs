@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
+using FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input.User;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
@@ -27,20 +28,20 @@ namespace FunnySailAPI.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-        private readonly IUserCEN _userCEN;
+        private readonly IUserCP _userCP;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            IUserCEN userCEN)
+            IUserCP userCP)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
-            _userCEN = userCEN;
+            _userCP = userCP;
         }
 
         [BindProperty]
@@ -81,7 +82,7 @@ namespace FunnySailAPI.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                (IdentityResult result, ApplicationUser user) = await _userCEN.CreateUser(Input);
+                (IdentityResult result, ApplicationUser user) = await _userCP.CreateUser(Input);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");

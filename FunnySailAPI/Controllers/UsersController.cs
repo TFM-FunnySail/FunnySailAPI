@@ -112,7 +112,7 @@ namespace FunnySailAPI.Controllers
                     user = await _unitOfWork.UserManager.FindByEmailAsync(userInput.Email);
                 }
 
-                await _unitOfWork.UserCEN.EditUser(user, userInput);
+                await _unitOfWork.UserCP.EditUser(user, userInput);
 
                 return NoContent();
             }
@@ -141,7 +141,7 @@ namespace FunnySailAPI.Controllers
                     return BadRequest();
 
 
-                (IdentityResult result, ApplicationUser user) = await _unitOfWork.UserCEN.CreateUser(addUserInput);
+                (IdentityResult result, ApplicationUser user) = await _unitOfWork.UserCP.CreateUser(addUserInput);
 
                 if (!result.Succeeded)
                     return StatusCode(StatusCodes.Status500InternalServerError,
