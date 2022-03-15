@@ -191,5 +191,32 @@ namespace FunnySailAPI.Controllers
             }
         }
 
+        // DEL: api/Users/5/role
+        [CustomAuthorize(UserRolesConstant.ADMIN)]
+        [HttpDelete("{id}/role")]
+        public async Task<IActionResult> DeleteRole(string id, [FromBody] string[] roles)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                await _unitOfWork.UserCEN.DeleteRole(id, roles);
+
+                return NoContent();
+            }
+            catch (DataValidationException dataValidation)
+            {
+                if (dataValidation.ExceptionType == ExceptionTypesEnum.NotFound)
+                    return NotFound();
+
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, new ErrorResponseDTO(dataValidation));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
+
     }
 }

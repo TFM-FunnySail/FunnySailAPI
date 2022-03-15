@@ -177,7 +177,29 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
                     ExceptionTypesEnum.DontExists);
             }
             ApplicationUser user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+                throw new DataValidationException("User", "Usuario", ExceptionTypesEnum.NotFound);
+
             await _userManager.AddToRolesAsync(user, roles);
+        }
+
+        public async Task DeleteRole(string id, string[] roles)
+        {
+            if (roles.Any(x => !UserRolesConstant.ExistRole(x)))
+            {
+                string rolesNotFound = String.Join(",", roles.Where(x => !UserRolesConstant.ExistRole(x))
+                    .ToList());
+                throw new DataValidationException(rolesNotFound, rolesNotFound,
+                    ExceptionTypesEnum.DontExists);
+            }
+            ApplicationUser user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+                throw new DataValidationException("User", "Usuario", ExceptionTypesEnum.NotFound);
+
+
+            await _userManager.RemoveFromRolesAsync(user, roles);
         }
     }
 }
