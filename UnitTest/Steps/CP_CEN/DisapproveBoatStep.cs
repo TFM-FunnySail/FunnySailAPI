@@ -52,7 +52,7 @@ namespace UnitTest.Steps.CP_CEN
             IBoatCEN boatCEN = new BoatCEN(boatCAD);
             IReviewCEN reviewCEN = new ReviewCEN(reviewCAD);
             IMooringCEN mooringCEN = new MooringCEN(mooringCAD);
-            IUserCEN userCEN = new UserCEN(userCAD, null,null, databaseTransactionFactory);
+            IUserCEN userCEN = new UserCEN(userCAD, null,null);
 
 
             _boatCP = new BoatCP(boatCEN, null, null, null, null, null, databaseTransactionFactory,
