@@ -57,7 +57,7 @@ namespace UnitTest.Steps.CP_CEN.Activities
         {
             try
             {
-                _activityUpdated = await _activityCEN.EditActivity(new UpdateAcitivityDTO
+                _activityUpdated = await _activityCEN.EditActivity(new UpdateAcitivityInputDTO
                 {
                     Id = _id,
                     Name = _name
