@@ -4,6 +4,7 @@ using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.Filters;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
 using FunnySailAPI.ApplicationCore.Models.Utils;
@@ -12,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FunnySailAPI.ApplicationCore.Models.DTO.Input;
+using Microsoft.EntityFrameworkCore.Query;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input.Activity;
 
 namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
@@ -49,7 +50,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             return dbActivity.Id;
         }
 
-        public async Task<ActivityEN> EditActivity(UpdateAcitivityDTO updateAcitivityInput)
+        public async Task<ActivityEN> EditActivity(UpdateAcitivityInputDTO updateAcitivityInput)
         {
             if (updateAcitivityInput.Name == null)
                 throw new DataValidationException($"{_enName} name", $"Nombre del {_esName}",
@@ -88,20 +89,40 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             return _activityCAD;
         }
 
-        public async Task<List<ActivityEN>> GetAvailableActivity(Pagination pagination, DateTime? initialDate, DateTime? endDate, decimal? minPrice, decimal? maxPrice, String name)
+        public async Task<IList<ActivityEN>> GetAvailableActivities(Pagination pagination, DateTime initialDate, DateTime endDate,
+           Func<IQueryable<ActivityEN>, IOrderedQueryable<ActivityEN>> orderBy = null,
+           Func<IQueryable<ActivityEN>, IIncludableQueryable<ActivityEN, object>> includeProperties = null)
         {
+            List<int> idsNotAvailable = await _activityCAD.GetActivityIdsNotAvailable(initialDate, endDate);
 
-            IQueryable<ActivityEN> activitys = _activityCAD.GetActivityFiltered(new ActivityFilters
+            IQueryable<ActivityEN> activities = _activityCAD.GetActivityFiltered(new ActivityFilters
             {
-                Active = true,
-                MinPrice = minPrice,
-                MaxPrice = maxPrice,
-                InitialDate = initialDate,
-                EndDate = endDate,
-                Name = name
+                Active = true
             });
 
-            return await _activityCAD.GetAll(activitys.OrderBy(x => x.Id), pagination);
+            if (orderBy == null)
+                orderBy = b => b.OrderBy(x => x.Id);
+
+            return await _activityCAD.Get(activities, orderBy, includeProperties, pagination);
+        }
+
+        public async Task<IList<ActivityEN>> GetAll(ActivityFilters filters = null,
+        Pagination pagination = null,
+        Func<IQueryable<ActivityEN>, IOrderedQueryable<ActivityEN>> orderBy = null,
+        Func<IQueryable<ActivityEN>, IIncludableQueryable<ActivityEN, object>> includeProperties = null)
+        {
+            var activities = _activityCAD.GetActivityFiltered(filters);
+
+            if (orderBy == null)
+                orderBy = b => b.OrderBy(x => x.Id);
+
+            return await _activityCAD.Get(activities, orderBy, includeProperties, pagination);
+        }
+        public async Task<int> GetTotal(ActivityFilters filters = null)
+        {
+            var activities = _activityCAD.GetActivityFiltered(filters);
+
+            return await _activityCAD.GetCounter(activities);
         }
     }
 }
