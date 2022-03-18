@@ -1,10 +1,14 @@
 ﻿using FunnySailAPI.ApplicationCore.Exceptions;
 using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
+using FunnySailAPI.ApplicationCore.Models.Filters;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
+using FunnySailAPI.ApplicationCore.Models.Utils;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -45,7 +49,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             return ownerInvoiceEN;
         }
 
-        protected async Task<int> CreateOwnerInvoice(string ownerId,decimal amount,bool toCollet)
+        public async Task<int> CreateOwnerInvoice(string ownerId,decimal amount,bool toCollet)
         {
             OwnerInvoiceEN ownerInvoiceEN = await _ownerInvoiceCAD.AddAsync(new OwnerInvoiceEN
             {
@@ -63,6 +67,26 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
         public IOwnerInvoiceLineCAD GetOwnerInvoiceLineCAD()
         {
             return _ownerInvoiceLineCAD;
+        }
+
+       public async Task<IList<OwnerInvoiceEN>> GetAll(OwnerInvoiceFilters filters = null,
+       Pagination pagination = null,
+       Func<IQueryable<OwnerInvoiceEN>, IOrderedQueryable<OwnerInvoiceEN>> orderBy = null,
+       Func<IQueryable<OwnerInvoiceEN>, IIncludableQueryable<OwnerInvoiceEN, object>> includeProperties = null)
+        {
+            var OwnerInvoices = _ownerInvoiceCAD.GetOwnerInvoiceFiltered(filters);
+
+            if (orderBy == null)
+                orderBy = b => b.OrderBy(x => x.Id);
+
+            return await _ownerInvoiceCAD.Get(OwnerInvoices, orderBy, includeProperties, pagination);
+        }
+
+        public async Task<int> GetTotal(OwnerInvoiceFilters filters = null)
+        {
+            var OwnerInvoices = _ownerInvoiceCAD.GetOwnerInvoiceFiltered(filters);
+
+            return await _ownerInvoiceCAD.GetCounter(OwnerInvoices);
         }
     }
 }
