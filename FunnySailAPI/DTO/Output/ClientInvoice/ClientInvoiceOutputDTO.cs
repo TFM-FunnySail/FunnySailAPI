@@ -14,8 +14,8 @@ namespace FunnySailAPI.DTO.Output.ClientInvoice
         public decimal TotalAmount { get; set; }
         public string ClientId { get; set; }
         public UserOutputDTO Client { get; set; }
-        public List<InvoiceLineEN> InvoiceLines { get; set; }
-        public List<RefundEN> Refunds { get; set; }
+        public List<ClientInvoiceLinesOutputDTO> InvoiceLines { get; set; }
+        //public List<RefundOutputDTO> Refunds { get; set; }
 
         public ClientInvoiceOutputDTO()
         {
