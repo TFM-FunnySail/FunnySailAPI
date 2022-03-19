@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input.Activity;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
 {
@@ -16,8 +17,16 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
     {
         Task<int> AddActivity(AddActivityInputDTO addActivityInput);
         IActivityCAD GetActivityCAD();
-        Task<ActivityEN> EditActivity(UpdateAcitivityDTO updateAcitivityInput);
+        Task<ActivityEN> EditActivity(UpdateAcitivityInputDTO updateAcitivityInput);
         Task<ActivityEN> DeactivateActivity(int activityId);
-        Task<List<ActivityEN>> GetAvailableActivity(Pagination pagination, DateTime? initialDate, DateTime? endDate, decimal? minPrice, decimal? maxPrice, String name);
+        Task<IList<ActivityEN>> GetAvailableActivities(Pagination pagination, DateTime initialDate, DateTime endDate,
+           Func<IQueryable<ActivityEN>, IOrderedQueryable<ActivityEN>> orderBy = null,
+           Func<IQueryable<ActivityEN>, IIncludableQueryable<ActivityEN, object>> includeProperties = null);
+
+        Task<IList<ActivityEN>> GetAll(ActivityFilters filters = null,
+            Pagination pagination = null,
+            Func<IQueryable<ActivityEN>, IOrderedQueryable<ActivityEN>> orderBy = null,
+            Func<IQueryable<ActivityEN>, IIncludableQueryable<ActivityEN, object>> includeProperties = null);
+        Task<int> GetTotal(ActivityFilters filters = null);
     }
 }

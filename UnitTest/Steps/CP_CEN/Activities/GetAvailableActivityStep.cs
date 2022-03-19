@@ -23,8 +23,8 @@ namespace UnitTest.Features.CAD.Activitys
         private ApplicationDbContextFake _applicationDbContextFake;
         private IActivityCEN _activityCEN;
         private List<ActivityEN> _activities;
-        private DateTime? _initialDate;
-        private DateTime? _endDate;
+        private DateTime _initialDate;
+        private DateTime _endDate;
         private Pagination _pagination;
         private Decimal? _minPrice;
         private Decimal? _maxPrice;
@@ -59,7 +59,7 @@ namespace UnitTest.Features.CAD.Activitys
         [When(@"se obtienen las actividades disponibles con ese rango de precio")]
         public async Task WhenSeObtienenLasActividadesDisponiblesConEseRangoDePrecioAsync()
         {
-            _activities = await _activityCEN.GetAvailableActivity(_pagination, _initialDate, _endDate, _minPrice, _maxPrice, _name);
+            _activities = (await _activityCEN.GetAvailableActivities(_pagination, _initialDate, _endDate)).ToList();
         }
 
         [Then(@"el resultado debe ser una lista con los barcos con un precio mayor a (.*) y menor a (.*) que se encuentren activas")]
@@ -85,7 +85,7 @@ namespace UnitTest.Features.CAD.Activitys
         [When(@"se obtienen las actividades disponibles con esos rangos de fechas")]
         public async Task WhenSeObtienenLasActividadesDisponiblesAsync()
         {
-            _activities = await _activityCEN.GetAvailableActivity(_pagination, _initialDate, _endDate, 0, 0, _name);
+            _activities = (await _activityCEN.GetAvailableActivities(_pagination, _initialDate, _endDate)).ToList();
         }
 
         [Then(@"el resultado debe ser una lista con todas las actividades activas entre (.*) y (.*)")]
@@ -110,7 +110,7 @@ namespace UnitTest.Features.CAD.Activitys
         [When(@"se obtienen las actividades disponibles")]
         public async Task WhenSeObtienenLasActividadesDisponibles()
         {
-            _activities = await _activityCEN.GetAvailableActivity(_pagination, null, null, 0, 0, _name);
+            _activities = (await _activityCEN.GetAvailableActivities(_pagination, _initialDate, _endDate)).ToList();
         }
 
         [Then(@"el resultado debe ser una lista con todas las actividades activas con nombre (.*)")]

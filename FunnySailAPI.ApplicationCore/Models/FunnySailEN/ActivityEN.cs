@@ -24,6 +24,8 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
         [Required]
         public string Description { get; set; }
 
+        public List<ActivityResourcesEN> ActivityResources { get; set; }
+
         public List<ActivityBookingEN> ActivityBookings { get; set; }
     }
 }

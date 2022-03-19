@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FunnySailAPI.ApplicationCore.Models.DTO.Input.Activity
 {
-    public class UpdateAcitivityDTO
+    public class UpdateAcitivityInputDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
