@@ -1,25 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
-using FunnySailAPI.Infrastructure;
 using FunnySailAPI.ApplicationCore.Interfaces;
 using FunnySailAPI.ApplicationCore.Exceptions;
 using FunnySailAPI.ApplicationCore.Models.Filters;
 using FunnySailAPI.ApplicationCore.Models.Utils;
-using FunnySailAPI.DTO.Output.Boat;
 using FunnySailAPI.Assemblers;
 using FunnySailAPI.DTO.Output;
 using FunnySailAPI.ApplicationCore.Models.Globals;
 using FunnySailAPI.Helpers;
 using FunnySailAPI.ApplicationCore.Constants;
-using FunnySailAPI.ApplicationCore.Helpers;
 using FunnySailAPI.DTO.Output.Activity;
-using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input.Activity;
 
 namespace FunnySailAPI.Controllers
@@ -44,7 +39,7 @@ namespace FunnySailAPI.Controllers
         {
             try
             {
-                var activityTotal = await _unitOfWork.ActivityCEN.GetTotal(filters);
+                int activityTotal = await _unitOfWork.ActivityCEN.GetTotal(filters);
 
                 var activities = (await _unitOfWork.ActivityCEN.GetAll(
                     filters: filters,
@@ -176,5 +171,57 @@ namespace FunnySailAPI.Controllers
             }
 
         }
+
+        // PUT: api/Activities/5/activate 
+       
+        [HttpPut("{id}/activate")]
+        public async Task<IActionResult> PutActiveActivity(int id)
+        {
+            try
+            {
+                await _unitOfWork.ActivityCEN.ActivateActivity(id);
+
+                return NoContent();
+            }
+            catch (DataValidationException dataValidation)
+            {
+                if (dataValidation.ExceptionType == ExceptionTypesEnum.NotFound)
+                    return NotFound();
+
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, new ErrorResponseDTO(dataValidation));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
+
+        // PUT: api/Activities/5/deactivate 
+     
+        [HttpPut("{id}/deactivate")]
+        public async Task<IActionResult> PutDisapproveBoat(int id)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                await _unitOfWork.ActivityCEN.DeactivateActivity(id);
+
+                return NoContent();
+            }
+            catch (DataValidationException dataValidation)
+            {
+                if (dataValidation.ExceptionType == ExceptionTypesEnum.NotFound)
+                    return NotFound();
+
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, new ErrorResponseDTO(dataValidation));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
+
     }
 }
