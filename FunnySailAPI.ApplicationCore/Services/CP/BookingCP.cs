@@ -20,7 +20,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
     {
         private readonly IBookingCEN _bookingCEN;
         private readonly IUserCEN _userCEN;
-        private readonly IInvoiceLineCEN _invoiceLineCEN;
+        private readonly IClientInvoiceLineCEN _invoiceLineCEN;
         private readonly IOwnerInvoiceLineCEN _ownerInvoiceLineCEN;
         private readonly IBoatBookingCEN _boatBookingCEN;
         private readonly IServiceBookingCEN _serviceBookingCEN;
@@ -35,7 +35,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
 
         public BookingCP(IBookingCEN bookingCEN,
                          IUserCEN userCEN,
-                         IInvoiceLineCEN invoiceLineCEN,
+                         IClientInvoiceLineCEN invoiceLineCEN,
                          IOwnerInvoiceLineCEN ownerInvoiceLineCEN,
                          IBoatBookingCEN boatBookingCEN,
                          IServiceBookingCEN serviceBookingCEN,

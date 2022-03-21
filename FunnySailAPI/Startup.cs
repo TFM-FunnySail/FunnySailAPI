@@ -70,7 +70,7 @@ namespace FunnySailAPI
             services.AddScoped<IBookingCAD, BookingCAD>();
             services.AddScoped<IBoatBookingCAD, BoatBookingCAD>();
             services.AddScoped<IActivityBookingCAD, ActivityBookingCAD>();
-            services.AddScoped<IInvoiceLineCAD, InvoiceLineCAD>();
+            services.AddScoped<IClientInvoiceLineCAD, ClientInvoiceLineCAD>();
             services.AddScoped<IClientInvoiceCAD, ClientInvoiceCAD>();
             services.AddScoped<IServiceCAD, ServiceCAD>();
             services.AddScoped<IServiceBookingCAD, ServiceBookingCAD>();
@@ -110,7 +110,7 @@ namespace FunnySailAPI
             services.AddScoped<IActivityBookingCEN, ActivityBookingCEN>();
             services.AddScoped<IServiceBookingCEN, ServiceBookingCEN>();
             services.AddScoped<IBoatBookingCEN, BoatBookingCEN>();
-            services.AddScoped<IInvoiceLineCEN, InvoiceLineCEN>();
+            services.AddScoped<IClientInvoiceLineCEN, ClientInvoiceLineCEN>();
             services.AddScoped<IClientInvoiceCEN, ClientInvoiceCEN>();
             services.AddScoped<IOwnerInvoiceLineCEN, OwnerInvoiceLineCEN>();
             services.AddScoped<IBoatBaseCEN, BoatBaseCEN>();
