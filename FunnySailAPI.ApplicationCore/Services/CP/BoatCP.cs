@@ -8,8 +8,11 @@ using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 using FunnySailAPI.ApplicationCore.Models.Filters;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +30,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
         private readonly IReviewCEN _reviewCEN;
         private readonly IUserCEN _userCEN;
         private readonly IMooringCEN _mooringCEN;
+        private readonly IResourcesCEN _resourcesCEN;
         private IDatabaseTransactionFactory _databaseTransactionFactory;
 
         public BoatCP(IBoatCEN boatCEN,
@@ -38,7 +42,8 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                       IDatabaseTransactionFactory databaseTransactionFactory,
                       IReviewCEN reviewCEN,
                       IUserCEN userCEN,
-                      IMooringCEN mooringCEN)
+                      IMooringCEN mooringCEN,
+                      IResourcesCEN resourcesCEN)
         {
             _boatCEN = boatCEN;
             _boatInfoCEN = boatInfoCEN;
@@ -50,6 +55,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             _reviewCEN = reviewCEN;
             _userCEN = userCEN;
             _mooringCEN = mooringCEN;
+            _resourcesCEN = resourcesCEN;
         }
 
         public async Task<int> CreateBoat(AddBoatInputDTO addBoatInput)
@@ -237,6 +243,39 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             }
 
             return boat;
+        }
+
+        public async Task<int> AddImage(int boatId, IFormFile image, bool main)
+        {
+            BoatEN dbBoat = await _boatCEN.GetBoatCAD().FindById(boatId);
+            if (dbBoat == null)
+                throw new DataValidationException("Boat", "La embarcación", ExceptionTypesEnum.NotFound);
+
+            int idResource = 0;
+            string uri = await _resourcesCEN.UploadImage(image);
+
+            using (var databaseTransaction = _databaseTransactionFactory.BeginTransaction())
+            {
+                try
+                {
+                    idResource = await _resourcesCEN.AddResources(main,ResourcesEnum.Image, uri);
+
+                    await _boatResourceCEN.AddBoatResource(new BoatResourceEN
+                    {
+                        BoatId = boatId,
+                        ResourceId = idResource
+                    });
+
+                    await databaseTransaction.CommitAsync();
+                }
+                catch (Exception ex)
+                {
+                    await databaseTransaction.RollbackAsync();
+                    throw ex;
+                }
+            }
+
+            return idResource;
         }
     }
 }
