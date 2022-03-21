@@ -73,6 +73,17 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             return activity;
         }
 
+        public async Task<ActivityEN> ActivateActivity(int activityId)
+        {
+            ActivityEN activity = await _activityCAD.FindById(activityId);
+
+            activity.Active = true;
+
+            await _activityCAD.Update(activity);
+
+            return activity;
+        }
+
         public async Task<ActivityEN> DeactivateActivity(int activityId)
         {
             ActivityEN activity = await _activityCAD.FindById(activityId);

@@ -60,28 +60,28 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
 
             if (activityFilters.ActivityId != 0)
                 activities = activities.Where(x => x.Id == activityFilters.ActivityId);
-
+            
             if (activityFilters.Active != null)
                 activities = activities.Where(x => x.Active == activityFilters.Active);
-
+            
             if (activityFilters.MinPrice != 0)
                 activities = activities.Where(x => x.Price >= activityFilters.MinPrice);
 
             if (activityFilters.MaxPrice != 0)
                 activities = activities.Where(x => x.Price < activityFilters.MaxPrice);
-
+            
             if (activityFilters.InitialDate != null)
                 activities = activities.Where(x => x.ActivityDate >= activityFilters.InitialDate);
 
             if (activityFilters.EndDate != null)
                 activities = activities.Where(x => x.ActivityDate < activityFilters.EndDate);
-
-            if (activityFilters.Name != "")
+            
+            if (activityFilters.Name != null)
                 activities = activities.Where(x => x.Name == activityFilters.Name);
 
             if (activityFilters.ActivityIdList?.Count > 0)
                 activities = activities.Where(x => activityFilters.ActivityIdList.Contains(x.Id));
-
+            
             return activities;
         }
 

@@ -18,6 +18,7 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
         Task<int> AddActivity(AddActivityInputDTO addActivityInput);
         IActivityCAD GetActivityCAD();
         Task<ActivityEN> EditActivity(UpdateAcitivityInputDTO updateAcitivityInput);
+        Task<ActivityEN> ActivateActivity(int activityId);
         Task<ActivityEN> DeactivateActivity(int activityId);
         Task<IList<ActivityEN>> GetAvailableActivities(Pagination pagination, DateTime initialDate, DateTime endDate,
            Func<IQueryable<ActivityEN>, IOrderedQueryable<ActivityEN>> orderBy = null,
