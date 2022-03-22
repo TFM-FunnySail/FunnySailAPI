@@ -16,25 +16,8 @@ namespace FunnySailAPI.Assemblers
                 CreatedDate = clientInvoiceEN.CreatedDate,
                 Canceled = clientInvoiceEN.Canceled,
                 Paid = clientInvoiceEN.Paid,
-                ClientId = clientInvoiceEN.ClientId,
+                ClientId = clientInvoiceEN.ClientId
             };
-
-            if(clientInvoiceEN.Client != null)
-            {
-                clientInvoiceOutput.Client = new UserOutputDTO
-                {
-                    UserId = clientInvoiceEN.Client.UserId,
-                    BirthDay = clientInvoiceEN.Client.BirthDay,
-                    BoatOwner = clientInvoiceEN.Client.BoatOwner,
-                    FirstName = clientInvoiceEN.Client.FirstName,
-                    LastName = clientInvoiceEN.Client.LastName,
-                    ReceivePromotion = clientInvoiceEN.Client.ReceivePromotion,
-                    EmailConfirmed = clientInvoiceEN.Client.ApplicationUser.EmailConfirmed,
-                    Email = clientInvoiceEN.Client.ApplicationUser.Email,
-                    PhoneNumber = clientInvoiceEN.Client.ApplicationUser.PhoneNumber,
-                    UserName = clientInvoiceEN.Client.ApplicationUser.UserName,
-                };
-            }
 
             if (clientInvoiceEN.InvoiceLines != null)
             {

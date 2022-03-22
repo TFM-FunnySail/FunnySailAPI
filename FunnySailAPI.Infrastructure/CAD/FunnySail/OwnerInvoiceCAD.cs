@@ -38,11 +38,11 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
             if (OwnerInvoiceFilters.ToCollet != null)
                 OwnerInvoices = OwnerInvoices.Where(x => x.ToCollet == OwnerInvoiceFilters.ToCollet);
 
-            if (OwnerInvoiceFilters.CreatedPricesRange?.MinPrice != null)
-                OwnerInvoices = OwnerInvoices.Where(x => x.Amount >= OwnerInvoiceFilters.CreatedPricesRange.MinPrice);
+            if (OwnerInvoiceFilters.MinPrice != 0)
+                OwnerInvoices = OwnerInvoices.Where(x => x.Amount >= OwnerInvoiceFilters.MinPrice);
 
-            if (OwnerInvoiceFilters.CreatedPricesRange?.MaxPrice != null)
-                OwnerInvoices = OwnerInvoices.Where(x => x.Amount < OwnerInvoiceFilters.CreatedPricesRange.MaxPrice);
+            if (OwnerInvoiceFilters.MaxPrice != 0)
+                OwnerInvoices = OwnerInvoices.Where(x => x.Amount < OwnerInvoiceFilters.MaxPrice);
 
             if (OwnerInvoiceFilters.CreatedDaysRange?.InitialDate != null)
                 OwnerInvoices = OwnerInvoices.Where(x => x.Date >= OwnerInvoiceFilters.CreatedDaysRange.InitialDate);
