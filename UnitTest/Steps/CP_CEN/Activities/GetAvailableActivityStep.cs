@@ -44,33 +44,7 @@ namespace UnitTest.Features.CAD.Activitys
 
         }
 
-        [Given(@"se piden las actividades disponibles con un precio minimo de (.*) y maximo de (.*)")]
-        public void GivenSePidenLasActividadesDisponiblesConPreciosSuperioresA(decimal minPrice, decimal maxPrice)
-        {
-            _minPrice = minPrice;
-            _maxPrice = maxPrice;
-            _pagination = new Pagination
-            {
-                Offset = 0,
-                Limit = 1000
-            };
-        }
-
-        [When(@"se obtienen las actividades disponibles con ese rango de precio")]
-        public async Task WhenSeObtienenLasActividadesDisponiblesConEseRangoDePrecioAsync()
-        {
-            _activities = (await _activityCEN.GetAvailableActivities(_pagination, _initialDate, _endDate)).ToList();
-        }
-
-        [Then(@"el resultado debe ser una lista con los barcos con un precio mayor a (.*) y menor a (.*) que se encuentren activas")]
-        public void ThenElResultadoDebeSerUnaListaConLosBarcosConUnPrecioMayorAQueSeEncuentrenActivas(decimal minPrice, decimal maxPrice)
-        {
-            int totalActiveInRange = _applicationDbContextFake._dbContextFake.Activity.Count(x => x.Price >= minPrice && x.Price < maxPrice && x.Active == true);
-            Assert.IsTrue(!_activities.Any(x => x.Active == false));
-            Assert.AreEqual(_activities.Count, totalActiveInRange);
-        }
-
-        [Given(@"se piden las actividades disponibles para las fechas (.*) y (.*)")]
+         [Given(@"se piden las actividades disponibles para las fechas (.*) y (.*)")]
         public void GivenSePidenLasActividadesDisponiblesParaLasFechasYAsync(string initialDate, string endDate)
         {
             _initialDate = DateTime.Parse(initialDate);
@@ -96,30 +70,5 @@ namespace UnitTest.Features.CAD.Activitys
             Assert.AreEqual(_activities.Count, totalActiveInRange);
         }
 
-        [Given(@"se piden las actividades disponibles con nombre (.*)")]
-        public void GivenSePidenLasActividadesDisponiblesConNombre(string name)
-        {
-            _name = name;
-            _pagination = new Pagination
-            {
-                Offset = 0,
-                Limit = 1000
-            };
-        }
-
-        [When(@"se obtienen las actividades disponibles")]
-        public async Task WhenSeObtienenLasActividadesDisponibles()
-        {
-            _activities = (await _activityCEN.GetAvailableActivities(_pagination, _initialDate, _endDate)).ToList();
-        }
-
-        [Then(@"el resultado debe ser una lista con todas las actividades activas con nombre (.*)")]
-        public void ThenElResultadoDebeSerUnaListaConTodasLasActividadesActivasConNombreAsync(string name)
-        {
-
-            int totalActiveWithName = _applicationDbContextFake._dbContextFake.Activity.Count(x => x.Name == name && x.Active == true);
-            Assert.IsTrue(!_activities.Any(x => x.Active == false));
-            Assert.AreEqual(_activities.Count, totalActiveWithName);
-        }
     }
 }

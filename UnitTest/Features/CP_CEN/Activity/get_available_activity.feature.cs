@@ -91,73 +91,6 @@ namespace UnitTest.Features.CP_CEN.Activity
             testRunner.CollectScenarioErrors();
         }
         
-        public virtual void MostrarActividadesActivasConRangosDePrecios(string minPrice, string maxPrice, string[] exampleTags)
-        {
-            string[] tagsOfScenario = exampleTags;
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            argumentsOfScenario.Add("minPrice", minPrice);
-            argumentsOfScenario.Add("maxPrice", maxPrice);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Mostrar actividades activas con rangos de precios", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 4
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            bool isScenarioIgnored = default(bool);
-            bool isFeatureIgnored = default(bool);
-            if ((tagsOfScenario != null))
-            {
-                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((this._featureTags != null))
-            {
-                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((isScenarioIgnored || isFeatureIgnored))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 5
- testRunner.Given(string.Format("se piden las actividades disponibles con un precio minimo de {0} y maximo de {1}", minPrice, maxPrice), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 6
- testRunner.When("se obtienen las actividades disponibles con ese rango de precio", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 7
- testRunner.Then(string.Format("el resultado debe ser una lista con los barcos con un precio mayor a {0} y menor " +
-                            "a {1} que se encuentren activas", minPrice, maxPrice), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Mostrar actividades activas con rangos de precios: 300")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "get_available_activity")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "300")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:minPrice", "300")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:maxPrice", "500")]
-        public virtual void MostrarActividadesActivasConRangosDePrecios_300()
-        {
-#line 4
-this.MostrarActividadesActivasConRangosDePrecios("300", "500", ((string[])(null)));
-#line hidden
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Mostrar actividades activas con rangos de precios: 200")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "get_available_activity")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "200")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:minPrice", "200")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:maxPrice", "340")]
-        public virtual void MostrarActividadesActivasConRangosDePrecios_200()
-        {
-#line 4
-this.MostrarActividadesActivasConRangosDePrecios("200", "340", ((string[])(null)));
-#line hidden
-        }
-        
         public virtual void MostrarActividadesActivasConRangosDeFechas(string initialDate, string endDate, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
@@ -165,7 +98,7 @@ this.MostrarActividadesActivasConRangosDePrecios("200", "340", ((string[])(null)
             argumentsOfScenario.Add("initialDate", initialDate);
             argumentsOfScenario.Add("endDate", endDate);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Mostrar actividades activas con rangos de fechas", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 14
+#line 3
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -185,13 +118,13 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 15
+#line 4
  testRunner.Given(string.Format("se piden las actividades disponibles para las fechas {0} y {1}", initialDate, endDate), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 16
+#line 5
  testRunner.When("se obtienen las actividades disponibles con esos rangos de fechas", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 17
+#line 6
  testRunner.Then(string.Format("el resultado debe ser una lista con todas las actividades activas entre {0} y {1}" +
                             "", initialDate, endDate), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -207,7 +140,7 @@ this.ScenarioInitialize(scenarioInfo);
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:endDate", "2022-04-06T11:00")]
         public virtual void MostrarActividadesActivasConRangosDeFechas_2022_02_02T1100()
         {
-#line 14
+#line 3
 this.MostrarActividadesActivasConRangosDeFechas("2022-02-02T11:00", "2022-04-06T11:00", ((string[])(null)));
 #line hidden
         }
@@ -220,71 +153,8 @@ this.MostrarActividadesActivasConRangosDeFechas("2022-02-02T11:00", "2022-04-06T
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:endDate", "2022-04-03T14:00")]
         public virtual void MostrarActividadesActivasConRangosDeFechas_2022_02_21T1400()
         {
-#line 14
+#line 3
 this.MostrarActividadesActivasConRangosDeFechas("2022-02-21T14:00", "2022-04-03T14:00", ((string[])(null)));
-#line hidden
-        }
-        
-        public virtual void MostrarActividadesIndicadaConNombreIntroducidoPorElUsuario(string activityName, string[] exampleTags)
-        {
-            string[] tagsOfScenario = exampleTags;
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            argumentsOfScenario.Add("activityName", activityName);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Mostrar actividades indicada con nombre introducido por el usuario", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 24
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            bool isScenarioIgnored = default(bool);
-            bool isFeatureIgnored = default(bool);
-            if ((tagsOfScenario != null))
-            {
-                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((this._featureTags != null))
-            {
-                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((isScenarioIgnored || isFeatureIgnored))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 25
- testRunner.Given(string.Format("se piden las actividades disponibles con nombre {0}", activityName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 26
- testRunner.When("se obtienen las actividades disponibles", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 27
- testRunner.Then(string.Format("el resultado debe ser una lista con todas las actividades activas con nombre {0}", activityName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Mostrar actividades indicada con nombre introducido por el usuario: Buceo")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "get_available_activity")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Buceo")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:activityName", "Buceo")]
-        public virtual void MostrarActividadesIndicadaConNombreIntroducidoPorElUsuario_Buceo()
-        {
-#line 24
-this.MostrarActividadesIndicadaConNombreIntroducidoPorElUsuario("Buceo", ((string[])(null)));
-#line hidden
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Mostrar actividades indicada con nombre introducido por el usuario: Pesca")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "get_available_activity")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Pesca")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:activityName", "Pesca")]
-        public virtual void MostrarActividadesIndicadaConNombreIntroducidoPorElUsuario_Pesca()
-        {
-#line 24
-this.MostrarActividadesIndicadaConNombreIntroducidoPorElUsuario("Pesca", ((string[])(null)));
 #line hidden
         }
     }

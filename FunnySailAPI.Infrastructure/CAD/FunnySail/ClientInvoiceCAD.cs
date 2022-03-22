@@ -35,19 +35,19 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
 
             if (ClientInvoiceFilters.IsPaid != null)
                 ClientInvoices = ClientInvoices.Where(x => x.Paid == ClientInvoiceFilters.IsPaid);
+            
+            if (ClientInvoiceFilters.MinPrice != 0)
+                ClientInvoices = ClientInvoices.Where(x => x.TotalAmount >= ClientInvoiceFilters.MinPrice);
 
-            if (ClientInvoiceFilters.CreatedPricesRange?.MinPrice != null)
-                ClientInvoices = ClientInvoices.Where(x => x.TotalAmount >= ClientInvoiceFilters.CreatedPricesRange.MinPrice);
-
-            if (ClientInvoiceFilters.CreatedPricesRange?.MaxPrice != null)
-                ClientInvoices = ClientInvoices.Where(x => x.TotalAmount < ClientInvoiceFilters.CreatedPricesRange.MaxPrice);
-
+            if (ClientInvoiceFilters.MaxPrice != 0)
+                ClientInvoices = ClientInvoices.Where(x => x.TotalAmount < ClientInvoiceFilters.MaxPrice);
+            
             if (ClientInvoiceFilters.CreatedDaysRange?.InitialDate != null)
                 ClientInvoices = ClientInvoices.Where(x => x.CreatedDate >= ClientInvoiceFilters.CreatedDaysRange.InitialDate);
 
             if (ClientInvoiceFilters.CreatedDaysRange?.EndDate != null)
                 ClientInvoices = ClientInvoices.Where(x => x.CreatedDate < ClientInvoiceFilters.CreatedDaysRange.EndDate);
-
+            
             return ClientInvoices;
         }
 

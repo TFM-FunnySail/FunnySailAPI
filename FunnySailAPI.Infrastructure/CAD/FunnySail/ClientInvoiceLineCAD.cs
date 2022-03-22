@@ -52,7 +52,7 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
             return await Get(clientInvoiceLines, orderBy, includeProperties, pagination);
         }
 
-        public async Task SetOwnerInvoice(List<InvoiceLineEN> clientInvoiceLines, int newClientInvoice)
+        public async Task SetClientInvoice(List<InvoiceLineEN> clientInvoiceLines, int newClientInvoice)
         {
             clientInvoiceLines.ForEach(x => x.ClientInvoiceId = newClientInvoice);
             await _dbContext.SaveChangesAsync();
