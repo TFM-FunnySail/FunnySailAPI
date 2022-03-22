@@ -40,7 +40,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
                     $"The {_enName} cannot be canceled because it has already been paid",
                     $"No se puede cancelar la {_esName} porque ya fue pagada.");
 
-            if (!ownerInvoiceEN.IsCanceled) return ownerInvoiceEN;
+            if (ownerInvoiceEN.IsCanceled) return ownerInvoiceEN;
 
             ownerInvoiceEN.IsCanceled = true;
 
