@@ -56,6 +56,8 @@ namespace UnitTest.FakeFactories
             //Agregando services
             _dbContextFake.AddRange(ServicesFaker());
             _dbContextFake.AddRange(ServicesBookingFaker());
+            _dbContextFake.AddRange(TecServicesFaker());
+            _dbContextFake.AddRange(TechnicalServiceBoatFaker());
 
             _dbContextFake.SaveChanges();
         }
@@ -239,6 +241,37 @@ namespace UnitTest.FakeFactories
                 new ServiceBookingEN
                 {
                     ServiceId = 2   
+                },
+            };
+        }
+
+        private List<TechnicalServiceEN> TecServicesFaker()
+        {
+            return new List<TechnicalServiceEN>
+            {
+                new TechnicalServiceEN
+                {
+                    Active = true,
+                    Description = "prueba con barcos",
+                    Price = 20,
+                    Id = 1
+                },
+            };
+        }
+
+        private List<TechnicalServiceBoatEN> TechnicalServiceBoatFaker()
+        {
+            return new List<TechnicalServiceBoatEN>
+            {
+                new TechnicalServiceBoatEN
+                {
+                    BoatId = 1,
+                    CreatedDate = DateTime.Now,
+                    Done = false,
+                    Price = 20,
+                    ServiceDate = DateTime.Now.AddDays(10),
+                    TechnicalServiceId = 1,
+                    Id = 1
                 },
             };
         }
