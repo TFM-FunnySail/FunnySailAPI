@@ -48,6 +48,9 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
         public decimal CalculatePrice(BoatPricesEN boatPrices,double days, double hours)
         {
+            if(days <= 0 && hours <= 0)
+                return 0;
+
             if (days >= 1)
                 return boatPrices.DayBasePrice * (decimal)days + (decimal)boatPrices.Supplement;
 
