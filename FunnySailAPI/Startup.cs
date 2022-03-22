@@ -188,7 +188,7 @@ namespace FunnySailAPI
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "FunnySail API V1");
-                
+                c.DefaultModelsExpandDepth(-1);
                 // To serve SwaggerUI at application's root page, set the RoutePrefix property to an empty string.
                 c.RoutePrefix = "swagger";
             });
