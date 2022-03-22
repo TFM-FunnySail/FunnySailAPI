@@ -56,7 +56,7 @@ namespace UnitTest.Steps.CP_CEN
 
 
             _boatCP = new BoatCP(boatCEN, null, null, null, null, null, databaseTransactionFactory,
-                reviewCEN, userCEN, mooringCEN);
+                reviewCEN, userCEN, mooringCEN,null);
         }
 
         [Given(@"que se quiere desaprobar el barco de id (.*), el admin de id (.*)")]
