@@ -251,6 +251,11 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             if (dbBoat == null)
                 throw new DataValidationException("Boat", "La embarcación", ExceptionTypesEnum.NotFound);
 
+            string[] extensions = new string[] { "png", "jpg" };
+            if (!extensions.Any(x => image.Name.ToLower().Contains(x)))
+                throw new DataValidationException("The image file does not have the required extension", 
+                    "El archivo imagen no tiene la extensión requerida");
+
             int idResource = 0;
             string uri = await _resourcesCEN.UploadImage(image);
 
