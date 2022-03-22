@@ -17,6 +17,7 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
         public decimal HourBasePrice { get; set; }
 
         public float Supplement { get; set; }
+        public float PorcentPriceOwner { get; set; }
 
         public BoatEN Boat { get; set; }
     }
