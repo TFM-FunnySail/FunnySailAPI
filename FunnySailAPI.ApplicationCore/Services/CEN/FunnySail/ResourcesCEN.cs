@@ -46,5 +46,18 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
             return uri;
         }
+
+        public async Task DeleteResource(ResourcesEN resource)
+        {
+            string uri = resource.Uri;
+            await _resourcesCAD.Delete(resource);
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Images", uri);
+
+            if (System.IO.File.Exists(path))
+            {
+                System.IO.File.Delete(path);
+            }
+        }
     }
 }
