@@ -26,7 +26,8 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
         public async Task<bool> IsServiceBusy(int technicalServiceId, DateTime serviceDate)
         {
             return await _dbContext.TechnicalServiceBoat.AnyAsync(x => x.TechnicalServiceId == technicalServiceId
-            && x.ServiceDate == serviceDate);
+            && x.ServiceDate.Year == serviceDate.Year && x.ServiceDate.Month == serviceDate.Month && x.ServiceDate.Day == serviceDate.Day 
+            && x.ServiceDate.Hour == serviceDate.Hour);
         }
 
         public async Task<IList<TechnicalServiceBoatEN>> Get(TechnicalServiceBoatFilters filters,

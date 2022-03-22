@@ -1,9 +1,9 @@
 ﻿Feature: add_mooring
 
 Scenario: anyadir un amarre 
-	Given el amarre tiene como id puerto el 1 y alias el Amarre1 y tipo small 
+	Given el amarre tiene como alias el Amarre 1 y id puerto el 1 y tipo small 
 	When se anyade el amarre 
-	Then devuelve el id de morrig 
+	Then devuelve el id de mooring 
 
 Scenario: anyadir un amarre con un id incorrecto  
 	Given el amarre tiene como id puerto el -1 

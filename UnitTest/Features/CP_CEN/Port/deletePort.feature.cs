@@ -164,7 +164,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("un puerto que aún tiene que ofrecer servicios a clientes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 10
- testRunner.When("se intente eliminar el puerto", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("se procede a la eliminación", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 11
  testRunner.Then("no se podrá proceder con la eliminación", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");

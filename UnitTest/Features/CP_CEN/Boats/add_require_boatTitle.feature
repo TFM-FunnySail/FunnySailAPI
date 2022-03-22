@@ -7,5 +7,5 @@ Scenario: Se tiene un barco que supera los 6 metros
 
 Scenario: una embarcación de más de 6 metros en la que no se especifica titulación
 	Given un barco que requiere titulación por ley y no se especifica
-	When se quiere continuar con el proceso de registro
+	When el proceso de registro del barco esté en marcha
 	Then no se registrará el barco por falta de información

@@ -7,5 +7,5 @@ Scenario: Se quiere eliminar un punto de amarre sin barco asignado del sistema
 
 Scenario: Se quiere eliminar un punto de amarre con un barco asignado del sistema
 	Given un punto de amarre que tiene un barco asignado 0
-	When se quiera eliminar el amarre
+	When se intente eliminar el amarre
 	Then el sistema devolverá error porque habrá un barco en ese amarre

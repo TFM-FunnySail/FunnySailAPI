@@ -164,7 +164,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("unos datos incompletos", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 10
- testRunner.When("se trata de realizar la relación", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("se introducen los datos", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 11
  testRunner.Then("no se produce la relación por falta de datos", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");

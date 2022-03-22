@@ -22,8 +22,8 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.OwnerInvoicesTypes
         private IList<OwnerInvoiceLineEN> _ownerInvoiceLines;
 
         public BookingOwnerInvoiceType(IOwnerInvoiceCAD ownerInvoiceCAD,
-                                      IOwnerInvoiceLineCAD ownerInvoiceLineCAD) : base(ownerInvoiceCAD,
-                                                                     ownerInvoiceLineCAD)
+                                      IOwnerInvoiceLineCAD ownerInvoiceLineCAD,
+                                      IUserCAD userCAD) : base(ownerInvoiceCAD, ownerInvoiceLineCAD, userCAD)
         {
             
         }

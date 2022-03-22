@@ -59,6 +59,9 @@ namespace UnitTest.FakeFactories
             _dbContextFake.AddRange(TecServicesFaker());
             _dbContextFake.AddRange(TechnicalServiceBoatFaker());
 
+            //Agregando bookings
+            _dbContextFake.AddRange(BookingFaker());
+
             _dbContextFake.SaveChanges();
         }
 
@@ -276,6 +279,25 @@ namespace UnitTest.FakeFactories
             };
         }
 
+
+        private List<BookingEN> BookingFaker() 
+        {
+            return new List<BookingEN>
+            {
+                new BookingEN
+                {
+                    Id = 1,
+                    ClientId = "1",
+                    CreatedDate = DateTime.Now,
+                    EntryDate = DateTime.Now.AddDays(10),
+                    DepartureDate = DateTime.Now.AddDays(10).AddHours(5),
+                    TotalPeople = 10,
+                    Paid = false, 
+                    RequestCaptain = true,
+                    Status = BookingStatusEnum.Booking
+                }
+            };
+        }
 
         public void Add<T>(T newEntity)
         {

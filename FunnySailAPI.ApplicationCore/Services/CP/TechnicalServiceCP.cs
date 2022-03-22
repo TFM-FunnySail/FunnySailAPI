@@ -4,6 +4,7 @@ using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input.Services;
+using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,8 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
 
         public async Task<int> ScheduleTechnicalServiceToBoat(ScheduleTechnicalServiceDTO scheduleTechnicalService)
         {
-            if(await _boatCEN.GetBoatCAD().AnyById(scheduleTechnicalService.BoatId))
+            BoatEN boatEN = await _boatCEN.GetBoatCAD().FindById(scheduleTechnicalService.BoatId);
+            if (boatEN == null)
                 throw new DataValidationException("Boat", "Embarcación", ExceptionTypesEnum.NotFound);
 
             bool boatBusy = await _boatCEN.GetBoatCAD().IsBoatBusy(scheduleTechnicalService.BoatId,

@@ -123,7 +123,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("la información del barco está incompleta", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 5
- testRunner.When("se introducen los datos incompletos", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("se introduce la informacion de la embarcación", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 6
  testRunner.Then("devuelve error por falta de datos y no se crea la embarcación", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -164,7 +164,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("un grupo de datos válidos", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 10
- testRunner.When("introducimos los datos", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("se introduce la informacion de la embarcación", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 11
  testRunner.Then("el proceso se realiza correctamente y se añade la información", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");

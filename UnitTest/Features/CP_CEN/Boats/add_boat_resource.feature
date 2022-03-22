@@ -7,5 +7,5 @@ Scenario: Dada una embarcación a la que se quiere adjuntar un recurso
 
 Scenario: Se quiere adjuntar un recurso pero no se tiene uno de los identificadores
 	Given unos datos incompletos
-	When se trata de realizar la relación
+	When se introducen los datos
 	Then no se produce la relación por falta de datos

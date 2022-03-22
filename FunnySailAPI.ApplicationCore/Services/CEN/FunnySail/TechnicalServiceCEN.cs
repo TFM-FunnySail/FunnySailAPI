@@ -83,12 +83,10 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
         public async Task<int> AddTechnicalServiceBoat(ScheduleTechnicalServiceDTO scheduleTechnicalService)
         {
-            TechnicalServiceEN service = await _technicalServiceCAD.
-                FindById(scheduleTechnicalService.TechnicalServiceId);
+            TechnicalServiceEN service = await _technicalServiceCAD.FindById(scheduleTechnicalService.TechnicalServiceId);
 
             if (service == null)
-                throw new DataValidationException(_enName, _esName,
-                    ExceptionTypesEnum.NotFound);
+                throw new DataValidationException(_enName, _esName, ExceptionTypesEnum.NotFound);
 
             bool technicalServiceBusy = await _technicalServiceBoatCAD.IsServiceBusy(scheduleTechnicalService.TechnicalServiceId,
                 scheduleTechnicalService.ServiceDate);
