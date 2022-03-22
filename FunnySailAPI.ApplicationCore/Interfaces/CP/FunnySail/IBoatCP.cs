@@ -15,5 +15,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail
         Task<decimal> CalculatePrice();
         Task<BoatEN> UpdateBoat(UpdateBoatInputDTO updateBoatInput);
         Task<int> AddImage(int boatId, IFormFile image, bool main);
+        Task RemoveImage(int id, int resourceId);
     }
 }

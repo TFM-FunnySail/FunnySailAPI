@@ -8,8 +8,10 @@ using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 using FunnySailAPI.ApplicationCore.Models.Filters;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
+using FunnySailAPI.ApplicationCore.Models.Utils;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -281,6 +283,56 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             }
 
             return idResource;
+        }
+
+        public async Task RemoveImage(int boatId, int resourceId)
+        {
+            BoatEN boat = (await _boatCEN.GetAll(
+                    filters: new BoatFilters { BoatId = boatId },
+                    pagination: new Pagination { Limit=1, Offset = 0},
+                    includeProperties: source => source
+                                        .Include(x => x.BoatResources)
+                                        .ThenInclude(x => x.Resource)))
+                    .FirstOrDefault();
+
+            if (boat == null)
+                throw new DataValidationException("Boat", "La embarcación", ExceptionTypesEnum.NotFound);
+
+            BoatResourceEN boatResource = boat.BoatResources.FirstOrDefault(x=> x.ResourceId == resourceId);
+            if (boatResource == null)
+                throw new DataValidationException("Boat resource", "Recurso", ExceptionTypesEnum.NotFound);
+
+            if (boat.BoatResources.Count(x => x.ResourceId != resourceId) == 0)
+                throw new DataValidationException("The resource is the only one in the product, it cannot be deleted",
+                    "El recurso es el único en el producto, no se puede eliminar");
+
+            bool otherBoatWithSameResource = (await _boatResourceCEN.GetAll(
+                filters: new BoatResourceFilters
+                {
+                    ResourceId = resourceId,
+                    NotBoatId = new List<int> { boatId }
+                },
+                pagination: new Pagination { Limit=1, Offset = 0})).Any();
+
+            ResourcesEN resource = boatResource.Resource;
+
+            using (var databaseTransaction = _databaseTransactionFactory.BeginTransaction())
+            {
+                try
+                {
+                    await _boatResourceCEN.GetBoatResourceCAD().Delete(boatResource);
+
+                    if(!otherBoatWithSameResource)
+                        await _resourcesCEN.DeleteResource(resource);
+                    
+                    await databaseTransaction.CommitAsync();
+                }
+                catch (Exception ex)
+                {
+                    await databaseTransaction.RollbackAsync();
+                    throw ex;
+                }
+            }
         }
     }
 }
