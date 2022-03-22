@@ -250,5 +250,59 @@ namespace FunnySailAPI.Controllers
             }
         }
 
+        //api/boats/5/resource/image
+        [CustomAuthorize(UserRolesConstant.ADMIN, UserRolesConstant.BOAT_OWNER)]
+        [HttpPost("{id}/resource/image")]
+        public async Task<IActionResult> PostUploadImage(int id, IFormFile imageFile,bool main)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                await _unitOfWork.BoatCP.AddImage(id, imageFile, main);
+                
+                return NoContent();
+            }
+            catch (DataValidationException dataValidation)
+            {
+                if (dataValidation.ExceptionType == ExceptionTypesEnum.NotFound)
+                    return NotFound();
+
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, new ErrorResponseDTO(dataValidation));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
+
+        //api/boats/5/resource/23
+        [CustomAuthorize(UserRolesConstant.ADMIN, UserRolesConstant.BOAT_OWNER)]
+        [HttpDelete("{id}/resource/{resourceId}")]
+        public async Task<IActionResult> DeleteBoatImage(int id,int resourceId)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                await _unitOfWork.BoatCP.RemoveImage(id, resourceId);
+
+                return NoContent();
+            }
+            catch (DataValidationException dataValidation)
+            {
+                if (dataValidation.ExceptionType == ExceptionTypesEnum.NotFound)
+                    return NotFound();
+
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, new ErrorResponseDTO(dataValidation));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
+
     }
 }

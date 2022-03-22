@@ -31,6 +31,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
         private readonly IBoatCP _boatCP;
         private readonly IClientInvoiceCEN _clientInvoiceCEN;
         private readonly IRefundCEN _refundCEN;
+        private readonly IBoatPricesCEN _boatPricesCEN;
         private IDatabaseTransactionFactory _databaseTransactionFactory;
 
         public BookingCP(IBookingCEN bookingCEN,
@@ -46,7 +47,8 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                          IBoatCP boatCP,
                          IClientInvoiceCEN clientInvoiceCEN,
                          IDatabaseTransactionFactory databaseTransactionFactory,
-                         IRefundCEN refundCEN) 
+                         IRefundCEN refundCEN,
+                         IBoatPricesCEN boatPricesCEN) 
         {
             _bookingCEN = bookingCEN;
             _userCEN = userCEN;
@@ -62,6 +64,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             _clientInvoiceCEN = clientInvoiceCEN;
             _databaseTransactionFactory = databaseTransactionFactory;
             _refundCEN = refundCEN;
+            _boatPricesCEN = boatPricesCEN;
         }
         public async Task<int> CreateBooking(AddBookingInputDTO addBookingInput)
         {
@@ -130,6 +133,9 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                 throw new DataValidationException("You must create the order with at least one activity, service or boat",
                     "Debe crear la orden con al menos una actividad, servicio o embarcación");
 
+            double hoursOfDifference = (addBookingInput.DepartureDate - addBookingInput.EntryDate).TotalHours;
+            double daysOfDifference = (addBookingInput.DepartureDate - addBookingInput.EntryDate).TotalDays;
+
             using (var databaseTransaction = _databaseTransactionFactory.BeginTransaction())
             {
                 try
@@ -153,13 +159,13 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
 
                     InvoiceLineEN invoiceLineEN = await _invoiceLineCEN.GetInvoiceLineCAD().FindById(invoiceLineId);
                     bookingEN.InvoiceLine = invoiceLineEN;
-
+                    
                     if (boats.Count > 0)
                     {
                         List<BoatBookingEN> boatBookings = new List<BoatBookingEN>();
                         foreach (var boat in boats)
                         {
-                            decimal price = await _boatCP.CalculatePrice();
+                            decimal price = _boatPricesCEN.CalculatePrice(boat.BoatPrices,daysOfDifference,hoursOfDifference);
                             await _boatBookingCEN.CreateBoatBooking(new BoatBookingEN
                             {
                                 BoatId = boat.Id,
