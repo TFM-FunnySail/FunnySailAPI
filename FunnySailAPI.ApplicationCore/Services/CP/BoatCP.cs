@@ -185,11 +185,6 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             return dbBoat;
         }
 
-        public Task<decimal> CalculatePrice()
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<BoatEN> UpdateBoat(UpdateBoatInputDTO updateBoatInput)
         {
             BoatEN boat = null;

@@ -11,5 +11,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
     {
         Task<int> AddBoatPrices(BoatPricesEN boatPricesEN);
         Task<BoatPricesEN> UpdateBoat(UpdateBoatPricesInputDTO updateBoatInput);
+        decimal CalculatePrice(BoatPricesEN boatPrices,double days, double hours);
     }
 }
