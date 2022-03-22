@@ -170,9 +170,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                             boatBookings.Add(await _boatBookingCEN.GetBoatBookingCAD().FindByIds(boat.Id, bookingId));
                             totalAmount += price;
 
-                            var ownerLineLast = ownerInvoiceLines
-                                .FirstOrDefault(x => x.OwnerId == boat.OwnerId);
-                            if (ownerLineLast == null)
+                            if (!ownerInvoiceLines.Any(x => x.OwnerId == boat.OwnerId))
                             {
                                 ownerInvoiceLines.Add(new OwnerInvoiceLineEN
                                 {
@@ -183,8 +181,8 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                             }
                             else
                             {
-                                ownerInvoiceLines.Where(x=>x.OwnerId == boat.OwnerId).ToList()
-                                    .ForEach(x=> x.Price = price * (decimal)boat.BoatPrices.PorcentPriceOwner);
+                                ownerInvoiceLines.FirstOrDefault(x => x.OwnerId == boat.OwnerId)
+                                    .Price = price * (decimal)boat.BoatPrices.PorcentPriceOwner;
                             }
                         }
                         bookingEN.BoatBookings = boatBookings;
