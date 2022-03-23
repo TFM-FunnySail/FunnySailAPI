@@ -28,6 +28,10 @@ namespace UnitTest.Steps.CP_CEN.Booking
         private IRefundCAD _refundCAD;
         private IRefundCEN _refundCEN;
         private BookingEN _bookingEN;
+        private IOwnerInvoiceCAD _ownerInvoiceCAD;
+        private IOwnerInvoiceCEN _ownerInvoiceCEN;
+        private IOwnerInvoiceLineCAD _ownerInvoiceLineCAD;
+        private IUserCAD _userCAD;
         private IDatabaseTransactionFactory _databaseTransactionFactory;
         private int _id;
 
@@ -40,8 +44,12 @@ namespace UnitTest.Steps.CP_CEN.Booking
             _refundCAD = new RefundCAD(applicationDbContextFake._dbContextFake);
             _bookingCEN = new BookingCEN(_bookingCAD);
             _refundCEN = new RefundCEN(_refundCAD, _bookingCEN);
+            _ownerInvoiceCAD = new OwnerInvoiceCAD(applicationDbContextFake._dbContextFake);
+            _ownerInvoiceLineCAD = new OwnerInvoiceLineCAD(applicationDbContextFake._dbContextFake);
+            _userCAD = new UsersCAD(applicationDbContextFake._dbContextFake);
+            _ownerInvoiceCEN = new OwnerInvoiceCEN(_ownerInvoiceCAD, _ownerInvoiceLineCAD, _userCAD);
             _databaseTransactionFactory = new DatabaseTransactionFactory(applicationDbContextFake._dbContextFake);
-            _bookingCP = new BookingCP(_bookingCEN, null, null, null, null, null, null, null, null, null, null, null, _databaseTransactionFactory, _refundCEN, null);
+            _bookingCP = new BookingCP(_bookingCEN, null, null, null, null, null, null, null, null, null, null, null, _databaseTransactionFactory, _refundCEN, null, _ownerInvoiceCEN);
         }
 
 

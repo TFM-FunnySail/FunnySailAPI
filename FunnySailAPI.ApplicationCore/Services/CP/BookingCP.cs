@@ -192,20 +192,9 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
 
                         if(ownerInvoiceLines.Count > 0)
                         {
-                            List<(int, string)> OwnersInvoices = new List<(int, string)>();
                             foreach(var ownerInvoiceLine in ownerInvoiceLines) 
                             {
-                                var findOwner = OwnersInvoices.Find(o => o.Item2 == (string)ownerInvoiceLine.OwnerId);
-                                if (findOwner == (null, null))
-                                {
-                                    int OwnerInvoiceId = await _ownerInvoiceCEN.CreateOwnerInvoice(ownerInvoiceLine.OwnerId, ownerInvoiceLine.Price, true);
-                                    OwnersInvoices.Add((OwnerInvoiceId, ownerInvoiceLine.OwnerId));
-                                }
-                                else 
-                                {
-                                    OwnerInvoiceEN ownerInvoiceEN = await _ownerInvoiceCEN.GetOwnerInvoiceCAD().FindById(findOwner.Item1);
-                                    ownerInvoiceEN.OwnerInvoiceLines.Add(ownerInvoiceLine);
-                                }  
+                                await _ownerInvoiceCEN.CreateOwnerInvoice(ownerInvoiceLine.OwnerId, ownerInvoiceLine.Price, true);
                             }
                         }
                     }

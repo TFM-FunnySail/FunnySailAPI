@@ -29,6 +29,10 @@ namespace UnitTest.Steps.CP_CEN.Booking
         private IClientInvoiceCEN _clientInvoiceCEN;
         private IClientInvoiceLineCAD _clientInvoiceLineCAD;
         private IClientInvoiceLineCEN _clientInvoiceLineCEN;
+        private IOwnerInvoiceCAD _ownerInvoiceCAD;
+        private IOwnerInvoiceCEN _ownerInvoiceCEN;
+        private IOwnerInvoiceLineCAD _ownerInvoiceLineCAD;
+        private IUserCAD _userCAD;
         private IDatabaseTransactionFactory _databaseTransactionFactory;
 
         private ClientInvoiceEN _clientInvoiceEN;
@@ -45,8 +49,12 @@ namespace UnitTest.Steps.CP_CEN.Booking
             _clientInvoiceLineCEN = new ClientInvoiceLineCEN(_clientInvoiceLineCAD);
             _clientInvoiceCAD = new ClientInvoiceCAD(applicationDbContextFake._dbContextFake);
             _clientInvoiceCEN = new ClientInvoiceCEN(_clientInvoiceCAD, _clientInvoiceLineCAD);
+            _ownerInvoiceCAD = new OwnerInvoiceCAD(applicationDbContextFake._dbContextFake);
+            _ownerInvoiceLineCAD = new OwnerInvoiceLineCAD(applicationDbContextFake._dbContextFake);
+            _userCAD = new UsersCAD(applicationDbContextFake._dbContextFake);
+            _ownerInvoiceCEN = new OwnerInvoiceCEN(_ownerInvoiceCAD, _ownerInvoiceLineCAD, _userCAD);
             _databaseTransactionFactory = new DatabaseTransactionFactory(applicationDbContextFake._dbContextFake);
-            _bookingCP = new BookingCP(_bookingCEN, null, _clientInvoiceLineCEN, null, null, null, null, null, null ,null, null, _clientInvoiceCEN, _databaseTransactionFactory, null, null);
+            _bookingCP = new BookingCP(_bookingCEN, null, _clientInvoiceLineCEN, null, null, null, null, null, null ,null, null, _clientInvoiceCEN, _databaseTransactionFactory, null, null, _ownerInvoiceCEN);
         }
 
         [Given(@"se pasa el identificador de una reserva")]

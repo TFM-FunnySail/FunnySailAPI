@@ -37,6 +37,8 @@ namespace UnitTest.Steps.CP_CEN.Booking
         private IClientInvoiceLineCEN _clientInvoiceLineCEN;
         private IOwnerInvoiceLineCAD _ownerInvoiceLineCAD;
         private IOwnerInvoiceLineCEN _ownerInvoiceLineCEN;
+        private IOwnerInvoiceCAD _ownerInvoiceCAD;
+        private IOwnerInvoiceCEN _ownerInvoiceCEN;
         private IDatabaseTransactionFactory _databaseTransactionFactory;
         private int _id;
         private AddBookingInputDTO _addBookingInputDTO;
@@ -57,8 +59,10 @@ namespace UnitTest.Steps.CP_CEN.Booking
             _ownerInvoiceLineCEN = new OwnerInvoiceLineCEN();
             _boatCAD = new BoatCAD(applicationDbContextFake._dbContextFake);
             _boatCEN = new BoatCEN(_boatCAD);
+            _ownerInvoiceCAD = new OwnerInvoiceCAD(applicationDbContextFake._dbContextFake);
+            _ownerInvoiceCEN = new OwnerInvoiceCEN(_ownerInvoiceCAD, _ownerInvoiceLineCAD, _userCAD);
             _databaseTransactionFactory = new DatabaseTransactionFactory(applicationDbContextFake._dbContextFake);
-            _bookingCP = new BookingCP(_bookingCEN, _userCEN, _clientInvoiceLineCEN, _ownerInvoiceLineCEN, null, null, null, null, _boatCEN, null, null, null, _databaseTransactionFactory, _refundCEN, null);
+            _bookingCP = new BookingCP(_bookingCEN, _userCEN, _clientInvoiceLineCEN, _ownerInvoiceLineCEN, null, null, null, null, _boatCEN, null, null, null, _databaseTransactionFactory, _refundCEN, null, _ownerInvoiceCEN);
         }
 
         [Given(@"se introducen los datos para una reserva")]
