@@ -3,6 +3,7 @@ using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.Filters;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
+using FunnySailAPI.ApplicationCore.Models.Globals;
 using FunnySailAPI.ApplicationCore.Models.Utils;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
@@ -51,6 +52,22 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             var query = _reviewCAD.GetReviewFiltered(filters);
 
             return await _reviewCAD.GetCounter(query);
+        }
+
+        public async Task<ReviewEN> CloseReview(int id)
+        {
+            ReviewEN review = await _reviewCAD.FindById(id);
+            if (review == null)
+                throw new DataValidationException("Review", "Revisión", ExceptionTypesEnum.NotFound);
+
+            if (review.Closed)
+                throw new DataValidationException("Review is closed",
+                    "La revisión ya se encuentra cerrada");
+
+            review.Closed = true;
+            await _reviewCAD.Update(review);
+
+            return review;
         }
     }
 }

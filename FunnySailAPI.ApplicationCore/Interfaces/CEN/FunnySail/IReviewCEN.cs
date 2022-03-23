@@ -18,5 +18,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
         Func<IQueryable<ReviewEN>, IOrderedQueryable<ReviewEN>> orderBy = null,
         Func<IQueryable<ReviewEN>, IIncludableQueryable<ReviewEN, object>> includeProperties = null);
         Task<int> GetTotal(ReviewFilters filters = null);
+        Task<ReviewEN> CloseReview(int id);
     }
 }

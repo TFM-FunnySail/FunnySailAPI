@@ -15,6 +15,8 @@ using FunnySailAPI.ApplicationCore.Models.Filters;
 using FunnySailAPI.ApplicationCore.Models.Utils;
 using FunnySailAPI.DTO.Output;
 using FunnySailAPI.Assemblers;
+using FunnySailAPI.ApplicationCore.Exceptions;
+using FunnySailAPI.ApplicationCore.Models.Globals;
 
 namespace FunnySailAPI.Controllers
 {
@@ -87,49 +89,30 @@ namespace FunnySailAPI.Controllers
             }
         }
 
-        //// PUT: api/Reviews/5
-        //// To protect from overposting attacks, enable the specific properties you want to bind to, for
-        //// more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutReviewEN(int id, ReviewEN reviewEN)
-        //{
-        //    if (id != reviewEN.Id)
-        //    {
-        //        return BadRequest();
-        //    }
+        // PUT: api/Reviews/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPut("{id}/close")]
+        public async Task<IActionResult> PutCloseReviewEN(int id)
+        {
+            try
+            {
+                await _unitOfWork.ReviewCEN.CloseReview(id);
 
-        //    _context.Entry(reviewEN).State = EntityState.Modified;
+                return NoContent();
+            }
+            catch (DataValidationException dataValidation)
+            {
+                if (dataValidation.ExceptionType == ExceptionTypesEnum.NotFound)
+                    return NotFound();
 
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!ReviewENExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return NoContent();
-        //}
-
-        //// POST: api/Reviews
-        //// To protect from overposting attacks, enable the specific properties you want to bind to, for
-        //// more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        //[HttpPost]
-        //public async Task<ActionResult<ReviewEN>> PostReviewEN(ReviewEN reviewEN)
-        //{
-        //    _context.Reviews.Add(reviewEN);
-        //    await _context.SaveChangesAsync();
-
-        //    return CreatedAtAction("GetReviewEN", new { id = reviewEN.Id }, reviewEN);
-        //}
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, new ErrorResponseDTO(dataValidation));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
 
 
     }
