@@ -45,7 +45,7 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
                 query = query.Where(x => filter.NotResourceId.Contains(x.ResourceId));
 
             if (filter.NotBoatId != null)
-                query = query.Where(x => filter.NotBoatId.Contains(x.BoatId));
+                query = query.Where(x => !filter.NotBoatId.Contains(x.BoatId));
 
             return query;
         }
