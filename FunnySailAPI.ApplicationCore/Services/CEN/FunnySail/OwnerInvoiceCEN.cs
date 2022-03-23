@@ -77,7 +77,12 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             return _ownerInvoiceLineCAD;
         }
 
-       public async Task<IList<OwnerInvoiceEN>> GetAll(OwnerInvoiceFilters filters = null,
+        public IOwnerInvoiceCAD GetOwnerInvoiceCAD()
+        {
+            return _ownerInvoiceCAD;
+        }
+
+        public async Task<IList<OwnerInvoiceEN>> GetAll(OwnerInvoiceFilters filters = null,
        Pagination pagination = null,
        Func<IQueryable<OwnerInvoiceEN>, IOrderedQueryable<OwnerInvoiceEN>> orderBy = null,
        Func<IQueryable<OwnerInvoiceEN>, IIncludableQueryable<OwnerInvoiceEN, object>> includeProperties = null)

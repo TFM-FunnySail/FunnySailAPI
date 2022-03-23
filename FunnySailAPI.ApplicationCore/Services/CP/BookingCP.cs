@@ -32,6 +32,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
         private readonly IClientInvoiceCEN _clientInvoiceCEN;
         private readonly IRefundCEN _refundCEN;
         private readonly IBoatPricesCEN _boatPricesCEN;
+        private readonly IOwnerInvoiceCEN _ownerInvoiceCEN;
         private IDatabaseTransactionFactory _databaseTransactionFactory;
 
         public BookingCP(IBookingCEN bookingCEN,
@@ -48,7 +49,8 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                          IClientInvoiceCEN clientInvoiceCEN,
                          IDatabaseTransactionFactory databaseTransactionFactory,
                          IRefundCEN refundCEN,
-                         IBoatPricesCEN boatPricesCEN) 
+                         IBoatPricesCEN boatPricesCEN,
+                         IOwnerInvoiceCEN ownerInvoiceCEN) 
         {
             _bookingCEN = bookingCEN;
             _userCEN = userCEN;
@@ -65,6 +67,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             _databaseTransactionFactory = databaseTransactionFactory;
             _refundCEN = refundCEN;
             _boatPricesCEN = boatPricesCEN;
+            _ownerInvoiceCEN = ownerInvoiceCEN;
         }
         public async Task<int> CreateBooking(AddBookingInputDTO addBookingInput)
         {
@@ -189,7 +192,21 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
 
                         if(ownerInvoiceLines.Count > 0)
                         {
-                            //Agregar ownerInvoiceLine
+                            List<(int, string)> OwnersInvoices = new List<(int, string)>();
+                            foreach(var ownerInvoiceLine in ownerInvoiceLines) 
+                            {
+                                var findOwner = OwnersInvoices.Find(o => o.Item2 == (string)ownerInvoiceLine.OwnerId);
+                                if (findOwner == (null, null))
+                                {
+                                    int OwnerInvoiceId = await _ownerInvoiceCEN.CreateOwnerInvoice(ownerInvoiceLine.OwnerId, ownerInvoiceLine.Price, true);
+                                    OwnersInvoices.Add((OwnerInvoiceId, ownerInvoiceLine.OwnerId));
+                                }
+                                else 
+                                {
+                                    OwnerInvoiceEN ownerInvoiceEN = await _ownerInvoiceCEN.GetOwnerInvoiceCAD().FindById(findOwner.Item1);
+                                    ownerInvoiceEN.OwnerInvoiceLines.Add(ownerInvoiceLine);
+                                }  
+                            }
                         }
                     }
 
