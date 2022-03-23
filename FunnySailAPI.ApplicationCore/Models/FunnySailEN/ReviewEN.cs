@@ -16,6 +16,7 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
 
         [Required, StringLength(500)]
         public string Description { get; set; }
+        public bool Closed { get; set; }
 
         public BoatEN Boat { get; set; }
         public UsersEN Admin { get; set; }

@@ -152,17 +152,12 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
 
                     BookingEN bookingEN = await _bookingCEN.GetBookingCAD().FindById(bookingId);
 
-                    int invoiceLineId = await _invoiceLineCEN.CreateInvoiceLine(new InvoiceLineEN
-                    {
-                        BookingId = bookingId
-                    });
-
-                    InvoiceLineEN invoiceLineEN = await _invoiceLineCEN.GetInvoiceLineCAD().FindById(invoiceLineId);
-                    bookingEN.InvoiceLine = invoiceLineEN;
-                    
+                    decimal totalAmount = 0;
                     if (boats.Count > 0)
                     {
                         List<BoatBookingEN> boatBookings = new List<BoatBookingEN>();
+                        List<OwnerInvoiceLineEN> ownerInvoiceLines = new List<OwnerInvoiceLineEN>();
+                        
                         foreach (var boat in boats)
                         {
                             decimal price = _boatPricesCEN.CalculatePrice(boat.BoatPrices,daysOfDifference,hoursOfDifference);
@@ -173,9 +168,29 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                                 Price = price
                             });
                             boatBookings.Add(await _boatBookingCEN.GetBoatBookingCAD().FindByIds(boat.Id, bookingId));
-                            invoiceLineEN.TotalAmount += price;
+                            totalAmount += price;
+
+                            if (!ownerInvoiceLines.Any(x => x.OwnerId == boat.OwnerId))
+                            {
+                                ownerInvoiceLines.Add(new OwnerInvoiceLineEN
+                                {
+                                    BookingId = bookingId,
+                                    OwnerId = boat.OwnerId,
+                                    Price = price* (decimal)boat.BoatPrices.PorcentPriceOwner
+                                });
+                            }
+                            else
+                            {
+                                ownerInvoiceLines.FirstOrDefault(x => x.OwnerId == boat.OwnerId)
+                                    .Price = price * (decimal)boat.BoatPrices.PorcentPriceOwner;
+                            }
                         }
                         bookingEN.BoatBookings = boatBookings;
+
+                        if(ownerInvoiceLines.Count > 0)
+                        {
+                            //Agregar ownerInvoiceLine
+                        }
                     }
 
                     if (services.Count > 0)
@@ -190,7 +205,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                                 Price = service.Price
                             });
                             serviceBookings.Add(await _serviceBookingCEN.GetServiceBookingCAD().FindByIds(service.Id, bookingId));
-                            invoiceLineEN.TotalAmount += service.Price;
+                            totalAmount += service.Price;
                         }
                         bookingEN.ServiceBookings = serviceBookings;
                     }
@@ -207,11 +222,18 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                                 Price = activity.Price
                             });
                             activityBookings.Add(await _activityBookingCEN.GetActivityBookingCAD().FindByIds(activity.Id, bookingId));
-                            invoiceLineEN.TotalAmount += activity.Price;
+                            totalAmount += activity.Price;
                         }
                         bookingEN.ActivityBookings = activityBookings;
                     }
 
+
+                    int invoiceLineId = await _invoiceLineCEN.CreateInvoiceLine(new InvoiceLineEN
+                    {
+                        BookingId = bookingId,
+                        Currency = CurrencyEnum.EUR,
+                        TotalAmount = totalAmount,
+                    });
                     await databaseTransaction.CommitAsync();
                 }
                 catch (Exception ex)
