@@ -29,7 +29,7 @@ namespace FunnySailAPI.Controllers
 
         // GET: api/refunds
         [HttpGet]
-        public async Task<ActionResult<GenericResponseDTO<RefundOutputDTO>>> GetBoats([FromQuery] RefundFilters filters, [FromQuery] Pagination pagination)
+        public async Task<ActionResult<GenericResponseDTO<RefundOutputDTO>>> GetRefunds([FromQuery] RefundFilters filters, [FromQuery] Pagination pagination)
         {
             try
             {
@@ -43,6 +43,36 @@ namespace FunnySailAPI.Controllers
                     .Select(x => RefundAssemblers.Convert(x));
 
                 return new GenericResponseDTO<RefundOutputDTO>(boats, pagination.Limit, pagination.Offset, boatTotal);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
+
+        // GET: api/Refunds/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<RefundOutputDTO>> GetRefund(int id)
+        {
+            try
+            {
+                var itemResult = await _unitOfWork.RefundCEN.GetAll(pagination: new Pagination
+                {
+                    Limit = 1,
+                    Offset = 0
+                }, filters: new RefundFilters
+                {
+                    Id = id
+                }, includeProperties: source => source.Include(x => x.ClientInvoice));
+
+                var item = itemResult.Select(x => RefundAssemblers.Convert(x))
+                    .FirstOrDefault();
+                if (item == null)
+                {
+                    return NotFound();
+                }
+
+                return item;
             }
             catch (Exception ex)
             {
