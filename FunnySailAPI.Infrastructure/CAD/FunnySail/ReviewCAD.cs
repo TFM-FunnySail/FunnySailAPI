@@ -30,6 +30,12 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
             if (filters.BoatId != 0)
                 query = query.Where(x => x.BoatId >= filters.BoatId);
 
+            if (filters.Closed != null)
+                query = query.Where(x => x.Closed == filters.Closed);
+
+            if (filters.Description != null)
+                query = query.Where(x => x.Description.Contains(filters.Description));
+
             return query;
         }
     }

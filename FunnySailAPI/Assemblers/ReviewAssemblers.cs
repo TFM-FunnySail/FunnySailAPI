@@ -10,6 +10,8 @@ namespace FunnySailAPI.Assemblers
             ReviewOutputDTO reviewOutputDTO = new ReviewOutputDTO
             {
                 Id = review.Id,
+                Description = review.Description,
+                Closed = review.Closed,
             };
 
             if(review.Admin != null)
