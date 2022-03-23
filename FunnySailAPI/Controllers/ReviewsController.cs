@@ -56,18 +56,36 @@ namespace FunnySailAPI.Controllers
         }
 
         // GET: api/Reviews/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<ReviewEN>> GetReviewEN(int id)
-        //{
-        //    var reviewEN = await _context.Reviews.FindAsync(id);
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ReviewOutputDTO>> GetReviewEN(int id)
+        {
+            try
+            {
+                var itemResult = await _unitOfWork.ReviewCEN.GetAll(pagination: new Pagination
+                {
+                    Limit = 1,
+                    Offset = 0
+                }, filters: new ReviewFilters
+                {
+                    Id = id
+                }, includeProperties: source => source.Include(x => x.Admin)
+                                        .ThenInclude(x => x.ApplicationUser)
+                                        .Include(x => x.Boat)
+                                        .ThenInclude(x => x.BoatInfo));
 
-        //    if (reviewEN == null)
-        //    {
-        //        return NotFound();
-        //    }
+                var review = itemResult.Select(x => ReviewAssemblers.Convert(x)).FirstOrDefault();
+                if (review == null)
+                {
+                    return NotFound();
+                }
 
-        //    return reviewEN;
-        //}
+                return review;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
 
         //// PUT: api/Reviews/5
         //// To protect from overposting attacks, enable the specific properties you want to bind to, for
@@ -113,21 +131,6 @@ namespace FunnySailAPI.Controllers
         //    return CreatedAtAction("GetReviewEN", new { id = reviewEN.Id }, reviewEN);
         //}
 
-        //// DELETE: api/Reviews/5
-        //[HttpDelete("{id}")]
-        //public async Task<ActionResult<ReviewEN>> DeleteReviewEN(int id)
-        //{
-        //    var reviewEN = await _context.Reviews.FindAsync(id);
-        //    if (reviewEN == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    _context.Reviews.Remove(reviewEN);
-        //    await _context.SaveChangesAsync();
-
-        //    return reviewEN;
-        //}
 
     }
 }
