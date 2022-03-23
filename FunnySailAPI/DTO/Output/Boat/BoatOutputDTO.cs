@@ -21,9 +21,9 @@ namespace FunnySailAPI.DTO.Output.Boat
         public decimal Sleeve { get; set; }
         public int Capacity { get; set; }
         public int MotorPower { get; set; }
-        public decimal DayBasePrice { get; set; }
-        public decimal HourBasePrice { get; set; }
-        public float Supplement { get; set; }
+        public decimal? DayBasePrice { get; set; }
+        public decimal? HourBasePrice { get; set; }
+        public float? Supplement { get; set; }
         public BoatTypeOutputDTO BoatType { get; set; }
         public MooringOutputDTO Mooring { get; set; }
         public List<BoatResourcesOutputDTO> BoatResources { get; set; }

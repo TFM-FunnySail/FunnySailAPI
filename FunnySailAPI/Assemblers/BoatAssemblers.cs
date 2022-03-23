@@ -17,7 +17,7 @@ namespace FunnySailAPI.Assemblers
             BoatOutputDTO boatOutput = new BoatOutputDTO
             {
                 Id = boatEN.Id,
-                Supplement = boatEN.BoatPrices.Supplement,
+                Supplement = boatEN.BoatPrices?.Supplement,
                 Active = boatEN.Active,
                 CreatedDate = boatEN.CreatedDate,
                 PendingToReview = boatEN.PendingToReview,
@@ -28,8 +28,8 @@ namespace FunnySailAPI.Assemblers
                 Length = boatEN.BoatInfo.Length,
                 Sleeve = boatEN.BoatInfo.Sleeve,
                 Registration = boatEN.BoatInfo.Registration,
-                DayBasePrice = boatEN.BoatPrices.DayBasePrice,
-                HourBasePrice = boatEN.BoatPrices.HourBasePrice
+                DayBasePrice = boatEN.BoatPrices?.DayBasePrice,
+                HourBasePrice = boatEN.BoatPrices?.HourBasePrice
             };
 
             if(boatEN.BoatType != null)
