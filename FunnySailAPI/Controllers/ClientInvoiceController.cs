@@ -49,7 +49,8 @@ namespace FunnySailAPI.Controllers
                     includeProperties: source => source.Include(x => x.InvoiceLines)
                                         .ThenInclude(x => x.Booking)
                                         .Include(x => x.Client)
-                                     
+                                        .Include(x => x.Refunds)
+
                      ))
                     .Select(x => ClientInvoiceAssemblers.Convert(x));
 
@@ -76,7 +77,8 @@ namespace FunnySailAPI.Controllers
                     Id = id
                 }, includeProperties: source => source.Include(x => x.InvoiceLines)
                                         .ThenInclude(x => x.Booking)
-                                        .Include(x => x.Client));
+                                        .Include(x => x.Client)
+                                        .Include(x => x.Refunds));
 
                 var clientInvoice = clientInvoices.Select(x => ClientInvoiceAssemblers.Convert(x)).FirstOrDefault();
                 if (clientInvoice == null)
@@ -137,7 +139,7 @@ namespace FunnySailAPI.Controllers
         }
         */
         // PUT: api/ClientInvoice/5/cancel
-       // [CustomAuthorize(UserRolesConstant.ADMIN)]
+        [CustomAuthorize(UserRolesConstant.ADMIN)]
         [HttpPut("{id}/cancel")]
         public async Task<IActionResult> PutCancelClientInvoice(int id)
         {
