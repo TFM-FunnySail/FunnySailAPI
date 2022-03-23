@@ -19,13 +19,16 @@ namespace FunnySailAPI.Assemblers
                 ClientId = clientInvoiceEN.ClientId
             };
 
+            if (clientInvoiceEN.Client != null)
+                clientInvoiceOutput.Client = UserAssemblers.Convert(clientInvoiceEN.Client);
+
             if (clientInvoiceEN.InvoiceLines != null)
             {
                 clientInvoiceOutput.InvoiceLines = clientInvoiceEN.InvoiceLines.Select(x => new ClientInvoiceLinesOutputDTO
                 {
-                   BookingId = x.BookingId,
-                   TotalAmount = x.TotalAmount,
-                   ClientInvoiceId = x.ClientInvoiceId,
+                    BookingId = x.BookingId,
+                    TotalAmount = x.TotalAmount,
+                    ClientInvoiceId = x.ClientInvoiceId,
                 }).ToList();
             }
 

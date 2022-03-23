@@ -91,7 +91,7 @@ namespace FunnySailAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
             }
         }
-
+        /*
         // POST: api/ClientInvoice
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
@@ -135,9 +135,9 @@ namespace FunnySailAPI.Controllers
             }
 
         }
-
+        */
         // PUT: api/ClientInvoice/5/cancel
-        [CustomAuthorize(UserRolesConstant.ADMIN)]
+       // [CustomAuthorize(UserRolesConstant.ADMIN)]
         [HttpPut("{id}/cancel")]
         public async Task<IActionResult> PutCancelClientInvoice(int id)
         {
