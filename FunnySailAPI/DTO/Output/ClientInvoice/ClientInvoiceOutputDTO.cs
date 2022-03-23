@@ -2,6 +2,7 @@
 using FunnySailAPI.DTO.Output.User;
 using System;
 using System.Collections.Generic;
+using FunnySailAPI.DTO.Output.Refund;
 
 namespace FunnySailAPI.DTO.Output.ClientInvoice
 {
