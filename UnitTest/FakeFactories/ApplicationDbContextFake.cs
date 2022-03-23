@@ -92,6 +92,7 @@ namespace UnitTest.FakeFactories
                     CreatedDate = DateTime.UtcNow,
                     BoatType = new BoatTypeEN
                     {
+                        Id = 1,
                         Name = "Tipo prueba",
                         Description = "Desc prueba"
                     }
@@ -104,6 +105,7 @@ namespace UnitTest.FakeFactories
                     CreatedDate = DateTime.UtcNow,
                     BoatType = new BoatTypeEN
                     {
+                        Id = 2,
                         Name = "Barco aprobado",
                         Description = "Desc Barco aprobado"
                     }
@@ -292,9 +294,15 @@ namespace UnitTest.FakeFactories
                     EntryDate = DateTime.Now.AddDays(10),
                     DepartureDate = DateTime.Now.AddDays(10).AddHours(5),
                     TotalPeople = 10,
-                    Paid = false, 
+                    Paid = false,
                     RequestCaptain = true,
-                    Status = BookingStatusEnum.Booking
+                    Status = BookingStatusEnum.Booking,
+                    InvoiceLine = new InvoiceLineEN{
+                        BookingId = 1,
+                        ClientInvoiceId = 1,
+                        Currency = CurrencyEnum.EUR,
+                        TotalAmount = 10
+                    }
                 }
             };
         }

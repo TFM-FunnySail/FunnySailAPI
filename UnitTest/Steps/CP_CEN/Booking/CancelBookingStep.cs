@@ -39,7 +39,7 @@ namespace UnitTest.Steps.CP_CEN.Booking
             _bookingCAD = new BookingCAD(applicationDbContextFake._dbContextFake);
             _refundCAD = new RefundCAD(applicationDbContextFake._dbContextFake);
             _bookingCEN = new BookingCEN(_bookingCAD);
-            _refundCEN = new RefundCEN(_refundCAD);
+            _refundCEN = new RefundCEN(_refundCAD, _bookingCEN);
             _databaseTransactionFactory = new DatabaseTransactionFactory(applicationDbContextFake._dbContextFake);
             _bookingCP = new BookingCP(_bookingCEN, null, null, null, null, null, null, null, null, null, null, null, _databaseTransactionFactory, _refundCEN, null);
         }

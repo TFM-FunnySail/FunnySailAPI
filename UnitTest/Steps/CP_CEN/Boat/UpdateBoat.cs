@@ -40,22 +40,15 @@ namespace UnitTest.Steps.CP_CEN.Boat
         private IRequiredBoatTitleCAD _requiredBoatTitlesCAD;
         private IRequiredBoatTitlesCEN _requiredBoatTitlesCEN;
         private IDatabaseTransactionFactory _databaseTransactionFactory;
-        private IReviewCAD _reviewCAD;
-        private IReviewCEN _reviewCEN;
-        private IUserCAD _userCAD;
-        private IUserCEN _userCEN;
         private IMooringCAD _mooringCAD;
         private IMooringCEN _mooringCEN;
-        private IResourcesCAD _resourcesCAD;
-        private IResourcesCEN _resourcesCEN;
         
-        private Task<BoatEN> _boatEN;
+        private BoatEN _boatEN;
         private int _boatId;
         private int _boatTypeId;
         private int _mooringId;
 
-        public UpdateBoat(ScenarioContext scenarioContext, SignInManager<ApplicationUser> signInManager,
-                       UserManager<ApplicationUser> userManager, IWebHostEnvironment environment)
+        public UpdateBoat(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
 
@@ -72,17 +65,11 @@ namespace UnitTest.Steps.CP_CEN.Boat
             _boatPricesCEN = new BoatPricesCEN(_boatPricesCAD);
             _requiredBoatTitlesCAD = new RequiredBoatTitleCAD(applicationDbContextFake._dbContextFake);
             _requiredBoatTitlesCEN = new RequiredBoatTitlesCEN(_requiredBoatTitlesCAD);
-            _reviewCAD = new ReviewCAD(applicationDbContextFake._dbContextFake);
-            _reviewCEN = new ReviewCEN(_reviewCAD);
-            _userCAD = new UsersCAD(applicationDbContextFake._dbContextFake);
-            _userCEN = new UserCEN(_userCAD, signInManager, userManager);
             _mooringCAD = new MooringCAD(applicationDbContextFake._dbContextFake);
             _mooringCEN = new MooringCEN(_mooringCAD);
-            _resourcesCAD = new ResourcesCAD(applicationDbContextFake._dbContextFake);
-            _resourcesCEN = new ResourcesCEN(_resourcesCAD, environment);
             _databaseTransactionFactory = new DatabaseTransactionFactory(applicationDbContextFake._dbContextFake);
             _boatCP = new BoatCP(_boatCEN, _boatInfoCEN, _boatTypeCEN, _boatResourceCEN, _boatPricesCEN, _requiredBoatTitlesCEN,
-                       _databaseTransactionFactory,_reviewCEN,_userCEN,_mooringCEN,_resourcesCEN);
+                       _databaseTransactionFactory,null,null,_mooringCEN,null);
         }
 
         [Given(@"los datos del actualización de la embarcación sin boatType")]
@@ -94,11 +81,11 @@ namespace UnitTest.Steps.CP_CEN.Boat
         }
 
         [When(@"se actualizan los datos de la embarcación")]
-        public void WhenSeActualizanLosDatosDeLaEmbarcacion()
+        public async Task WhenSeActualizanLosDatosDeLaEmbarcacion()
         {
             try
             {
-                _boatEN = _boatCP.UpdateBoat(new UpdateBoatInputDTO
+                _boatEN = await _boatCP.UpdateBoat(new UpdateBoatInputDTO
                 {
                     BoatId = _boatId,
                     BoatTypeId = _boatTypeId,
@@ -107,19 +94,19 @@ namespace UnitTest.Steps.CP_CEN.Boat
                     PendingToReview = false
                 });
             }
-            catch (Exception ex)
+            catch (DataValidationException ex)
             {
-                _scenarioContext.Add("Exception_NullDesc", ex);
+                _scenarioContext.Add("Ex_NotFound", ex);
             }
         }
 
         [Then(@"salta una excepción boat type dont exist")]
         public void ThenSaltaUnaExcepcionBoatTypeDontExist()
         {
-            DataValidationException ex = _scenarioContext.Get<DataValidationException>("Exception_NullDesc");
+            DataValidationException ex = _scenarioContext.Get<DataValidationException>("Ex_NotFound");
 
             Assert.IsNotNull(ex);
-            Assert.AreEqual(ExceptionTypesEnum.IsRequired, ex.ExceptionType);
+            Assert.AreEqual(ExceptionTypesEnum.DontExists, ex.ExceptionType);
         }
 
         [Given(@"los datos del actualización de la embarcación sin MooringId")]
@@ -133,10 +120,10 @@ namespace UnitTest.Steps.CP_CEN.Boat
         [Then(@"salta una excepción MooringId dont exist")]
         public void ThenSaltaUnaExcepcionMooringIdDontExist()
         {
-            DataValidationException ex = _scenarioContext.Get<DataValidationException>("Exception_NullDesc");
+            DataValidationException ex = _scenarioContext.Get<DataValidationException>("Ex_NotFound");
 
             Assert.IsNotNull(ex);
-            Assert.AreEqual(ExceptionTypesEnum.IsRequired, ex.ExceptionType);
+            Assert.AreEqual(ExceptionTypesEnum.DontExists, ex.ExceptionType);
         }
 
         [Given(@"los datos del actualización de la embarcación sin BoatID")]
@@ -150,10 +137,10 @@ namespace UnitTest.Steps.CP_CEN.Boat
         [Then(@"salta una excepción BoatID dont exist")]
         public void ThenSaltaUnaExcepcionBoatIDDontExist()
         {
-            DataValidationException ex = _scenarioContext.Get<DataValidationException>("Exception_NullDesc");
+            DataValidationException ex = _scenarioContext.Get<DataValidationException>("Ex_NotFound");
 
             Assert.IsNotNull(ex);
-            Assert.AreEqual(ExceptionTypesEnum.IsRequired, ex.ExceptionType);
+            Assert.AreEqual(ExceptionTypesEnum.NotFound, ex.ExceptionType);
         }
 
         [Given(@"los datos del actualización de la embarcación")]
@@ -167,11 +154,11 @@ namespace UnitTest.Steps.CP_CEN.Boat
         [Then(@"se actualizan los datos")]
         public void ThenSeActualizanLosDatos()
         {
-            Assert.AreEqual(true, _boatEN.Result.Active);
-            Assert.AreEqual(false, _boatEN.Result.PendingToReview);
-            Assert.AreEqual(_boatId, _boatEN.Result.Id);
-            Assert.AreEqual(_boatTypeId, _boatEN.Result.BoatTypeId);
-            Assert.AreEqual(_mooringId, _boatEN.Result.MooringId);
+            Assert.AreEqual(true, _boatEN.Active);
+            Assert.AreEqual(false, _boatEN.PendingToReview);
+            Assert.AreEqual(_boatId, _boatEN.Id);
+            Assert.AreEqual(_boatTypeId, _boatEN.BoatTypeId);
+            Assert.AreEqual(_mooringId, _boatEN.MooringId);
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
+﻿using FunnySailAPI.ApplicationCore.Exceptions;
+using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using System;
@@ -11,14 +12,20 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
     public class RefundCEN : IRefundCEN
     {
         private readonly IRefundCAD _refundCAD;
+        private readonly IBookingCEN _bookingCEN;
 
-        public RefundCEN(IRefundCAD refundCAD)
+        public RefundCEN(IRefundCAD refundCAD, IBookingCEN bookingCEN)
         {
             _refundCAD = refundCAD;
+            _bookingCEN = bookingCEN;
         }
 
         public async Task<int> CreateRefund(int bookingID,string desc, decimal amountToReturn)
         {
+            BookingEN bookingEN = await _bookingCEN.GetBookingCAD().FindById(bookingID);
+            if (bookingEN == null)
+                throw new DataValidationException("Booking", "Reserva", Models.Globals.ExceptionTypesEnum.NotFound);
+
             RefundEN dbRefund = await _refundCAD.AddAsync(new RefundEN
             {
                 AmountToReturn = amountToReturn,
@@ -28,6 +35,11 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             });
 
             return dbRefund.Id;
+        }
+
+        public IRefundCAD GetRefundCAD()
+        {
+            return _refundCAD;
         }
     }
 }

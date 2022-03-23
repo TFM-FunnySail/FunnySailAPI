@@ -1,4 +1,5 @@
-﻿using FunnySailAPI.ApplicationCore.Models.DTO.Input;
+﻿using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input.Mooring;
 using FunnySailAPI.ApplicationCore.Models.Filters;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
@@ -16,5 +17,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
         Task DeleteMooring(int mooringId);
         Task<MooringEN> UpdateMooring(UpdateMooringDTO updateMooringInput);
         Task<bool> Any(MooringFilters filter);
+        IMooringCAD GetBoatCAD();
     }
 }

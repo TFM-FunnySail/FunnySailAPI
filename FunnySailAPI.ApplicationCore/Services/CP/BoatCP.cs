@@ -189,20 +189,19 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
         {
             BoatEN boat = null;
             //Validar algunos datos, Las excepciones se cambiaran por una de aplicacion
-            if(updateBoatInput.BoatTypeId != null)
-            {
-                if (!(await _boatTypeCEN.AnyBoatTypeById((int)updateBoatInput.BoatTypeId)))
-                    throw new DataValidationException("Boat type",
-                    "El tipo de embarcación", ExceptionTypesEnum.DontExists);
-            }
-
             if (updateBoatInput.MooringId != null)
             {
-                if (!(await _mooringCEN.Any( new MooringFilters { 
-                    MooringId = updateBoatInput.MooringId
-                })))
+                MooringEN dbMooring = await _mooringCEN.GetBoatCAD().FindById((int)updateBoatInput.MooringId);
+                if (dbMooring == null)
                     throw new DataValidationException("Mooring.",
                         "Amarre de puerto.", ExceptionTypesEnum.DontExists);
+            }
+
+            if (updateBoatInput.BoatTypeId != null)
+            {
+                 if(!(await _boatTypeCEN.AnyBoatTypeById((int)updateBoatInput.BoatTypeId)))
+                    throw new DataValidationException("BoatType",
+                        "Tipo de embarcación.", ExceptionTypesEnum.DontExists);
             }
 
             //Abrir transaccion
