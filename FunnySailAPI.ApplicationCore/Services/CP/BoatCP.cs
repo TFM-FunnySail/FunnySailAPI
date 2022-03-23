@@ -1,4 +1,5 @@
-﻿using FunnySailAPI.ApplicationCore.Exceptions;
+﻿using FunnySailAPI.ApplicationCore.Constants;
+using FunnySailAPI.ApplicationCore.Exceptions;
 using FunnySailAPI.ApplicationCore.Interfaces;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
@@ -279,7 +280,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             return idResource;
         }
 
-        public async Task RemoveImage(int boatId, int resourceId)
+        public async Task RemoveImage(int boatId, int resourceId,ApplicationUser user,IList<string> roles)
         {
             BoatEN boat = (await _boatCEN.GetAll(
                     filters: new BoatFilters { BoatId = boatId },
@@ -299,6 +300,9 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             if (boat.BoatResources.Count(x => x.ResourceId != resourceId) == 0)
                 throw new DataValidationException("The resource is the only one in the product, it cannot be deleted",
                     "El recurso es el único en el producto, no se puede eliminar");
+
+            if(boat.OwnerId != user.Id && !roles.Contains(UserRolesConstant.ADMIN))
+                throw new DataValidationException("", "", ExceptionTypesEnum.Forbidden);
 
             bool otherBoatWithSameResource = (await _boatResourceCEN.GetAll(
                 filters: new BoatResourceFilters
