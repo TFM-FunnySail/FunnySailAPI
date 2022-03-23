@@ -49,7 +49,8 @@ namespace FunnySailAPI.Controllers
                     includeProperties: source => source.Include(x => x.InvoiceLines)
                                         .ThenInclude(x => x.Booking)
                                         .Include(x => x.Client)
-                                     
+                                        .Include(x => x.Refunds)
+
                      ))
                     .Select(x => ClientInvoiceAssemblers.Convert(x));
 
@@ -76,7 +77,8 @@ namespace FunnySailAPI.Controllers
                     Id = id
                 }, includeProperties: source => source.Include(x => x.InvoiceLines)
                                         .ThenInclude(x => x.Booking)
-                                        .Include(x => x.Client));
+                                        .Include(x => x.Client)
+                                        .Include(x => x.Refunds));
 
                 var clientInvoice = clientInvoices.Select(x => ClientInvoiceAssemblers.Convert(x)).FirstOrDefault();
                 if (clientInvoice == null)
@@ -91,7 +93,7 @@ namespace FunnySailAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
             }
         }
-
+        /*
         // POST: api/ClientInvoice
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
@@ -135,7 +137,7 @@ namespace FunnySailAPI.Controllers
             }
 
         }
-
+        */
         // PUT: api/ClientInvoice/5/cancel
         [CustomAuthorize(UserRolesConstant.ADMIN)]
         [HttpPut("{id}/cancel")]
