@@ -145,5 +145,31 @@ namespace FunnySailAPI.Controllers
 
         }
 
+        [CustomAuthorize(UserRolesConstant.ADMIN)]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteMooringEN(int idMooring)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+         
+                await _unitOfWork.MooringCEN.DeleteMooring(idMooring);
+
+                return NoContent();
+            }
+            catch (DataValidationException dataValidation)
+            {
+                if (dataValidation.ExceptionType == ExceptionTypesEnum.NotFound)
+                    return NotFound();
+
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, new ErrorResponseDTO(dataValidation));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
+
     }
 }

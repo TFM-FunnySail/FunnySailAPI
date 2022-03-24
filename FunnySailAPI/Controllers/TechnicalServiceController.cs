@@ -84,6 +84,29 @@ namespace FunnySailAPI.Controllers
             }
         }
 
+
+        [HttpPost]
+        public async Task<ActionResult<TechnicalServiceOutputDTO>> CreateTechnicalServiceController(decimal price, string description)
+        {
+            try
+            {
+                await _unitOfWork.TechnicalServiceCEN.AddTechnicalService(price, description);
+
+                return NoContent();
+            }
+            catch (DataValidationException dataValidation)
+            {
+                if (dataValidation.ExceptionType == ExceptionTypesEnum.NotFound)
+                    return NotFound();
+
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, new ErrorResponseDTO(dataValidation));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
+
         //POST: api/TechnicalService/Schedule
         [HttpPost("schedule")]
         public async Task<ActionResult<TechnicalServiceOutputDTO>> ScheduleTechnicalServiceBoatController(ScheduleTechnicalServiceDTO scheduleTechnicalService)
@@ -120,6 +143,32 @@ namespace FunnySailAPI.Controllers
                 technicalService.Id = id;
 
                 await _unitOfWork.TechnicalServiceCEN.UpdateTechnicalService(technicalService);
+
+                return NoContent();
+            }
+            catch (DataValidationException dataValidation)
+            {
+                if (dataValidation.ExceptionType == ExceptionTypesEnum.NotFound)
+                    return NotFound();
+
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, new ErrorResponseDTO(dataValidation));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
+
+        [CustomAuthorize(UserRolesConstant.ADMIN)]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTechnicalService(int idTechnicalService)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                await _unitOfWork.TechnicalServiceCEN.DeleteService(idTechnicalService);
 
                 return NoContent();
             }
