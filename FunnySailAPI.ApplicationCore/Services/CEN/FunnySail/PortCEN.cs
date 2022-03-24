@@ -88,6 +88,10 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
                 throw new DataValidationException("Port", "Puerto",
                     ExceptionTypesEnum.NotFound);
 
+            if (await _portCAD.AnyBoatInPort(id))
+                throw new DataValidationException("The port cannot be deleted because there are ships mooring in that port.",
+                    "El puerto no puede ser eliminado porque hay embarcaciones en amarres de dicho puerto.");
+
             await _portCAD.Delete(port);
         }
 

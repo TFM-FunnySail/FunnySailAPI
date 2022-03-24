@@ -12,5 +12,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail
     {
         Task<PortEN> FindByIdAllData(int bookingId);
         IQueryable<PortEN> GetPortFiltered(PortFilters filters);
+        Task<bool> AnyBoatInPort(int id);
     }
 }

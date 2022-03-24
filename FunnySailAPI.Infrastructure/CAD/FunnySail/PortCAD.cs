@@ -17,6 +17,13 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
         {
         }
 
+        public async Task<bool> AnyBoatInPort(int portId)
+        {
+            return await _dbContext.Boats.Include(x => x.Mooring)
+                .Where(x => x.Mooring.PortId == portId)
+                .AnyAsync();
+        }
+
         public async Task<PortEN> FindByIdAllData(int bookingId)
         {
             return await _dbContext.Ports
