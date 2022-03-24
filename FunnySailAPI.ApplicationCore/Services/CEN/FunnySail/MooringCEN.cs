@@ -106,5 +106,10 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
             return await _mooringCAD.Get(moorings, orderBy, includeProperties, pagination);
         }
+
+        public IMooringCAD GetMooringCAD()
+        {
+            return _mooringCAD;
+        }
     }
 }

@@ -25,6 +25,7 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
             Pagination pagination = null,
             Func<IQueryable<MooringEN>, IOrderedQueryable<MooringEN>> orderBy = null,
             Func<IQueryable<MooringEN>, IIncludableQueryable<MooringEN, object>> includeProperties = null);
+        IMooringCAD GetMooringCAD();
 
     }
 }
