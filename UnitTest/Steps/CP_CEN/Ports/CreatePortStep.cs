@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 using UnitTest.FakeFactories;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input.Port;
 
 namespace UnitTest.Steps.CP_CEN.Ports
 {
@@ -25,7 +26,7 @@ namespace UnitTest.Steps.CP_CEN.Ports
         private int _id;
         private string _location;
         private string _name;
-
+        private AddPortInputDTO _addPortInputDTO;
         public CreatePortStep(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
@@ -39,14 +40,21 @@ namespace UnitTest.Steps.CP_CEN.Ports
         [Given(@"con un (.*) y una (.*)")]
         public void GivenConUnYUna(string name, string location)
         {
-            _name = name;
-            _location = location;
+            _addPortInputDTO = new AddPortInputDTO
+            {
+                Name = name,
+                Location = location
+            };
         }
         
         [Given(@"con una (.*) y sin nombre")]
         public void GivenConUnaYSinNombre(string location)
         {
-            _location = location;
+            _addPortInputDTO = new AddPortInputDTO
+            {
+                Name = null,
+                Location = location
+            };
         }
         
         [When(@"se adiciona el puerto")]
@@ -54,7 +62,7 @@ namespace UnitTest.Steps.CP_CEN.Ports
         {
             try
             {
-                int id = await _portCEN.AddPort(_name,_location);
+                int id = await _portCEN.AddPort(_addPortInputDTO);
                 _newPort = await _portCAD.FindById(id);
             }
             catch (DataValidationException ex)
@@ -66,8 +74,8 @@ namespace UnitTest.Steps.CP_CEN.Ports
         [Then(@"devuelve el puerto creado en base de datos con los mismos valores")]
         public void ThenDevuelveElPuertoCreadoEnBaseDeDatosConLosMismosValores()
         {
-            Assert.AreEqual(_location, _newPort.Location);
-            Assert.AreEqual(_name, _newPort.Name);
+            Assert.AreEqual(_addPortInputDTO.Location, _newPort.Location);
+            Assert.AreEqual(_addPortInputDTO.Name, _newPort.Name);
         }
         
         [Then(@"devuelve un error porque el nombre del puerto es requerido")]

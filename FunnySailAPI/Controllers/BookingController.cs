@@ -144,7 +144,7 @@ namespace FunnySailAPI.Controllers
             }
         }
 
-        // Put: api/Bookings
+        // Post: api/Bookings
         [CustomAuthorize]
         [HttpPost]
         public async Task<ActionResult<BookingOutputDTO>> CreateBooking(AddBookingInputDTO bookingInput)

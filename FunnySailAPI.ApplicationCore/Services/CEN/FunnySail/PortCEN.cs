@@ -31,14 +31,14 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             _esName = "Puerto";
         }
 
-        public async Task<int> AddPort(string name, string location)
+        public async Task<int> AddPort(AddPortInputDTO addPortInputDTO)
         {
-            if (name == null)
+            if (addPortInputDTO.Name == null)
             {
                 throw new DataValidationException($"{_enName} name", $"Nombre del {_esName}",
                     ExceptionTypesEnum.IsRequired);
             }
-            else if (location == null)
+            else if (addPortInputDTO.Location == null)
             {
                 throw new DataValidationException($"{_enName} location", $"Localización del {_esName}",
                    ExceptionTypesEnum.IsRequired);
@@ -46,8 +46,8 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
             PortEN dbPort = await _portCAD.AddAsync(new PortEN
             {
-                Name = name,
-                Location = location
+                Name = addPortInputDTO.Name,
+                Location = addPortInputDTO.Location
             });
 
             return dbPort.Id;
