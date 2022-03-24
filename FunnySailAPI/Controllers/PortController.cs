@@ -22,7 +22,6 @@ using System.Threading.Tasks;
 namespace FunnySailAPI.Controllers
 {
     [Route("api/[controller]")]
-    [CustomAuthorize(UserRolesConstant.ADMIN)]
     [ApiController]
     public class PortController : BaseController
     {
