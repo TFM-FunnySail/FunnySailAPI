@@ -65,9 +65,7 @@ namespace UnitTest.Steps.CP_CEN.Boat
             mockResourceCEN.CallBase = true;
             _formFile = new FormFile(null, 0, 0, "35", "35.jpg");
             mockResourceCEN.Setup(x => x.UploadImage(_formFile)).ReturnsAsync(_formFile.FileName);
-            //mockResourceCEN.Setup(x => x.AddResources(true, ResourcesEnum.Image, _formFile.FileName))
-            //    .ReturnsAsync();
-
+            
             IResourcesCEN resourcesCEN = mockResourceCEN.Object;
 
             _boatCP = new BoatCP(boatCEN, null, null, boatResourceCEN, null, null, databaseTransactionFactory,
