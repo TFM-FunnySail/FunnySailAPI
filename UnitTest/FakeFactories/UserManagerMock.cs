@@ -32,5 +32,11 @@ namespace UnitTest.FakeFactories
             userManager.Setup(x => x.AddToRoleAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Success);
         }
+
+        public void SetupForEditUser()
+        {
+            userManager.Setup(x => x.UpdateAsync(It.IsAny<ApplicationUser>()))
+                .ReturnsAsync(IdentityResult.Success);
+        }
     }
 }
