@@ -53,7 +53,7 @@ namespace FunnySailAPI.ApplicationCore.Services
 
             ApplicationUser user = await _userManager.FindByEmailAsync(loginUserInput.Email);
 
-            string jwtToken = generateJwtToken(user);
+            string jwtToken = _authRefreshTokenCEN.GenerateJwtToken(user);
 
             AuthRefreshToken refreshToken = await _authRefreshTokenCEN.
                 GenerateRefreshTokens(user,ipAddress,null);
@@ -77,7 +77,7 @@ namespace FunnySailAPI.ApplicationCore.Services
             var newRefreshToken = await _authRefreshTokenCEN.GenerateRefreshTokens(user,ipAddress, refreshToken);
 
             // generate new jwt
-            string jwtToken = generateJwtToken(user);
+            string jwtToken = _authRefreshTokenCEN.GenerateJwtToken(user);
 
             return new AuthenticateResponseDTO
             {
@@ -94,21 +94,6 @@ namespace FunnySailAPI.ApplicationCore.Services
         {
             await _authRefreshTokenCEN.RevokeToken(token, ipAddress);
         }
-
-        private string generateJwtToken(ApplicationUser user)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id) }),
-                Expires = DateTime.UtcNow.AddMinutes(15),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
-        }
-
         
     }
 }
