@@ -21,7 +21,7 @@ namespace FunnySailAPI.DTO.Output.Booking
         //public InvoiceDTO 
         public List<BoatBookingOutputDTO> BoatBookings { get; set; }
         public List<ServiceBookingOutputDTO> ServiceBookings { get; set; }
-        public List<ActivyBookingOutputDTO> ActivyBookings { get; set; }
+        public List<ActivityBookingOutputDTO> ActivyBookings { get; set; }
         public BookingOutputDTO() { }
     }
 }
