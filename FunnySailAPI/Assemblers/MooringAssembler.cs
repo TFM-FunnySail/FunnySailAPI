@@ -1,5 +1,6 @@
 ﻿using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.DTO.Output.Mooring;
+using FunnySailAPI.DTO.Output.Port;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,12 +16,22 @@ namespace FunnySailAPI.Assemblers
         {
             MooringOutputDTO mooringOutput = new MooringOutputDTO
             {
-                //Como se tiene el id de puerto, el atributo Port daba problemas y lo he quitado, si no ejecuta, pro
                 Id = mooringEN.Id,
                 PortId = mooringEN.PortId,
                 Type = mooringEN.Type,
                 Alias = mooringEN.Alias
             };
+
+            if(mooringEN.Port != null)
+            {
+                mooringOutput.Port = new PortOutputDTO
+                {
+                    Id = mooringEN.Port.Id,
+                    Location = mooringEN.Port.Location,
+                    Name = mooringEN.Port.Name,
+                };
+            }
+
 
             return mooringOutput;
         }
