@@ -249,7 +249,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                 throw new DataValidationException("Boat", "La embarcación", ExceptionTypesEnum.NotFound);
 
             string[] extensions = new string[] { "png", "jpg" };
-            if (!extensions.Any(x => image.Name.ToLower().Contains(x)))
+            if (!extensions.Any(x => image.FileName.ToLower().Contains(x)))
                 throw new DataValidationException("The image file does not have the required extension", 
                     "El archivo imagen no tiene la extensión requerida");
 

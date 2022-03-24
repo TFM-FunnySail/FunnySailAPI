@@ -13,4 +13,5 @@ Scenario: Se quiere subir una imagen a un barco que no existe
 Scenario: Se sube la imagen correctamente
 	Given se subira una imagen correcta a un barco existente
 	When se invoca la función para publicar imagen
+	And se extraen los datos resultantes para comprobarlo
 	Then la imagen ha sido agregada en base de datos
