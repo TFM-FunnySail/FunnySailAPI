@@ -6,8 +6,11 @@ using FunnySailAPI.ApplicationCore.Models.DTO.Input.Mooring;
 using FunnySailAPI.ApplicationCore.Models.Filters;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
+using FunnySailAPI.ApplicationCore.Models.Utils;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -83,7 +86,28 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             return await _mooringCAD.Any(query);
         }
 
-        public IMooringCAD GetBoatCAD()
+        //Esto es de la modificación de la interfaz
+
+        public async Task<int> GetTodos(MooringFilters filters = null)
+        {
+            var activities = _mooringCAD.GetFiltered(filters);
+
+            return await _mooringCAD.GetCounter(activities);
+        }
+
+        public async Task<IList<MooringEN>> GetAll(MooringFilters filters = null, Pagination pagination = null, 
+            Func<System.Linq.IQueryable<MooringEN>, System.Linq.IOrderedQueryable<MooringEN>> orderBy = null, 
+            Func<System.Linq.IQueryable<MooringEN>, IIncludableQueryable<MooringEN, object>> includeProperties = null)
+        {
+            var moorings = _mooringCAD.GetFiltered(filters);
+
+            if (orderBy == null)
+                orderBy = b => b.OrderBy(x => x.Id);
+
+            return await _mooringCAD.Get(moorings, orderBy, includeProperties, pagination);
+        }
+
+        public IMooringCAD GetMooringCAD()
         {
             return _mooringCAD;
         }

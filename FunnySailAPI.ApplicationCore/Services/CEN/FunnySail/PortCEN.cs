@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input.Port;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 {
@@ -30,14 +31,14 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             _esName = "Puerto";
         }
 
-        public async Task<int> AddPort(string name, string location)
+        public async Task<int> AddPort(AddPortInputDTO addPortInputDTO)
         {
-            if (name == null)
+            if (addPortInputDTO.Name == null)
             {
                 throw new DataValidationException($"{_enName} name", $"Nombre del {_esName}",
                     ExceptionTypesEnum.IsRequired);
             }
-            else if (location == null)
+            else if (addPortInputDTO.Location == null)
             {
                 throw new DataValidationException($"{_enName} location", $"Localización del {_esName}",
                    ExceptionTypesEnum.IsRequired);
@@ -45,8 +46,8 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
             PortEN dbPort = await _portCAD.AddAsync(new PortEN
             {
-                Name = name,
-                Location = location
+                Name = addPortInputDTO.Name,
+                Location = addPortInputDTO.Location
             });
 
             return dbPort.Id;
@@ -99,6 +100,23 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
         {
             IQueryable<PortEN> port = _portCAD.GetIQueryable();
             return _portCAD.Any(port.Where(x => x.Id == portId));
+        }
+
+        public async Task<IList<PortEN>> GetAll(PortFilters filters = null, Pagination pagination = null, Func<IQueryable<PortEN>, IOrderedQueryable<PortEN>> orderBy = null, Func<IQueryable<PortEN>, IIncludableQueryable<PortEN, object>> includeProperties = null)
+        {
+            var query = _portCAD.GetPortFiltered(filters);
+
+            if (orderBy == null)
+                orderBy = b => b.OrderBy(x => x.Id);
+
+            return await _portCAD.Get(query, orderBy, includeProperties, pagination);
+        }
+
+        public async Task<int> GetTotal(PortFilters filters = null)
+        {
+            var query = _portCAD.GetPortFiltered(filters);
+
+            return await _portCAD.GetCounter(query);
         }
     }
 }

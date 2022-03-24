@@ -30,5 +30,10 @@ namespace FunnySailAPI.ApplicationCore.Helpers
             return role == UserRolesConstant.ADMIN || role == UserRolesConstant.CLIENT
                 || role == UserRolesConstant.BOAT_OWNER;
         }
+
+        public static bool AnyRole(object userRoles, string aDMIN)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

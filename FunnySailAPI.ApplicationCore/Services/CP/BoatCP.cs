@@ -192,7 +192,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             //Validar algunos datos, Las excepciones se cambiaran por una de aplicacion
             if (updateBoatInput.MooringId != null)
             {
-                MooringEN dbMooring = await _mooringCEN.GetBoatCAD().FindById((int)updateBoatInput.MooringId);
+                MooringEN dbMooring = await _mooringCEN.GetMooringCAD().FindById((int)updateBoatInput.MooringId);
                 if (dbMooring == null)
                     throw new DataValidationException("Mooring.",
                         "Amarre de puerto.", ExceptionTypesEnum.DontExists);
