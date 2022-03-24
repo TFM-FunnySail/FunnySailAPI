@@ -150,6 +150,9 @@ namespace FunnySailAPI.Controllers
                 if(dataValidation.ExceptionType == ExceptionTypesEnum.NotFound)
                     return NotFound();
 
+                if(dataValidation.ExceptionType == ExceptionTypesEnum.Forbidden)
+                    return StatusCode(StatusCodes.Status403Forbidden);
+
                 return StatusCode(StatusCodes.Status422UnprocessableEntity, new ErrorResponseDTO(dataValidation));
             }
             catch (Exception ex)
@@ -287,7 +290,7 @@ namespace FunnySailAPI.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest();
 
-                await _unitOfWork.BoatCP.RemoveImage(id, resourceId);
+                await _unitOfWork.BoatCP.RemoveImage(id, resourceId,User.ApplicationUser,UserRoles);
 
                 return NoContent();
             }

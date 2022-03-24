@@ -50,8 +50,16 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
         public async Task DeleteResource(ResourcesEN resource)
         {
             string uri = resource.Uri;
+            ResourcesEnum resourceType = resource.Type;
+
             await _resourcesCAD.Delete(resource);
 
+            if(resourceType == ResourcesEnum.Image)
+                RemovePhisicalImage(uri);
+        }
+
+        private static void RemovePhisicalImage(string uri)
+        {
             var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Images", uri);
 
             if (System.IO.File.Exists(path))

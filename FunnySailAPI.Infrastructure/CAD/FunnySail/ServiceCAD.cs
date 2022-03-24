@@ -70,9 +70,9 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
 
         public async Task<List<ServiceEN>> GetServiceFilteredList(ServiceFilters serviceFilters)
         {
-            IQueryable<ServiceEN> boats = GetServiceFiltered(serviceFilters);
+            IQueryable<ServiceEN> services = GetServiceFiltered(serviceFilters);
 
-            return await boats.ToListAsync();
+            return await services.ToListAsync();
         }
         #endregion
     }

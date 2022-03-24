@@ -22,6 +22,6 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
         [Required]
         public bool Active { get; set; }
 
-        List<TechnicalServiceBoatEN> TechnicalServicesBoat { get; set; }
+        public List<TechnicalServiceBoatEN> TechnicalServicesBoat { get; set; }
     }
 }

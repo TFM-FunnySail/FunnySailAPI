@@ -1,4 +1,5 @@
-﻿using FunnySailAPI.ApplicationCore.Exceptions;
+﻿using FunnySailAPI.ApplicationCore.Constants;
+using FunnySailAPI.ApplicationCore.Exceptions;
 using FunnySailAPI.ApplicationCore.Interfaces;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
@@ -191,7 +192,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             //Validar algunos datos, Las excepciones se cambiaran por una de aplicacion
             if (updateBoatInput.MooringId != null)
             {
-                MooringEN dbMooring = await _mooringCEN.GetBoatCAD().FindById((int)updateBoatInput.MooringId);
+                MooringEN dbMooring = await _mooringCEN.GetMooringCAD().FindById((int)updateBoatInput.MooringId);
                 if (dbMooring == null)
                     throw new DataValidationException("Mooring.",
                         "Amarre de puerto.", ExceptionTypesEnum.DontExists);
@@ -248,7 +249,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                 throw new DataValidationException("Boat", "La embarcación", ExceptionTypesEnum.NotFound);
 
             string[] extensions = new string[] { "png", "jpg" };
-            if (!extensions.Any(x => image.Name.ToLower().Contains(x)))
+            if (!extensions.Any(x => image.FileName.ToLower().Contains(x)))
                 throw new DataValidationException("The image file does not have the required extension", 
                     "El archivo imagen no tiene la extensión requerida");
 
@@ -279,7 +280,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             return idResource;
         }
 
-        public async Task RemoveImage(int boatId, int resourceId)
+        public async Task RemoveImage(int boatId, int resourceId,ApplicationUser user,IList<string> roles)
         {
             BoatEN boat = (await _boatCEN.GetAll(
                     filters: new BoatFilters { BoatId = boatId },
@@ -299,6 +300,9 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             if (boat.BoatResources.Count(x => x.ResourceId != resourceId) == 0)
                 throw new DataValidationException("The resource is the only one in the product, it cannot be deleted",
                     "El recurso es el único en el producto, no se puede eliminar");
+
+            if(boat.OwnerId != user.Id && !roles.Contains(UserRolesConstant.ADMIN))
+                throw new DataValidationException("", "", ExceptionTypesEnum.Forbidden);
 
             bool otherBoatWithSameResource = (await _boatResourceCEN.GetAll(
                 filters: new BoatResourceFilters

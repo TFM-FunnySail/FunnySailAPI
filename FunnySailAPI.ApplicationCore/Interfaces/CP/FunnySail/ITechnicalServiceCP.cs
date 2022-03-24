@@ -8,6 +8,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail
 {
     public interface ITechnicalServiceCP
     {
-        public Task<int> ScheduleTechnicalServiceToBoat(ScheduleTechnicalServiceDTO scheduleTechnicalService);
+        Task<int> ScheduleTechnicalServiceToBoat(ScheduleTechnicalServiceDTO scheduleTechnicalService);
     }
 }

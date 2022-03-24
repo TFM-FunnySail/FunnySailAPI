@@ -1,5 +1,6 @@
 ﻿using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.DTO.Output.ClientInvoice;
+using FunnySailAPI.DTO.Output.Refund;
 using FunnySailAPI.DTO.Output.User;
 using System.Linq;
 
@@ -19,13 +20,29 @@ namespace FunnySailAPI.Assemblers
                 ClientId = clientInvoiceEN.ClientId
             };
 
+            if (clientInvoiceEN.Client != null)
+                clientInvoiceOutput.Client = UserAssemblers.Convert(clientInvoiceEN.Client);
+
             if (clientInvoiceEN.InvoiceLines != null)
             {
                 clientInvoiceOutput.InvoiceLines = clientInvoiceEN.InvoiceLines.Select(x => new ClientInvoiceLinesOutputDTO
                 {
-                   BookingId = x.BookingId,
-                   TotalAmount = x.TotalAmount,
-                   ClientInvoiceId = x.ClientInvoiceId,
+                    BookingId = x.BookingId,
+                    TotalAmount = x.TotalAmount,
+                    ClientInvoiceId = x.ClientInvoiceId,
+                }).ToList();
+            }
+
+
+            if (clientInvoiceEN.Refunds != null)
+            {
+                clientInvoiceOutput.Refunds = clientInvoiceEN.Refunds.Select(x => new RefundOutputDTO
+                {
+                    Id = x.Id,
+                    AmountToReturn = x.AmountToReturn,
+                    BookingId = x.BookingId,
+                    Date = x.Date,
+                    Description = x.Description
                 }).ToList();
             }
 

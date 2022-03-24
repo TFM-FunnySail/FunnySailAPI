@@ -19,11 +19,16 @@ namespace FunnySailAPI.Assemblers
                 FirstName = userEN.FirstName,
                 LastName = userEN.LastName,
                 ReceivePromotion = userEN.ReceivePromotion,
-                EmailConfirmed = userEN.ApplicationUser.EmailConfirmed,
-                Email = userEN.ApplicationUser.Email,
-                PhoneNumber = userEN.ApplicationUser.PhoneNumber,
-                UserName = userEN.ApplicationUser.UserName,
             };
+
+            if (userEN.ApplicationUser != null)
+            {
+                user.EmailConfirmed = userEN.ApplicationUser.EmailConfirmed;
+                user.Email = userEN.ApplicationUser.Email;
+                user.PhoneNumber = userEN.ApplicationUser.PhoneNumber;
+                user.UserName = userEN.ApplicationUser.UserName;
+            }
+
             return user;
         }
     }
