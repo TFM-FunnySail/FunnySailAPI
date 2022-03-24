@@ -9,6 +9,6 @@ namespace FunnySailAPI.DTO.Output.TechnicalService
         public decimal Price { get; set; }
         public string Description { get; set; }
         public bool Active { get; set; }
-        List<TechnicalServiceBoatOutputDTO> TechnicalServicesBoat { get; set; }
+        public List<TechnicalServiceBoatOutputDTO> TechnicalServicesBoat { get; set; }
     }
 }

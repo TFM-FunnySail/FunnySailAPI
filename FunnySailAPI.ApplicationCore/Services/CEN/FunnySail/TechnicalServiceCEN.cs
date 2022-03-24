@@ -4,10 +4,14 @@ using FunnySailAPI.ApplicationCore.Interfaces.CEN;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input.Services;
+using FunnySailAPI.ApplicationCore.Models.Filters;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
+using FunnySailAPI.ApplicationCore.Models.Utils;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -107,6 +111,26 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             });
 
             return technicalServiceBoat.Id;
+        }
+
+        public async Task<IList<TechnicalServiceEN>> GetAll(TechnicalServiceFilters filters = null,
+       Pagination pagination = null,
+       Func<IQueryable<TechnicalServiceEN>, IOrderedQueryable<TechnicalServiceEN>> orderBy = null,
+       Func<IQueryable<TechnicalServiceEN>, IIncludableQueryable<TechnicalServiceEN, object>> includeProperties = null)
+        {
+            var technicalServices = _technicalServiceCAD.GetTechnicalServiceFiltered(filters);
+
+            if (orderBy == null)
+                orderBy = b => b.OrderBy(x => x.Id);
+
+            return await _technicalServiceCAD.Get(technicalServices, orderBy, includeProperties, pagination);
+        }
+
+        public async Task<int> GetTotal(TechnicalServiceFilters filters = null)
+        {
+            var TechnicalServices = _technicalServiceCAD.GetTechnicalServiceFiltered(filters);
+
+            return await _technicalServiceCAD.GetCounter(TechnicalServices);
         }
     }
 }

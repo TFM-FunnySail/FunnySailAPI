@@ -66,7 +66,7 @@ namespace FunnySailAPI.Assemblers
                 {
                     Id = boatEN.Mooring.Id,
                     Alias = boatEN.Mooring.Alias,
-                    Type = boatEN.Mooring.Type.ToString(),
+                    Type = boatEN.Mooring.Type,
                     PortId = boatEN.Mooring.PortId,
                 };
 
