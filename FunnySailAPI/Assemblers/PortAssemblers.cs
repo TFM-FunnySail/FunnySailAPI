@@ -20,10 +20,8 @@ namespace FunnySailAPI.Assemblers
 
             if (portEN.Moorings != null)
             {
-                foreach (var mooring in portEN.Moorings)
-                {
-                    //portOutputDTO.Moorings.Add(MooringAssembler.Convert(mooring));
-                }
+                portOutputDTO.Moorings = portEN.Moorings.Select(x => 
+                                            MooringAssemblers.Convert(x)).ToList();
             }
             return portOutputDTO;
         }
