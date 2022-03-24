@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 namespace FunnySailAPI.Controllers
 {
     [Route("api/[controller]")]
-    [CustomAuthorize(UserRolesConstant.ADMIN)]
+    [CustomAuthorize]
     [ApiController]
     public class BookingController : BaseController
     {
@@ -91,8 +91,7 @@ namespace FunnySailAPI.Controllers
         }
 
         // Put: api/Bookings/5
-        [CustomAuthorize(UserRolesConstant.ADMIN)]
-        [HttpPut("{id}")]
+        [HttpPut("{id}/cancel")]
         public async Task<ActionResult<BookingOutputDTO>> CancelBooking(int id)
         {
             try
@@ -118,8 +117,7 @@ namespace FunnySailAPI.Controllers
         }
 
         // Put: api/Bookings/5
-        [CustomAuthorize(UserRolesConstant.ADMIN)]
-        [HttpPut("{id}")]
+        [HttpPut("{id}/pay")]
         public async Task<ActionResult<BookingOutputDTO>> PayBooking(int id)
         {
             try
@@ -144,7 +142,6 @@ namespace FunnySailAPI.Controllers
         }
 
         // Post: api/Bookings
-        [CustomAuthorize]
         [HttpPost]
         public async Task<ActionResult<BookingOutputDTO>> CreateBooking(AddBookingInputDTO bookingInput)
         {
@@ -182,12 +179,14 @@ namespace FunnySailAPI.Controllers
         // Put: api/Bookings/5
         [CustomAuthorize(UserRolesConstant.ADMIN)]
         [HttpPut("{id}")]
-        public async Task<ActionResult<BookingOutputDTO>> UpdateBooking(UpdateBookingInputDTO updateBookingInputDTO)
+        public async Task<ActionResult<BookingOutputDTO>> UpdateBooking(int id,UpdateBookingInputDTO updateBookingInputDTO)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest();
+
+                updateBookingInputDTO.Id = id;
 
                 BookingEN booking = await _unitOfWork.BookingCEN.UpdateBooking(updateBookingInputDTO);
                 return CreatedAtAction("GetBoat", new { id = booking.Id });
