@@ -17,7 +17,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
         Task<BookingEN> GetAllDataBooking(int bookingId);
         IBookingCAD GetBookingCAD();
         Task<BookingEN> UpdateBooking(BookingEN bookingEN);
-
         Task<IList<BookingEN>> GetAll(BookingFilters filters = null,
         Pagination pagination = null,
         Func<IQueryable<BookingEN>, IOrderedQueryable<BookingEN>> orderBy = null,
