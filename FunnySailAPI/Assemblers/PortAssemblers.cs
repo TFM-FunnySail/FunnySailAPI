@@ -18,7 +18,7 @@ namespace FunnySailAPI.Assemblers
                 Name = portEN.Name,
             };
 
-            if (portEN.Moorings != null) 
+            if (portEN.Moorings != null)
             {
                 foreach (var mooring in portEN.Moorings)
                 {
@@ -27,4 +27,5 @@ namespace FunnySailAPI.Assemblers
             }
             return portOutputDTO;
         }
+    }
 }

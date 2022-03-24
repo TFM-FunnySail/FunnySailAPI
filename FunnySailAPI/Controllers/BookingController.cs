@@ -128,7 +128,6 @@ namespace FunnySailAPI.Controllers
                     return BadRequest();
 
                 await _unitOfWork.BookingCP.PayBooking(id);
-
                 return NoContent();
             }
             catch (DataValidationException dataValidation)
@@ -180,7 +179,31 @@ namespace FunnySailAPI.Controllers
             }
         }
 
+        // Put: api/Bookings/5
+        [CustomAuthorize(UserRolesConstant.ADMIN)]
+        [HttpPut("{id}")]
+        public async Task<ActionResult<BookingOutputDTO>> UpdateBooking(UpdateBookingInputDTO updateBookingInputDTO)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
 
+                BookingEN booking = await _unitOfWork.BookingCEN.UpdateBooking(updateBookingInputDTO);
+                return CreatedAtAction("GetBoat", new { id = booking.Id });
+            }
+            catch (DataValidationException dataValidation)
+            {
+                if (dataValidation.ExceptionType == ExceptionTypesEnum.NotFound)
+                    return NotFound();
+
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, new ErrorResponseDTO(dataValidation));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
 
     }
 }

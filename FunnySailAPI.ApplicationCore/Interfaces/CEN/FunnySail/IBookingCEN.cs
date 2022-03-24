@@ -1,4 +1,5 @@
 ﻿using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input.Booking;
 using FunnySailAPI.ApplicationCore.Models.Filters;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Utils;
@@ -16,6 +17,7 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
         Task<int> CreateBooking(BookingEN bookingEN);
         Task<BookingEN> GetAllDataBooking(int bookingId);
         IBookingCAD GetBookingCAD();
+        Task<BookingEN> UpdateBooking(UpdateBookingInputDTO updateBookingInputDTO);
         Task<BookingEN> UpdateBooking(BookingEN bookingEN);
         Task<IList<BookingEN>> GetAll(BookingFilters filters = null,
         Pagination pagination = null,
