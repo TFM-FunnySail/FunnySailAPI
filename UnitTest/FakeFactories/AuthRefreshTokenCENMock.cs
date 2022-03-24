@@ -30,6 +30,9 @@ namespace UnitTest.FakeFactories
             authRefreshToken.Setup(x => x.GenerateRefreshTokens(It.IsAny<ApplicationUser>(), It.IsAny<string>(),
                 It.IsAny<AuthRefreshToken>()))
                 .ReturnsAsync( new AuthRefreshToken());
+            
+            authRefreshToken.Setup(x => x.GenerateJwtToken(It.IsAny<ApplicationUser>()))
+                .Returns("ssdsdsd");
         }
     }
 }
