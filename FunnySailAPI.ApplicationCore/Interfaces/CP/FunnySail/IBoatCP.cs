@@ -14,6 +14,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail
         Task<BoatEN> DisapproveBoat(int boatId, DisapproveBoatInputDTO disapproveBoatInput);
         Task<BoatEN> UpdateBoat(UpdateBoatInputDTO updateBoatInput);
         Task<int> AddImage(int boatId, IFormFile image, bool main);
-        Task RemoveImage(int id, int resourceId);
+        Task RemoveImage(int id, int resourceId, ApplicationUser user, IList<string> roles);
     }
 }

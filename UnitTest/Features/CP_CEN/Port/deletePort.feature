@@ -7,5 +7,5 @@ Scenario: Se quiere eliminar un puerto
 
 Scenario: Se quiere eliminar un puerto que tiene reservas activas
 	Given un puerto que aún tiene que ofrecer servicios a clientes 
-	When se intente eliminar el puerto
+	When se procede a la eliminación
 	Then no se podrá proceder con la eliminación

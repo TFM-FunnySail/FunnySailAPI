@@ -15,6 +15,7 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
     {
         Task<OwnerInvoiceEN> CancelOwnerInvoice(int ownerInvoiceId);
         IOwnerInvoiceLineCAD GetOwnerInvoiceLineCAD();
+        IOwnerInvoiceCAD GetOwnerInvoiceCAD();
         Task<int> CreateOwnerInvoice(string ownerId, decimal amount, bool toCollet);
         Task<IList<OwnerInvoiceEN>> GetAll(OwnerInvoiceFilters filters = null,
         Pagination pagination = null,

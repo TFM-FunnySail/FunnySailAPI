@@ -59,7 +59,59 @@ namespace UnitTest.FakeFactories
             _dbContextFake.AddRange(TecServicesFaker());
             _dbContextFake.AddRange(TechnicalServiceBoatFaker());
 
+            //Agregando bookings
+            _dbContextFake.AddRange(BookingFaker());
+
+            //Agregando recursos
+            _dbContextFake.AddRange(ResourcesFaker());
+            _dbContextFake.AddRange(BoatResourcesFaker());
+
             _dbContextFake.SaveChanges();
+        }
+
+        private List<BoatResourceEN> BoatResourcesFaker()
+        {
+            return new List<BoatResourceEN>
+            {
+                new BoatResourceEN
+                {
+                    BoatId = 1,
+                    ResourceId =3,
+                },
+                new BoatResourceEN
+                {
+                    BoatId = 1,
+                    ResourceId =2,
+                },
+            };
+        }
+
+        private List<ResourcesEN> ResourcesFaker()
+        {
+            return new List<ResourcesEN>
+            {
+                new ResourcesEN
+                {
+                    Id = 1,
+                    Main = true,
+                    Type = ResourcesEnum.Image,
+                    Uri = "Images/1.jpg"
+                },
+                new ResourcesEN
+                {
+                    Id = 2,
+                    Main = false,
+                    Type = ResourcesEnum.Image,
+                    Uri = "Images/2.jpg"
+                },
+                new ResourcesEN
+                {
+                    Id = 3,
+                    Main = false,
+                    Type = ResourcesEnum.Image,
+                    Uri = "Images/3.jpg"
+                }
+            };
         }
 
         private List<UsersEN> UserFaker()
@@ -73,6 +125,14 @@ namespace UnitTest.FakeFactories
                     LastName = "Merten",
                     FirstName = "Pedro",
                     ReceivePromotion = true
+                },
+                new UsersEN
+                {
+                    UserId = "2",
+                    BoatOwner = false,
+                    LastName = "Quiez",
+                    FirstName = "Rodri",
+                    ReceivePromotion = false
                 }
             };
         }
@@ -87,8 +147,10 @@ namespace UnitTest.FakeFactories
                     PendingToReview = true,
                     Active = false,
                     CreatedDate = DateTime.UtcNow,
+                    OwnerId = "1",
                     BoatType = new BoatTypeEN
                     {
+                        Id = 1,
                         Name = "Tipo prueba",
                         Description = "Desc prueba"
                     }
@@ -101,6 +163,7 @@ namespace UnitTest.FakeFactories
                     CreatedDate = DateTime.UtcNow,
                     BoatType = new BoatTypeEN
                     {
+                        Id = 2,
                         Name = "Barco aprobado",
                         Description = "Desc Barco aprobado"
                     }
@@ -276,6 +339,31 @@ namespace UnitTest.FakeFactories
             };
         }
 
+
+        private List<BookingEN> BookingFaker() 
+        {
+            return new List<BookingEN>
+            {
+                new BookingEN
+                {
+                    Id = 1,
+                    ClientId = "1",
+                    CreatedDate = DateTime.Now,
+                    EntryDate = DateTime.Now.AddDays(10),
+                    DepartureDate = DateTime.Now.AddDays(10).AddHours(5),
+                    TotalPeople = 10,
+                    Paid = false,
+                    RequestCaptain = true,
+                    Status = BookingStatusEnum.Booking,
+                    InvoiceLine = new InvoiceLineEN{
+                        BookingId = 1,
+                        ClientInvoiceId = 1,
+                        Currency = CurrencyEnum.EUR,
+                        TotalAmount = 10
+                    }
+                }
+            };
+        }
 
         public void Add<T>(T newEntity)
         {

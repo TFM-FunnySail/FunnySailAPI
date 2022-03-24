@@ -30,7 +30,6 @@ namespace UnitTest.Steps.CP_CEN
             var applicationDbContextFake = new ApplicationDbContextFake();
             _boatInfoCAD = new BoatInfoCAD(applicationDbContextFake._dbContextFake);
             _boatInfoCEN = new BoatInfoCEN(_boatInfoCAD);
-
         }
 
         [Given(@"la información del barco está incompleta")]
@@ -39,8 +38,8 @@ namespace UnitTest.Steps.CP_CEN
             _boatInfoEN = new BoatInfoEN();
         }
 
-        [When(@"se introducen los datos incompletos")]
-        public async void WhenSeIntroducenLosDatosIncompletos()
+        [When(@"se introduce la informacion de la embarcación")]
+        public async void WhenSeIntroduceLaInformacionDeLaEmbarcacion()
         {
             try
             {
@@ -66,26 +65,23 @@ namespace UnitTest.Steps.CP_CEN
         [Given(@"un grupo de datos válidos")]
         public void GivenUnGrupoDeDatosValidos()
         {
-            _boatInfoEN = new BoatInfoEN();
-        }
-
-        [When(@"introducimos los datos")]
-        public async void WhenIntroducimosLosDatos()
-        {
-            try
+            _boatInfoEN = new BoatInfoEN
             {
-                _id = await _boatInfoCEN.AddBoatInfo(_boatInfoEN);
-            }
-            catch (DataValidationException ex)
-            {
-                _scenarioContext.Add("Ex_NotFound", ex);
-            }
+                BoatId = 1,
+                Name = "nombreBote",
+                Description = "descripcion del bote",
+                Registration = "registro de bote",
+                Length = (decimal)7.2,
+                Sleeve = (decimal)5.2,
+                Capacity = 15,
+                MotorPower = 13
+            };
         }
 
         [Then(@"el proceso se realiza correctamente y se añade la información")]
         public void ThenElProcesoSeRealizaCorrectamenteYSeAnadeLaInformacion()
         {
-            Assert.AreEqual(0, _id);
+            Assert.AreEqual(1, _id);
         }
 
     }

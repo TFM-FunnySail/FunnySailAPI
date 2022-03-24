@@ -164,7 +164,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("un punto de amarre que tiene un barco asignado 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 10
- testRunner.When("se quiera eliminar el amarre", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("se intente eliminar el amarre", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 11
  testRunner.Then("el sistema devolverá error porque habrá un barco en ese amarre", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");

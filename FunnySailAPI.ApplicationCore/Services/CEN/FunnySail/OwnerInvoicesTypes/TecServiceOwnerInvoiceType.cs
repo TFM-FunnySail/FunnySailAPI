@@ -23,8 +23,9 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.OwnerInvoicesTypes
 
         public TecServiceOwnerInvoiceType(IOwnerInvoiceCAD ownerInvoiceCAD,
                                          IOwnerInvoiceLineCAD ownerInvoiceLineCAD,
+                                         IUserCAD userCAD,
                                          ITechnicalServiceBoatCAD technicalServiceBoatCAD) : base(ownerInvoiceCAD,
-                                                                                          ownerInvoiceLineCAD)
+                                                                                          ownerInvoiceLineCAD, userCAD)
         {
             _technicalServiceBoatCAD = technicalServiceBoatCAD;
         }

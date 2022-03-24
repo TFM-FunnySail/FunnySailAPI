@@ -18,15 +18,18 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
     {
         protected readonly IOwnerInvoiceCAD _ownerInvoiceCAD;
         protected readonly IOwnerInvoiceLineCAD _ownerInvoiceLineCAD;
+        protected readonly IUserCAD _userCAD;
         private readonly string _enName;
         private readonly string _esName;
         public OwnerInvoiceCEN(IOwnerInvoiceCAD ownerInvoiceCAD,
-                               IOwnerInvoiceLineCAD ownerInvoiceLineCAD)
+                               IOwnerInvoiceLineCAD ownerInvoiceLineCAD,
+                               IUserCAD userCAD)
         {
             _ownerInvoiceCAD = ownerInvoiceCAD;
             _enName = "Owner invoice";
             _esName = "Factura de propietario";
             _ownerInvoiceLineCAD = ownerInvoiceLineCAD;
+            _userCAD = userCAD;
         }
 
         public async Task<OwnerInvoiceEN> CancelOwnerInvoice(int ownerInvoiceId)
@@ -51,6 +54,11 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
         public async Task<int> CreateOwnerInvoice(string ownerId,decimal amount,bool toCollet)
         {
+            UsersEN user = await _userCAD.FindById(ownerId);
+
+            if (user == null)
+                throw new DataValidationException("Owner", "Propietario", ExceptionTypesEnum.NotFound);
+
             OwnerInvoiceEN ownerInvoiceEN = await _ownerInvoiceCAD.AddAsync(new OwnerInvoiceEN
             {
                 Date = DateTime.UtcNow,
@@ -69,7 +77,12 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             return _ownerInvoiceLineCAD;
         }
 
-       public async Task<IList<OwnerInvoiceEN>> GetAll(OwnerInvoiceFilters filters = null,
+        public IOwnerInvoiceCAD GetOwnerInvoiceCAD()
+        {
+            return _ownerInvoiceCAD;
+        }
+
+        public async Task<IList<OwnerInvoiceEN>> GetAll(OwnerInvoiceFilters filters = null,
        Pagination pagination = null,
        Func<IQueryable<OwnerInvoiceEN>, IOrderedQueryable<OwnerInvoiceEN>> orderBy = null,
        Func<IQueryable<OwnerInvoiceEN>, IIncludableQueryable<OwnerInvoiceEN, object>> includeProperties = null)

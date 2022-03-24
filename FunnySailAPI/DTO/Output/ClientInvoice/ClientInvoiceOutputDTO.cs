@@ -2,6 +2,7 @@
 using FunnySailAPI.DTO.Output.User;
 using System;
 using System.Collections.Generic;
+using FunnySailAPI.DTO.Output.Refund;
 
 namespace FunnySailAPI.DTO.Output.ClientInvoice
 {
@@ -15,7 +16,7 @@ namespace FunnySailAPI.DTO.Output.ClientInvoice
         public string ClientId { get; set; }
         public UserOutputDTO Client { get; set; }
         public List<ClientInvoiceLinesOutputDTO> InvoiceLines { get; set; }
-        //public List<RefundOutputDTO> Refunds { get; set; }
+        public List<RefundOutputDTO> Refunds { get; set; }
 
         public ClientInvoiceOutputDTO()
         {

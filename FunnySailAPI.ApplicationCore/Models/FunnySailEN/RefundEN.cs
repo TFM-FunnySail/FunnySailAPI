@@ -12,7 +12,7 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
         [Key]
         public int Id { get; set; }
         
-         [Required, MaxLength(500)]
+        [Required, MaxLength(500)]
         public string Description { get; set; }
 
         [Column(TypeName = "money")]
@@ -20,6 +20,7 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
         public DateTime Date { get; set; }
 
         public int BookingId { get; set; }
+        public int? ClientInvoiceId { get; set; }
 
         public BookingEN Booking { get; set; }
 

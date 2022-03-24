@@ -164,7 +164,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("un barco que requiere titulación por ley y no se especifica", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 10
- testRunner.When("se quiere continuar con el proceso de registro", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("el proceso de registro del barco esté en marcha", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 11
  testRunner.Then("no se registrará el barco por falta de información", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");

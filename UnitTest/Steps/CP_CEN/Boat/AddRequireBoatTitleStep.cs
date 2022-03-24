@@ -36,7 +36,8 @@ namespace UnitTest.Steps.CP_CEN
         [Given(@"un barco que necesita una titulación para manejarlo")]
         public void GivenUnBarcoQueNecesitaUnaTitulacionParaManejarlo()
         {
-            _requiredBoatTitleEN = new RequiredBoatTitleEN {
+            _requiredBoatTitleEN = new RequiredBoatTitleEN
+            {
                 TitleId = BoatTiteEnum.Captaincy,
                 BoatId = 1
             };
@@ -68,19 +69,6 @@ namespace UnitTest.Steps.CP_CEN
             {
                 TitleId = BoatTiteEnum.Captaincy
             };
-        }
-
-        [When(@"se quiere continuar con el proceso de registro")]
-        public async void WhenSeQuiereContinuarConElProcesoDeRegistro()
-        {
-            try
-            {
-                _id = await _requiredBoatTitlesCEN.AddRequiredBoatTitle(_requiredBoatTitleEN);
-            }
-            catch (DataValidationException ex)
-            {
-                _scenarioContext.Add("Ex_NotFound", ex);
-            }
         }
 
         [Then(@"no se registrará el barco por falta de información")]

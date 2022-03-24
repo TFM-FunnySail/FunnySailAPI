@@ -50,6 +50,11 @@ namespace FunnySailAPI.ApplicationCore.Exceptions
                     esMessage = $"{esTitle} no existe.";
                     break;
 
+                case ExceptionTypesEnum.Forbidden:
+                    enMessage = $"Access denied.";
+                    esMessage = $"Acceso denegado.";
+                    break;
+
                 default: throw new NotImplementedException("Exception type not implemented");
             }
 

@@ -20,7 +20,7 @@ namespace UnitTest.Features.CP_CEN.User
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [Microsoft.VisualStudio.TestTools.UnitTesting.TestClassAttribute()]
-    public partial class CreateUserFeature
+    public partial class Create_UserFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -48,7 +48,7 @@ namespace UnitTest.Features.CP_CEN.User
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/CP_CEN/User", "createUser", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/CP_CEN/User", "create_user", null, ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -63,9 +63,9 @@ namespace UnitTest.Features.CP_CEN.User
         public virtual void TestInitialize()
         {
             if (((testRunner.FeatureContext != null) 
-                        && (testRunner.FeatureContext.FeatureInfo.Title != "createUser")))
+                        && (testRunner.FeatureContext.FeatureInfo.Title != "create_user")))
             {
-                global::UnitTest.Features.CP_CEN.User.CreateUserFeature.FeatureSetup(null);
+                global::UnitTest.Features.CP_CEN.User.Create_UserFeature.FeatureSetup(null);
             }
         }
         
@@ -91,14 +91,14 @@ namespace UnitTest.Features.CP_CEN.User
             testRunner.CollectScenarioErrors();
         }
         
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Se quiere crear un nuevo usuario y se han indicado los datos correspondientes de " +
-            "forma correcta")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "createUser")]
-        public virtual void SeQuiereCrearUnNuevoUsuarioYSeHanIndicadoLosDatosCorrespondientesDeFormaCorrecta()
+        public virtual void SeQuiereCrearUnNuevoUsuarioYSeHanIndicadoLosDatosCorrespondientesDeFormaCorrecta(string email, string nombre, string apellidos, string promocion, string[] exampleTags)
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("email", email);
+            argumentsOfScenario.Add("nombre", nombre);
+            argumentsOfScenario.Add("apellidos", apellidos);
+            argumentsOfScenario.Add("promocion", promocion);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Se quiere crear un nuevo usuario y se han indicado los datos correspondientes de " +
                     "forma correcta", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 3
@@ -122,57 +122,80 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 4
- testRunner.Given("los datos de un nuevo usuario correctos", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given(string.Format("un usuario con datos {0},{1},{2},{3}", email, nombre, apellidos, promocion), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 5
  testRunner.When("se invoca la función de registro", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 6
- testRunner.Then("se notifica al usuario el éxito con un email", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("se crea un usuario con los mismos datos", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("El usuario que quiere registrarse no ha indicado correctamente su información")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "createUser")]
-        public virtual void ElUsuarioQueQuiereRegistrarseNoHaIndicadoCorrectamenteSuInformacion()
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Se quiere crear un nuevo usuario y se han indicado los datos correspondientes de " +
+            "forma correcta: orla@gmail.com")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "create_user")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "orla@gmail.com")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:email", "orla@gmail.com")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:nombre", "Orlando")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:apellidos", "Marques")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:promocion", "si")]
+        public virtual void SeQuiereCrearUnNuevoUsuarioYSeHanIndicadoLosDatosCorrespondientesDeFormaCorrecta_OrlaGmail_Com()
         {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("El usuario que quiere registrarse no ha indicado correctamente su información", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 8
-this.ScenarioInitialize(scenarioInfo);
+#line 3
+this.SeQuiereCrearUnNuevoUsuarioYSeHanIndicadoLosDatosCorrespondientesDeFormaCorrecta("orla@gmail.com", "Orlando", "Marques", "si", ((string[])(null)));
 #line hidden
-            bool isScenarioIgnored = default(bool);
-            bool isFeatureIgnored = default(bool);
-            if ((tagsOfScenario != null))
-            {
-                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((this._featureTags != null))
-            {
-                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((isScenarioIgnored || isFeatureIgnored))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 9
- testRunner.Given("unos datos incorrectos de registro de usuario", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Se quiere crear un nuevo usuario y se han indicado los datos correspondientes de " +
+            "forma correcta: andre@gmail.com")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "create_user")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "andre@gmail.com")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:email", "andre@gmail.com")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:nombre", "Andres")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:apellidos", "Rojas")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:promocion", "no")]
+        public virtual void SeQuiereCrearUnNuevoUsuarioYSeHanIndicadoLosDatosCorrespondientesDeFormaCorrecta_AndreGmail_Com()
+        {
+#line 3
+this.SeQuiereCrearUnNuevoUsuarioYSeHanIndicadoLosDatosCorrespondientesDeFormaCorrecta("andre@gmail.com", "Andres", "Rojas", "no", ((string[])(null)));
 #line hidden
-#line 10
- testRunner.When("se invoca la función de registro", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Se quiere crear un nuevo usuario y se han indicado los datos correspondientes de " +
+            "forma correcta: nino@yahoo.com")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "create_user")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "nino@yahoo.com")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:email", "nino@yahoo.com")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:nombre", "Nino")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:apellidos", "Ballester")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:promocion", "si")]
+        public virtual void SeQuiereCrearUnNuevoUsuarioYSeHanIndicadoLosDatosCorrespondientesDeFormaCorrecta_NinoYahoo_Com()
+        {
+#line 3
+this.SeQuiereCrearUnNuevoUsuarioYSeHanIndicadoLosDatosCorrespondientesDeFormaCorrecta("nino@yahoo.com", "Nino", "Ballester", "si", ((string[])(null)));
 #line hidden
-#line 11
- testRunner.Then("no se permite continuar hasta solventar los fallos", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Se quiere crear un nuevo usuario y se han indicado los datos correspondientes de " +
+            "forma correcta: diego@gmail.com")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "create_user")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "diego@gmail.com")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:email", "diego@gmail.com")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:nombre", "Diego")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:apellidos", "Juarez")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:promocion", "no")]
+        public virtual void SeQuiereCrearUnNuevoUsuarioYSeHanIndicadoLosDatosCorrespondientesDeFormaCorrecta_DiegoGmail_Com()
+        {
+#line 3
+this.SeQuiereCrearUnNuevoUsuarioYSeHanIndicadoLosDatosCorrespondientesDeFormaCorrecta("diego@gmail.com", "Diego", "Juarez", "no", ((string[])(null)));
 #line hidden
-            }
-            this.ScenarioCleanup();
         }
     }
 }

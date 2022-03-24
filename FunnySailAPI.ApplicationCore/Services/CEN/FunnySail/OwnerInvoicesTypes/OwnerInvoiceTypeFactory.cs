@@ -13,14 +13,16 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.OwnerInvoicesTypes
         private readonly IOwnerInvoiceCAD _ownerInvoiceCAD;
         private readonly IOwnerInvoiceLineCAD _ownerInvoiceLineCAD;
         private readonly ITechnicalServiceBoatCAD _technicalServiceBoatCAD;
-
+        private readonly IUserCAD _userCAD;
         public OwnerInvoiceTypeFactory(IOwnerInvoiceCAD ownerInvoiceCAD,
                                        IOwnerInvoiceLineCAD ownerInvoiceLineCAD,
+                                       IUserCAD userCAD,
                                        ITechnicalServiceBoatCAD technicalServiceBoatCAD)
         {
             _ownerInvoiceCAD = ownerInvoiceCAD;
             _ownerInvoiceLineCAD = ownerInvoiceLineCAD;
             _technicalServiceBoatCAD = technicalServiceBoatCAD;
+            _userCAD = userCAD;
         }
 
         public IOwnerInvoiceTypes GetOwnerInvoiceType(OwnerInvoicesEnum type)
@@ -28,10 +30,10 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.OwnerInvoicesTypes
             switch (type)
             {
                 case OwnerInvoicesEnum.Booking:
-                    return new BookingOwnerInvoiceType(_ownerInvoiceCAD, _ownerInvoiceLineCAD);
+                    return new BookingOwnerInvoiceType(_ownerInvoiceCAD, _ownerInvoiceLineCAD, _userCAD);
 
                 case OwnerInvoicesEnum.TechnicalService:
-                    return new TecServiceOwnerInvoiceType(_ownerInvoiceCAD, _ownerInvoiceLineCAD, _technicalServiceBoatCAD);
+                    return new TecServiceOwnerInvoiceType(_ownerInvoiceCAD, _ownerInvoiceLineCAD, _userCAD, _technicalServiceBoatCAD);
             }
 
             throw new NotImplementedException();

@@ -25,31 +25,17 @@ namespace FunnySailAPI.Assemblers
                 OwnerId = ownerInvoiceEN.OwnerId,
             };
 
-            if(ownerInvoiceEN.Owner != null)
-            {
-                ownerInvoiceOutput.Owner = new UserOutputDTO
-                {
-                    UserId = ownerInvoiceEN.Owner.UserId,
-                    BirthDay = ownerInvoiceEN.Owner.BirthDay,
-                    BoatOwner = ownerInvoiceEN.Owner.BoatOwner,
-                    FirstName = ownerInvoiceEN.Owner.FirstName,
-                    LastName = ownerInvoiceEN.Owner.LastName,
-                    ReceivePromotion = ownerInvoiceEN.Owner.ReceivePromotion,
-                    EmailConfirmed = ownerInvoiceEN.Owner.ApplicationUser.EmailConfirmed,
-                    Email = ownerInvoiceEN.Owner.ApplicationUser.Email,
-                    PhoneNumber = ownerInvoiceEN.Owner.ApplicationUser.PhoneNumber,
-                    UserName = ownerInvoiceEN.Owner.ApplicationUser.UserName,
-                };
-            }
+            if (ownerInvoiceEN.Owner != null)
+                ownerInvoiceOutput.Owner = UserAssemblers.Convert(ownerInvoiceEN.Owner);
 
             if (ownerInvoiceEN.OwnerInvoiceLines != null)
             {
                 ownerInvoiceOutput.OwnerInvoiceLines = ownerInvoiceEN.OwnerInvoiceLines.Select(x => new OwnerInvoiceLinesOutputDTO
                 {
-                   BookingId = x.BookingId,
-                   OwnerInvoiceId = x.OwnerInvoiceId,
-                   Price = x.Price,
-                   OwnerId = x.OwnerId,
+                    BookingId = x.BookingId,
+                    OwnerInvoiceId = x.OwnerInvoiceId,
+                    Price = x.Price,
+                    OwnerId = x.OwnerId,
                 }).ToList();
             }
 
