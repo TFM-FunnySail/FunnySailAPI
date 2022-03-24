@@ -125,6 +125,14 @@ namespace UnitTest.FakeFactories
                     LastName = "Merten",
                     FirstName = "Pedro",
                     ReceivePromotion = true
+                },
+                new UsersEN
+                {
+                    UserId = "2",
+                    BoatOwner = false,
+                    LastName = "Quiez",
+                    FirstName = "Rodri",
+                    ReceivePromotion = false
                 }
             };
         }
