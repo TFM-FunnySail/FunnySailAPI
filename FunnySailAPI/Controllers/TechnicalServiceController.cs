@@ -42,8 +42,7 @@ namespace FunnySailAPI.Controllers
 
                 var technicalServices = (await _unitOfWork.TechnicalServiceCEN.GetAll(
                     filters: filters,
-                    pagination: pagination ?? new Pagination(),
-                    includeProperties: source => source.Include(x => x.TechnicalServicesBoat)
+                    pagination: pagination ?? new Pagination()
                     ))
                     .Select(x => TechnicalServiceAssembler.Convert(x));
 
@@ -85,19 +84,14 @@ namespace FunnySailAPI.Controllers
             }
         }
 
-        //POST: api/TechnicalService/Schedule(?)
-        [HttpPost]
+        //POST: api/TechnicalService/Schedule
+        [HttpPost("schedule")]
         public async Task<ActionResult<TechnicalServiceOutputDTO>> ScheduleTechnicalServiceBoatController(ScheduleTechnicalServiceDTO scheduleTechnicalService)
         {
             try
             {
                 int id = await _unitOfWork.TechnicalServiceCP.ScheduleTechnicalServiceToBoat(scheduleTechnicalService);
-                //if (!ModelState.IsValid)
-                //    return BadRequest();
-
-                //await _unitOfWork.OwnerInvoiceCEN.CancelOwnerInvoice(id);
-
-                //return NoContent();
+                
                 return NoContent();
             }
             catch (DataValidationException dataValidation)
@@ -116,12 +110,14 @@ namespace FunnySailAPI.Controllers
         // PUT: api/TechnicalService/5/cancel
         [CustomAuthorize(UserRolesConstant.ADMIN)]
         [HttpPut("{id}/cancel")]
-        public async Task<IActionResult> PutTechnicalService(UpdateTechnicalServiceDTO technicalService)
+        public async Task<IActionResult> PutTechnicalService(int id,UpdateTechnicalServiceDTO technicalService)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest();
+
+                technicalService.Id = id;
 
                 await _unitOfWork.TechnicalServiceCEN.UpdateTechnicalService(technicalService);
 
