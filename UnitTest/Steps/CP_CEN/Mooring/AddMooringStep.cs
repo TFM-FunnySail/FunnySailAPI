@@ -80,7 +80,7 @@ namespace UnitTest.Steps.CP_CEN
             Assert.AreEqual("Port Id cant be small than 0", ex.EnMessage);
         }
 
-        [Given(@"el amarre tiene como id (.) y tipo (.)")]
+        [Given(@"el amarre tiene como id (.) y tipo (.*)")]
         public async void GivenElAmarreTieneComoIdYTipoSmall(int p0, MooringEnum type)
         {
             _id = p0;
