@@ -79,8 +79,8 @@ namespace UnitTest.Steps.CP_CEN.User
                 ReceivePromotion = _promotion
             });
             _applicationUserCreated = user;
-            var query = _userCEN.GetUserCAD().GetIQueryable();
-            _userCreated = query.FirstOrDefault(x => x.UserId == user.Id);
+
+            _userCreated = await _userCEN.GetUserCAD().FindById(user.Id);
         }
 
         [Then(@"se crea un usuario con los mismos datos")]
