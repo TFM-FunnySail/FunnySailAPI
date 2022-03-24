@@ -17,13 +17,11 @@ namespace UnitTest.FakeFactories
         public SignInManagerMock()
         {
             var userManager = new UserManagerMock();
-
-            singInManager = new Mock<SignInManager<ApplicationUser>>(userManager.userManager,
-                 new Mock<IHttpContextAccessor>().Object,
-                 new Mock<IUserClaimsPrincipalFactory<ApplicationUser>>().Object,
-                 new Mock<IOptions<IdentityOptions>>().Object,
-                 new Mock<ILogger<SignInManager<ApplicationUser>>>().Object,
-                 new Mock<IAuthenticationSchemeProvider>().Object);
+            var _contextAccessor = new Mock<IHttpContextAccessor>();
+            var _userPrincipalFactory = new Mock<IUserClaimsPrincipalFactory<ApplicationUser>>();
+            singInManager = new Mock<SignInManager<ApplicationUser>>(userManager.userManager.Object,
+                 _contextAccessor.Object, _userPrincipalFactory.Object,
+                 null,null,null,null);
         }
 
         public void SetupForLoginPassSuccess()

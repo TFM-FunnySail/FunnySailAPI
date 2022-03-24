@@ -38,5 +38,13 @@ namespace UnitTest.FakeFactories
             userManager.Setup(x => x.UpdateAsync(It.IsAny<ApplicationUser>()))
                 .ReturnsAsync(IdentityResult.Success);
         }
+
+        public void SetupForFindByEmail()
+        {
+            userManager.Setup(x => x.FindByEmailAsync(It.IsAny<string>()))
+                .ReturnsAsync((string email)=> {
+                    return new ApplicationUser { Email = email };
+                });
+        }
     }
 }
