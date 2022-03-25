@@ -147,14 +147,14 @@ namespace FunnySailAPI.Controllers
 
         [CustomAuthorize(UserRolesConstant.ADMIN)]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMooringEN(int idMooring)
+        public async Task<IActionResult> DeleteMooringEN(int id)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest();
          
-                await _unitOfWork.MooringCEN.DeleteMooring(idMooring);
+                await _unitOfWork.MooringCEN.DeleteMooring(id);
 
                 return NoContent();
             }

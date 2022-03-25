@@ -90,9 +90,9 @@ namespace FunnySailAPI.Controllers
         {
             try
             {
-                await _unitOfWork.TechnicalServiceCEN.AddTechnicalService(price, description);
+                int id = await _unitOfWork.TechnicalServiceCEN.AddTechnicalService(price, description);
 
-                return NoContent();
+                return CreatedAtAction("GetTechnicalService", new { id = id });
             }
             catch (DataValidationException dataValidation)
             {
@@ -161,14 +161,14 @@ namespace FunnySailAPI.Controllers
 
         [CustomAuthorize(UserRolesConstant.ADMIN)]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTechnicalService(int idTechnicalService)
+        public async Task<IActionResult> DeleteTechnicalService(int id)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest();
 
-                await _unitOfWork.TechnicalServiceCEN.DeleteService(idTechnicalService);
+                await _unitOfWork.TechnicalServiceCEN.DeleteService(id);
 
                 return NoContent();
             }
