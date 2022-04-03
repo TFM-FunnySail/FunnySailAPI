@@ -135,5 +135,32 @@ namespace FunnySailAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
             }
         }
+
+        // Put: api/Ports/5
+        [CustomAuthorize(UserRolesConstant.ADMIN)]
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<PortOutputDTO>> DeletePort(int id)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                await _unitOfWork.PortCEN.DeletePort(id);
+
+                return NoContent();
+            }
+            catch (DataValidationException dataValidation)
+            {
+                if (dataValidation.ExceptionType == ExceptionTypesEnum.NotFound)
+                    return NotFound();
+
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, new ErrorResponseDTO(dataValidation));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
     }
 }
