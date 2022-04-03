@@ -1,4 +1,6 @@
 ﻿using FunnySailAPI.ApplicationCore.Constants;
+using FunnySailAPI.ApplicationCore.Interfaces;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input.User;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
 using Microsoft.AspNetCore.Identity;
@@ -16,14 +18,17 @@ namespace FunnySailAPI.Infrastructure.Initialize
         private readonly ApplicationDbContext _dbContext;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IUnitOfWork _unitOfWork;
 
         public InitializeDB(ApplicationDbContext dbContext,
             UserManager<ApplicationUser> userManager,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            IUnitOfWork unitOfWork)
         {
             _dbContext = dbContext;
             _userManager = userManager;
             _roleManager = roleManager;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task Initialize()
@@ -41,14 +46,18 @@ namespace FunnySailAPI.Infrastructure.Initialize
                 await _roleManager.CreateAsync(new IdentityRole(UserRolesConstant.ADMIN));
                 await _roleManager.CreateAsync(new IdentityRole(UserRolesConstant.BOAT_OWNER));
 
-                IdentityResult identityResult = await _userManager.CreateAsync(new ApplicationUser
+                //Crear usuarios
+                (IdentityResult result, ApplicationUser user) = await _unitOfWork.UserCP.CreateUser(new AddUserInputDTO
                 {
-                    UserName = "admin",
-                    Email = "admin@funnysail.com",
-                    NormalizedUserName = "ADMIN"
-                }, "Admin1234*");
-
-                var user = await _userManager.FindByNameAsync("admin");
+                    Email = "admin1@funnysail.com",
+                    ConfirmPassword = "Admin1**23*er",
+                    FirstName = "Admin",
+                    LastName = "Admin Last Name",
+                    Password = "Admin1**23*er",
+                    PhoneNumber = "5555555"
+                });
+                user.EmailConfirmed = true;
+                await _dbContext.SaveChangesAsync();
                 await _userManager.AddToRoleAsync(user, UserRolesConstant.ADMIN);
             }
             catch (Exception)
