@@ -4,6 +4,7 @@ using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail;
+using FunnySailAPI.ApplicationCore.Interfaces.InfrastructureServices;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
 using FunnySailAPI.ApplicationCore.Services;
@@ -15,6 +16,7 @@ using FunnySailAPI.Infrastructure;
 using FunnySailAPI.Infrastructure.CAD;
 using FunnySailAPI.Infrastructure.CAD.FunnySail;
 using FunnySailAPI.Infrastructure.Initialize;
+using FunnySailAPI.Infrastructure.Services;
 using FunnySailAPI.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -138,6 +140,7 @@ namespace FunnySailAPI
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IRequestUtilityService, RequestUtilityService>();
+            services.AddScoped<IEmailService, EmailService>();
             #endregion
 
             services.AddSwaggerGen(c =>
