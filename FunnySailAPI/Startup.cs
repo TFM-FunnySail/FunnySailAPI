@@ -4,7 +4,6 @@ using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail;
-using FunnySailAPI.ApplicationCore.Interfaces.InfrastructureServices;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
 using FunnySailAPI.ApplicationCore.Services;
@@ -16,7 +15,6 @@ using FunnySailAPI.Infrastructure;
 using FunnySailAPI.Infrastructure.CAD;
 using FunnySailAPI.Infrastructure.CAD.FunnySail;
 using FunnySailAPI.Infrastructure.Initialize;
-using FunnySailAPI.Infrastructure.Services;
 using FunnySailAPI.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -51,7 +49,7 @@ namespace FunnySailAPI
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             
@@ -140,7 +138,6 @@ namespace FunnySailAPI
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IRequestUtilityService, RequestUtilityService>();
-            services.AddScoped<IEmailService, EmailService>();
             #endregion
 
             services.AddSwaggerGen(c =>
@@ -191,7 +188,7 @@ namespace FunnySailAPI
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "FunnySail API V1");
-                c.DefaultModelsExpandDepth(-1);
+                //c.DefaultModelsExpandDepth(-1);
                 // To serve SwaggerUI at application's root page, set the RoutePrefix property to an empty string.
                 c.RoutePrefix = "swagger";
             });

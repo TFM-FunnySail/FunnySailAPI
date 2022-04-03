@@ -20,6 +20,10 @@ using FunnySailAPI.Helpers;
 using FunnySailAPI.ApplicationCore.Constants;
 using Microsoft.AspNetCore.Identity;
 using FunnySailAPI.ApplicationCore.Helpers;
+using Microsoft.AspNetCore.WebUtilities;
+using System.Text;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using System.Text.Encodings.Web;
 
 namespace FunnySailAPI.Controllers
 {
@@ -28,13 +32,16 @@ namespace FunnySailAPI.Controllers
     public class UsersController : BaseController
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IEmailSender _emailSender;
         private readonly IRequestUtilityService _requestUtilityService;
 
         public UsersController(IUnitOfWork unitOfWork,
-                               IRequestUtilityService requestUtilityService)
+                               IRequestUtilityService requestUtilityService,
+                               IEmailSender emailSender)
         {
             _unitOfWork = unitOfWork;
             _requestUtilityService = requestUtilityService;
+            _emailSender = emailSender;
         }
 
         // GET: api/Users
@@ -134,7 +141,7 @@ namespace FunnySailAPI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<UsersEN>> PostUsersEN(AddUserInputDTO addUserInput)
+        public async Task<ActionResult<UserOutputDTO>> PostUsersEN(AddUserInputDTO addUserInput)
         {
             try
             {
@@ -148,6 +155,18 @@ namespace FunnySailAPI.Controllers
                     return StatusCode(StatusCodes.Status500InternalServerError,
                         new ErrorResponseDTO("User could not be created", 
                         "El usuario no pudo ser creado"));
+
+                var code = await _unitOfWork.UserManager.GenerateEmailConfirmationTokenAsync(user);
+                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+
+                var callbackUrl = Url.Page(
+                    "/Account/ConfirmEmail",
+                    pageHandler: null,
+                    values: new { area = "Identity", userId = user.Id, code = code },
+                    protocol: Request.Scheme);
+
+                await _emailSender.SendEmailAsync(user.Email, "Confirm your email",
+                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                 return CreatedAtAction("GetUsersEN", new { id = user.Id });
             }

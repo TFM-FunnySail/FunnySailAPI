@@ -122,7 +122,7 @@ namespace FunnySailAPI.Controllers
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [CustomAuthorize]
         [HttpPost]
-        public async Task<ActionResult<ServiceEN>> PostServices(AddServiceDTO serviceInput)
+        public async Task<ActionResult<ServiceOutputDTO>> PostServices(AddServiceDTO serviceInput)
         {
             try
             {
