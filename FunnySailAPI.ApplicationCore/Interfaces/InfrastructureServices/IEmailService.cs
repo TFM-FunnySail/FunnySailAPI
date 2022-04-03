@@ -6,5 +6,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.InfrastructureServices
 {
     public interface IEmailService
     {
+        bool SendEmail(string userEmail, string subject, string body);
     }
 }

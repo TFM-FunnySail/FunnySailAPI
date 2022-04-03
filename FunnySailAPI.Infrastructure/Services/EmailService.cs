@@ -24,13 +24,14 @@ namespace FunnySailAPI.Infrastructure.Services
             mailMessage.Body = body;
 
             SmtpClient client = new SmtpClient();
-            client.Credentials = new System.Net.NetworkCredential("care@yogihosting.com", "yourpassword");
+            client.UseDefaultCredentials = true;
+            //client.Credentials = new System.Net.NetworkCredential("care@yogihosting.com", "yourpassword");
             client.Host = "smtpout.secureserver.net";
             client.Port = 80;
 
             try
             {
-                client.Send(mailMessage);
+                client.SendMailAsync(mailMessage);
                 return true;
             }
             catch (Exception ex)
