@@ -32,7 +32,7 @@ namespace UnitTest.FakeFactories
                 .ReturnsAsync( new AuthRefreshToken());
             
             authRefreshToken.Setup(x => x.GenerateJwtToken(It.IsAny<ApplicationUser>()))
-                .Returns("ssdsdsd");
+                .Returns(("ssdsdsd", new DateTime()));
         }
     }
 }
