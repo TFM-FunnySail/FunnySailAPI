@@ -45,7 +45,8 @@ namespace FunnySailAPI.ApplicationCore.Services
         }
 
         public async Task<AuthenticateResponseDTO> LoginUser(LoginUserInputDTO loginUserInput,
-                                                             string ipAddress)
+                                                             string ipAddress,
+                                                             bool toAdmin = false)
         {
             SignInResult result = await _signInManager.PasswordSignInAsync(loginUserInput.Email, loginUserInput.Password, true, lockoutOnFailure: false);
             if (!result.Succeeded)
@@ -53,6 +54,12 @@ namespace FunnySailAPI.ApplicationCore.Services
                     "Usuario o contraseña inválida.");
 
             ApplicationUser user = await _userManager.FindByEmailAsync(loginUserInput.Email);
+
+            if(!await _userManager.IsInRoleAsync(user, UserRolesConstant.ADMIN))
+            {
+                throw new DataValidationException("Denied access.",
+                    "Acceso denegado.");
+            }
 
             string jwtToken = _authRefreshTokenCEN.GenerateJwtToken(user);
 

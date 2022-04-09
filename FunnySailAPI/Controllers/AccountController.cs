@@ -49,6 +49,28 @@ namespace FunnySailAPI.Controllers
             }
         }
 
+        [HttpPost("admin/login")]
+        public async Task<ActionResult<AuthenticateResponseDTO>> AdminLogin(LoginUserInputDTO loginUserInput)
+        {
+            try
+            {
+                AuthenticateResponseDTO response = await _accountService.LoginUser(loginUserInput,
+                    _requestUtilityService.ipAddress(Request, HttpContext),true);
+                setTokenCookie(response.RefreshToken);
+                return Ok(response);
+            }
+            catch (DataValidationException dataValidation)
+            {
+                return StatusCode(StatusCodes.Status422UnprocessableEntity,
+                    new ErrorResponseDTO(dataValidation));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    new ErrorResponseDTO(ex));
+            }
+        }
+
         [HttpPost("refresh-token")]
         public async Task<ActionResult<AuthenticateResponseDTO>> RefreshToken()
         {
