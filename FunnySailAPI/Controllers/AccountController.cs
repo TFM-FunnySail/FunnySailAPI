@@ -1,5 +1,6 @@
 ﻿using FunnySailAPI.ApplicationCore.Constants;
 using FunnySailAPI.ApplicationCore.Exceptions;
+using FunnySailAPI.ApplicationCore.Extensions;
 using FunnySailAPI.ApplicationCore.Interfaces;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input.Account;
 using FunnySailAPI.ApplicationCore.Models.DTO.Output.Account;
@@ -34,7 +35,7 @@ namespace FunnySailAPI.Controllers
             {
                 AuthenticateResponseDTO response = await _accountService.LoginUser(loginUserInput,
                     _requestUtilityService.ipAddress(Request, HttpContext));
-                setTokenCookie(response.RefreshToken);
+                setTokenCookie(response);
                 return Ok(response);
             }
             catch (DataValidationException dataValidation)
@@ -56,7 +57,7 @@ namespace FunnySailAPI.Controllers
             {
                 AuthenticateResponseDTO response = await _accountService.LoginUser(loginUserInput,
                     _requestUtilityService.ipAddress(Request, HttpContext),true);
-                setTokenCookie(response.RefreshToken);
+                setTokenCookie(response);
                 return Ok(response);
             }
             catch (DataValidationException dataValidation)
@@ -79,7 +80,8 @@ namespace FunnySailAPI.Controllers
                 var refreshToken = Request.Cookies["refreshToken"];
                 AuthenticateResponseDTO response = await _accountService.RefreshToken(refreshToken,
                     _requestUtilityService.ipAddress(Request, HttpContext));
-                setTokenCookie(response.RefreshToken);
+                setTokenCookie(response);
+                
                 return Ok(response);
             }
             catch (DataValidationException dataValidation)
@@ -126,14 +128,16 @@ namespace FunnySailAPI.Controllers
             }
         }
 
-        private void setTokenCookie(string token)
+        private void setTokenCookie(AuthenticateResponseDTO response)
         {
             var cookieOptions = new CookieOptions
             {
                 HttpOnly = true,
                 Expires = DateTime.UtcNow.AddDays(TokenInfoConstant.refreshTokenExpiresInDays)
             };
-            Response.Cookies.Append("refreshToken", token, cookieOptions);
+            Response.Cookies.Append("refreshToken", response.JwtToken, cookieOptions);
+            var expires = (DateTimeOffset)cookieOptions.Expires;
+            response.RefreshTokenExpiresIn = expires.ToUnixLongTimeStamp();
         }
     }
 }

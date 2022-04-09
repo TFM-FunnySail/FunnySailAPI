@@ -1,5 +1,6 @@
 ﻿using FunnySailAPI.ApplicationCore.Constants;
 using FunnySailAPI.ApplicationCore.Exceptions;
+using FunnySailAPI.ApplicationCore.Extensions;
 using FunnySailAPI.ApplicationCore.Interfaces;
 using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN;
@@ -61,7 +62,7 @@ namespace FunnySailAPI.ApplicationCore.Services
                     "Acceso denegado.");
             }
 
-            string jwtToken = _authRefreshTokenCEN.GenerateJwtToken(user);
+            (string jwtToken,DateTime expires) = _authRefreshTokenCEN.GenerateJwtToken(user);
 
             AuthRefreshToken refreshToken = await _authRefreshTokenCEN.
                 GenerateRefreshTokens(user,ipAddress,null);
@@ -74,8 +75,7 @@ namespace FunnySailAPI.ApplicationCore.Services
                 JwtToken = jwtToken,
                 RefreshToken = refreshToken.Token,
                 Created = refreshToken.Created,
-                JwtTokenExpiresIn = TokenInfoConstant.tokenExpiresInSeconds,
-                RefreshTokenExpiresIn = TokenInfoConstant.refreshTokenExpiresInSeconds
+                JwtTokenExpiresIn = expires.ToUnixLongTimeStamp(),
             };
         }
 
@@ -87,7 +87,7 @@ namespace FunnySailAPI.ApplicationCore.Services
             var newRefreshToken = await _authRefreshTokenCEN.GenerateRefreshTokens(user,ipAddress, refreshToken);
 
             // generate new jwt
-            string jwtToken = _authRefreshTokenCEN.GenerateJwtToken(user);
+            (string jwtToken,DateTime expires) = _authRefreshTokenCEN.GenerateJwtToken(user);
 
             return new AuthenticateResponseDTO
             {
@@ -96,7 +96,8 @@ namespace FunnySailAPI.ApplicationCore.Services
                 IsVerified = user.EmailConfirmed,
                 JwtToken = jwtToken,
                 RefreshToken = newRefreshToken.Token,
-                Created = newRefreshToken.Created
+                Created = newRefreshToken.Created,
+                JwtTokenExpiresIn = expires.ToUnixLongTimeStamp(),
             };
         }
 

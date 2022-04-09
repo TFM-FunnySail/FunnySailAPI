@@ -87,7 +87,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             await _authRefreshTokenCAD.Update(refreshToken);
         }
 
-        public string GenerateJwtToken(ApplicationUser user)
+        public (string,DateTime) GenerateJwtToken(ApplicationUser user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
@@ -98,7 +98,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+            return (tokenHandler.WriteToken(token), (DateTime)tokenDescriptor.Expires);
         }
     }
 }
