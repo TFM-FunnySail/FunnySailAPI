@@ -1,4 +1,5 @@
-﻿using FunnySailAPI.ApplicationCore.Exceptions;
+﻿using FunnySailAPI.ApplicationCore.Constants;
+using FunnySailAPI.ApplicationCore.Exceptions;
 using FunnySailAPI.ApplicationCore.Interfaces;
 using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN;
@@ -65,7 +66,9 @@ namespace FunnySailAPI.ApplicationCore.Services
                 IsVerified = user.EmailConfirmed,
                 JwtToken = jwtToken,
                 RefreshToken = refreshToken.Token,
-                Created = refreshToken.Created
+                Created = refreshToken.Created,
+                JwtTokenExpiresIn = TokenInfoConstant.tokenExpiresInSeconds,
+                RefreshTokenExpiresIn = TokenInfoConstant.refreshTokenExpiresInSeconds
             };
         }
 

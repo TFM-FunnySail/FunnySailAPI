@@ -13,6 +13,8 @@ namespace FunnySailAPI.ApplicationCore.Models.DTO.Output.Account
         public DateTime? Updated { get; set; }
         public bool IsVerified { get; set; }
         public string JwtToken { get; set; }
+        public int JwtTokenExpiresIn { get; set; }
+        public int RefreshTokenExpiresIn { get; set; }
 
         [JsonIgnore] // refresh token is returned in http only cookie
         public string RefreshToken { get; set; }

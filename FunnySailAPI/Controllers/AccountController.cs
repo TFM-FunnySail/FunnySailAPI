@@ -109,7 +109,7 @@ namespace FunnySailAPI.Controllers
             var cookieOptions = new CookieOptions
             {
                 HttpOnly = true,
-                Expires = DateTime.UtcNow.AddDays(7)
+                Expires = DateTime.UtcNow.AddDays(TokenInfoConstant.refreshTokenExpiresInDays)
             };
             Response.Cookies.Append("refreshToken", token, cookieOptions);
         }
