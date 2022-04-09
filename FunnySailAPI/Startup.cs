@@ -140,6 +140,16 @@ namespace FunnySailAPI
             services.AddScoped<IRequestUtilityService, RequestUtilityService>();
             #endregion
 
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(policy =>
+                                  {
+                                      policy.AllowAnyOrigin()
+                                      .AllowAnyHeader()
+                                      .AllowAnyMethod();
+                                  });
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -199,6 +209,8 @@ namespace FunnySailAPI
             app.UseRouting();
 
             initializeDB.Initialize();
+
+            app.UseCors();
 
             app.UseAuthentication();
             app.UseAuthorization();
