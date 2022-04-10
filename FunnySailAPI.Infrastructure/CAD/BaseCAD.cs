@@ -36,6 +36,7 @@ namespace FunnySailAPI.Infrastructure.CAD
         public virtual async Task<List<T>> GetAll(Pagination pagination)
         {
             DbSet<T> dbSet = _dbContext.Set<T>();
+            AjustOffsetByPage(pagination);
             return await dbSet.Skip(pagination.Offset).Take(pagination.Limit).ToListAsync();
         }
 
@@ -79,6 +80,7 @@ namespace FunnySailAPI.Infrastructure.CAD
 
         public async Task<List<T>> GetAll(IQueryable<T> query, Pagination pagination)
         {
+            AjustOffsetByPage(pagination);
             return await query.Skip(pagination.Offset).Take(pagination.Limit).ToListAsync();
         }
 
@@ -94,6 +96,7 @@ namespace FunnySailAPI.Infrastructure.CAD
             Func<IQueryable<T>, IIncludableQueryable<T, object>> includeProperties = null,
             Pagination pagination = null)
         {
+            
             if (includeProperties != null)
             {
                 query = includeProperties(query);
@@ -105,9 +108,21 @@ namespace FunnySailAPI.Infrastructure.CAD
             }
 
             if (pagination != null)
+            {
+                AjustOffsetByPage(pagination);
+
                 return await query.Skip(pagination.Offset).Take(pagination.Limit).ToListAsync();
+            }
             else
                 return await query.ToListAsync();
+        }
+
+        private static void AjustOffsetByPage(Pagination pagination)
+        {
+            if (pagination.Page > 0)
+            {
+                pagination.Offset = (pagination.Page - 1) * pagination.Limit;
+            }
         }
     }
 }
