@@ -2,6 +2,7 @@
 using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.Filters;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,10 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
 
             if (filters.UserId != null)
                 query = query.Where(x => x.UserId == filters.UserId);
+
+            if (filters.Email != null)
+                query = query.Include(x=>x.ApplicationUser)
+                    .Where(x => x.ApplicationUser.Email == filters.Email);
 
             if (filters.ReceivePromotion != null)
                 query = query.Where(x => x.ReceivePromotion == filters.ReceivePromotion);

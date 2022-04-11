@@ -173,7 +173,7 @@ namespace FunnySailAPI.Controllers
         }
 
         // PUT: api/Activities/5/activate 
-       
+        [CustomAuthorize(UserRolesConstant.ADMIN)]
         [HttpPut("{id}/activate")]
         public async Task<IActionResult> PutActiveActivity(int id)
         {
@@ -197,7 +197,7 @@ namespace FunnySailAPI.Controllers
         }
 
         // PUT: api/Activities/5/deactivate 
-     
+        [CustomAuthorize(UserRolesConstant.ADMIN)]
         [HttpPut("{id}/deactivate")]
         public async Task<IActionResult> PutDisapproveBoat(int id)
         {
