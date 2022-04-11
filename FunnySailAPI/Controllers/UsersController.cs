@@ -80,15 +80,18 @@ namespace FunnySailAPI.Controllers
                 }, filters: new UsersFilters
                 {
                     UserId = id
-                }, includeProperties: source => source.Include(x => x.ApplicationUser));
-
-                var user = users.Select(x => UserAssemblers.Convert(x)).FirstOrDefault();
+                }, includeProperties: source => source.Include(x => x.ApplicationUser)
+                                                      .Include(x=>x.Bookings));
+                var user = users.FirstOrDefault();
                 if (user == null)
                 {
                     return NotFound();
                 }
 
-                return user;
+                var roles = await _unitOfWork.UserManager.GetRolesAsync(user.ApplicationUser);
+                var userOutput = UserAssemblers.Convert(user, roles);
+
+                return userOutput;
             }
             catch (Exception ex)
             {

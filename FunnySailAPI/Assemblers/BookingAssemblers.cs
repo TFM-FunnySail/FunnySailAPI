@@ -22,7 +22,7 @@ namespace FunnySailAPI.Assemblers
                 RequestCaptain = booking.RequestCaptain
             };
 
-            if (booking.ClientId != null)
+            if (booking.Client != null)
                 bookingOutputDTO.client = UserAssemblers.Convert(booking.Client);
 
             if (booking.ActivityBookings != null)

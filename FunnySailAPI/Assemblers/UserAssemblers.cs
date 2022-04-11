@@ -1,4 +1,5 @@
 ﻿using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
+using FunnySailAPI.DTO.Output.Booking;
 using FunnySailAPI.DTO.Output.User;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace FunnySailAPI.Assemblers
 {
     public static class UserAssemblers
     {
-        internal static UserOutputDTO Convert(UsersEN userEN)
+        internal static UserOutputDTO Convert(UsersEN userEN, IList<string> roles = null)
         {
             UserOutputDTO user = new UserOutputDTO
             {
@@ -19,6 +20,7 @@ namespace FunnySailAPI.Assemblers
                 FirstName = userEN.FirstName,
                 LastName = userEN.LastName,
                 ReceivePromotion = userEN.ReceivePromotion,
+                Roles = roles
             };
 
             if (userEN.ApplicationUser != null)
@@ -27,6 +29,16 @@ namespace FunnySailAPI.Assemblers
                 user.Email = userEN.ApplicationUser.Email;
                 user.PhoneNumber = userEN.ApplicationUser.PhoneNumber;
                 user.UserName = userEN.ApplicationUser.UserName;
+            }
+
+            if(userEN.Bookings?.Count > 0)
+            {
+                user.Bookings = new List<BookingOutputDTO>();
+                foreach(var booking in userEN.Bookings)
+                {
+                    booking.Client = null;
+                    user.Bookings.Add(BookingAssemblers.Convert(booking));
+                }
             }
 
             return user;

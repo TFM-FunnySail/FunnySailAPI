@@ -23,6 +23,8 @@
     <Compile Remove="Migrations\20220208174856_RemoveNavigation.Designer.cs" />
     <Compile Remove="Migrations\20220216214316_FIXAliasToMooring.cs" />
     <Compile Remove="Migrations\20220216214316_FIXAliasToMooring.Designer.cs" />
+    <Compile Remove="Migrations\20220411204913_AddBookingsToUser.cs" />
+    <Compile Remove="Migrations\20220411204913_AddBookingsToUser.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

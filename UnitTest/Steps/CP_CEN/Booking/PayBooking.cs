@@ -44,7 +44,7 @@ namespace UnitTest.Steps.CP_CEN.Booking
 
             var applicationDbContextFake = new ApplicationDbContextFake();
             _bookingCAD = new BookingCAD(applicationDbContextFake._dbContextFake);
-            _bookingCEN = new BookingCEN(_bookingCAD);
+            _bookingCEN = new BookingCEN(_bookingCAD, null, null, null);
             _clientInvoiceLineCAD = new ClientInvoiceLineCAD(applicationDbContextFake._dbContextFake);
             _clientInvoiceLineCEN = new ClientInvoiceLineCEN(_clientInvoiceLineCAD);
             _clientInvoiceCAD = new ClientInvoiceCAD(applicationDbContextFake._dbContextFake);
