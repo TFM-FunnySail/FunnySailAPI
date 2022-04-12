@@ -97,7 +97,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                 var boatsNotAvailable = await _boatCEN.GetBoatCAD().GetBoatIdsNotAvailable
                     (addBookingInput.EntryDate, addBookingInput.DepartureDate,addBookingInput.BoatIds);
 
-                if (addBookingInput.BoatIds.Count != boatsNotAvailable.Count)
+                if (boatsNotAvailable.Any(x => addBookingInput.BoatIds.Contains(x)))
                     throw new DataValidationException($"The Boats {String.Join(",", boatsNotAvailable)} not avialable",
                             $"Los barcos {String.Join(",",boatsNotAvailable)} no disponibles");
 
@@ -108,11 +108,11 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             if (addBookingInput.ServiceIds.Count > 0) 
             {
                 var servicesNotAvailable = await _serviceCEN.GetServiceCAD().GetServiceIdsNotAvailable
-                    (addBookingInput.EntryDate, addBookingInput.DepartureDate, addBookingInput.BoatIds);
+                    (addBookingInput.EntryDate, addBookingInput.DepartureDate, addBookingInput.ServiceIds);
 
-                if (addBookingInput.ServiceIds.Count != servicesNotAvailable.Count)
+                if (servicesNotAvailable.Any(x=> addBookingInput.ServiceIds.Contains(x)))
                     throw new DataValidationException($"The services {String.Join(",", servicesNotAvailable)} not avialable",
-                            $"Los servicios {String.Join(",", servicesNotAvailable)} no disponibles");
+                            $"Los servicios {String.Join(",", servicesNotAvailable)} no están disponibles para las fechas seleccionadas");
 
                 services = await _serviceCEN.GetServiceCAD().GetServiceFilteredList(
                                     new ServiceFilters { ServiceIdList = addBookingInput.ServiceIds });
@@ -124,7 +124,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                 var activitiesNotAvailable = await _activityCEN.GetActivityCAD().GetActivityIdsNotAvailable
                     (addBookingInput.EntryDate, addBookingInput.DepartureDate, addBookingInput.ActivityIds);
 
-                if (addBookingInput.ActivityIds.Count != activitiesNotAvailable.Count)
+                if (activitiesNotAvailable.Any(x => addBookingInput.ActivityIds.Contains(x)))
                     throw new DataValidationException($"The activities {String.Join(",", activitiesNotAvailable)} are not avialable",
                             $"Las actividades {String.Join(",", activitiesNotAvailable)} no están disponibles");
 
@@ -158,7 +158,6 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                     decimal totalAmount = 0;
                     if (boats.Count > 0)
                     {
-                        List<BoatBookingEN> boatBookings = new List<BoatBookingEN>();
                         List<OwnerInvoiceLineEN> ownerInvoiceLines = new List<OwnerInvoiceLineEN>();
                         
                         foreach (var boat in boats)
@@ -170,7 +169,6 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                                 BookingId = bookingId,
                                 Price = price
                             });
-                            boatBookings.Add(await _boatBookingCEN.GetBoatBookingCAD().FindByIds(boat.Id, bookingId));
                             totalAmount += price;
 
                             if (!ownerInvoiceLines.Any(x => x.OwnerId == boat.OwnerId))
@@ -188,8 +186,6 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                                     .Price = price * (decimal)boat.BoatPrices.PorcentPriceOwner;
                             }
                         }
-                        bookingEN.BoatBookings = boatBookings;
-
                         if(ownerInvoiceLines.Count > 0)
                         {
                             foreach(var ownerInvoiceLine in ownerInvoiceLines) 
@@ -201,7 +197,6 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
 
                     if (services.Count > 0)
                     {
-                        List<ServiceBookingEN> serviceBookings = new List<ServiceBookingEN>();
                         foreach (var service in services)
                         {
                             await _serviceBookingCEN.CreateServiceBooking(new ServiceBookingEN
@@ -210,15 +205,12 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                                 BookingId = bookingId,
                                 Price = service.Price
                             });
-                            serviceBookings.Add(await _serviceBookingCEN.GetServiceBookingCAD().FindByIds(service.Id, bookingId));
                             totalAmount += service.Price;
                         }
-                        bookingEN.ServiceBookings = serviceBookings;
                     }
 
                     if (activities.Count > 0)
                     {
-                        List<ActivityBookingEN> activityBookings = new List<ActivityBookingEN>();
                         foreach (var activity in activities)
                         {
                             await _activityBookingCEN.CreateActivityBooking(new ActivityBookingEN
@@ -227,10 +219,8 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                                 BookingId = bookingId,
                                 Price = activity.Price
                             });
-                            activityBookings.Add(await _activityBookingCEN.GetActivityBookingCAD().FindByIds(activity.Id, bookingId));
                             totalAmount += activity.Price;
                         }
-                        bookingEN.ActivityBookings = activityBookings;
                     }
 
 
@@ -248,9 +238,6 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                     throw ex;
                 }
             }
-
-            
-
 
             return bookingId;
         }

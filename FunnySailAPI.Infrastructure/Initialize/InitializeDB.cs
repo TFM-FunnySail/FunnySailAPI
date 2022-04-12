@@ -1,5 +1,6 @@
 ﻿using FunnySailAPI.ApplicationCore.Constants;
 using FunnySailAPI.ApplicationCore.Interfaces;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input.Booking;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input.User;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
@@ -104,6 +105,44 @@ namespace FunnySailAPI.Infrastructure.Initialize
                     await _dbContext.Services.AddRangeAsync(services);
                     await _dbContext.SaveChangesAsync();
                 }
+
+                //if (!await _dbContext.Bookings.AnyAsync())
+                //{
+                //    //Crear reservas de servicios y actividades
+                //    int index = 1;
+                //    List<UsersEN> users = await _dbContext.UsersInfo.ToListAsync();
+                //    List<ServiceEN> services = await _dbContext.Services.ToListAsync();
+                //    List<ActivityEN> activities = await _dbContext.Activity.ToListAsync();
+                //    for (; index <= 20; index++)
+                //    {
+                //        bool requestCapitan = NextFloat(0, 1) > (decimal)0.5;
+                //        UsersEN user = users.ElementAt(NextInt(0, users.Count));
+                //        int dayAfter = NextInt(50, 100);
+                //        int hoursAfter = NextInt(0, 32);
+                //        List<ServiceEN> servicesBooking = new List<ServiceEN>
+                //        {
+                //            services.ElementAt(NextInt(0, services.Count)),
+                //            services.ElementAt(NextInt(0, services.Count)),
+                //        };
+                //        List<ActivityEN> activitiesBooking = new List<ActivityEN>
+                //        {
+                //            activities.ElementAt(NextInt(0, activities.Count)),
+                //            activities.ElementAt(NextInt(0, activities.Count)),
+                //        };
+                //        await _unitOfWork.BookingCP.CreateBooking(new AddBookingInputDTO
+                //        {
+                //            RequestCaptain = requestCapitan,
+                //            ClientId = user.UserId,
+                //            BoatIds = new List<int>(),
+                //            TotalPeople = NextInt(1,20),
+                //            DepartureDate = DateTime.UtcNow.AddDays(dayAfter).AddHours(hoursAfter),
+                //            EntryDate = DateTime.UtcNow.AddDays(dayAfter),
+                //            ActivityIds = activitiesBooking.Select(x=>x.Id).ToList(),
+                //            ServiceIds = servicesBooking.Select(x=>x.Id).ToList(),
+                //        });
+                //    }
+                    
+                //}
             }
             catch (Exception)
             {
@@ -115,6 +154,12 @@ namespace FunnySailAPI.Infrastructure.Initialize
             System.Random random = new System.Random();
             double val = (random.NextDouble() * (max - min) + min);
             return (decimal)val;
+        }
+        private int NextInt(int min, int max)
+        {
+            System.Random random = new System.Random();
+            double val = (random.NextDouble() * (max - min) + min);
+            return (int)val;
         }
     }
 
