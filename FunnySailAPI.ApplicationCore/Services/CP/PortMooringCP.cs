@@ -23,7 +23,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
 
         public async Task<int> AddMooring(int portId, string alias, MooringEnum type)
         {
-            if(await _portCEN.AnyPortById(portId))
+            if(!await _portCEN.AnyPortById(portId))
             {
                 throw new DataValidationException("Port","Puerto",ExceptionTypesEnum.NotFound);
             }
