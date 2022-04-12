@@ -144,6 +144,23 @@ namespace FunnySailAPI.Infrastructure.Initialize
 
                 //}
 
+                if (!await _dbContext.BoatTypes.AnyAsync())
+                {
+                    int index = 1;
+                    List<BoatTypeEN> boats = new List<BoatTypeEN>();
+                    for (; index <= 10; index++)
+                    {
+                        bool active = NextFloat(0, 1) > (decimal)0.5;
+                        boats.Add(new BoatTypeEN
+                        {
+                            Name = "Tipo prueba " + index,
+                            Description = "Desripcion tipo prueba " + index
+                        });
+                    }
+                    await _dbContext.BoatTypes.AddRangeAsync(boats);
+                    await _dbContext.SaveChangesAsync();
+                }
+
                 if (!await _dbContext.Ports.AnyAsync())
                 {
                     int index = 1;
@@ -167,18 +184,17 @@ namespace FunnySailAPI.Infrastructure.Initialize
                     List<MooringEN> moorings = new List<MooringEN>();
                     for (; index <= 20; index++)
                     {
-                        Random random = new Random();
                         bool active = NextFloat(0, 1) > (decimal)0.5;
                         moorings.Add(new MooringEN
                         {
                             Alias = "Mooring " + index,
-                            PortId = random.Next(1, 5)
-
+                            PortId = NextInt(1, 5)
                         });
                     }
                     await _dbContext.Moorings.AddRangeAsync(moorings);
                     await _dbContext.SaveChangesAsync();
                 }
+
             }
             catch (Exception)
             {
