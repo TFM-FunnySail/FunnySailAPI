@@ -141,8 +141,44 @@ namespace FunnySailAPI.Infrastructure.Initialize
                 //            ServiceIds = servicesBooking.Select(x=>x.Id).ToList(),
                 //        });
                 //    }
-                    
+
                 //}
+
+                if (!await _dbContext.Ports.AnyAsync())
+                {
+                    int index = 1;
+                    List<PortEN> ports = new List<PortEN>();
+                    for (; index <= 5; index++)
+                    {
+                        bool active = NextFloat(0, 1) > (decimal)0.5;
+                        ports.Add(new PortEN
+                        {
+                            Name = "Puerto prueba " + index,
+                            Location = "calle prueba " + index
+                        });
+                    }
+                    await _dbContext.Ports.AddRangeAsync(ports);
+                    await _dbContext.SaveChangesAsync();
+                }
+
+                if (!await _dbContext.Moorings.AnyAsync())
+                {
+                    int index = 1;
+                    List<MooringEN> moorings = new List<MooringEN>();
+                    for (; index <= 20; index++)
+                    {
+                        Random random = new Random();
+                        bool active = NextFloat(0, 1) > (decimal)0.5;
+                        moorings.Add(new MooringEN
+                        {
+                            Alias = "Mooring " + index,
+                            PortId = random.Next(1, 5)
+
+                        });
+                    }
+                    await _dbContext.Moorings.AddRangeAsync(moorings);
+                    await _dbContext.SaveChangesAsync();
+                }
             }
             catch (Exception)
             {
