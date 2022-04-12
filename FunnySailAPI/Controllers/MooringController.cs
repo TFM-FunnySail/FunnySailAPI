@@ -40,12 +40,11 @@ namespace FunnySailAPI.Controllers
         {
             try
             {
-                int mooringTotal = await _unitOfWork.MooringCEN.GetTodos(filters);
+                int mooringTotal = await _unitOfWork.MooringCEN.GetTotal(filters);
 
                 var moorings = (await _unitOfWork.MooringCEN.GetAll(
                     filters: filters,
-                    pagination: pagination ?? new Pagination()
-                    ,
+                    pagination: pagination ?? new Pagination(),
                     includeProperties: source => source.Include(x => x.Port)
 
                      ))

@@ -88,11 +88,11 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
         //Esto es de la modificación de la interfaz
 
-        public async Task<int> GetTodos(MooringFilters filters = null)
+        public async Task<int> GetTotal(MooringFilters filters = null)
         {
-            var activities = _mooringCAD.GetFiltered(filters);
+            var moorings = _mooringCAD.GetFiltered(filters);
 
-            return await _mooringCAD.GetCounter(activities);
+            return await _mooringCAD.GetCounter(moorings);
         }
 
         public async Task<IList<MooringEN>> GetAll(MooringFilters filters = null, Pagination pagination = null, 
