@@ -20,7 +20,7 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
         Task DeleteMooring(int mooringId);
         Task<MooringEN> UpdateMooring(UpdateMooringDTO updateMooringInput);
         Task<bool> Any(MooringFilters filter);
-        Task<int> GetTodos(MooringFilters filters = null);
+        Task<int> GetTotal(MooringFilters filters = null);
         Task<IList<MooringEN>> GetAll(MooringFilters filters = null,
             Pagination pagination = null,
             Func<IQueryable<MooringEN>, IOrderedQueryable<MooringEN>> orderBy = null,

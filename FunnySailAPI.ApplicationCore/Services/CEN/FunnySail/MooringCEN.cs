@@ -60,11 +60,11 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
         public async Task<MooringEN> UpdateMooring(UpdateMooringDTO updateMooringInput)
         {
-            if(updateMooringInput.MooringId == 0)
+            if(updateMooringInput.id == 0)
                 throw new DataValidationException("Mooring id", "Amarre de puerto",
                     ExceptionTypesEnum.IsRequired);
 
-            MooringEN dbMooring = await _mooringCAD.FindById(updateMooringInput.MooringId);
+            MooringEN dbMooring = await _mooringCAD.FindById(updateMooringInput.id);
 
             if (dbMooring == null)
                 throw new DataValidationException("Mooring", "Amarre de puerto",
@@ -88,11 +88,11 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
         //Esto es de la modificación de la interfaz
 
-        public async Task<int> GetTodos(MooringFilters filters = null)
+        public async Task<int> GetTotal(MooringFilters filters = null)
         {
-            var activities = _mooringCAD.GetFiltered(filters);
+            var moorings = _mooringCAD.GetFiltered(filters);
 
-            return await _mooringCAD.GetCounter(activities);
+            return await _mooringCAD.GetCounter(moorings);
         }
 
         public async Task<IList<MooringEN>> GetAll(MooringFilters filters = null, Pagination pagination = null, 
