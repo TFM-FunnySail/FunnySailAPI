@@ -34,7 +34,7 @@ namespace FunnySailAPI.Assemblers
             if(userEN.Bookings?.Count > 0)
             {
                 user.Bookings = new List<BookingOutputDTO>();
-                foreach(var booking in userEN.Bookings)
+                foreach(var booking in userEN.Bookings.OrderByDescending(x=>x.Id))
                 {
                     booking.Client = null;
                     user.Bookings.Add(BookingAssemblers.Convert(booking));

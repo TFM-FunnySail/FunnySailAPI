@@ -103,7 +103,7 @@ namespace FunnySailAPI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUsersEN(string id, AddUserInputDTO userInput)
+        public async Task<IActionResult> PutUsersEN(string id, EditUserInputDTO userInput)
         {
             try
             {
@@ -120,7 +120,7 @@ namespace FunnySailAPI.Controllers
                 }
                 else
                 {
-                    user = await _unitOfWork.UserManager.FindByEmailAsync(userInput.Email);
+                    user = await _unitOfWork.UserManager.FindByIdAsync(id);
                 }
 
                 await _unitOfWork.UserCP.EditUser(user, userInput);

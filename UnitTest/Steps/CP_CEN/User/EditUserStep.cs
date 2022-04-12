@@ -69,7 +69,8 @@ namespace UnitTest.Steps.CP_CEN.User
             await _userCP.EditUser(new ApplicationUser
             {
                 Id = _id
-            },new AddUserInputDTO { 
+            },new EditUserInputDTO
+            { 
                 FirstName = _name,
                 LastName = _lastName,
                 BirthDay = _birthday,

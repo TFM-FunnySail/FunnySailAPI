@@ -74,10 +74,9 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                 }
             }
         }
-        public async Task<IdentityResult> EditUser(ApplicationUser user, AddUserInputDTO addUserInput)
+        public async Task<IdentityResult> EditUser(ApplicationUser user, EditUserInputDTO addUserInput)
         {
             user.PhoneNumber = addUserInput.PhoneNumber;
-            user.Email = addUserInput.Email;
 
             using (var databaseTransaction = _databaseTransactionFactory.BeginTransaction())
             {

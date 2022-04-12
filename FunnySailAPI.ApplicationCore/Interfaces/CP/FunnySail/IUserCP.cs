@@ -11,7 +11,7 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail
     public interface IUserCP
     {
         Task<(IdentityResult, ApplicationUser)> CreateUser(AddUserInputDTO addUserInput);
-        Task<IdentityResult> EditUser(ApplicationUser user, AddUserInputDTO addUserInput);
+        Task<IdentityResult> EditUser(ApplicationUser user, EditUserInputDTO addUserInput);
 
     }
 }
