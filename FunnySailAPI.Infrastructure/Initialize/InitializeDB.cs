@@ -85,6 +85,25 @@ namespace FunnySailAPI.Infrastructure.Initialize
                     await _dbContext.Activity.AddRangeAsync(activities);
                     await _dbContext.SaveChangesAsync();
                 }
+
+                if (!await _dbContext.Services.AnyAsync())
+                {
+                    int index = 1;
+                    List<ServiceEN> services = new List<ServiceEN>();
+                    for (; index <= 50; index++)
+                    {
+                        bool active = NextFloat(0, 1) > (decimal)0.5;
+                        services.Add(new ServiceEN
+                        {
+                            Description = $"Desc {index}",
+                            Name = $"Servicio {index}",
+                            Active = active,
+                            Price = NextFloat(1, 100)
+                        });
+                    }
+                    await _dbContext.Services.AddRangeAsync(services);
+                    await _dbContext.SaveChangesAsync();
+                }
             }
             catch (Exception)
             {
