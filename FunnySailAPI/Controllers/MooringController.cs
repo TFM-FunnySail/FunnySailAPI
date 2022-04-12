@@ -97,7 +97,7 @@ namespace FunnySailAPI.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest();
 
-                if (id != updateMooring.MooringId)
+                if (id != updateMooring.id)
                     return BadRequest();
 
                 await _unitOfWork.MooringCEN.UpdateMooring(updateMooring);

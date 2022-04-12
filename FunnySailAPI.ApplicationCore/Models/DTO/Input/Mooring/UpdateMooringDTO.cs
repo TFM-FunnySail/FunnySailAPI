@@ -7,7 +7,7 @@ namespace FunnySailAPI.ApplicationCore.Models.DTO.Input.Mooring
 {
     public class UpdateMooringDTO
     {
-        public int MooringId { get; set; }
+        public int id { get; set; }
         public string Alias { get; set; }
         public int PortId { get; set; }
         public MooringEnum Type { get; set; }

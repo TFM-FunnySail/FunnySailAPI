@@ -40,7 +40,7 @@ namespace UnitTest.Steps.CP_CEN
         {
             _updateMooringDTO = new UpdateMooringDTO
             {
-                MooringId = 1,
+                id = 1,
                 Alias = "Alias Modificado",
                 PortId = 2,
                 Type = MooringEnum.Big
@@ -74,7 +74,7 @@ namespace UnitTest.Steps.CP_CEN
         {
             _updateMooringDTO = new UpdateMooringDTO
             {
-                MooringId = 0,
+                id = 0,
                 Alias = "Alias Modificado",
                 PortId = 2,
                 Type = MooringEnum.Big
