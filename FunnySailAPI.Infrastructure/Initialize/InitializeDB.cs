@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 
 namespace FunnySailAPI.Infrastructure.Initialize
 {
@@ -192,6 +193,39 @@ namespace FunnySailAPI.Infrastructure.Initialize
                         });
                     }
                     await _dbContext.Moorings.AddRangeAsync(moorings);
+                    await _dbContext.SaveChangesAsync();
+                }
+     
+                if (!await _dbContext.Boats.AnyAsync()) { 
+                    int index = 1;
+
+                    //  Listas vacias
+                    List<int> resourcesIds = new List<int>();
+                    List<AddRequiredBoatTitleInputDTO> requiredBoatTitles = new List<AddRequiredBoatTitleInputDTO>();
+
+                    for (; index <= 10; index++)
+                    {
+
+                        await _unitOfWork.BoatCP.CreateBoat(new AddBoatInputDTO
+                        {
+                            BoatTypeId = index,
+                            Name = "Embarcación prueba " + index,
+                            Capacity = index * 3,
+                            MotorPower = index * 20,
+                            Sleeve = index * 20,
+                            Supplement = 20,         
+                            Registration = "Reg prueba " + index,
+                            OwnerId = "e154b7cd-9fa6-42df-a765-589383aa6bbf",              
+                            Description = "Descripción embarcación prueba " + index,
+                            DayBasePrice = NextInt(100, 300),
+                            HourBasePrice = NextInt(15, 30),
+                            Length = NextInt(40, 100),
+                            MooringId = index,
+                            MooringPoint = "Puerto prueba " + index,
+                            ResourcesIdList = resourcesIds,
+                            RequiredBoatTitles = requiredBoatTitles,
+                        });
+                    }
                     await _dbContext.SaveChangesAsync();
                 }
 
