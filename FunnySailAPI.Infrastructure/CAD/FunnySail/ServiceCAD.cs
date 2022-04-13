@@ -65,6 +65,18 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
             if (serviceFilters.ServiceIdList?.Count > 0)
                 services = services.Where(x => serviceFilters.ServiceIdList.Contains(x.Id));
 
+            if (serviceFilters.MinPrice != 0)
+                services = services.Where(x => x.Price >= serviceFilters.MinPrice);
+
+            if (serviceFilters.MaxPrice != 0)
+                services = services.Where(x => x.Price < serviceFilters.MaxPrice);
+
+            if (serviceFilters.Name != null)
+                services = services.Where(x => x.Name.Contains(serviceFilters.Name));
+
+            if (serviceFilters.Description != null)
+                services = services.Where(x => x.Description.Contains(serviceFilters.Description));
+
             return services;
         }
 

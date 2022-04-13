@@ -23,5 +23,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
        Func<IQueryable<TechnicalServiceEN>, IOrderedQueryable<TechnicalServiceEN>> orderBy = null,
        Func<IQueryable<TechnicalServiceEN>, IIncludableQueryable<TechnicalServiceEN, object>> includeProperties = null);
         Task<int> GetTotal(TechnicalServiceFilters filters = null);
+        Task<TechnicalServiceEN> CancelTechnicalService(int technicalServiceId);
     }
 }
