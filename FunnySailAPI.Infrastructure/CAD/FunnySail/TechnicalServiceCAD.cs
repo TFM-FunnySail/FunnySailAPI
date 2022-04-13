@@ -20,14 +20,22 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
 
             if (technicalServiceFilters == null)
                 return technicalServices;
+
             if(technicalServiceFilters.Active != null)
                 technicalServices = technicalServices.Where(x => x.Active == technicalServiceFilters.Active);
-            if(technicalServiceFilters.Description != "")
-                technicalServices = technicalServices.Where(x => x.Description == technicalServiceFilters.Description);
-            if(technicalServiceFilters.Id != null)
+
+            if(technicalServiceFilters.Description != null)
+                technicalServices = technicalServices.Where(x => x.Description.Contains(technicalServiceFilters.Description));
+
+            if (technicalServiceFilters.Id != 0)
                 technicalServices = technicalServices.Where(x => x.Id == technicalServiceFilters.Id);
-            if (technicalServiceFilters.Price != null)
-                technicalServices = technicalServices.Where(x => x.Price == technicalServiceFilters.Price);
+
+            if (technicalServiceFilters.MinPrice != 0)
+                technicalServices = technicalServices.Where(x => x.Price >= technicalServiceFilters.MinPrice);
+
+            if (technicalServiceFilters.MaxPrice != 0)
+                technicalServices = technicalServices.Where(x => x.Price < technicalServiceFilters.MaxPrice);
+
             return technicalServices;
         }
     }
