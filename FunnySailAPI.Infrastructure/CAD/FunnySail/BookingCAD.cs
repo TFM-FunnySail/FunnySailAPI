@@ -41,16 +41,34 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
             if (filters.ClientId != null)
                 query = query.Where(x => x.ClientId == filters.ClientId);
 
-            if (filters.CreatedDate != null)
-                query = query.Where(x => x.CreatedDate == filters.CreatedDate);
+            if (filters.CreatedDateRange != null)
+            {
+                if(filters.CreatedDateRange.InitialDate != null)
+                    query = query.Where(x => x.CreatedDate >= filters.CreatedDateRange.InitialDate);
 
-            if (filters.EntryDate != null)
-                query = query.Where(x => x.EntryDate == filters.EntryDate);
+                if (filters.CreatedDateRange.EndDate != null)
+                    query = query.Where(x => x.CreatedDate < filters.CreatedDateRange.EndDate);
+            }
 
-            if (filters.DepartureDate != null)
-                query = query.Where(x => x.DepartureDate == filters.DepartureDate);
-            
-            if (filters.TotalPeople != null)
+            if (filters.EntryDateRange != null)
+            {
+                if (filters.EntryDateRange.InitialDate != null)
+                    query = query.Where(x => x.EntryDate >= filters.EntryDateRange.InitialDate);
+
+                if (filters.EntryDateRange.EndDate != null)
+                    query = query.Where(x => x.EntryDate < filters.EntryDateRange.EndDate);
+            }
+
+            if (filters.DepartureDateRange != null)
+            {
+                if (filters.DepartureDateRange.InitialDate != null)
+                    query = query.Where(x => x.DepartureDate >= filters.DepartureDateRange.InitialDate);
+
+                if (filters.DepartureDateRange.EndDate != null)
+                    query = query.Where(x => x.DepartureDate < filters.DepartureDateRange.EndDate);
+            }
+
+            if (filters.TotalPeople != 0)
                 query = query.Where(x => x.TotalPeople == filters.TotalPeople);
 
             if (filters.Paid != null)

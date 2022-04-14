@@ -15,5 +15,6 @@ namespace FunnySailAPI.ApplicationCore.Models.Filters
         public string Name { get; set; }
         public string Description { get; set; }
         public List<int> ActivityIdList { get; set; }
+        public List<int> ActivityNotIdList { get; set; }
     }
 }

@@ -56,10 +56,10 @@ namespace FunnySailAPI.ApplicationCore.Services
 
             ApplicationUser user = await _userManager.FindByEmailAsync(loginUserInput.Email);
 
-            if(!await _userManager.IsInRoleAsync(user, UserRolesConstant.ADMIN))
+            if (toAdmin && !await _userManager.IsInRoleAsync(user, UserRolesConstant.ADMIN))
             {
                 throw new DataValidationException("Denied access.",
-                    "Acceso denegado.");
+                        "Acceso denegado.");
             }
 
             (string jwtToken,DateTime expires) = _authRefreshTokenCEN.GenerateJwtToken(user);

@@ -108,7 +108,8 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
             IQueryable<ActivityEN> activities = _activityCAD.GetActivityFiltered(new ActivityFilters
             {
-                Active = true
+                Active = true,
+                ActivityNotIdList = idsNotAvailable
             });
 
             if (orderBy == null)

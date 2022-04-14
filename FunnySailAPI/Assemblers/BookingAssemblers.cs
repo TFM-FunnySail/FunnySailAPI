@@ -19,7 +19,10 @@ namespace FunnySailAPI.Assemblers
                 DepartureDate = booking.DepartureDate,
                 Paid = booking.Paid,
                 TotalPeople = booking.TotalPeople,
-                RequestCaptain = booking.RequestCaptain
+                RequestCaptain = booking.RequestCaptain,
+                ActivyBookings = new List<ActivityBookingOutputDTO>(),
+                BoatBookings = new List<BoatBookingOutputDTO>(),
+                ServiceBookings = new List<ServiceBookingOutputDTO>()
             };
 
             if (booking.Client != null)

@@ -84,7 +84,10 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
 
             if (activityFilters.ActivityIdList?.Count > 0)
                 activities = activities.Where(x => activityFilters.ActivityIdList.Contains(x.Id));
-            
+
+            if (activityFilters.ActivityNotIdList?.Count > 0)
+                activities = activities.Where(x => !activityFilters.ActivityNotIdList.Contains(x.Id));
+
             return activities;
         }
 
