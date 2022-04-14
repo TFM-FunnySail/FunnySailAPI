@@ -63,6 +63,16 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
             return service;
         }
+        public async Task<TechnicalServiceEN> CancelTechnicalService(int technicalServiceId)
+        {
+            TechnicalServiceEN technicalService = await _technicalServiceCAD.FindById(technicalServiceId);
+
+            technicalService.Active = false;
+
+            await _technicalServiceCAD.Update(technicalService);
+
+            return technicalService;
+        }
 
         public async Task DeleteService(int id)
         {

@@ -133,7 +133,34 @@ namespace FunnySailAPI.Controllers
         // PUT: api/TechnicalService/5/cancel
         [CustomAuthorize(UserRolesConstant.ADMIN)]
         [HttpPut("{id}/cancel")]
-        public async Task<IActionResult> PutTechnicalService(int id,UpdateTechnicalServiceDTO technicalService)
+        public async Task<IActionResult> CancelTechnicalService(int id)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                await _unitOfWork.TechnicalServiceCEN.CancelTechnicalService(id);
+
+                return NoContent();
+            }
+            catch (DataValidationException dataValidation)
+            {
+                if (dataValidation.ExceptionType == ExceptionTypesEnum.NotFound)
+                    return NotFound();
+
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, new ErrorResponseDTO(dataValidation));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
+
+        // PUT: api/TechnicalService/5
+        [CustomAuthorize(UserRolesConstant.ADMIN)]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutTechnicalService(int id, UpdateTechnicalServiceDTO technicalService)
         {
             try
             {

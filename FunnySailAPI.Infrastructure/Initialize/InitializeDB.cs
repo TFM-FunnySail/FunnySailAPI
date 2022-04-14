@@ -141,8 +141,78 @@ namespace FunnySailAPI.Infrastructure.Initialize
                 //            ServiceIds = servicesBooking.Select(x=>x.Id).ToList(),
                 //        });
                 //    }
-                    
+
                 //}
+
+                if (!await _dbContext.BoatTypes.AnyAsync())
+                {
+                    int index = 1;
+                    List<BoatTypeEN> boats = new List<BoatTypeEN>();
+                    for (; index <= 10; index++)
+                    {
+                        bool active = NextFloat(0, 1) > (decimal)0.5;
+                        boats.Add(new BoatTypeEN
+                        {
+                            Name = "Tipo prueba " + index,
+                            Description = "Desripcion tipo prueba " + index
+                        });
+                    }
+                    await _dbContext.BoatTypes.AddRangeAsync(boats);
+                    await _dbContext.SaveChangesAsync();
+                }
+
+                if (!await _dbContext.Ports.AnyAsync())
+                {
+                    int index = 1;
+                    List<PortEN> ports = new List<PortEN>();
+                    for (; index <= 5; index++)
+                    {
+                        bool active = NextFloat(0, 1) > (decimal)0.5;
+                        ports.Add(new PortEN
+                        {
+                            Name = "Puerto prueba " + index,
+                            Location = "calle prueba " + index
+                        });
+                    }
+                    await _dbContext.Ports.AddRangeAsync(ports);
+                    await _dbContext.SaveChangesAsync();
+                }
+
+                if (!await _dbContext.Moorings.AnyAsync())
+                {
+                    int index = 1;
+                    List<MooringEN> moorings = new List<MooringEN>();
+                    for (; index <= 20; index++)
+                    {
+                        bool active = NextFloat(0, 1) > (decimal)0.5;
+                        moorings.Add(new MooringEN
+                        {
+                            Alias = "Mooring " + index,
+                            PortId = NextInt(1, 5)
+                        });
+                    }
+                    await _dbContext.Moorings.AddRangeAsync(moorings);
+                    await _dbContext.SaveChangesAsync();
+                }
+
+                if (!await _dbContext.TechnicalServices.AnyAsync())
+                {
+                    int index = 1;
+                    List<TechnicalServiceEN> technicalServices = new List<TechnicalServiceEN>();
+                    for (; index <= 50; index++)
+                    {
+                        bool active = NextFloat(0, 1) > (decimal)0.5;
+                        technicalServices.Add(new TechnicalServiceEN
+                        {
+                            Description = $"Desc {index}",
+                            Active = active,
+                            Price = NextFloat(1, 100)
+                        });
+                    }
+                    await _dbContext.TechnicalServices.AddRangeAsync(technicalServices);
+                    await _dbContext.SaveChangesAsync();
+                }
+
             }
             catch (Exception)
             {
