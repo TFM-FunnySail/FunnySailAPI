@@ -7,7 +7,8 @@ namespace FunnySailAPI.DTO.Output.Booking
 {
     public class ActivityBookingOutputDTO
     {
-        public int ActivityId { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
         public decimal Price { get; set; }
     }
 }

@@ -10,9 +10,14 @@ namespace FunnySailAPI.Assemblers
         {
             ServiceBookingOutputDTO serviceBookingOutputDTO = new ServiceBookingOutputDTO
             {
-                ServiceId = serviceBookingEN.ServiceId,
+                Id = serviceBookingEN.ServiceId,
                 Price = serviceBookingEN.Price
             };
+
+            if(serviceBookingEN.service != null)
+            {
+                serviceBookingOutputDTO.Name = serviceBookingEN.service.Name;
+            }
 
             return serviceBookingOutputDTO;
         }

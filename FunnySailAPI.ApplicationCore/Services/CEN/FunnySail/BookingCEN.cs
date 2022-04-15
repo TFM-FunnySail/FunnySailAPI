@@ -6,6 +6,7 @@ using FunnySailAPI.ApplicationCore.Models.Filters;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
 using FunnySailAPI.ApplicationCore.Models.Utils;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
@@ -21,13 +22,17 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
         private readonly IActivityBookingCAD _activityBookingCAD;
         private readonly IServiceBookingCAD _serviceBookingCAD;
         private readonly IBoatBookingCAD _boatBookingCAD;
+        private readonly IUserCAD _userCAD;
 
-        public BookingCEN(IBookingCAD bookingCAD, IActivityBookingCAD activityBookingCAD, IServiceBookingCAD serviceBookingCAD, IBoatBookingCAD boatBookingCAD) 
+        public BookingCEN(IBookingCAD bookingCAD, IActivityBookingCAD activityBookingCAD,
+            IServiceBookingCAD serviceBookingCAD, IBoatBookingCAD boatBookingCAD,
+            IUserCAD userCAD) 
         {
             _bookingCAD = bookingCAD;
             _activityBookingCAD = activityBookingCAD;
             _serviceBookingCAD = serviceBookingCAD;
             _boatBookingCAD = boatBookingCAD;
+            _userCAD = userCAD;
         }
 
         public async Task<int> CreateBooking(BookingEN bookingEN)
@@ -65,11 +70,42 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
         public async Task<BookingEN> UpdateBooking(UpdateBookingInputDTO updateBookingInputDTO)
         {
-            if (updateBookingInputDTO.Id == null)
+            if (updateBookingInputDTO.Id == 0)
                 throw new DataValidationException("Booking Id", "Id Reserva",
                     ExceptionTypesEnum.IsRequired);
 
-            BookingEN bookingEN = await _bookingCAD.FindById(updateBookingInputDTO.Id);
+            BookingEN bookingEN = (await GetAll(new BookingFilters
+            {
+                bookingId = updateBookingInputDTO.Id
+            },includeProperties: source => source.Include(x => x.ActivityBookings)
+                                        .Include(x => x.BoatBookings)
+                                        .Include(x => x.ServiceBookings)
+                                        .Include(x => x.InvoiceLine)
+                                        .ThenInclude(x=>x.ClientInvoice)))
+                                        .FirstOrDefault();
+
+            if(bookingEN == null)
+                throw new DataValidationException("Booking", "Reserva",
+                    ExceptionTypesEnum.NotFound);
+
+            if (bookingEN.Status == BookingStatusEnum.Cancelled)
+                throw new DataValidationException("The reservation cannot be modified because it is canceled",
+                    "La reserva no puede ser modificada porque está cancelada");
+
+            if (bookingEN.Status == BookingStatusEnum.Completed)
+                throw new DataValidationException("The reservation cannot be modified because it is completed",
+                    "La reserva no puede ser modificada porque está completada");
+
+            if (updateBookingInputDTO.ClientId != null)
+            {
+                var newUsertoBooking = _userCAD.FindById(updateBookingInputDTO.ClientId);
+
+                if(newUsertoBooking == null)
+                    throw new DataValidationException("New user to booking", "Nuevo usuario para la Reserva",
+                    ExceptionTypesEnum.DontExists);
+
+                bookingEN.ClientId = updateBookingInputDTO.ClientId;
+            }
 
             if (updateBookingInputDTO.EntryDate != null)
                 bookingEN.EntryDate = (DateTime)updateBookingInputDTO.EntryDate;
@@ -80,42 +116,71 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             if (updateBookingInputDTO.TotalPeople != null)
                 bookingEN.TotalPeople = (int)updateBookingInputDTO.TotalPeople;
 
-            if (updateBookingInputDTO.ClientId != null)
-                bookingEN.ClientId = (string)updateBookingInputDTO.ClientId;
-
             if (updateBookingInputDTO.RequestCaptain != null)
                 bookingEN.RequestCaptain = (bool)updateBookingInputDTO.RequestCaptain;
 
+            decimal extraTotalAmount = 0;
             if (updateBookingInputDTO.ActivityBookingIds != null) 
             {
-                List<ActivityBookingEN> activityENs = new List<ActivityBookingEN>();
                 foreach (var activity in updateBookingInputDTO.ActivityBookingIds)
                 {
-                    ActivityBookingEN activityEN = await _activityBookingCAD.FindByIds(activity.Item1, activity.Item2);
-                    if (activityEN != null)
-                        activityENs.Add(activityEN);
+                    ActivityBookingEN activityEN = await _activityBookingCAD.FindByIds(activity, updateBookingInputDTO.Id);
+                    if (activityEN != null && !bookingEN.ActivityBookings.Any(x=>x.ActivityId == activity))
+                    {
+                        bookingEN.ActivityBookings.Add(new ActivityBookingEN
+                        {
+                            ActivityId = activity,
+                            Price = activityEN.Price
+                        });
+                        extraTotalAmount += activityEN.Price;
+                    }  
                 }
             }
 
             if (updateBookingInputDTO.ServiceBookingIds != null)
             {
-                List<ServiceBookingEN> servicesENs = new List<ServiceBookingEN>();
                 foreach (var service in updateBookingInputDTO.ServiceBookingIds)
                 {
-                    ServiceBookingEN serviceEN = await _serviceBookingCAD.FindByIds(service.Item1, service.Item2);
-                    if (serviceEN != null)
-                        servicesENs.Add(serviceEN);
+                    ServiceBookingEN serviceEN = await _serviceBookingCAD.FindByIds(service, updateBookingInputDTO.Id);
+                    if (serviceEN != null && !bookingEN.ServiceBookings.Any(x=>x.ServiceId == service))
+                    {
+                        bookingEN.ServiceBookings.Add(new ServiceBookingEN
+                        {
+                            Price = serviceEN.Price,
+                            ServiceId = serviceEN.ServiceId
+                        });
+                        extraTotalAmount += serviceEN.Price;
+                    }
                 }
             }
 
             if (updateBookingInputDTO.BoatBookingIds != null)
             {
-                List<BoatBookingEN> boatENs = new List<BoatBookingEN>();
                 foreach (var boat in updateBookingInputDTO.BoatBookingIds)
                 {
-                    BoatBookingEN boatEN = await _boatBookingCAD.FindByIds(boat.Item1, boat.Item2);
-                    if (boatEN != null)
-                        boatENs.Add(boatEN);
+                    BoatBookingEN boatEN = await _boatBookingCAD.FindByIds(boat, updateBookingInputDTO.Id);
+                    if (boatEN != null && !bookingEN.BoatBookings.Any(x=>x.BoatId == boat))
+                    {
+                        bookingEN.BoatBookings.Add(new BoatBookingEN
+                        {
+                            BoatId = boatEN.BoatId,
+                            Price = boatEN.Price
+                        });
+                        extraTotalAmount += boatEN.Price;
+                    }
+                }
+            }
+
+            if(extraTotalAmount > 0)
+            {
+                if (bookingEN.Status == BookingStatusEnum.Booking || bookingEN.Paid)
+                    throw new DataValidationException("It is not possible to add activities, services or boats to the reservation because it has already been paid",
+                        "No se puede agregar actividades, servicios o embarcaciones a la reserva porque ya fue pagada");
+
+                bookingEN.InvoiceLine.TotalAmount += extraTotalAmount;
+                if(bookingEN.InvoiceLine.ClientInvoice != null)
+                {
+                    bookingEN.InvoiceLine.ClientInvoice.TotalAmount += extraTotalAmount;
                 }
             }
 

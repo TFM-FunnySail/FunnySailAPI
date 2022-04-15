@@ -73,9 +73,13 @@ namespace FunnySailAPI.Controllers
                 {
                     bookingId = id
                 }, includeProperties: source => source.Include(x => x.Client)
+                                        .ThenInclude(x=>x.ApplicationUser)
                                         .Include(x => x.ActivityBookings)
+                                        .ThenInclude(x=>x.Activity)
                                         .Include(x => x.BoatBookings)
+                                        .ThenInclude(x => x.Boat.BoatInfo)
                                         .Include(x => x.ServiceBookings)
+                                        .ThenInclude(x=>x.service)
                                         .Include(x=>x.InvoiceLine));
 
                 var booking = itemResult.Select(x => BookingAssemblers.Convert(x)).FirstOrDefault();
@@ -208,7 +212,7 @@ namespace FunnySailAPI.Controllers
 
         // GET: api/Bookings/status
         [HttpGet("status")]
-        public ActionResult<IList<EnumsOutputDTO>> GetBookingsStatus([FromQuery] BookingFilters filters, [FromQuery] Pagination pagination)
+        public ActionResult<IList<EnumsOutputDTO>> GetBookingsStatus()
         {
             try
             {
