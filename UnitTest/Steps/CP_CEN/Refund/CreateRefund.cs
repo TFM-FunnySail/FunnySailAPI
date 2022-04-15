@@ -33,7 +33,7 @@ namespace UnitTest.Steps.CP_CEN.Refund
 
             var applicationDbContextFake = new ApplicationDbContextFake();
             _bookingCAD = new BookingCAD(applicationDbContextFake._dbContextFake);
-            _bookingCEN = new BookingCEN(_bookingCAD,null,null,null);
+            _bookingCEN = new BookingCEN(_bookingCAD,null,null,null,null);
             _refundCAD = new RefundCAD(applicationDbContextFake._dbContextFake);
             _refundCEN = new RefundCEN(_refundCAD, _bookingCEN);
         }

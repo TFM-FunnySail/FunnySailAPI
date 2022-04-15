@@ -44,7 +44,7 @@ namespace UnitTest.Steps.CP_CEN.Booking
 
             var applicationDbContextFake = new ApplicationDbContextFake();
             _bookingCAD = new BookingCAD(applicationDbContextFake._dbContextFake);
-            _bookingCEN = new BookingCEN(_bookingCAD, null, null, null);
+            
             _clientInvoiceLineCAD = new ClientInvoiceLineCAD(applicationDbContextFake._dbContextFake);
             _clientInvoiceLineCEN = new ClientInvoiceLineCEN(_clientInvoiceLineCAD);
             _clientInvoiceCAD = new ClientInvoiceCAD(applicationDbContextFake._dbContextFake);
@@ -52,6 +52,8 @@ namespace UnitTest.Steps.CP_CEN.Booking
             _ownerInvoiceCAD = new OwnerInvoiceCAD(applicationDbContextFake._dbContextFake);
             _ownerInvoiceLineCAD = new OwnerInvoiceLineCAD(applicationDbContextFake._dbContextFake);
             _userCAD = new UsersCAD(applicationDbContextFake._dbContextFake);
+
+            _bookingCEN = new BookingCEN(_bookingCAD, null, null, null, _userCAD);
             _ownerInvoiceCEN = new OwnerInvoiceCEN(_ownerInvoiceCAD, _ownerInvoiceLineCAD, _userCAD);
             _databaseTransactionFactory = new DatabaseTransactionFactory(applicationDbContextFake._dbContextFake);
             _bookingCP = new BookingCP(_bookingCEN, null, _clientInvoiceLineCEN, null, null, null, null, null, null ,null, null, _clientInvoiceCEN, _databaseTransactionFactory, null, null, _ownerInvoiceCEN);

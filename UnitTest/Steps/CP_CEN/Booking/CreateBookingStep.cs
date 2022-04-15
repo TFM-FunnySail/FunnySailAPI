@@ -49,10 +49,11 @@ namespace UnitTest.Steps.CP_CEN.Booking
             var applicationDbContextFake = new ApplicationDbContextFake();
             _bookingCAD = new BookingCAD(applicationDbContextFake._dbContextFake);
             _refundCAD = new RefundCAD(applicationDbContextFake._dbContextFake);
-            _bookingCEN = new BookingCEN(_bookingCAD, null, null, null);
+            
             _refundCEN = new RefundCEN(_refundCAD, _bookingCEN);
             _userCAD = new UsersCAD(applicationDbContextFake._dbContextFake);
             _userCEN = new UserCEN(_userCAD, null, null);
+            _bookingCEN = new BookingCEN(_bookingCAD, null, null, null, _userCAD);
             _clientInvoiceLineCAD = new ClientInvoiceLineCAD(applicationDbContextFake._dbContextFake);
             _clientInvoiceLineCEN = new ClientInvoiceLineCEN(_clientInvoiceLineCAD);
             _ownerInvoiceLineCAD = new OwnerInvoiceLineCAD(applicationDbContextFake._dbContextFake);
