@@ -1,5 +1,6 @@
 ﻿using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.DTO.Output.Booking;
+using FunnySailAPI.DTO.Output.ClientInvoice;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +51,16 @@ namespace FunnySailAPI.Assemblers
                 {
                     bookingOutputDTO.ServiceBookings.Add(ServiceBookingAssemblers.Convert(serviceBooking));
                 }
+            }
+
+            if(booking.InvoiceLine != null)
+            {
+                bookingOutputDTO.ClientInvoiceLine = new ClientInvoiceLinesOutputDTO
+                {
+                    BookingId = booking.Id,
+                    Currency = booking.InvoiceLine.Currency,
+                    TotalAmount = booking.InvoiceLine.TotalAmount,
+                };
             }
 
             return bookingOutputDTO;

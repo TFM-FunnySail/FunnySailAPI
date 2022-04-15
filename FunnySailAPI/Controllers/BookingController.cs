@@ -47,6 +47,7 @@ namespace FunnySailAPI.Controllers
                                         .Include(x => x.ActivityBookings)
                                         .Include(x => x.BoatBookings)
                                         .Include(x => x.ServiceBookings)
+                                        .Include(x => x.InvoiceLine)
                      ))
                     .Select(x => BookingAssemblers.Convert(x));
 
@@ -74,7 +75,8 @@ namespace FunnySailAPI.Controllers
                 }, includeProperties: source => source.Include(x => x.Client)
                                         .Include(x => x.ActivityBookings)
                                         .Include(x => x.BoatBookings)
-                                        .Include(x => x.ServiceBookings));
+                                        .Include(x => x.ServiceBookings)
+                                        .Include(x=>x.InvoiceLine));
 
                 var booking = itemResult.Select(x => BookingAssemblers.Convert(x)).FirstOrDefault();
                 if (booking == null)
