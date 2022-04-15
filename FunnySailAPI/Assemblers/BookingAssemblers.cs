@@ -58,7 +58,7 @@ namespace FunnySailAPI.Assemblers
                 bookingOutputDTO.ClientInvoiceLine = new ClientInvoiceLinesOutputDTO
                 {
                     BookingId = booking.Id,
-                    Currency = booking.InvoiceLine.Currency,
+                    Currency = booking.InvoiceLine.Currency.ToString(),
                     TotalAmount = booking.InvoiceLine.TotalAmount,
                 };
             }

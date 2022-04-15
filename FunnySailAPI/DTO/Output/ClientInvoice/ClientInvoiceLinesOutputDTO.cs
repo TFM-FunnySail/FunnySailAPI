@@ -7,7 +7,7 @@ namespace FunnySailAPI.DTO.Output.ClientInvoice
     public class ClientInvoiceLinesOutputDTO
     {
         public int BookingId { get; set; }
-        public CurrencyEnum Currency { get; set; }
+        public string Currency { get; set; }
         public decimal TotalAmount { get; set; }
         public int? ClientInvoiceId { get; set; }
 

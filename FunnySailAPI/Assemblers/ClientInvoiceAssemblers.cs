@@ -30,6 +30,7 @@ namespace FunnySailAPI.Assemblers
                     BookingId = x.BookingId,
                     TotalAmount = x.TotalAmount,
                     ClientInvoiceId = x.ClientInvoiceId,
+                    Currency = x.Currency.ToString()
                 }).ToList();
             }
 
