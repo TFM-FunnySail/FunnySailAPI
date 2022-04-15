@@ -18,6 +18,7 @@ namespace FunnySailAPI.DTO.Output.Booking
         public int TotalPeople { get; set; }
         public bool Paid { get; set; }
         public bool RequestCaptain { get; set; }
+        public string Status { get; set; }
         public UserOutputDTO client { get; set; } 
         public List<BoatBookingOutputDTO> BoatBookings { get; set; }
         public List<ServiceBookingOutputDTO> ServiceBookings { get; set; }

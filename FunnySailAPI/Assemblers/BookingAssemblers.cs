@@ -21,6 +21,7 @@ namespace FunnySailAPI.Assemblers
                 Paid = booking.Paid,
                 TotalPeople = booking.TotalPeople,
                 RequestCaptain = booking.RequestCaptain,
+                Status = booking.Status.ToString(),
                 ActivyBookings = new List<ActivityBookingOutputDTO>(),
                 BoatBookings = new List<BoatBookingOutputDTO>(),
                 ServiceBookings = new List<ServiceBookingOutputDTO>()
