@@ -206,5 +206,19 @@ namespace FunnySailAPI.Controllers
             }
         }
 
+        // GET: api/Bookings/status
+        [HttpGet("status")]
+        public ActionResult<IList<EnumsOutputDTO>> GetBookingsStatus([FromQuery] BookingFilters filters, [FromQuery] Pagination pagination)
+        {
+            try
+            {
+                return Ok(EnumsAssemblers.Convert<BookingStatusEnum>());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
+
     }
 }
