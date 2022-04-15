@@ -96,6 +96,11 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
                 throw new DataValidationException("The reservation cannot be modified because it is completed",
                     "La reserva no puede ser modificada porque está completada");
 
+            if(updateBookingInputDTO.Status != null)
+            {
+                bookingEN.Status = (BookingStatusEnum)updateBookingInputDTO.Status;
+            }
+
             if (updateBookingInputDTO.ClientId != null)
             {
                 var newUsertoBooking = _userCAD.FindById(updateBookingInputDTO.ClientId);
