@@ -178,7 +178,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
             if(extraTotalAmount > 0)
             {
-                if (bookingEN.Status == BookingStatusEnum.Booking || bookingEN.Paid)
+                if (bookingEN.Status == BookingStatusEnum.Rented || bookingEN.Paid)
                     throw new DataValidationException("It is not possible to add activities, services or boats to the reservation because it has already been paid",
                         "No se puede agregar actividades, servicios o embarcaciones a la reserva porque ya fue pagada");
 
