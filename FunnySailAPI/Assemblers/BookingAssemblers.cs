@@ -27,7 +27,11 @@ namespace FunnySailAPI.Assemblers
             };
 
             if (booking.Client != null)
+            {
+                booking.Client.Bookings = null;
                 bookingOutputDTO.client = UserAssemblers.Convert(booking.Client);
+            }
+                
 
             if (booking.ActivityBookings != null)
             {
