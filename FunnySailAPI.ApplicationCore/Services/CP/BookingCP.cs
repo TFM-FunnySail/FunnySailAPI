@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input.Booking;
+using Microsoft.EntityFrameworkCore;
 
 namespace FunnySailAPI.ApplicationCore.Services.CP
 {
@@ -323,5 +324,172 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             }
         }
 
+        public async Task<BookingEN> UpdateBooking(UpdateBookingInputDTO updateBookingInputDTO)
+        {
+            if (updateBookingInputDTO.Id == 0)
+                throw new DataValidationException("Booking Id", "Id Reserva",
+                    ExceptionTypesEnum.IsRequired);
+
+            BookingEN bookingEN = (await _bookingCEN.GetAll(new BookingFilters
+            {
+                bookingId = updateBookingInputDTO.Id
+            }, includeProperties: source => source
+                                         .Include(x => x.Client)
+                                        .ThenInclude(x => x.ApplicationUser)
+                                        .Include(x => x.ActivityBookings)
+                                        .ThenInclude(x => x.Activity)
+                                        .Include(x => x.BoatBookings)
+                                        .ThenInclude(x => x.Boat.BoatInfo)
+                                        .Include(x => x.ServiceBookings)
+                                        .ThenInclude(x => x.service)
+                                        .Include(x => x.InvoiceLine)
+                                         .ThenInclude(x => x.ClientInvoice)))
+                                        .FirstOrDefault();
+
+            if (bookingEN == null)
+                throw new DataValidationException("Booking", "Reserva",
+                    ExceptionTypesEnum.NotFound);
+
+            if (bookingEN.Status == BookingStatusEnum.Cancelled)
+                throw new DataValidationException("The reservation cannot be modified because it is canceled",
+                    "La reserva no puede ser modificada porque está cancelada");
+
+            if (bookingEN.Status == BookingStatusEnum.Completed)
+                throw new DataValidationException("The reservation cannot be modified because it is completed",
+                    "La reserva no puede ser modificada porque está completada");
+
+            if (updateBookingInputDTO.Status != null)
+            {
+                bookingEN.Status = (BookingStatusEnum)updateBookingInputDTO.Status;
+            }
+
+            if (updateBookingInputDTO.ClientId != null && updateBookingInputDTO.ClientId != bookingEN.ClientId)
+            {
+                var newUsertoBooking = _userCEN.GetUserCAD().FindById(updateBookingInputDTO.ClientId);
+
+                if (newUsertoBooking == null)
+                    throw new DataValidationException("New user to booking", "Nuevo usuario para la Reserva",
+                    ExceptionTypesEnum.DontExists);
+
+                bookingEN.ClientId = updateBookingInputDTO.ClientId;
+            }
+
+            if (updateBookingInputDTO.EntryDate != null)
+                bookingEN.EntryDate = (DateTime)updateBookingInputDTO.EntryDate;
+
+            if (updateBookingInputDTO.DepartureDate != null)
+                bookingEN.DepartureDate = (DateTime)updateBookingInputDTO.DepartureDate;
+
+            if (updateBookingInputDTO.TotalPeople != null)
+                bookingEN.TotalPeople = (int)updateBookingInputDTO.TotalPeople;
+
+            if (updateBookingInputDTO.RequestCaptain != null)
+                bookingEN.RequestCaptain = (bool)updateBookingInputDTO.RequestCaptain;
+
+            decimal extraTotalAmount = 0;
+            if (updateBookingInputDTO.ActivityBookingIds != null)
+            {
+                foreach (var activity in updateBookingInputDTO.ActivityBookingIds)
+                {
+                    ActivityEN activityEN = await _activityCEN.GetActivityCAD().FindById(activity);
+                    if (activityEN == null)
+                        throw new DataValidationException($"Activity {activity}", $"Actividad {activity}",
+                            ExceptionTypesEnum.DontExists);
+
+                    if (!bookingEN.ActivityBookings.Any(x => x.ActivityId == activity))
+                    {
+                        bookingEN.ActivityBookings.Add(new ActivityBookingEN
+                        {
+                            ActivityId = activity,
+                            Price = activityEN.Price
+                        });
+                        extraTotalAmount += activityEN.Price;
+                    }
+                }
+
+                extraTotalAmount -= bookingEN.ActivityBookings.Where(x =>
+                !updateBookingInputDTO.ActivityBookingIds.Contains(x.ActivityId)).Sum(x => x.Price);
+
+                bookingEN.ActivityBookings.RemoveAll(x =>
+                !updateBookingInputDTO.ActivityBookingIds.Contains(x.ActivityId));
+            }
+
+            if (updateBookingInputDTO.ServiceBookingIds != null)
+            {
+                foreach (var service in updateBookingInputDTO.ServiceBookingIds)
+                {
+                    ServiceEN serviceEN = await _serviceCEN.GetServiceCAD().FindById(service);
+                    if (serviceEN == null)
+                        throw new DataValidationException($"Service {service}", $"Servicio {service}",
+                            ExceptionTypesEnum.DontExists);
+                    if (!bookingEN.ServiceBookings.Any(x => x.ServiceId == service))
+                    {
+                        bookingEN.ServiceBookings.Add(new ServiceBookingEN
+                        {
+                            Price = serviceEN.Price,
+                            ServiceId = service
+                        });
+                        extraTotalAmount += serviceEN.Price;
+                    }
+                }
+
+                extraTotalAmount -= bookingEN.ServiceBookings.Where(x =>
+                !updateBookingInputDTO.ServiceBookingIds.Contains(x.ServiceId)).Sum(x => x.Price);
+
+                bookingEN.ServiceBookings.RemoveAll(x =>
+                !updateBookingInputDTO.ServiceBookingIds.Contains(x.ServiceId));
+            }
+
+            if (updateBookingInputDTO.BoatBookingIds != null)
+            {
+                foreach (var boat in updateBookingInputDTO.BoatBookingIds)
+                {
+                    BoatPricesEN boatEN = await _boatPricesCEN.GetBoatPricesCAD().FindById(boat);
+                    if (boatEN == null)
+                        throw new DataValidationException($"Boat {boat}", $"Embarcación {boat}",
+                            ExceptionTypesEnum.DontExists);
+                    
+                    if (!bookingEN.BoatBookings.Any(x => x.BoatId == boat))
+                    {
+                        decimal price = CalculateBoatPriceInAOrder(bookingEN, boatEN);
+                        bookingEN.BoatBookings.Add(new BoatBookingEN
+                        {
+                            BoatId = boatEN.BoatId,
+                            Price = price
+                        });
+                        extraTotalAmount += price;
+                    }
+                }
+
+                extraTotalAmount -= bookingEN.BoatBookings.Where(x =>
+                !updateBookingInputDTO.BoatBookingIds.Contains(x.BoatId)).Sum(x => x.Price);
+
+                bookingEN.BoatBookings.RemoveAll(x =>
+                !updateBookingInputDTO.BoatBookingIds.Contains(x.BoatId));
+            }
+
+            if (extraTotalAmount != 0)
+            {
+                if (bookingEN.Status == BookingStatusEnum.Rented || bookingEN.Paid)
+                    throw new DataValidationException("It is not possible to update activities, services or boats to the reservation because it has already been paid",
+                        "No se puede modificar actividades, servicios o embarcaciones a la reserva porque ya fue pagada");
+
+                bookingEN.InvoiceLine.TotalAmount += extraTotalAmount;
+                if (bookingEN.InvoiceLine.ClientInvoice != null)
+                {
+                    bookingEN.InvoiceLine.ClientInvoice.TotalAmount += extraTotalAmount;
+                }
+            }
+
+            return await _bookingCEN.UpdateBooking(bookingEN);
+        }
+
+        public decimal CalculateBoatPriceInAOrder(BookingEN booking,BoatPricesEN boatPrices)
+        {
+            double hoursOfDifference = (booking.DepartureDate - booking.EntryDate).TotalHours;
+            double daysOfDifference = (booking.DepartureDate - booking.EntryDate).TotalDays;
+
+            return _boatPricesCEN.CalculatePrice(boatPrices, daysOfDifference, hoursOfDifference);
+        }
     }
 }

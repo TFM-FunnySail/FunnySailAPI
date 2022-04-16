@@ -194,8 +194,8 @@ namespace FunnySailAPI.Controllers
 
                 updateBookingInputDTO.Id = id;
 
-                BookingEN booking = await _unitOfWork.BookingCEN.UpdateBooking(updateBookingInputDTO);
-                return CreatedAtAction("GetBoat", new { id = booking.Id });
+                BookingEN booking = await _unitOfWork.BookingCP.UpdateBooking(updateBookingInputDTO);
+                return Ok(BookingAssemblers.Convert(booking));
             }
             catch (DataValidationException dataValidation)
             {

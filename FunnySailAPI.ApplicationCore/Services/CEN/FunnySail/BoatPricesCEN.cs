@@ -56,5 +56,10 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
             return boatPrices.HourBasePrice * (decimal)hours + (decimal)boatPrices.Supplement;
         }
+
+        public IBoatPricesCAD GetBoatPricesCAD()
+        {
+            return _boatPricesCAD;
+        }
     }
 }
