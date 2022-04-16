@@ -8,6 +8,7 @@ namespace FunnySailAPI.ApplicationCore.Models.Filters
     {
         public int Id { get; set; }
         public string ClientId { get; set; }
+        public string ClientEmail { get; set; }
         public bool? ToCollet { get; set; }
         public decimal MinPrice { get; set; }
         public decimal MaxPrice { get; set; }

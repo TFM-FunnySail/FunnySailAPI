@@ -46,12 +46,10 @@ namespace FunnySailAPI.Controllers
                 var clientInvoices = (await _unitOfWork.ClientInvoiceCEN.GetAll(
                     filters: filters,
                     pagination: pagination ?? new Pagination(),
-                    includeProperties: source => source.Include(x => x.InvoiceLines)
-                                        .ThenInclude(x => x.Booking)
-                                        .Include(x => x.Client)
-                                        .Include(x => x.Refunds)
-
-                     ))
+                    includeProperties: source => source.Include(x=>x.InvoiceLines)
+                                                        .Include(x => x.Client)
+                                                        .ThenInclude(x=>x.ApplicationUser)
+                    ))
                     .Select(x => ClientInvoiceAssemblers.Convert(x));
 
                 return new GenericResponseDTO<ClientInvoiceOutputDTO>(clientInvoices, pagination.Limit, pagination.Offset, clientInvoiceTotal);
@@ -76,9 +74,8 @@ namespace FunnySailAPI.Controllers
                 {
                     Id = id
                 }, includeProperties: source => source.Include(x => x.InvoiceLines)
-                                        .ThenInclude(x => x.Booking)
                                         .Include(x => x.Client)
-                                        .Include(x => x.Refunds));
+                                        .ThenInclude(x => x.ApplicationUser));
 
                 var clientInvoice = clientInvoices.Select(x => ClientInvoiceAssemblers.Convert(x)).FirstOrDefault();
                 if (clientInvoice == null)
@@ -93,51 +90,7 @@ namespace FunnySailAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
             }
         }
-        /*
-        // POST: api/ClientInvoice
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [CustomAuthorize]
-        [HttpPost]
-        public async Task<ActionResult<OwnerInvoiceEN>> PostClientInvoice(AddClientInvoiceInputDTO addClientInvoiceInput)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest();
-
-                ApplicationUser user;
-                if (!RolesHelpers.AnyRole(UserRoles, UserRolesConstant.ADMIN))
-                {
-                    user = User.ApplicationUser;
-                }
-                else
-                {
-                    user = await _unitOfWork.UserManager.FindByIdAsync(addClientInvoiceInput.ClientId);
-                }
-                addClientInvoiceInput.ClientId = user.Id;
-
-                int ownerInvoiceId = await _unitOfWork.ClientInvoiceCEN.CreateClientInvoice(new ClientInvoiceEN
-                {
-                    ClientId = addClientInvoiceInput.ClientId,
-                    CreatedDate = DateTime.Now,
-                    Canceled = false,
-                    TotalAmount = addClientInvoiceInput.TotalAmount
-                });
-
-                return CreatedAtAction("GetClientInvoice", new { id = addClientInvoiceInput.ClientId });
-            }
-            catch (DataValidationException dataValidation)
-            {
-                return StatusCode(StatusCodes.Status422UnprocessableEntity, new ErrorResponseDTO(dataValidation));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
-            }
-
-        }
-        */
+        
         // PUT: api/ClientInvoice/5/cancel
         [CustomAuthorize(UserRolesConstant.ADMIN)]
         [HttpPut("{id}/cancel")]

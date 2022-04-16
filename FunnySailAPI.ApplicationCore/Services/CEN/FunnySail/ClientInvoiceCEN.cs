@@ -36,6 +36,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
             if (clientInvoiceEN == null)
                 throw new DataValidationException(_enName, _esName, ExceptionTypesEnum.NotFound);
+            
             if (clientInvoiceEN.Paid)
                 throw new DataValidationException(
                     $"The {_enName} cannot be canceled because it has already been paid",

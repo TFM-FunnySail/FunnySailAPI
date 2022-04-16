@@ -30,6 +30,12 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
             if (ClientInvoiceFilters.ClientId != null)
                 ClientInvoices = ClientInvoices.Where(x => x.ClientId == ClientInvoiceFilters.ClientId);
 
+            if(ClientInvoiceFilters.ClientEmail != null)
+            {
+                ClientInvoices = ClientInvoices.Include(x => x.Client).ThenInclude(x => x.ApplicationUser)
+                    .Where(x => x.Client.ApplicationUser.Email == ClientInvoiceFilters.ClientEmail);
+            }
+
             if (ClientInvoiceFilters.IsCanceled != null)
                 ClientInvoices = ClientInvoices.Where(x => x.Canceled == ClientInvoiceFilters.IsCanceled);
 
