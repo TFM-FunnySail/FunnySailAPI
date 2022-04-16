@@ -1,5 +1,6 @@
 ﻿using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.DTO.Output.Booking;
+using FunnySailAPI.DTO.Output.ClientInvoice;
 using FunnySailAPI.DTO.Output.User;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,18 @@ namespace FunnySailAPI.Assemblers
                 {
                     booking.Client = null;
                     user.Bookings.Add(BookingAssemblers.Convert(booking));
+                }
+            }
+
+            if(userEN.Invoices?.Count > 0)
+            {
+                user.Invoices = new List<ClientInvoiceOutputDTO>();
+                foreach (var invoice in userEN.Invoices.OrderByDescending(x => x.Id))
+                {
+                    invoice.Client = null;
+                    invoice.InvoiceLines = null;
+                    invoice.Refunds = null;
+                    user.Invoices.Add(ClientInvoiceAssemblers.Convert(invoice));
                 }
             }
 

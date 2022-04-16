@@ -1,4 +1,5 @@
 ﻿using FunnySailAPI.DTO.Output.Booking;
+using FunnySailAPI.DTO.Output.ClientInvoice;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace FunnySailAPI.DTO.Output.User
         public string PhoneNumber { get; set; }
         public IList<string> Roles { get; set; }
         public IList<BookingOutputDTO> Bookings { get; set; }
+        public IList<ClientInvoiceOutputDTO> Invoices { get; set; }
 
     }
 }

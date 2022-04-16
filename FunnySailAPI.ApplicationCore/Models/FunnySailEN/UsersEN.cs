@@ -28,5 +28,6 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
         public List<BoatEN> Boats { get; set; }
         public List<ReviewEN> AdminReviews { get; set; }
         public List<BookingEN> Bookings { get; set; }
+        public List<ClientInvoiceEN> Invoices { get; set; }
     }
 }
