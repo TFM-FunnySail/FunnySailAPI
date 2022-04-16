@@ -39,6 +39,8 @@ namespace FunnySailAPI.Controllers
                     filters: filters,
                     pagination: pagination ?? new Pagination(),
                     includeProperties: source => source.Include(x => x.ClientInvoice)
+                                                        .Include(x=>x.Booking.Client)
+                                                        .ThenInclude(x=>x.ApplicationUser)
                      ))
                     .Select(x => RefundAssemblers.Convert(x));
 

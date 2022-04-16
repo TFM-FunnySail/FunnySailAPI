@@ -1,6 +1,7 @@
 ﻿using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.Filters;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +51,11 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
 
             if (filters.Description != null)
                 query = query.Where(x => x.Description.Contains(filters.Description));
+
+            if (filters.ClientEmail != null)
+                query = query.Include(x => x.Booking.Client)
+                            .ThenInclude(x => x.ApplicationUser)
+                            .Where(x => x.Booking.Client.ApplicationUser.Email == filters.ClientEmail);
 
             return query;
         }

@@ -1,4 +1,5 @@
 ﻿using FunnySailAPI.DTO.Output.ClientInvoice;
+using FunnySailAPI.DTO.Output.User;
 using System;
 
 namespace FunnySailAPI.DTO.Output.Refund
@@ -12,5 +13,6 @@ namespace FunnySailAPI.DTO.Output.Refund
         public int BookingId { get; set; }
         public int? ClientInvoiceId { get; set; }
         public ClientInvoiceOutputDTO ClientInvoice { get; set; }
+        public UserOutputDTO Client { get; set; }
     }
 }
