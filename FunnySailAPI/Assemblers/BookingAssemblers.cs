@@ -1,6 +1,7 @@
 ﻿using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.DTO.Output.Booking;
 using FunnySailAPI.DTO.Output.ClientInvoice;
+using FunnySailAPI.DTO.Output.Refund;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,6 +67,15 @@ namespace FunnySailAPI.Assemblers
                     Currency = booking.InvoiceLine.Currency.ToString(),
                     TotalAmount = booking.InvoiceLine.TotalAmount,
                 };
+            }
+
+            if(booking.Refunds != null)
+            {
+                bookingOutputDTO.Refunds = new List<RefundOutputDTO>();
+                foreach (var refund in booking.Refunds)
+                {
+                    bookingOutputDTO.Refunds.Add(RefundAssemblers.Convert(refund));
+                }
             }
 
             return bookingOutputDTO;

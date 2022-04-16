@@ -82,8 +82,10 @@ namespace FunnySailAPI.Controllers
                     UserId = id
                 }, includeProperties: source => source.Include(x => x.ApplicationUser)
                                                       .Include(x=>x.Invoices)
+                                                      .Include(x => x.Bookings)
+                                                      .ThenInclude(x=>x.InvoiceLine)
                                                       .Include(x=>x.Bookings)
-                                                      .ThenInclude(x=>x.InvoiceLine));
+                                                      .ThenInclude(x=>x.Refunds));
                 var user = users.FirstOrDefault();
                 if (user == null)
                 {

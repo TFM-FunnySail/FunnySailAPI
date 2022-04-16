@@ -1,5 +1,6 @@
 ﻿using FunnySailAPI.DTO.Output.Booking;
 using FunnySailAPI.DTO.Output.ClientInvoice;
+using FunnySailAPI.DTO.Output.Refund;
 using System;
 using System.Collections.Generic;
 using System.Linq;
