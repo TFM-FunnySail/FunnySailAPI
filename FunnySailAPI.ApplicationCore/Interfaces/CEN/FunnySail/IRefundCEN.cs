@@ -13,7 +13,7 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
 {
     public interface IRefundCEN
     {
-        Task<int> CreateRefund(int bookingID, string desc, decimal amountToReturn);
+        Task<int> CreateRefund(int bookingID, string desc, decimal amountToReturn, int? clientInvoiceId = null);
 		Task<IList<RefundEN>> GetAll(RefundFilters filters = null,
         Pagination pagination = null,
         Func<IQueryable<RefundEN>, IOrderedQueryable<RefundEN>> orderBy = null,

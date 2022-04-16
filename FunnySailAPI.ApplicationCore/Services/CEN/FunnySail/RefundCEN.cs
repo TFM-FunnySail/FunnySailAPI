@@ -24,7 +24,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             _bookingCEN = bookingCEN;
         }
 
-        public async Task<int> CreateRefund(int bookingID,string desc, decimal amountToReturn)
+        public async Task<int> CreateRefund(int bookingID,string desc, decimal amountToReturn, int? clientInvoiceId = null)
         {
             BookingEN bookingEN = await _bookingCEN.GetBookingCAD().FindById(bookingID);
             if (bookingEN == null)
@@ -35,7 +35,8 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
                 AmountToReturn = amountToReturn,
                 BookingId = bookingID,
                 Date = DateTime.UtcNow,
-                Description = desc
+                Description = desc,
+                ClientInvoiceId = clientInvoiceId
             });
 
             return dbRefund.Id;
