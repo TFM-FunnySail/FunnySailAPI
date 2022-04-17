@@ -144,7 +144,7 @@ namespace FunnySailAPI.Infrastructure.Initialize
                 //    }
 
                 //}
-
+           
                 if (!await _dbContext.BoatTypes.AnyAsync())
                 {
                     int index = 1;
@@ -195,36 +195,14 @@ namespace FunnySailAPI.Infrastructure.Initialize
                     await _dbContext.Moorings.AddRangeAsync(moorings);
                     await _dbContext.SaveChangesAsync();
                 }
-     
-                if (!await _dbContext.Boats.AnyAsync()) { 
+
+                if (!await _dbContext.Resources.AnyAsync())
+                {
                     int index = 1;
-
-                    //  Listas vacias
-                    List<int> resourcesIds = new List<int>();
-                    List<AddRequiredBoatTitleInputDTO> requiredBoatTitles = new List<AddRequiredBoatTitleInputDTO>();
-
-                    for (; index <= 10; index++)
+                    List<ResourcesEN> resources = new List<ResourcesEN>();
+                    for (; index <= 7; index++)
                     {
-
-                        await _unitOfWork.BoatCP.CreateBoat(new AddBoatInputDTO
-                        {
-                            BoatTypeId = index,
-                            Name = "Embarcación prueba " + index,
-                            Capacity = index * 3,
-                            MotorPower = index * 20,
-                            Sleeve = index * 20,
-                            Supplement = 20,         
-                            Registration = "Reg prueba " + index,
-                            OwnerId = "e154b7cd-9fa6-42df-a765-589383aa6bbf",              
-                            Description = "Descripción embarcación prueba " + index,
-                            DayBasePrice = NextInt(100, 300),
-                            HourBasePrice = NextInt(15, 30),
-                            Length = NextInt(40, 100),
-                            MooringId = index,
-                            MooringPoint = "Puerto prueba " + index,
-                            ResourcesIdList = resourcesIds,
-                            RequiredBoatTitles = requiredBoatTitles,
-                        });
+                        await _unitOfWork.ResourcesCEN.AddResources(false, 0, index.ToString()+ ".png");
                     }
                     await _dbContext.SaveChangesAsync();
                 }
@@ -244,6 +222,42 @@ namespace FunnySailAPI.Infrastructure.Initialize
                         });
                     }
                     await _dbContext.TechnicalServices.AddRangeAsync(technicalServices);
+                    await _dbContext.SaveChangesAsync();
+                }
+
+                if (!await _dbContext.Boats.AnyAsync()) { 
+                    int index = 1;
+
+                    //  Listas vacias
+                    List<int> resourcesIds = new List<int>();
+                    List<AddRequiredBoatTitleInputDTO> requiredBoatTitles = new List<AddRequiredBoatTitleInputDTO>();
+
+                    for (; index <= 7; index++)
+                    {
+                        resourcesIds.Clear();
+                        resourcesIds.Add(index);
+
+               
+                        await _unitOfWork.BoatCP.CreateBoat(new AddBoatInputDTO
+                        {
+                            BoatTypeId = index,
+                            Name = "Embarcación prueba " + index,
+                            Capacity = index * 3,
+                            MotorPower = index * 20,
+                            Sleeve = index * 20,
+                            Supplement = 20,         
+                            Registration = "Reg prueba " + index,
+                            OwnerId = "04395eac-522d-476a-99e6-f96e3a409d4b",              
+                            Description = "Descripción embarcación prueba " + index,
+                            DayBasePrice = NextInt(100, 300),
+                            HourBasePrice = NextInt(15, 30),
+                            Length = NextInt(40, 100),
+                            MooringId = index,
+                            MooringPoint = "Puerto prueba " + index,
+                            ResourcesIdList = resourcesIds,
+                            RequiredBoatTitles = requiredBoatTitles,
+                        });
+                    }
                     await _dbContext.SaveChangesAsync();
                 }
 
