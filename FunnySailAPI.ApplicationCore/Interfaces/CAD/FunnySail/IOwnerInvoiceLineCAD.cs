@@ -17,5 +17,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail
                                             Func<IQueryable<OwnerInvoiceLineEN>, IIncludableQueryable<OwnerInvoiceLineEN, object>> includeProperties = null,
                                             Pagination pagination = null);
         Task SetOwnerInvoice(List<OwnerInvoiceLineEN> ownerInvoiceLines, int newOwnerInvoice);
+        IQueryable<OwnerInvoiceLineEN> GetOwnerInvoiceLineFiltered(OwnerInvoiceLineFilters filters);
     }
 }

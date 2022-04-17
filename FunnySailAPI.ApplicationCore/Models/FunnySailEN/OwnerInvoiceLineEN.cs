@@ -17,6 +17,7 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
         public decimal Price { get; set; }
 
         public BookingEN Booking { get; set; }
+        public UsersEN Owner { get; set; }
         public OwnerInvoiceEN OwnerInvoice { get; set; }
     }
 }

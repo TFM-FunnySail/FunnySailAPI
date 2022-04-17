@@ -54,8 +54,8 @@ namespace FunnySailAPI.Controllers
                                         .ThenInclude(x => x.Booking)
                                         .Include(x => x.TechnicalServiceBoats)
                                         .Include(x => x.Owner)
-                                        .ThenInclude(x=>x.ApplicationUser)
-                                     
+                                        .ThenInclude(x => x.ApplicationUser)
+
                      ))
                     .Select(x => OwnerInvoiceAssemblers.Convert(x));
 
@@ -158,6 +158,34 @@ namespace FunnySailAPI.Controllers
                     return NotFound();
 
                 return StatusCode(StatusCodes.Status422UnprocessableEntity, new ErrorResponseDTO(dataValidation));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
+
+        // GET: api/OwnerInvoice/invoiceOrderPending
+        [HttpGet("invoiceOrderPending")]
+        public async Task<ActionResult<GenericResponseDTO<OwnerInvoiceLinesOutputDTO>>> GetOwnerInvoicesOrderPending([FromQuery] OwnerInvoiceLineFilters filters, [FromQuery] Pagination pagination)
+        {
+            try
+            {
+                filters.Invoiced = false;
+
+                int ownerInvoiceTotal = await _unitOfWork.OwnerInvoiceLineCEN.GetTotal(filters);
+
+                var ownerInvoices = (await _unitOfWork.OwnerInvoiceLineCEN.GetAll(
+                    filters: filters,
+                    pagination: pagination ?? new Pagination(),
+                    includeProperties: source => source.Include(x => x.Owner)
+                                        .ThenInclude(x => x.ApplicationUser)
+
+                     ))
+                    .Select(x => OwnerInvoiceLineAssemblers.Convert(x));
+                
+
+                return new GenericResponseDTO<OwnerInvoiceLinesOutputDTO>(ownerInvoices, pagination.Limit, pagination.Offset, ownerInvoiceTotal);
             }
             catch (Exception ex)
             {

@@ -1,4 +1,5 @@
 ﻿using FunnySailAPI.ApplicationCore.Models.Globals;
+using FunnySailAPI.DTO.Output.User;
 
 namespace FunnySailAPI.DTO.Output.OwnerInvoice
 {
@@ -8,5 +9,6 @@ namespace FunnySailAPI.DTO.Output.OwnerInvoice
         public string OwnerId { get; set; }
         public int? OwnerInvoiceId { get; set; }
         public decimal Price { get; set; }
+        public UserOutputDTO Owner { get; set; }
     }
 }
