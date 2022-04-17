@@ -22,6 +22,7 @@ using FunnySailAPI.DTO.Output.Activity;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input.OwnerInvoice;
 using FunnySailAPI.DTO.Output.OwnerInvoice;
+using FunnySailAPI.DTO.Output.User;
 
 namespace FunnySailAPI.Controllers
 {
@@ -166,6 +167,7 @@ namespace FunnySailAPI.Controllers
         }
 
         // GET: api/OwnerInvoice/invoiceOrderPending
+        [CustomAuthorize(UserRolesConstant.ADMIN)]
         [HttpGet("invoiceOrderPending")]
         public async Task<ActionResult<GenericResponseDTO<OwnerInvoiceLinesOutputDTO>>> GetOwnerInvoicesOrderPending([FromQuery] OwnerInvoiceLineFilters filters, [FromQuery] Pagination pagination)
         {
@@ -193,6 +195,23 @@ namespace FunnySailAPI.Controllers
             }
         }
 
+        // GET: api/OwnerInvoice/invoiceOrderPending/owner
+        [CustomAuthorize(UserRolesConstant.ADMIN)]
+        [HttpGet("invoiceOrderPending/owner")]
+        public async Task<ActionResult<IEnumerable<UserOutputDTO>>> GetOwnerWithInvoicesOrderPending()
+        {
+            try
+            {
+                var owners = (await _unitOfWork.UserCEN.GetOwnerWithInvPending())
+                    .Select(x => UserAssemblers.Convert(x));
+
+                return Ok(owners);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
 
     }
 }

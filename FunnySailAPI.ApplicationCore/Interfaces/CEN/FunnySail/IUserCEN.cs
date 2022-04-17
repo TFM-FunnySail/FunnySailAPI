@@ -26,5 +26,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
             Func<IQueryable<UsersEN>, IIncludableQueryable<UsersEN, object>> includeProperties = null);
         Task AddRole(string id, string[] roles);
         Task DeleteRole(string id, string[] roles);
+        Task<IList<UsersEN>> GetOwnerWithInvPending();
     }
 }
