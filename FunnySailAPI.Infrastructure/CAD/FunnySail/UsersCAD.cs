@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FunnySailAPI.Infrastructure.CAD.FunnySail
 {
@@ -49,6 +50,13 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
                 query = query.Where(x => x.LastName.Contains(filters.LastName));
 
             return query;
+        }
+
+        public async Task<IList<UsersEN>> GetOwnerWithInvPending()
+        {
+            return await _dbContext.OwnerInvoiceLines.Where(x => x.OwnerInvoiceId == null)
+                .Include(x => x.Owner).ThenInclude(x => x.ApplicationUser)
+                .Select(x => x.Owner).Distinct().ToListAsync();
         }
     }
 }

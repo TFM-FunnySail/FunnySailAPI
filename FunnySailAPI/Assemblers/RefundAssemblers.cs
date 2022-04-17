@@ -25,6 +25,8 @@ namespace FunnySailAPI.Assemblers
 
             if(refund.Booking?.Client != null)
             {
+                refund.Booking.Client.Bookings = null;
+                refund.Booking.Client.Invoices = null;
                 refundOutput.Client = UserAssemblers.Convert(refund.Booking.Client);
             }
 

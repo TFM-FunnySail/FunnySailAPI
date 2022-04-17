@@ -1,5 +1,6 @@
 ﻿using FunnySailAPI.DTO.Output.Boat;
 using FunnySailAPI.DTO.Output.ClientInvoice;
+using FunnySailAPI.DTO.Output.Refund;
 using FunnySailAPI.DTO.Output.User;
 using System;
 using System.Collections.Generic;
@@ -20,9 +21,10 @@ namespace FunnySailAPI.DTO.Output.Booking
         public bool RequestCaptain { get; set; }
         public string Status { get; set; }
         public UserOutputDTO client { get; set; } 
-        public List<BoatBookingOutputDTO> BoatBookings { get; set; }
-        public List<ServiceBookingOutputDTO> ServiceBookings { get; set; }
-        public List<ActivityBookingOutputDTO> ActivyBookings { get; set; }
+        public IList<BoatBookingOutputDTO> BoatBookings { get; set; }
+        public IList<ServiceBookingOutputDTO> ServiceBookings { get; set; }
+        public IList<ActivityBookingOutputDTO> ActivyBookings { get; set; }
+        public IList<RefundOutputDTO> Refunds { get; set; }
         public ClientInvoiceLinesOutputDTO ClientInvoiceLine { get; set; }
         public BookingOutputDTO() { }
     }

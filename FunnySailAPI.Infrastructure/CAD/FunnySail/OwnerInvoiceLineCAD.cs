@@ -19,7 +19,7 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
             
         }
 
-        private IQueryable<OwnerInvoiceLineEN> GetOwnerInvoiceLineFiltered(OwnerInvoiceLineFilters filters)
+        public IQueryable<OwnerInvoiceLineEN> GetOwnerInvoiceLineFiltered(OwnerInvoiceLineFilters filters)
         {
             IQueryable<OwnerInvoiceLineEN> ownerInvoiceLines = GetIQueryable();
 
@@ -27,6 +27,20 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
 
             if (filters.BookingIds?.Count > 0)
                 ownerInvoiceLines = ownerInvoiceLines.Where(x => filters.BookingIds.Contains(x.BookingId));
+
+            if (filters.OwnerId != null)
+                ownerInvoiceLines = ownerInvoiceLines.Where(x => x.OwnerId == filters.OwnerId);
+
+            if (filters.OwnerInvoiceId != 0)
+                ownerInvoiceLines = ownerInvoiceLines.Where(x => x.OwnerInvoiceId == filters.OwnerInvoiceId);
+
+            if(filters.Invoiced != null)
+            {
+                if(filters.Invoiced == true)
+                    ownerInvoiceLines = ownerInvoiceLines.Where(x => x.OwnerInvoiceId != null);
+                else
+                    ownerInvoiceLines = ownerInvoiceLines.Where(x => x.OwnerInvoiceId == null);
+            }
 
             return ownerInvoiceLines;
         }

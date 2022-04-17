@@ -50,6 +50,11 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
             if (OwnerInvoiceFilters.CreatedDaysRange?.EndDate != null)
                 OwnerInvoices = OwnerInvoices.Where(x => x.Date < OwnerInvoiceFilters.CreatedDaysRange.EndDate);
 
+            if (OwnerInvoiceFilters.OwnerEmail != null)
+                OwnerInvoices = OwnerInvoices.Include(x => x.Owner)
+                    .ThenInclude(x => x.ApplicationUser)
+                    .Where(x => x.Owner.ApplicationUser.Email == OwnerInvoiceFilters.OwnerEmail);
+
             return OwnerInvoices;
         }
 

@@ -22,6 +22,7 @@ using FunnySailAPI.DTO.Output.Activity;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input.OwnerInvoice;
 using FunnySailAPI.DTO.Output.OwnerInvoice;
+using FunnySailAPI.DTO.Output.User;
 
 namespace FunnySailAPI.Controllers
 {
@@ -54,7 +55,8 @@ namespace FunnySailAPI.Controllers
                                         .ThenInclude(x => x.Booking)
                                         .Include(x => x.TechnicalServiceBoats)
                                         .Include(x => x.Owner)
-                                     
+                                        .ThenInclude(x => x.ApplicationUser)
+
                      ))
                     .Select(x => OwnerInvoiceAssemblers.Convert(x));
 
@@ -164,6 +166,52 @@ namespace FunnySailAPI.Controllers
             }
         }
 
+        // GET: api/OwnerInvoice/invoiceOrderPending
+        [CustomAuthorize(UserRolesConstant.ADMIN)]
+        [HttpGet("invoiceOrderPending")]
+        public async Task<ActionResult<GenericResponseDTO<OwnerInvoiceLinesOutputDTO>>> GetOwnerInvoicesOrderPending([FromQuery] OwnerInvoiceLineFilters filters, [FromQuery] Pagination pagination)
+        {
+            try
+            {
+                filters.Invoiced = false;
+
+                int ownerInvoiceTotal = await _unitOfWork.OwnerInvoiceLineCEN.GetTotal(filters);
+
+                var ownerInvoices = (await _unitOfWork.OwnerInvoiceLineCEN.GetAll(
+                    filters: filters,
+                    pagination: pagination ?? new Pagination(),
+                    includeProperties: source => source.Include(x => x.Owner)
+                                        .ThenInclude(x => x.ApplicationUser)
+
+                     ))
+                    .Select(x => OwnerInvoiceLineAssemblers.Convert(x));
+                
+
+                return new GenericResponseDTO<OwnerInvoiceLinesOutputDTO>(ownerInvoices, pagination.Limit, pagination.Offset, ownerInvoiceTotal);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
+
+        // GET: api/OwnerInvoice/invoiceOrderPending/owner
+        [CustomAuthorize(UserRolesConstant.ADMIN)]
+        [HttpGet("invoiceOrderPending/owner")]
+        public async Task<ActionResult<IEnumerable<UserOutputDTO>>> GetOwnerWithInvoicesOrderPending()
+        {
+            try
+            {
+                var owners = (await _unitOfWork.UserCEN.GetOwnerWithInvPending())
+                    .Select(x => UserAssemblers.Convert(x));
+
+                return Ok(owners);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
 
     }
 }

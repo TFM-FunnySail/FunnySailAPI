@@ -115,5 +115,11 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
             await _userManager.RemoveFromRolesAsync(user, roles);
         }
+
+
+        public async Task<IList<UsersEN>> GetOwnerWithInvPending()
+        {
+            return await _userCAD.GetOwnerWithInvPending();
+        }
     }
 }

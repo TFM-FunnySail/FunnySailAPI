@@ -80,7 +80,8 @@ namespace FunnySailAPI.Controllers
                                         .ThenInclude(x => x.Boat.BoatInfo)
                                         .Include(x => x.ServiceBookings)
                                         .ThenInclude(x=>x.service)
-                                        .Include(x=>x.InvoiceLine));
+                                        .Include(x=>x.InvoiceLine)
+                                        .Include(x=>x.Refunds));
 
                 var booking = itemResult.Select(x => BookingAssemblers.Convert(x)).FirstOrDefault();
                 if (booking == null)
