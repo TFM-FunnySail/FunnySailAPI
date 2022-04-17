@@ -38,7 +38,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
         {
             string uri = $"{Guid.NewGuid()}.jpg";
             //Subir imagen
-            string path = Path.Combine(_environment.ContentRootPath, "Images", uri);
+            string path = Path.Combine(_environment.ContentRootPath, "wwwroot/Images", uri);
             using (var stream = new FileStream(path, FileMode.Create))
             {
                 await image.CopyToAsync(stream);
