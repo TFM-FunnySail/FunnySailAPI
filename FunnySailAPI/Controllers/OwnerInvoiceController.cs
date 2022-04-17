@@ -54,6 +54,7 @@ namespace FunnySailAPI.Controllers
                                         .ThenInclude(x => x.Booking)
                                         .Include(x => x.TechnicalServiceBoats)
                                         .Include(x => x.Owner)
+                                        .ThenInclude(x=>x.ApplicationUser)
                                      
                      ))
                     .Select(x => OwnerInvoiceAssemblers.Convert(x));
