@@ -40,6 +40,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             boatPrices.DayBasePrice = updateBoatInput.DayBasePrice ?? boatPrices.DayBasePrice;
             boatPrices.HourBasePrice = updateBoatInput.HourBasePrice ?? boatPrices.HourBasePrice;
             boatPrices.Supplement = updateBoatInput.Supplement ?? boatPrices.Supplement;
+            boatPrices.PorcentPriceOwner = (float)0.2;
 
             await _boatPricesCAD.Update(boatPrices);
 

@@ -17,5 +17,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
            Func<IQueryable<OwnerInvoiceLineEN>, IOrderedQueryable<OwnerInvoiceLineEN>> orderBy = null,
            Func<IQueryable<OwnerInvoiceLineEN>, IIncludableQueryable<OwnerInvoiceLineEN, object>> includeProperties = null);
         Task<int> GetTotal(OwnerInvoiceLineFilters filters);
+        Task CreateOwnerInvoiceLines(IList<OwnerInvoiceLineEN> ownerInvoiceLines);
     }
 }

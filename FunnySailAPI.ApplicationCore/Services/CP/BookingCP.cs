@@ -89,11 +89,11 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                   "Cliente", ExceptionTypesEnum.NotFound);
 
 
-            List<BoatEN> boats = new List<BoatEN>();
-            List<ActivityEN> activities = new List<ActivityEN>();
-            List<ServiceEN> services = new List<ServiceEN>();
+            IList<BoatEN> boats = new List<BoatEN>();
+            IList<ActivityEN> activities = new List<ActivityEN>();
+            IList<ServiceEN> services = new List<ServiceEN>();
 
-            if (addBookingInput.BoatIds.Count > 0) 
+            if (addBookingInput.BoatIds?.Count > 0) 
             {
                 var boatsNotAvailable = await _boatCEN.GetBoatCAD().GetBoatIdsNotAvailable
                     (addBookingInput.EntryDate, addBookingInput.DepartureDate,addBookingInput.BoatIds);
@@ -102,11 +102,14 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                     throw new DataValidationException($"The Boats {String.Join(",", boatsNotAvailable)} not avialable",
                             $"Los barcos {String.Join(",",boatsNotAvailable)} no disponibles");
 
-                boats = await _boatCEN.GetBoatCAD().GetBoatFilteredList(new BoatFilters { BoatIdList= addBookingInput.BoatIds});
+                boats = await _boatCEN.GetAll(new BoatFilters { BoatIdList= addBookingInput.BoatIds},
+                    new Pagination { Limit = 3000},null, 
+                    source => source.Include(x => x.BoatInfo).Include(x=>x.BoatPrices)
+                    );
 
             }
 
-            if (addBookingInput.ServiceIds.Count > 0) 
+            if (addBookingInput.ServiceIds?.Count > 0) 
             {
                 var servicesNotAvailable = await _serviceCEN.GetServiceCAD().GetServiceIdsNotAvailable
                     (addBookingInput.EntryDate, addBookingInput.DepartureDate, addBookingInput.ServiceIds);
@@ -120,7 +123,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
 
             }
 
-            if (addBookingInput.ActivityIds.Count > 0) 
+            if (addBookingInput.ActivityIds?.Count > 0) 
             {
                 var activitiesNotAvailable = await _activityCEN.GetActivityCAD().GetActivityIdsNotAvailable
                     (addBookingInput.EntryDate, addBookingInput.DepartureDate, addBookingInput.ActivityIds);
@@ -189,10 +192,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                         }
                         if(ownerInvoiceLines.Count > 0)
                         {
-                            foreach(var ownerInvoiceLine in ownerInvoiceLines) 
-                            {
-                                await _ownerInvoiceCEN.CreateOwnerInvoice(ownerInvoiceLine.OwnerId, ownerInvoiceLine.Price, true);
-                            }
+                            await _ownerInvoiceLineCEN.CreateOwnerInvoiceLines(ownerInvoiceLines);
                         }
                     }
 

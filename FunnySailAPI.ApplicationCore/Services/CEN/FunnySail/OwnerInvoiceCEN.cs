@@ -52,6 +52,32 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             return ownerInvoiceEN;
         }
 
+        public async Task<OwnerInvoiceEN> PayOwnerInvoice(int ownerInvoiceId)
+        {
+            OwnerInvoiceEN ownerInvoiceEN = await _ownerInvoiceCAD.FindById(ownerInvoiceId);
+
+            if (ownerInvoiceEN == null)
+                throw new DataValidationException(_enName, _esName, ExceptionTypesEnum.NotFound);
+            
+            if (ownerInvoiceEN.IsPaid)
+                throw new DataValidationException(
+                    $"The {_enName} has already been paid",
+                    $"La {_esName} ya fue pagada.");
+
+            if (ownerInvoiceEN.IsCanceled)
+                throw new DataValidationException(
+                    $"The {_enName} cannot be paid because it has already been canceled",
+                    $"No se puede pagar la {_esName} porque ya fue cancelada.");
+
+            if (ownerInvoiceEN.IsPaid) return ownerInvoiceEN;
+
+            ownerInvoiceEN.IsPaid = true;
+
+            await _ownerInvoiceCAD.Update(ownerInvoiceEN);
+
+            return ownerInvoiceEN;
+        }
+
         public async Task<int> CreateOwnerInvoice(string ownerId,decimal amount,bool toCollet)
         {
             UsersEN user = await _userCAD.FindById(ownerId);

@@ -99,45 +99,7 @@ namespace FunnySailAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
             }
         }
-        /*
-        // POST: api/OwnerInvoice
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [CustomAuthorize]
-        [HttpPost]
-        public async Task<ActionResult<OwnerInvoiceEN>> PostOwnerInvoice(AddOwnerInvoiceInputDTO addOwnerInvoiceInput)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest();
-
-                ApplicationUser user;
-                if (!RolesHelpers.AnyRole(UserRoles, UserRolesConstant.ADMIN))
-                {
-                    user = User.ApplicationUser;
-                }
-                else
-                {
-                    user = await _unitOfWork.UserManager.FindByIdAsync(addOwnerInvoiceInput.OwnerId);
-                }
-                addOwnerInvoiceInput.OwnerId = user.Id;
-
-                int ownerInvoiceId = await _unitOfWork.OwnerInvoiceCP.CreateOwnerInvoice(addOwnerInvoiceInput);
-
-                return CreatedAtAction("GetOwnerInvoice", new { id = addOwnerInvoiceInput.OwnerId });
-            }
-            catch (DataValidationException dataValidation)
-            {
-                return StatusCode(StatusCodes.Status422UnprocessableEntity, new ErrorResponseDTO(dataValidation));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
-            }
-
-        }
-        */
+        
 
         // PUT: api/OwnerInvoice/5/cancel
         [CustomAuthorize(UserRolesConstant.ADMIN)]
@@ -150,6 +112,33 @@ namespace FunnySailAPI.Controllers
                     return BadRequest();
 
                 await _unitOfWork.OwnerInvoiceCEN.CancelOwnerInvoice(id);
+
+                return NoContent();
+            }
+            catch (DataValidationException dataValidation)
+            {
+                if (dataValidation.ExceptionType == ExceptionTypesEnum.NotFound)
+                    return NotFound();
+
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, new ErrorResponseDTO(dataValidation));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
+
+        // PUT: api/OwnerInvoice/5/pay
+        [CustomAuthorize(UserRolesConstant.ADMIN)]
+        [HttpPut("{id}/pay")]
+        public async Task<IActionResult> PutPayOwnerInvoice(int id)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                await _unitOfWork.OwnerInvoiceCEN.PayOwnerInvoice(id);
 
                 return NoContent();
             }

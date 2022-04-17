@@ -36,5 +36,10 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
             return await _ownerInvoiceLineCAD.GetCounter(ownerInvoices);
         }
+
+        public async Task CreateOwnerInvoiceLines(IList<OwnerInvoiceLineEN> ownerInvoiceLines)
+        {
+            await _ownerInvoiceLineCAD.AddRange(ownerInvoiceLines);
+        } 
     }
 }
