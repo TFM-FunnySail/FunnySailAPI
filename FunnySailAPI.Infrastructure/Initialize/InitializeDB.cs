@@ -237,7 +237,25 @@ namespace FunnySailAPI.Infrastructure.Initialize
                         resourcesIds.Clear();
                         resourcesIds.Add(index);
 
-               
+                        requiredBoatTitles.Clear();
+                        if (index < 3)
+                        {
+                            requiredBoatTitles.Add(new AddRequiredBoatTitleInputDTO
+                            {
+                                Title = BoatTiteEnum.Patronja
+                            });
+                        }
+                        else {
+                            requiredBoatTitles.Add(new AddRequiredBoatTitleInputDTO
+                            {
+                                Title = BoatTiteEnum.NavigationLicence 
+                            });
+                            requiredBoatTitles.Add(new AddRequiredBoatTitleInputDTO
+                            {
+                                Title = BoatTiteEnum.Captaincy
+                            });
+                        }
+
                         await _unitOfWork.BoatCP.CreateBoat(new AddBoatInputDTO
                         {
                             BoatTypeId = index,
