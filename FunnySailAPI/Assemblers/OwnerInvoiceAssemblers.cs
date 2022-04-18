@@ -30,13 +30,12 @@ namespace FunnySailAPI.Assemblers
 
             if (ownerInvoiceEN.OwnerInvoiceLines != null)
             {
-                ownerInvoiceOutput.OwnerInvoiceLines = ownerInvoiceEN.OwnerInvoiceLines.Select(x => new OwnerInvoiceLinesOutputDTO
+                ownerInvoiceOutput.OwnerInvoiceLines = new List<OwnerInvoiceLinesOutputDTO>();
+                foreach (var line in ownerInvoiceEN.OwnerInvoiceLines)
                 {
-                    BookingId = x.BookingId,
-                    OwnerInvoiceId = x.OwnerInvoiceId,
-                    Price = x.Price,
-                    OwnerId = x.OwnerId,
-                }).ToList();
+                    line.Owner = null;
+                    ownerInvoiceOutput.OwnerInvoiceLines.Add(OwnerInvoiceLineAssemblers.Convert(line));
+                }
             }
 
             if (ownerInvoiceEN.TechnicalServiceBoats != null)

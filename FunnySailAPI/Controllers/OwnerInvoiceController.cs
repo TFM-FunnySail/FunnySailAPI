@@ -84,7 +84,9 @@ namespace FunnySailAPI.Controllers
                 }, includeProperties: source => source.Include(x => x.OwnerInvoiceLines)
                                         .ThenInclude(x => x.Booking)
                                         .Include(x => x.TechnicalServiceBoats)
-                                        .Include(x => x.Owner));
+                                        .Include(x => x.Owner)
+                                        .ThenInclude(x=>x.ApplicationUser)
+                                        );
 
                 var ownerInvoice = ownerInvoices.Select(x => OwnerInvoiceAssemblers.Convert(x)).FirstOrDefault();
                 if (ownerInvoice == null)
@@ -200,6 +202,30 @@ namespace FunnySailAPI.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
             }
+        }
+
+        [CustomAuthorize(UserRolesConstant.ADMIN)]
+        [HttpPost]
+        public async Task<ActionResult<OwnerInvoiceOutputDTO>> PostOwnerInvoice(AddOwnerInvoiceInputDTO addOwnerInvoiceInput)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                int id = await _unitOfWork.OwnerInvoiceCP.CreateOwnerInvoice(addOwnerInvoiceInput);
+
+                return CreatedAtAction("GetOwnerInvoice", new { id = id });
+            }
+            catch (DataValidationException dataValidation)
+            {
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, new ErrorResponseDTO(dataValidation));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+
         }
 
     }
