@@ -23,7 +23,7 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
         {
             IQueryable<OwnerInvoiceLineEN> ownerInvoiceLines = GetIQueryable();
 
-            if (ownerInvoiceLines == null) return ownerInvoiceLines;
+            if (filters == null) return ownerInvoiceLines;
 
             if (filters.BookingIds?.Count > 0)
                 ownerInvoiceLines = ownerInvoiceLines.Where(x => filters.BookingIds.Contains(x.BookingId));
@@ -58,6 +58,12 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
         public async Task SetOwnerInvoice(List<OwnerInvoiceLineEN> ownerInvoiceLines, int newOwnerInvoice)
         {
             ownerInvoiceLines.ForEach(x => x.OwnerInvoiceId = newOwnerInvoice);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task AddRange(IEnumerable<OwnerInvoiceLineEN> ownerInvoices)
+        {
+            await _dbContext.OwnerInvoiceLines.AddRangeAsync(ownerInvoices);
             await _dbContext.SaveChangesAsync();
         }
     }

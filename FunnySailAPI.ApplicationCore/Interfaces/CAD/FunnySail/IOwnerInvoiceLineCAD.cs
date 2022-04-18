@@ -18,5 +18,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail
                                             Pagination pagination = null);
         Task SetOwnerInvoice(List<OwnerInvoiceLineEN> ownerInvoiceLines, int newOwnerInvoice);
         IQueryable<OwnerInvoiceLineEN> GetOwnerInvoiceLineFiltered(OwnerInvoiceLineFilters filters);
+        Task AddRange(IEnumerable<OwnerInvoiceLineEN> ownerInvoices);
     }
 }

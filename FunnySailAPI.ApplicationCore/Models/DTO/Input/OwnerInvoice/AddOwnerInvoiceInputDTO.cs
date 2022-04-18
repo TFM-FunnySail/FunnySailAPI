@@ -8,8 +8,6 @@ namespace FunnySailAPI.ApplicationCore.Models.DTO.Input.OwnerInvoice
     public class AddOwnerInvoiceInputDTO
     {
         public string OwnerId { get; set; }
-        public bool ToCollet { get; set; }
-        public decimal Amount { get; set; }
 
         public OwnerInvoicesEnum Type { get; set; }
         public List<int> InvoiceLinesIds { get; set; }

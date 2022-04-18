@@ -18,6 +18,8 @@ namespace FunnySailAPI.Assemblers
             if (ownerInvoiceEN.Owner != null)
                 ownerInvoiceOutput.Owner = UserAssemblers.Convert(ownerInvoiceEN.Owner);
 
+            if(ownerInvoiceEN.Booking != null)
+                ownerInvoiceOutput.Booking = BookingAssemblers.Convert(ownerInvoiceEN.Booking);
 
             return ownerInvoiceOutput;
         }

@@ -57,7 +57,7 @@ namespace UnitTest.Steps.CP_CEN.Booking
             _clientInvoiceLineCAD = new ClientInvoiceLineCAD(applicationDbContextFake._dbContextFake);
             _clientInvoiceLineCEN = new ClientInvoiceLineCEN(_clientInvoiceLineCAD);
             _ownerInvoiceLineCAD = new OwnerInvoiceLineCAD(applicationDbContextFake._dbContextFake);
-            _ownerInvoiceLineCEN = new OwnerInvoiceLineCEN();
+            _ownerInvoiceLineCEN = new OwnerInvoiceLineCEN(_ownerInvoiceLineCAD);
             _boatCAD = new BoatCAD(applicationDbContextFake._dbContextFake);
             _boatCEN = new BoatCEN(_boatCAD);
             _ownerInvoiceCAD = new OwnerInvoiceCAD(applicationDbContextFake._dbContextFake);

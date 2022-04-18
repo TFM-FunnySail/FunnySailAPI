@@ -113,7 +113,8 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                         BoatId = boatId,
                         DayBasePrice = addBoatInput.DayBasePrice,
                         HourBasePrice = addBoatInput.HourBasePrice,
-                        Supplement = addBoatInput.Supplement
+                        Supplement = addBoatInput.Supplement,
+                        PorcentPriceOwner = (float)0.2
                     });
 
                     //Adicionar recursos de embarcacion

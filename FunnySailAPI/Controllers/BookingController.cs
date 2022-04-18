@@ -157,15 +157,7 @@ namespace FunnySailAPI.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest();
 
-                ApplicationUser user;
-                if (!RolesHelpers.AnyRole(UserRoles, UserRolesConstant.ADMIN))
-                {
-                    user = User.ApplicationUser;
-                }
-                else
-                {
-                    user = await _unitOfWork.UserManager.FindByIdAsync(bookingInput.ClientId);
-                }
+                bookingInput.ClientId = User.UserId;
 
                 int bookingId = await _unitOfWork.BookingCP.CreateBooking(bookingInput);
                 return CreatedAtAction("GetBoat", new { id = bookingId });
