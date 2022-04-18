@@ -307,5 +307,18 @@ namespace FunnySailAPI.Controllers
             }
         }
 
+        // GET: api/Boats/requiredTitles
+        [HttpGet("requiredTitles")]
+        public ActionResult<IList<EnumsOutputDTO>> GetRequiredTitles()
+        {
+            try
+            {
+                return Ok(EnumsAssemblers.Convert<BoatTiteEnum>());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
     }
 }
