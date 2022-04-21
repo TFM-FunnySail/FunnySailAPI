@@ -165,7 +165,7 @@ namespace FunnySailAPI.Controllers
         // POST: api/Boats
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-     
+        [CustomAuthorize]
         [HttpPost]
         public async Task<ActionResult<BoatOutputDTO>> PostBoat(AddBoatInputDTO boatInput)
         {
@@ -173,7 +173,16 @@ namespace FunnySailAPI.Controllers
             {
                 if (!ModelState.IsValid)
                     return BadRequest();
-
+                ApplicationUser user;
+                if (!RolesHelpers.AnyRole(UserRoles, UserRolesConstant.ADMIN))
+                {
+                    user = User.ApplicationUser;
+                }
+                else
+                {
+                    user = await _unitOfWork.UserManager.FindByIdAsync(boatInput.OwnerId);
+                }
+                boatInput.OwnerId = user.Id;
             
 
                 int boatId = await _unitOfWork.BoatCP.CreateBoat(boatInput);
