@@ -36,5 +36,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces
         public IUserCP UserCP { get; }
         public IOwnerInvoiceLineCEN OwnerInvoiceLineCEN { get; }
         public IBoatTitlesCEN BoatTitlesCEN { get; }
+        public IBoatTypeCEN BoatTypeCEN { get; }
     }
 }

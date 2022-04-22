@@ -37,6 +37,7 @@ namespace FunnySailAPI.ApplicationCore.Services
         public IUserCP UserCP { get; private set; }
         public IOwnerInvoiceLineCEN OwnerInvoiceLineCEN { get; private set; }
         public IBoatTitlesCEN BoatTitlesCEN { get; private set; }
+        public IBoatTypeCEN BoatTypeCEN { get; private set; }
         public UnitOfWork(IBoatCP BoatCP,
                           IBookingCP BookingCP,
                           IOwnerInvoiceCP OwnerInvoiceCP,
@@ -62,7 +63,7 @@ namespace FunnySailAPI.ApplicationCore.Services
                           SignInManager<ApplicationUser> SignInManager,
                           IUserCP UserCP,
                           IOwnerInvoiceLineCEN OwnerInvoiceLineCEN,
-                          IBoatTitlesCEN BoatTitlesCEN)
+                          IBoatTitlesCEN BoatTitlesCEN, IBoatTypeCEN BoatTypeCEN)
         {
             this.BoatCP = BoatCP;
             this.BookingCP = BookingCP;
@@ -90,6 +91,7 @@ namespace FunnySailAPI.ApplicationCore.Services
             this.UserCP = UserCP;
             this.OwnerInvoiceLineCEN = OwnerInvoiceLineCEN;
             this.BoatTitlesCEN = BoatTitlesCEN;
+            this.BoatTypeCEN = BoatTypeCEN;
         }
     }
 }

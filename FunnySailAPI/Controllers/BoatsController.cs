@@ -48,6 +48,7 @@ namespace FunnySailAPI.Controllers
                     includeProperties: source=>source.Include(x=>x.BoatInfo)
                                         .Include(x => x.BoatPrices)
                                         .Include(x=>x.RequiredBoatTitles)
+                                        .Include(x => x.BoatType)
                                         .Include(x => x.Mooring)
                                         .ThenInclude(x => x.Port)
                                         .Include(x => x.BoatResources)
@@ -79,6 +80,7 @@ namespace FunnySailAPI.Controllers
                 }, includeProperties: source => source.Include(x => x.BoatInfo)
                                          .Include(x => x.BoatPrices)
                                          .Include(x => x.RequiredBoatTitles)
+                                         .Include(x => x.BoatType)
                                          .Include(x => x.Mooring)
                                          .ThenInclude(x => x.Port)
                                          .Include(x => x.BoatResources)
@@ -112,6 +114,7 @@ namespace FunnySailAPI.Controllers
                     includeProperties: source => source.Include(x => x.BoatInfo)
                                         .Include(x => x.BoatPrices)
                                         .Include(x => x.RequiredBoatTitles)
+                                        .Include(x => x.BoatType)
                                         .Include(x => x.Mooring)
                                         .ThenInclude(x => x.Port)
                                         .Include(x => x.BoatResources)
@@ -357,6 +360,24 @@ namespace FunnySailAPI.Controllers
             }
         }
 
+        // GET: api/Boats/requiredTitles/list
+        [HttpGet("requiredTitles/list")]
+        public async Task<ActionResult<IEnumerable<BoatTitleOutputDTO>>> GetRequiredTitlesBoatsAll()
+        {
+
+            try
+            {
+                var boatTitles = (await _unitOfWork.BoatTitlesCEN.GetAll());
+
+                return Ok(boatTitles);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+
+        }
+
         // PUT: api/Boats/requiredTitles
         [CustomAuthorize(UserRolesConstant.ADMIN)]
         [HttpPut("requiredTitles/{id}")]
@@ -388,7 +409,7 @@ namespace FunnySailAPI.Controllers
         }
 
         // DELETE: api/Boats/requiredTitles
-        [CustomAuthorize(UserRolesConstant.ADMIN)]
+
         [HttpDelete("requiredTitles/{id}")]
         public async Task<ActionResult<BoatTitleOutputDTO>> DeleteBoatTitle(int id)
         {
@@ -412,6 +433,24 @@ namespace FunnySailAPI.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
             }
+        }
+
+        // GET: api/Boats/types
+        [HttpGet("types")]
+        public async Task<ActionResult<IEnumerable<BoatTypeOutputDTO>>> GetBoatTypes()
+        {
+
+            try
+            {
+                var boatTypes = (await _unitOfWork.BoatTypeCEN.GetAll());
+
+                return Ok(boatTypes);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+
         }
     }
 }
