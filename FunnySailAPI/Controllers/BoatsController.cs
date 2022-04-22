@@ -409,7 +409,7 @@ namespace FunnySailAPI.Controllers
         }
 
         // DELETE: api/Boats/requiredTitles
-
+        [CustomAuthorize(UserRolesConstant.ADMIN)]
         [HttpDelete("requiredTitles/{id}")]
         public async Task<ActionResult<BoatTitleOutputDTO>> DeleteBoatTitle(int id)
         {
