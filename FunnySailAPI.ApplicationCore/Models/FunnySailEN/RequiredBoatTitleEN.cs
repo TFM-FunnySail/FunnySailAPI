@@ -10,10 +10,10 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
     [Table("RequiredBoatTitles")]
     public class RequiredBoatTitleEN
     {
-        public BoatTiteEnum TitleId { get; set; }
+        public int TitleId { get; set; }
         public int BoatId { get; set; }
 
         public BoatEN Boat { get; set; }
-        public BoatTitlesEnumsEN BoatTitles { get; set; }
+        public BoatTitlesEN BoatTitles { get; set; }
     }
 }

@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 
 namespace FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail
 {
-    public interface IBoatTypeCAD : IBaseCAD<BoatTypeEN>
+    public interface IBoatTitleCAD : IBaseCAD<BoatTitlesEN>
     {
-        Task<int> AddBoatType(string name, string description);
-        IQueryable<BoatTypeEN> GetBoatTypesFiltered(BoatTypesFilters boatTypesFilters);
+        Task<bool> AnyBoatWithTitle(int titleId);
+        Task<BoatTitlesEN> FindByIdAllData(int id, bool requiredTitle = false);
+        IQueryable<BoatTitlesEN> GetRequiredTitleFiltered(BoatTitlesFilters requiredTitlesFilters);
     }
 }

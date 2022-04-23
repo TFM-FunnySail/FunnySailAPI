@@ -127,12 +127,12 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                     }
 
                     //Crear titulacion requerida
-                    foreach (AddRequiredBoatTitleInputDTO requiredBoatTitle in addBoatInput.RequiredBoatTitles)
+                    foreach (int requiredBoatTitle in addBoatInput.RequiredBoatTitles)
                     {
                         await _requiredBoatTitlesCEN.AddRequiredBoatTitle(new RequiredBoatTitleEN
                         {
                             BoatId = boatId,
-                            TitleId = requiredBoatTitle.Title
+                            TitleId = requiredBoatTitle
                         });
                     }
 

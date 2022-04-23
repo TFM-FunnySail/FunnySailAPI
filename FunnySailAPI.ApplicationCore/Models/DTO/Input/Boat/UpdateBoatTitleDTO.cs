@@ -5,9 +5,10 @@ using System.Text;
 
 namespace FunnySailAPI.ApplicationCore.Models.DTO.Input.Boat
 {
-    public class UpdateRequiredBoatTitleDTO
+    public class UpdateBoatTitleDTO
     {
-        public int BoatId { get; set; }
-        public List<int> BoatTites { get; set; }
+        public int TitleId { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
     }
 }

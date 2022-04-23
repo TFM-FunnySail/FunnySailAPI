@@ -225,35 +225,51 @@ namespace FunnySailAPI.Infrastructure.Initialize
                     await _dbContext.SaveChangesAsync();
                 }
 
+                if (!await _dbContext.BoatTitles.AnyAsync())
+                {
+
+                    List<BoatTitlesEN> requiredTitles = new List<BoatTitlesEN>();
+
+                    requiredTitles.Add(new BoatTitlesEN
+                    {
+                        Name = "Captaincy",
+                        Description = "Titulación de capitanía"
+                    });
+
+                    requiredTitles.Add(new BoatTitlesEN
+                    {
+                        Name = "NavigationLicence",
+                        Description = "Licencia de navegación"
+                    });
+
+                    requiredTitles.Add(new BoatTitlesEN
+                    {
+                        Name = "Patronja",
+                        Description = "Titulación de patron/a de embarcaciones"
+                    });
+
+                    await _dbContext.BoatTitles.AddRangeAsync(requiredTitles);
+                    await _dbContext.SaveChangesAsync();
+                }
+
                 if (!await _dbContext.Boats.AnyAsync()) { 
                     int index = 1;
 
                     //  Listas vacias
                     List<int> resourcesIds = new List<int>();
-                    List<AddRequiredBoatTitleInputDTO> requiredBoatTitles = new List<AddRequiredBoatTitleInputDTO>();
-
+                    List<int> requiredBoatTitles = new List<int>();
+                    
                     for (; index <= 7; index++)
                     {
-                        resourcesIds.Clear();
-                        resourcesIds.Add(index);
-
                         requiredBoatTitles.Clear();
                         if (index < 3)
                         {
-                            requiredBoatTitles.Add(new AddRequiredBoatTitleInputDTO
-                            {
-                                Title = BoatTiteEnum.Patronja
-                            });
+                            requiredBoatTitles.Add(1);
                         }
-                        else {
-                            requiredBoatTitles.Add(new AddRequiredBoatTitleInputDTO
-                            {
-                                Title = BoatTiteEnum.NavigationLicence 
-                            });
-                            requiredBoatTitles.Add(new AddRequiredBoatTitleInputDTO
-                            {
-                                Title = BoatTiteEnum.Captaincy
-                            });
+                        else
+                        {
+                            requiredBoatTitles.Add(2);
+                            requiredBoatTitles.Add(3);
                         }
 
                         await _unitOfWork.BoatCP.CreateBoat(new AddBoatInputDTO
@@ -265,7 +281,7 @@ namespace FunnySailAPI.Infrastructure.Initialize
                             Sleeve = index * 20,
                             Supplement = 20,         
                             Registration = "Reg prueba " + index,
-                            OwnerId = "04395eac-522d-476a-99e6-f96e3a409d4b",              
+                            OwnerId = user1.Id,
                             Description = "Descripción embarcación prueba " + index,
                             DayBasePrice = NextInt(100, 300),
                             HourBasePrice = NextInt(15, 30),

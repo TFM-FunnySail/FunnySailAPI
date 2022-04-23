@@ -2,8 +2,10 @@
 
 namespace FunnySailAPI.DTO.Output.Boat
 {
-    public class RequiredBoatTitleOutputDTO
+    public class BoatTitleOutputDTO
     {
         public int TitleId { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
     }
 }
