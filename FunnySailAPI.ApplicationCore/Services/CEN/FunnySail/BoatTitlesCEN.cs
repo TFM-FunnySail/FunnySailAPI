@@ -27,8 +27,8 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
         public BoatTitlesCEN(IBoatTitleCAD boatTitleCAD)
         {
             _boatTitleCAD = boatTitleCAD;
-            _enName = "Boat title";
-            _esName = "Titulo embarcación";
+            _enName = "Required title";
+            _esName = "requerimiento de titulación";
         }
 
         public IBoatTitleCAD GetBoatTitleCAD()
@@ -38,7 +38,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
         public async Task<int> AddBoatTitle(AddBoatTitleInputDTO addBoatTitleInput)
         {
-            if (addBoatTitleInput.Name == null)
+            if (addBoatTitleInput.Name == "")
                 throw new DataValidationException($"{_enName} name", $"Nombre del {_esName}",
                     ExceptionTypesEnum.IsRequired);
 
@@ -76,8 +76,12 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             BoatTitlesEN dbTitle = await _boatTitleCAD.FindById(updateBoatTitleInput.TitleId);
 
             if (dbTitle == null)
-                throw new DataValidationException("Mooring", "Amarre de puerto",
+                throw new DataValidationException("Required title", "Título requerido",
                     ExceptionTypesEnum.NotFound);
+
+            if (updateBoatTitleInput.Name == "")
+                throw new DataValidationException($"{_enName} name", $"Nombre del {_esName}",
+                    ExceptionTypesEnum.IsRequired);
 
             dbTitle.Name = updateBoatTitleInput.Name;
             dbTitle.Description = updateBoatTitleInput.Description;
