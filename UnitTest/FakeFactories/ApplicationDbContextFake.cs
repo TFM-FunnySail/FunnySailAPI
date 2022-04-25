@@ -217,6 +217,24 @@ namespace UnitTest.FakeFactories
                     Id = 2,
                     Name = "Puerto de la tristeza",
                     Location = "c/Río Ebro"
+                },
+                new PortEN
+                {
+                    Id = 3,
+                    Name = "Puerto de la ironia",
+                    Location = "c/Río Ebro"
+                },
+                new PortEN
+                {
+                    Id = 4,
+                    Name = "Puerto de la estrés",
+                    Location = "c/Río Ebro"
+                },
+                new PortEN
+                {
+                    Id = 5,
+                    Name = "Puerto de la apatía",
+                    Location = "c/Río Ebro"
                 }
             };
         }

@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FunnySailAPI.Infrastructure\FunnySailAPI.Infrastructure.csproj" />
+    <ProjectReference Include="..\FunnySailAPI\FunnySailAPI.csproj" />
   </ItemGroup>
 
   <ItemGroup>
