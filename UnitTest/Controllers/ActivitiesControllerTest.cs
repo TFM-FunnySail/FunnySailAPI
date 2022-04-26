@@ -5,6 +5,7 @@ using FunnySailAPI.ApplicationCore.Models.Utils;
 using FunnySailAPI.Controllers;
 using FunnySailAPI.DTO.Output.Activity;
 using FunnySailAPI.Helpers;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -61,21 +62,19 @@ namespace UnitTest.Controllers
         }
 
         [TestMethod]
+        public void GetActivity_ShouldReturnNotFound()
+        {
+            var activities = _ActivitiesController.GetActivity(24);
+            Assert.AreEqual(404, new NotFoundObjectResult(activities.Result.Result).StatusCode);
+        }
+
+        [TestMethod]
         public void GetAvailableActivities_ShouldReturnAllAvilableActivities()
         {
             var activities = _ActivitiesController.GetAvailableActivities( new DateTime(2020,2,1), new DateTime(2022, 12, 1), new Pagination());
             Assert.IsNotNull(activities);
             Assert.AreEqual(5, activities.Result.Value.Total);
         }
-
-
-        [TestMethod]
-        public void GetAvailableActivities_ShouldReturnNoneAvilableActivites()
-        {
-            var activities = _ActivitiesController.GetAvailableActivities(new DateTime(2020, 2, 1), new DateTime(2020, 12, 1), new Pagination());
-            Assert.IsNotNull(activities);
-        }
-
 
         [TestMethod]
         public void PutActivity_ShoulChangedActivity()
@@ -112,6 +111,15 @@ namespace UnitTest.Controllers
         {
             var activities = _ActivitiesController.PutActiveActivity(1);
             Assert.IsNotNull(activities);
+        }
+
+
+        [TestMethod]
+        public void PutActiveActivity_ShouldRetrunNotFound()
+        {
+            var activities = _ActivitiesController.PutActiveActivity(1);
+            Assert.IsNotNull(activities);
+            Assert.AreEqual(404, new NotFoundObjectResult(activities.Result).StatusCode);
         }
 
         [TestMethod]

@@ -66,6 +66,8 @@ namespace UnitTest.FakeFactories
             _dbContextFake.AddRange(ResourcesFaker());
             _dbContextFake.AddRange(BoatResourcesFaker());
 
+            _dbContextFake.AddRange(ClientInvoiceFaker());
+
             _dbContextFake.SaveChanges();
         }
 
@@ -133,6 +135,14 @@ namespace UnitTest.FakeFactories
                     LastName = "Quiez",
                     FirstName = "Rodri",
                     ReceivePromotion = false
+                },
+                new UsersEN
+                {
+                    UserId = "3",
+                    BoatOwner = true,
+                    LastName = "Quiez",
+                    FirstName = "Rodri",
+                    ReceivePromotion = false
                 }
             };
         }
@@ -197,6 +207,27 @@ namespace UnitTest.FakeFactories
                     Id = 1,
                     Alias = "mooring1",
                     PortId = 1,
+                    Type = MooringEnum.Small
+                },
+                new MooringEN
+                {
+                    Id = 2,
+                    Alias = "mooring2",
+                    PortId = 1,
+                    Type = MooringEnum.Small
+                },
+                new MooringEN
+                {
+                    Id = 3,
+                    Alias = "mooring3",
+                    PortId = 2,
+                    Type = MooringEnum.Small
+                },
+                new MooringEN
+                {
+                    Id = 4,
+                    Alias = "mooring4",
+                    PortId = 2,
                     Type = MooringEnum.Small
                 }
             };
@@ -379,6 +410,37 @@ namespace UnitTest.FakeFactories
                         Currency = CurrencyEnum.EUR,
                         TotalAmount = 10
                     }
+                }
+            };
+        }
+
+        private List<ClientInvoiceEN> ClientInvoiceFaker()
+        {
+            return new List<ClientInvoiceEN>
+            {
+                new ClientInvoiceEN{
+                    Id = 1,
+                    CreatedDate = DateTime.Now,
+                    Paid = false,
+                    Canceled = false, 
+                    TotalAmount = 100,
+                    ClientId = "1"
+                },
+                 new ClientInvoiceEN{
+                    Id = 2,
+                    CreatedDate = DateTime.Now,
+                    Paid = true,
+                    Canceled = false,
+                    TotalAmount = 10000,
+                    ClientId = "1"
+                },
+                  new ClientInvoiceEN{
+                    Id = 3,
+                    CreatedDate = DateTime.Now,
+                    Paid = false,
+                    Canceled = true,
+                    TotalAmount = 900,
+                    ClientId = "1"
                 }
             };
         }
