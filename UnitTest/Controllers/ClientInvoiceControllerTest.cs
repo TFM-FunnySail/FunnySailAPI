@@ -55,7 +55,7 @@ namespace UnitTest.Controllers
         {
             var clientInvoice = _ClientInvoiceController.PutCancelClientInvoice(1);
             Assert.IsNotNull(clientInvoice);
-            Assert.AreEqual(new NoContentResult(), clientInvoice.Result);
+            Assert.IsInstanceOfType(clientInvoice.Result, typeof(NoContentResult));
         }
     }
 }

@@ -25,6 +25,7 @@
     <PackageReference Include="coverlet.collector" Version="3.0.2" />
     <PackageReference Include="SpecFlow" Version="3.9.50" />
     <PackageReference Include="SpecFlow.MsTest" Version="3.9.50" />
+    <PackageReference Include="xunit.extensibility.core" Version="2.4.1" />
   </ItemGroup>
 
   <ItemGroup>

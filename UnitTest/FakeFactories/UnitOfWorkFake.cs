@@ -6,6 +6,7 @@ using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Services;
 using FunnySailAPI.ApplicationCore.Services.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Services.CP;
+using FunnySailAPI.Controllers;
 using FunnySailAPI.Infrastructure;
 using FunnySailAPI.Infrastructure.CAD.FunnySail;
 using Microsoft.AspNetCore.Identity;

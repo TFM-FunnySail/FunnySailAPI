@@ -55,8 +55,7 @@ namespace UnitTest.Controllers
         {
             var bookings = _BookingController.CancelBooking(1);
             Assert.IsNotNull(bookings);
-            Assert.IsNotNull(bookings.Result.Result);
-            Assert.AreEqual(null, bookings.Result.Value);
+            Assert.IsInstanceOfType(bookings.Result.Result, typeof(NoContentResult));
         }
 
         [TestMethod]
@@ -64,9 +63,7 @@ namespace UnitTest.Controllers
         {
             var booking = _BookingController.PayBooking(1);
             Assert.IsNotNull(booking);
-            Assert.IsNotNull(booking.Result.Result);
-            Assert.AreEqual(null, booking.Result.Value);
-            Assert.AreEqual(new NoContentResult(), booking.Result.Result);
+            Assert.IsInstanceOfType(booking.Result.Result, typeof(NoContentResult));
         }
 
         [TestMethod]
