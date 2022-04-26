@@ -68,6 +68,8 @@ namespace UnitTest.FakeFactories
 
             _dbContextFake.AddRange(ClientInvoiceFaker());
 
+            _dbContextFake.AddRange(RefundFaker());
+
             _dbContextFake.SaveChanges();
         }
 
@@ -190,9 +192,27 @@ namespace UnitTest.FakeFactories
                 {
                     OwnerId = "1",
                     Id = 1,
-                    IsCanceled = true,
+                    IsCanceled = false,
                     Amount = 10, 
                     IsPaid = false,
+                    Date = DateTime.Now
+                },
+                new OwnerInvoiceEN
+                {
+                    OwnerId = "1",
+                    Id = 2,
+                    IsCanceled = true,
+                    Amount = 10,
+                    IsPaid = false,
+                    Date = DateTime.Now
+                },
+                new OwnerInvoiceEN
+                {
+                    OwnerId = "1",
+                    Id = 3,
+                    IsCanceled = true,
+                    Amount = 10,
+                    IsPaid = true,
                     Date = DateTime.Now
                 }
             };
@@ -441,6 +461,31 @@ namespace UnitTest.FakeFactories
                     Canceled = true,
                     TotalAmount = 900,
                     ClientId = "1"
+                }
+            };
+        }
+
+        private List<RefundEN> RefundFaker() 
+        {
+            return new List<RefundEN> 
+            { 
+                new RefundEN 
+                { 
+                    Id = 1, 
+                    Description = "descripcion", 
+                    AmountToReturn = (decimal)100,
+                    Date = DateTime.UtcNow,
+                    BookingId = 1,
+                    ClientInvoiceId = 1
+                },
+                new RefundEN
+                {
+                    Id = 2,
+                    Description = "descripcion2",
+                    AmountToReturn = (decimal)1040,
+                    Date = DateTime.UtcNow,
+                    BookingId = 1,
+                    ClientInvoiceId = 1
                 }
             };
         }

@@ -1,10 +1,12 @@
 ﻿using FunnySailAPI.ApplicationCore.Interfaces;
 using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
+using FunnySailAPI.ApplicationCore.Interfaces.CEN;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Services;
 using FunnySailAPI.ApplicationCore.Services.CEN.FunnySail;
+using FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.OwnerInvoicesTypes;
 using FunnySailAPI.ApplicationCore.Services.CP;
 using FunnySailAPI.Infrastructure;
 using FunnySailAPI.Infrastructure.CAD.FunnySail;
@@ -75,6 +77,7 @@ namespace UnitTest.FakeFactories
         private IBoatBookingCEN _BoatBookingCEN;
         private ITechnicalServiceBoatCAD _TechnicalServiceBoatCAD;
         private IDatabaseTransactionFactory _DatabaseTransactionFactory;
+        private IOwnerInvoiceTypeFactory _OwnerInvoiceTypeFactory;
         public UnitOfWorkFake() {
             var applicationDbContextFake = new ApplicationDbContextFake();
             _DatabaseTransactionFactory = new DatabaseTransactionFactory
@@ -83,6 +86,7 @@ namespace UnitTest.FakeFactories
             _UserManagerMock.SetupForCreateUser();
             _SignInManagerMock = new SignInManagerMock();
             _SignInManagerMock.SetupForLoginPassFailed();
+            
 
             _BoatCAD = new BoatCAD(applicationDbContextFake._dbContextFake);
             _BoatInfoCAD = new BoatInfoCAD(applicationDbContextFake._dbContextFake);
@@ -138,7 +142,8 @@ namespace UnitTest.FakeFactories
             _ServiceCEN = new ServiceCEN(_ServiceCAD, _ServiceBookingCAD);
             _TechnicalServiceCEN = new TechnicalServiceCEN(_TechnicalServiceCAD, _TechnicalServiceBoatCAD);
             _UserCEN = new UserCEN(_UserCAD, _SignInManagerMock.singInManager.Object, _UserManagerMock.userManager.Object);
-          
+
+            _OwnerInvoiceTypeFactory = new OwnerInvoiceTypeFactory(_OwnerInvoiceCAD, _OwnerInvoiceLineCAD, _UserCAD, _TechnicalServiceBoatCAD);
 
             _RefundCP = new RefundCP(_RefundCEN, _DatabaseTransactionFactory);
             _PortMooringCP = new PortMooringCP(_MooringCEN, _PortCEN);
@@ -146,7 +151,7 @@ namespace UnitTest.FakeFactories
             _UserCP = new UserCP(_UserCEN, _SignInManagerMock.singInManager.Object, _UserManagerMock.userManager.Object, _DatabaseTransactionFactory);
             _BoatCP = new BoatCP(_BoatCEN, _BoatInfoCEN, _BoatTypeCEN,_BoatResourceCEN, _BoatPricesCEN, _RequiredBoatTitlesCEN, _DatabaseTransactionFactory,_ReviewCEN,_UserCEN,_MooringCEN,_ResourcesCEN);
             _BookingCP = new BookingCP(_BookingCEN, _UserCEN, _ClientInvoiceLineCEN, _OwnerInvoiceLineCEN, _BoatBookingCEN, _ServiceBookingCEN, _ActivityBookingCEN, _ActivityCEN, _BoatCEN, _ServiceCEN, _BoatCP, _ClientInvoiceCEN, _DatabaseTransactionFactory, _RefundCEN, _BoatPricesCEN, _OwnerInvoiceCEN);
-            _OwnerInvoiceCP = new OwnerInvoiceCP(null, _DatabaseTransactionFactory);
+            _OwnerInvoiceCP = new OwnerInvoiceCP(_OwnerInvoiceTypeFactory, _DatabaseTransactionFactory);
             _PortMooringCP = new PortMooringCP(_MooringCEN,_PortCEN);
             _RefundCP = new RefundCP(_RefundCEN, _DatabaseTransactionFactory);
             _TechnicalServiceCP = new TechnicalServiceCP(_TechnicalServiceCEN, _BoatCEN);
