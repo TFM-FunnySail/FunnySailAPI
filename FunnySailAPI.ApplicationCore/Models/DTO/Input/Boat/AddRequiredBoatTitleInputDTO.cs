@@ -4,6 +4,6 @@ namespace FunnySailAPI.ApplicationCore.Models.DTO.Input
 {
     public class AddRequiredBoatTitleInputDTO
     {
-        public BoatTiteEnum Title { get; set; }
+        public int Title { get; set; }
     }
 }

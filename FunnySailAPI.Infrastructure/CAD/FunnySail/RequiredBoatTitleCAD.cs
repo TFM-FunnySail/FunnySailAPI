@@ -41,7 +41,7 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
                     .ToList();
 
                 //titulos en base de datos actualmente, listos para filtrar
-                List<BoatTiteEnum> titlesIds = dbRequireBoatsTitles.Select(x => x.TitleId).ToList();
+                List<int> titlesIds = dbRequireBoatsTitles.Select(x => x.TitleId).ToList();
 
                 var titlesToAdd = item.requiredBoatTitles.Where(x => !titlesIds.Contains(x.TitleId))
                     .ToList();

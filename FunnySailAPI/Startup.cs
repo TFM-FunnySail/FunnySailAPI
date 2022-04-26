@@ -86,6 +86,7 @@ namespace FunnySailAPI
             services.AddScoped<IOwnerInvoiceLineCAD, OwnerInvoiceLineCAD>();
             services.AddScoped<IRefundCAD, RefundCAD>();
             services.AddScoped<IAuthRefreshTokenCAD, AuthRefreshTokenCAD>();
+            services.AddScoped<IBoatTitleCAD, BoatTitleCAD>();
 
             #endregion
 
@@ -117,6 +118,7 @@ namespace FunnySailAPI
             services.AddScoped<IRefundCEN, RefundCEN>();
             services.AddScoped<IOwnerInvoiceCEN, OwnerInvoiceCEN>();
             services.AddScoped<IAuthRefreshTokenCEN, AuthRefreshTokenCEN>();
+            services.AddScoped<IBoatTitlesCEN, BoatTitlesCEN>();
 
             #endregion
 

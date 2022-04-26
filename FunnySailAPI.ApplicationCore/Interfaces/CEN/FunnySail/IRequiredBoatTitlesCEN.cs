@@ -10,7 +10,7 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
 {
     public interface IRequiredBoatTitlesCEN
     {
-        Task<(int, BoatTiteEnum)> AddRequiredBoatTitle(RequiredBoatTitleEN requiredBoatTitleEN);
+        Task<(int, int)> AddRequiredBoatTitle(RequiredBoatTitleEN requiredBoatTitleEN);
         Task<List<RequiredBoatTitleEN>> UpdateRequiredBoatTitle(UpdateRequiredBoatTitleDTO requiredBoatTitle);
     }
 }

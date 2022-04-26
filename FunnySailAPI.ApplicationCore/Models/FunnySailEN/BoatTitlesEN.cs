@@ -7,19 +7,23 @@ using System.Text;
 
 namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
 {
-    [Table("BoatTitlesEnums")]
-    public class BoatTitlesEnumsEN
+
+    [Table("BoatTitles")]
+    public class BoatTitlesEN
     {
+        
+        [Key]
         public int TitleId { get; set; }
 
         [Required]
         [StringLength(50)]
-        public int Name { get; set; }
+        public string Name { get; set; }
 
         [Required]
         [StringLength(500)]
         public string Description { get; set; }
 
         public List<RequiredBoatTitleEN> RequiredBoatTitles { get; set; }
+    
     }
 }

@@ -37,14 +37,6 @@ namespace FunnySailAPI.Infrastructure
                 rb.Property(r => r.TitleId).HasConversion<int>();
             });
 
-                
-            modelBuilder.Entity<BoatTitlesEnumsEN>(bt => 
-            {    
-                bt.HasKey(bt => bt.TitleId);
-                bt.Property(bt => bt.TitleId).HasConversion<int>();
-                bt.Property(bt => bt.Name).HasConversion<string>();
-            });
-
             modelBuilder.Entity<BoatPricesEN>(bp =>
             {
                 bp.HasKey(bt => bt.BoatId);
@@ -111,24 +103,6 @@ namespace FunnySailAPI.Infrastructure
                 oil.HasKey(m => new { m.BookingId, m.OwnerId });
             });
 
-            //Inicialización de datos
-            modelBuilder.Entity<BoatTitlesEnumsEN>().HasData(
-                new BoatTitlesEnumsEN
-                {
-                    TitleId = BoatTiteEnum.Captaincy,
-                    Name = BoatTiteEnum.Captaincy,
-                    Description = "Titulación de capitanía"
-                }, new BoatTitlesEnumsEN
-                {
-                    TitleId = BoatTiteEnum.NavigationLicence,
-                    Name = BoatTiteEnum.NavigationLicence,
-                    Description = "Licencia de navegación"
-                }, new BoatTitlesEnumsEN
-                {
-                    TitleId = BoatTiteEnum.Patronja,
-                    Name = BoatTiteEnum.Patronja,
-                    Description = "Titulación de patron/a de embarcaciones"
-                });
         }
 
         public DbSet<BoatTypeEN> BoatTypes { get; set; }
@@ -136,7 +110,8 @@ namespace FunnySailAPI.Infrastructure
         public DbSet<BoatResourceEN> BoatResources { get; set; }
         public DbSet<BoatInfoEN> BoatInfos { get; set; }
         public DbSet<RequiredBoatTitleEN> RequiredBoatTitles { get; set; }
-        public DbSet<BoatTitlesEnumsEN> BoatTitlesEnums { get; set; }
+       // public DbSet<BoatTitlesEN> BoatTitlesEnums { get; set; }
+        public DbSet<BoatTitlesEN> BoatTitles{ get; set; }
         public DbSet<UsersEN> UsersInfo { get; set; }
         public DbSet<BookingEN> Bookings { get; set; }
         public DbSet<InvoiceLineEN> InvoiceLines { get; set; }

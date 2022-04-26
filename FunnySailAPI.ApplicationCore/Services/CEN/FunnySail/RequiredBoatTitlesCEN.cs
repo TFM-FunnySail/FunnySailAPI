@@ -21,7 +21,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             _requiredBoatTitleCAD = requiredBoatTitleCAD;
         }
 
-        public async Task<(int, BoatTiteEnum)> AddRequiredBoatTitle(RequiredBoatTitleEN requiredBoatTitleEN)
+        public async Task<(int, int)> AddRequiredBoatTitle(RequiredBoatTitleEN requiredBoatTitleEN)
         {
             if (requiredBoatTitleEN.BoatId == 0)
                 throw new DataValidationException("Boat id", "Id del barco", ExceptionTypesEnum.IsRequired);

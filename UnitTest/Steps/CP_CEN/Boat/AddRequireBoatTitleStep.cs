@@ -21,7 +21,7 @@ namespace UnitTest.Steps.CP_CEN
         private IRequiredBoatTitlesCEN _requiredBoatTitlesCEN;
         private IRequiredBoatTitleCAD _requiredBoatTitleCAD;
         private RequiredBoatTitleEN _requiredBoatTitleEN;
-        private (int, BoatTiteEnum) _id;
+        private (int, int) _id;
 
         public AddRequireBoatTitleStep(ScenarioContext scenarioContext)
         {
@@ -38,7 +38,7 @@ namespace UnitTest.Steps.CP_CEN
         {
             _requiredBoatTitleEN = new RequiredBoatTitleEN
             {
-                TitleId = BoatTiteEnum.Captaincy,
+                TitleId = 1,
                 BoatId = 1
             };
         }
@@ -59,7 +59,7 @@ namespace UnitTest.Steps.CP_CEN
         [Then(@"se exigirá la especificación de un título válido para la embarcación")]
         public void ThenSeExigiraLaEspecificacionDeUnTituloValidoParaLaEmbarcacion()
         {
-            Assert.AreEqual((1, BoatTiteEnum.Captaincy), _id);
+            Assert.AreEqual((1, _requiredBoatTitleEN.TitleId), _id);
         }
 
         [Given(@"un barco que requiere titulación por ley y no se especifica")]
@@ -67,7 +67,7 @@ namespace UnitTest.Steps.CP_CEN
         {
             _requiredBoatTitleEN = new RequiredBoatTitleEN
             {
-                TitleId = BoatTiteEnum.Captaincy
+                TitleId = 1
             };
         }
 
