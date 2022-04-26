@@ -34,7 +34,7 @@ namespace FunnySailAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<GenericResponseDTO<TechnicalServiceOutputDTO>>> GetTechnicalService([FromQuery] TechnicalServiceFilters filters, [FromQuery] Pagination pagination)
+        public async Task<ActionResult<GenericResponseDTO<TechnicalServiceOutputDTO>>> GetTechnicalServices([FromQuery] TechnicalServiceFilters filters, [FromQuery] Pagination pagination)
         {
             try
             {
@@ -86,7 +86,7 @@ namespace FunnySailAPI.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<TechnicalServiceOutputDTO>> CreateTechnicalServiceController(decimal price, string description)
+        public async Task<ActionResult<TechnicalServiceOutputDTO>> CreateTechnicalService(decimal price, string description)
         {
             try
             {
@@ -109,7 +109,7 @@ namespace FunnySailAPI.Controllers
 
         //POST: api/TechnicalService/Schedule
         [HttpPost("schedule")]
-        public async Task<ActionResult<TechnicalServiceOutputDTO>> ScheduleTechnicalServiceBoatController(ScheduleTechnicalServiceDTO scheduleTechnicalService)
+        public async Task<ActionResult<TechnicalServiceOutputDTO>> ScheduleTechnicalServiceBoat(ScheduleTechnicalServiceDTO scheduleTechnicalService)
         {
             try
             {

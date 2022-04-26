@@ -40,7 +40,7 @@ namespace UnitTest.Controllers
             };
             var ports = _PortController.GetPorts(_PortFilters, new Pagination());
             Assert.IsNotNull(ports);
-            Assert.AreEqual(ports.Result.Value.Total, 5);
+            Assert.AreEqual(1,ports.Result.Value.Total);
         }
 
         [TestMethod]

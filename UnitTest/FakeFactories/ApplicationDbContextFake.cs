@@ -388,6 +388,14 @@ namespace UnitTest.FakeFactories
                     Price = 20,
                     Id = 1
                 },
+
+                new TechnicalServiceEN
+                {
+                    Active = false,
+                    Description = "prueba con barcos 2",
+                    Price = 20,
+                    Id = 2
+                },
             };
         }
 

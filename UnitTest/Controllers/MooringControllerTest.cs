@@ -56,7 +56,7 @@ namespace UnitTest.Controllers
             });
 
             Assert.IsNotNull(moorings);
-            Assert.AreEqual(new NoContentResult(), moorings.Result);
+            Assert.IsInstanceOfType(moorings.Result, typeof(NoContentResult));
         }
 
 
@@ -70,15 +70,15 @@ namespace UnitTest.Controllers
             });
 
             Assert.IsNotNull(moorings);
-            //Assert.AreEqual(5, moorings.Result.Result.Value.id);
+            Assert.IsInstanceOfType(moorings.Result.Result, typeof(CreatedAtActionResult));
         }
 
         [TestMethod]
         public void DeleteMooringEN_ShouldReturnNoContent()
         {
-            var moogins = _MooringController.DeleteMooringEN(1);
-            Assert.IsNotNull(moogins);
-            Assert.AreEqual(204, new OkObjectResult(moogins.Result).StatusCode);
+            var moorings = _MooringController.DeleteMooringEN(1);
+            Assert.IsNotNull(moorings);
+            Assert.IsInstanceOfType(moorings.Result, typeof(NoContentResult));
         }
 
         [TestMethod]
