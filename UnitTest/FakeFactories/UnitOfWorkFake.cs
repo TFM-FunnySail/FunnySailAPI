@@ -79,6 +79,8 @@ namespace UnitTest.FakeFactories
         private ITechnicalServiceBoatCAD _TechnicalServiceBoatCAD;
         private IDatabaseTransactionFactory _DatabaseTransactionFactory;
         private IOwnerInvoiceTypeFactory _OwnerInvoiceTypeFactory;
+        private IBoatTitleCAD _BoatTitleCAD;
+        private IBoatTitlesCEN _BoatTitlesCEN;
         public UnitOfWorkFake() {
             var applicationDbContextFake = new ApplicationDbContextFake();
             _DatabaseTransactionFactory = new DatabaseTransactionFactory
@@ -94,6 +96,7 @@ namespace UnitTest.FakeFactories
             _BoatPricesCAD = new BoatPricesCAD(applicationDbContextFake._dbContextFake);
             _BoatResourceCAD = new BoatResourceCAD(applicationDbContextFake._dbContextFake);
             _BoatTypeCAD = new BoatTypeCAD(applicationDbContextFake._dbContextFake);
+            _BoatTitleCAD = new BoatTitleCAD(applicationDbContextFake._dbContextFake);
             _BookingCAD = new BookingCAD(applicationDbContextFake._dbContextFake);
             _OwnerInvoiceCAD = new OwnerInvoiceCAD(applicationDbContextFake._dbContextFake);
             _PortCAD = new PortCAD(applicationDbContextFake._dbContextFake);
@@ -121,6 +124,7 @@ namespace UnitTest.FakeFactories
             _BoatPricesCEN = new BoatPricesCEN(_BoatPricesCAD);
             _BoatResourceCEN = new BoatResourceCEN(_BoatResourceCAD);
             _BoatTypeCEN = new BoatTypeCEN(_BoatTypeCAD);
+            _BoatTitlesCEN = new BoatTitlesCEN(_BoatTitleCAD);
             _ActivityBookingCEN = new ActivityBookingCEN(_ActivityBookingCAD);
             _ActivityCEN = new ActivityCEN(_ActivityCAD);
             _BoatBookingCEN = new BoatBookingCEN(_BoatBookingCAD);
@@ -182,7 +186,9 @@ namespace UnitTest.FakeFactories
                 _UserManagerMock.userManager.Object,
                 _SignInManagerMock.singInManager.Object,
                 _UserCP,
-                _OwnerInvoiceLineCEN
+                _OwnerInvoiceLineCEN,
+                _BoatTitlesCEN,
+                _BoatTypeCEN
                );
         }
     }

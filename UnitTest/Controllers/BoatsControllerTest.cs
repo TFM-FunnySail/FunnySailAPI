@@ -69,14 +69,6 @@ namespace UnitTest.Controllers
         }
 
         [TestMethod]
-        public void GetRequiredTitles_ShouldReturnRequiredTitles()
-        {
-            var titles = _BoatsController.GetRequiredTitles();
-            Assert.IsNotNull(titles);
-            Assert.IsInstanceOfType(titles.Result, typeof(OkObjectResult));
-        }
-
-        [TestMethod]
         public void PutBoat_ShouldReturnNoContent()
         {
             var boat = _BoatsController.PutBoatEN(1, new UpdateBoatInputDTO
