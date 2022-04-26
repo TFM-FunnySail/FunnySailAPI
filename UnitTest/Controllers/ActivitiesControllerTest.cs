@@ -111,6 +111,7 @@ namespace UnitTest.Controllers
         {
             var activities = _ActivitiesController.PutActiveActivity(1);
             Assert.IsNotNull(activities);
+            Assert.IsInstanceOfType(activities.Result, typeof(NoContentResult));
         }
 
 
@@ -127,6 +128,30 @@ namespace UnitTest.Controllers
         {
             var activities = _ActivitiesController.PutActiveActivity(1);
             Assert.IsNotNull(activities);
+            Assert.IsInstanceOfType(activities.Result, typeof(NoContentResult));
+        }
+
+        [TestMethod]
+        public void PutActivity_ShouldReturnNoContent()
+        {
+            var activities = _ActivitiesController.PutActivityEN(1, new UpdateAcitivityInputDTO { 
+                Id = 1, 
+                Name = "actividad guapa",
+                Description = "descripcion guapisima",
+                Price = (decimal)12.21,
+                Active = true,
+                ActivityDate = DateTime.UtcNow
+            });
+            Assert.IsNotNull(activities);
+            Assert.IsInstanceOfType(activities.Result, typeof(NoContentResult));
+        }
+
+        [TestMethod]
+        public void PutActiveActivity_ShouldRetrunNoContent()
+        {
+            var activities = _ActivitiesController.PutActiveActivity(1);
+            Assert.IsNotNull(activities);
+            Assert.IsInstanceOfType(activities.Result, typeof(NoContentResult));
         }
     }
 }

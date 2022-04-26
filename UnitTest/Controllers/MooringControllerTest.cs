@@ -88,5 +88,28 @@ namespace UnitTest.Controllers
             Assert.IsNotNull(moogins);
             Assert.AreEqual(404, new NotFoundObjectResult(moogins.Result).StatusCode);
         }
+
+        [TestMethod]
+        public void PutMooring_ShouldReturnNoContent()
+        {
+            var mooring = _MooringController.PutMooringEN(1,
+                new FunnySailAPI.ApplicationCore.Models.DTO.Input.Mooring.UpdateMooringDTO
+                {
+                    id = 1,
+                    Alias = "mooring1",
+                    PortId = 1,
+                    Type = FunnySailAPI.ApplicationCore.Models.Globals.MooringEnum.Medium
+                });
+            Assert.IsNotNull(mooring);
+            Assert.IsInstanceOfType(mooring.Result, typeof(NoContentResult));
+        }
+
+        [TestMethod]
+        public void DeleteMooring_ShouldReturnNoContent()
+        {
+            var mooring = _MooringController.DeleteMooringEN(1);
+            Assert.IsNotNull(mooring);
+            Assert.IsInstanceOfType(mooring.Result, typeof(NoContentResult));
+        }
     }
 }

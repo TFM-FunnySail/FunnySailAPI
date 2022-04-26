@@ -8,11 +8,15 @@ using FunnySailAPI.ApplicationCore.Services;
 using FunnySailAPI.ApplicationCore.Services.CEN.FunnySail;
 using FunnySailAPI.Controllers;
 using FunnySailAPI.Infrastructure.CAD.FunnySail;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using UnitTest.FakeFactories;
+using Xunit;
 
 namespace UnitTest.Controllers
 {
@@ -86,6 +90,7 @@ namespace UnitTest.Controllers
             };
             var port = _PortController.EditPort(editPort);
             Assert.IsNotNull(port);
+            Assert.IsInstanceOfType(port.Result.Result, typeof(NoContentResult));
         }
 
         [TestMethod]
@@ -93,6 +98,7 @@ namespace UnitTest.Controllers
         {
             var port = _PortController.DeletePort(1);
             Assert.IsNotNull(port);
+            Assert.IsInstanceOfType(port.Result.Result, typeof(NoContentResult));
         }
     }
 }

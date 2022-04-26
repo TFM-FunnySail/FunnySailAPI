@@ -5,6 +5,7 @@ using FunnySailAPI.ApplicationCore.Models.Utils;
 using FunnySailAPI.Controllers;
 using FunnySailAPI.DTO.Output.Boat;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -105,7 +106,8 @@ namespace UnitTest.Controllers
         {
             var boat = _BoatsController.PutApproveBoat(1);
             Assert.IsNotNull(boat);
-            Assert.AreEqual("Microsoft.AspNetCore.Mvc.NoContentResult",boat.Result.ToString());
+            Assert.IsInstanceOfType(boat.Result, typeof(NoContentResult));
+            //Assert.AreEqual("Microsoft.AspNetCore.Mvc.NoContentResult",boat.Result.ToString());
         }
 
         [TestMethod]
@@ -113,7 +115,8 @@ namespace UnitTest.Controllers
         {
             var boat = _BoatsController.PutDisapproveBoat(1, new DisapproveBoatInputDTO { AdminId = "1", Observation = "fallo tecnico" });
             Assert.IsNotNull(boat);
-            Assert.AreEqual("Microsoft.AspNetCore.Mvc.NoContentResult", boat.Result.ToString());
+            Assert.IsInstanceOfType(boat.Result, typeof(NoContentResult));
+            //Assert.AreEqual("Microsoft.AspNetCore.Mvc.NoContentResult", boat.Result.ToString());
         }
 
         [TestMethod]
@@ -122,15 +125,17 @@ namespace UnitTest.Controllers
             IFormFile formFile = new FormFile(null, 1, 1, "algo", "algo.png");
             var boat = _BoatsController.PostUploadImage(1, formFile, true);
             Assert.IsNotNull(boat);
-            Assert.AreEqual("Microsoft.AspNetCore.Mvc.NoContentResult", boat.Result.ToString());
+            Assert.IsInstanceOfType(boat.Result, typeof(NoContentResult));
+            //Assert.AreEqual("Microsoft.AspNetCore.Mvc.NoContentResult", boat.Result.ToString());
         }
 
         [TestMethod]
         public void DeleteBoatImage_ShouldRemoveImage() 
         {
-            var boat = _BoatsController.DeleteBoatImage(1, 1);
+            var boat = _BoatsController.DeleteBoatImage(1, 4);
             Assert.IsNotNull(boat);
-            Assert.AreEqual("Microsoft.AspNetCore.Mvc.NoContentResult", boat.Result.ToString());
+            Assert.IsInstanceOfType(boat.Result, typeof(NoContentResult));
+            //Assert.AreEqual("Microsoft.AspNetCore.Mvc.NoContentResult", boat.Result.ToString());
         }
 
         [TestMethod]
@@ -139,6 +144,20 @@ namespace UnitTest.Controllers
             var titles = _BoatsController.GetRequiredTitles();
             Assert.IsNotNull(titles);
             Assert.AreEqual("", titles.Result);
+        }
+
+        [TestMethod]
+        public void PutBoat_ShouldReturnNoContent()
+        {
+            var boat = _BoatsController.PutBoatEN(1, new UpdateBoatInputDTO
+            {
+                BoatId = 1,
+                Active = false,
+                PendingToReview = true
+            });
+
+            Assert.IsNotNull(boat);
+            Assert.IsInstanceOfType(boat.Result, typeof(NoContentResult));
         }
     }
 }
