@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.ActivityBookingCEN">
+    <Position X="2.5" Y="5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AACABAgAAAAAAAAAAAAAAIAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Services\CEN\FunnySail\ActivityBookingCEN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.ActivityCEN" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAABAAAAACAAAAAAAAAAAgAAAIAAAAAAgAAAAAEAAQ=</HashCode>
+      <FileName>Services\CEN\FunnySail\ActivityCEN .cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.187" Collapsed="true" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.AuthRefreshTokenCEN" BaseTypeListCollapsed="true">
+    <Position X="11.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACAAAAAAAAEAAACAAABCACBA=</HashCode>
+      <FileName>Services\CEN\FunnySail\AuthRefreshTokenCEN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.BoatBaseCEN" Collapsed="true">
+    <Position X="3.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Services\CEN\FunnySail\BoatBaseCEN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.BoatBookingCEN" BaseTypeListCollapsed="true">
+    <Position X="13" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAABAAAAAQAAAAAAAAAAAAAAAAAAAAACgAAAAAAAAA=</HashCode>
+      <FileName>Services\CEN\FunnySail\BoatBookingCEN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.BoatCEN">
+    <Position X="7.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIBAAAAwAAAAAAAAAAAAAAAAAAABAAAgAAAAAgBAA=</HashCode>
+      <FileName>Services\CEN\FunnySail\BoatCEN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.BoatInfoCEN">
+    <Position X="0.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAAAAAAAAAAAQAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Services\CEN\FunnySail\BoatInfoCEN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.BoatPricesCEN">
+    <Position X="2.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAIACAAAAAAAAAAAAAAAAAAAAAAQAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\CEN\FunnySail\BoatPricesCEN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.BoatResourceCEN" BaseTypeListCollapsed="true">
+    <Position X="14.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQAAAAAAAAAAIAAAAAgAAAAAAAIA=</HashCode>
+      <FileName>Services\CEN\FunnySail\BoatResourceCEN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.BoatTitlesCEN" BaseTypeListCollapsed="true">
+    <Position X="16.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAgggAAAAAAAAAAAoAAAAAEEAA=</HashCode>
+      <FileName>Services\CEN\FunnySail\BoatTitlesCEN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.BoatTypeCEN" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAIAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Services\CEN\FunnySail\BoatTypeCEN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.BookingCEN" BaseTypeListCollapsed="true">
+    <Position X="11.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>FAAABAIAAAAAAAAAAAAAAoAAAAgAAAAACgBAAAQAAAA=</HashCode>
+      <FileName>Services\CEN\FunnySail\BookingCEN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.ClientInvoiceCEN" BaseTypeListCollapsed="true">
+    <Position X="13" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAhAAAAAAAAAAAAQAAAgAAAAAAABAAAgAAAAAEACA=</HashCode>
+      <FileName>Services\CEN\FunnySail\ClientInvoiceCEN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.ClientInvoiceLineCEN" BaseTypeListCollapsed="true">
+    <Position X="14.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAIAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\CEN\FunnySail\ClientInvoiceLineCEN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.MooringCEN" BaseTypeListCollapsed="true">
+    <Position X="16.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IACABAAAAAAAEECAAACAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Services\CEN\FunnySail\MooringCEN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.OwnerInvoiceCEN" BaseTypeListCollapsed="true">
+    <Position X="5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAABAAAQAAQAAAAAAAAAAAAAIAAAAAACgCAEAAEAgA=</HashCode>
+      <FileName>Services\CEN\FunnySail\OwnerInvoiceCEN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.OwnerInvoiceLineCEN" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAQAAAAAAAgAAAAAAAgA=</HashCode>
+      <FileName>Services\CEN\FunnySail\OwnerInvoiceLineCEN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.PortCEN" BaseTypeListCollapsed="true">
+    <Position X="18.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAABAAAAAQAAAAAAAAAgAAAAAAAAAAABgAAAgQEAAA=</HashCode>
+      <FileName>Services\CEN\FunnySail\PortCEN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.RefundCEN" BaseTypeListCollapsed="true">
+    <Position X="18.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAEAAAACAAACAAAAAgAAAAABAAA=</HashCode>
+      <FileName>Services\CEN\FunnySail\RefundCEN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.RequiredBoatTitlesCEN">
+    <Position X="5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\CEN\FunnySail\RequiredBoatTitlesCEN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.ResourcesCEN" BaseTypeListCollapsed="true">
+    <Position X="14.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAgAAAAAIAAAAAAQAAQAABA=</HashCode>
+      <FileName>Services\CEN\FunnySail\ResourcesCEN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.ReviewCEN" BaseTypeListCollapsed="true">
+    <Position X="7.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAFAAAAAAAAAAAAAAAAAAAAQAABAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Services\CEN\FunnySail\ReviewCEN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.ServiceBookingCEN" BaseTypeListCollapsed="true">
+    <Position X="2.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAIAAAAAAAAAAAAgAAAAAAAAAAAwAAAAAAAAA=</HashCode>
+      <FileName>Services\CEN\FunnySail\ServiceBookingCEN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.ServiceCEN" BaseTypeListCollapsed="true">
+    <Position X="11.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAgAAAAAAAAAAAgAAEAAABgA=</HashCode>
+      <FileName>Services\CEN\FunnySail\ServiceCEN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.TechnicalServiceCEN" BaseTypeListCollapsed="true">
+    <Position X="13" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAACAAAAAAAAAAAACAAgAAAABAAgAAMAQEAAA=</HashCode>
+      <FileName>Services\CEN\FunnySail\TechnicalServiceCEN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CEN.FunnySail.UserCEN" BaseTypeListCollapsed="true">
+    <Position X="0.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>UAAABAgAAAQAAAAAgABAAAAAAAAAAAAAAgAAAACAACA=</HashCode>
+      <FileName>Services\CEN\FunnySail\UserCEN.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

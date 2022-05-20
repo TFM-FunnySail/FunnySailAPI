@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.ActivityBookingEN">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAIAEAAAAAAAAAAAABAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Models\FunnySailEN\ActivityBookingEN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.ActivityEN">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAQAgAAAAAAAAAAQACAAAAAAgAAIAAAAAEAA=</HashCode>
+      <FileName>Models\FunnySailEN\ActivityEN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.ActivityResourcesEN">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAgEAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Models\FunnySailEN\ActivityResourcesEN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.ApplicationUser">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\FunnySailEN\ApplicationUser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.AuthRefreshToken">
+    <Position X="11.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADAAAAAAAAAAAAAAABgAgAAAAAIAQAIAAAAAABBAA=</HashCode>
+      <FileName>Models\FunnySailEN\AuthRefreshToken.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.BoatBookingEN">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAQAIAAAAIAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\FunnySailEN\BoatBookingEN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.BoatEN">
+    <Position X="7.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAACAACIEAAAAAEAAAAAAEAAAEAAAAAgAgAGACAEAgA=</HashCode>
+      <FileName>Models\FunnySailEN\BoatEN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.BoatInfoEN" Collapsed="true">
+    <Position X="2.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAgAAAAIAAAAARCAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Models\FunnySailEN\BoatInfoEN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.BoatPricesEN">
+    <Position X="9.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAASAAAAAAAAQIAAAAAAAAAAEAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Models\FunnySailEN\BoatPricesEN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.BoatResourceEN">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAIAAAgAAAIAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\FunnySailEN\BoatResourceEN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.BoatTitlesEN">
+    <Position X="13" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAEEAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\FunnySailEN\BoatTitlesEN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.BoatTitlesEnumsEN">
+    <Position X="13" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAEEAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\FunnySailEN\BoatTitlesEnumsEN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.BoatTypeEN" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAgAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\FunnySailEN\BoatTypeEN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.BookingEN" Collapsed="true">
+    <Position X="4" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACCAAEAAIgEACAgAAAAECAIAAAAAAAAgIAAgAAEAQ=</HashCode>
+      <FileName>Models\FunnySailEN\BookingEN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.ClientInvoiceEN" Collapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAwAACAgAAAAAAAAAAAAAAAAgIAAAAAAAQ=</HashCode>
+      <FileName>Models\FunnySailEN\ClientInvoiceEN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.InvoiceLineEN" Collapsed="true">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAYAAAAAAAAAAAgCABAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Models\FunnySailEN\InvoiceLineEN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.MooringEN">
+    <Position X="9.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAIAAAEAAAAAAAAACAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Models\FunnySailEN\MooringEN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.OwnerInvoiceEN">
+    <Position X="11.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAACIAAAAGAAAAAAAAACAAAAAAQABAAAAABAAAQA=</HashCode>
+      <FileName>Models\FunnySailEN\OwnerInvoiceEN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.OwnerInvoiceLineEN" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACIAQAIAAAAAAQAAACAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\FunnySailEN\OwnerInvoiceLineEN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.PortEN" Collapsed="true">
+    <Position X="2.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAIAAAQAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Models\FunnySailEN\PortEN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.RefundEN" Collapsed="true">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAoAAAAAAAAAAAgAABAAAABAQAAAAAAAAA=</HashCode>
+      <FileName>Models\FunnySailEN\RefundEN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.RequiredBoatTitleEN" Collapsed="true">
+    <Position X="5.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAARAAAAAAAAEIAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\FunnySailEN\RequiredBoatTitleEN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.ResourcesEN" Collapsed="true">
+    <Position X="0.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAACQAABAAAAAA=</HashCode>
+      <FileName>Models\FunnySailEN\ResourcesEN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.ReviewEN">
+    <Position X="13" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAQAEAAgAAAAIAAAAQAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Models\FunnySailEN\ReviewEN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.ServiceBookingEN" Collapsed="true">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAQAIAAAAAAAAAAAAAAAAAAAAQEAAAAAAAAA=</HashCode>
+      <FileName>Models\FunnySailEN\ServiceBookingEN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.ServiceEN" Collapsed="true">
+    <Position X="2.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAQAgAAAAAAAAAAQAAAAAAAAgAAAAAgAAAAA=</HashCode>
+      <FileName>Models\FunnySailEN\ServiceEN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.TechnicalServiceBoatEN" Collapsed="true">
+    <Position X="4" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABCAAQAAQAAAAAAIAQAAACAAAIAAAAAAgAAAAAQgAA=</HashCode>
+      <FileName>Models\FunnySailEN\TechnicalServiceBoatEN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.TechnicalServiceEN" Collapsed="true">
+    <Position X="5.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAQAgAAAAAAAAAAAAAAAAAEAgAAAAAAAAAAA=</HashCode>
+      <FileName>Models\FunnySailEN\TechnicalServiceEN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Models.FunnySailEN.UsersEN" Collapsed="true">
+    <Position X="5.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAEAAAAAgAAAQACAAAAggAQAIAAAAAAAAACAAAAg=</HashCode>
+      <FileName>Models\FunnySailEN\UsersEN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

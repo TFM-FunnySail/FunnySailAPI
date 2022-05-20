@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CP.BoatCP" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAICAAAAgAAEAAAAAAAAEAAAABABAIAABAAAAgiIIA=</HashCode>
+      <FileName>Services\CP\BoatCP.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CP.BookingCP" BaseTypeListCollapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>JAAAAgAEBQAAEAAAIAAAIFAqAQgABAIAABACAAQACAA=</HashCode>
+      <FileName>Services\CP\BookingCP.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CP.OwnerInvoiceCP" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAABCAAAAAAAA=</HashCode>
+      <FileName>Services\CP\OwnerInvoiceCP.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CP.PortMooringCP" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAQgAAAA=</HashCode>
+      <FileName>Services\CP\PortMooringCP.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CP.RefundCP" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>Services\CP\RefundCP.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CP.TechnicalServiceCP" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAARAAA=</HashCode>
+      <FileName>Services\CP\TechnicalServiceCP.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FunnySailAPI.ApplicationCore.Services.CP.UserCP" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAQAAAAAAAABAAAAAAAAABAAAABAAAAAAAgA=</HashCode>
+      <FileName>Services\CP\UserCP.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
