@@ -62,6 +62,11 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                         FirstName = addUserInput.FirstName,
                         LastName = addUserInput.LastName,
                         ReceivePromotion = addUserInput.ReceivePromotion ?? false,
+                        Address = addUserInput.Address,
+                        City = addUserInput.City,
+                        Country = addUserInput.Country,
+                        ZipCode = addUserInput.ZipCode,
+                        State = addUserInput.State,
                     });
 
                     await _userManager.AddToRoleAsync(user, UserRolesConstant.CLIENT);

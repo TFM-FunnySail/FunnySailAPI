@@ -24,6 +24,21 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
         [Column(TypeName = "date")]
         public DateTime? BirthDay { get; set; }
 
+        [StringLength(500)]
+        public string Address { get; set; }
+
+        [StringLength(100)]
+        public string State { get; set; }
+
+        [StringLength(100)]
+        public string City { get; set; }
+
+        [StringLength(100)]
+        public string Country { get; set; }
+
+        [StringLength(5)]
+        public string ZipCode { get; set; }
+
         public ApplicationUser ApplicationUser { get; set; }
         public List<BoatEN> Boats { get; set; }
         public List<ReviewEN> AdminReviews { get; set; }
