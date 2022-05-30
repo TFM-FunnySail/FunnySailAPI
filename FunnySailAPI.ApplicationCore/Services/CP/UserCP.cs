@@ -108,6 +108,11 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                     userInfo.FirstName = addUserInput.FirstName;
                     userInfo.LastName = addUserInput.LastName;
                     userInfo.ReceivePromotion = addUserInput.ReceivePromotion ?? false;
+                    userInfo.Address = addUserInput.Address;
+                    userInfo.State = addUserInput.State;
+                    userInfo.City = addUserInput.City;
+                    userInfo.Country = addUserInput.Country;
+                    userInfo.ZipCode = addUserInput.ZipCode;
 
                     await _userCEN.GetUserCAD().Update(userInfo);
 
