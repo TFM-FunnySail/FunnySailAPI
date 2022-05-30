@@ -21,7 +21,12 @@ namespace FunnySailAPI.Assemblers
                 FirstName = userEN.FirstName,
                 LastName = userEN.LastName,
                 ReceivePromotion = userEN.ReceivePromotion,
-                Roles = roles
+                Roles = roles,
+                Address = userEN.Address,
+                State = userEN.State,
+                City = userEN.City,
+                Country = userEN.Country,
+                ZipCode = userEN.ZipCode
             };
 
             if (userEN.ApplicationUser != null)
