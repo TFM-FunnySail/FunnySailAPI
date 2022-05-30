@@ -1,4 +1,5 @@
 ﻿using FunnySailAPI.ApplicationCore.Constants;
+using FunnySailAPI.ApplicationCore.Exceptions;
 using FunnySailAPI.ApplicationCore.Interfaces;
 using FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail;
 using FunnySailAPI.ApplicationCore.Interfaces.CP.FunnySail;
@@ -7,6 +8,7 @@ using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -48,7 +50,8 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                     if (!result.Succeeded)
                     {
                         await databaseTransaction.RollbackAsync();
-                        return (result, user);
+                        throw new DataValidationException(String.Join($" ", result.Errors.Select(x => x.Description)),
+                            String.Join($" ", result.Errors.Select(x => x.Description)));
                     }
 
                     UsersEN userInfo = await _userCEN.GetUserCAD().AddAsync(new UsersEN
@@ -66,6 +69,10 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                     await databaseTransaction.CommitAsync();
 
                     return (result, user);
+                }
+                catch (DataValidationException ex)
+                {
+                    throw ex;
                 }
                 catch (Exception ex)
                 {
