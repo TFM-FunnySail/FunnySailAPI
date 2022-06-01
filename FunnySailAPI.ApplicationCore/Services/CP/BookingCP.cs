@@ -185,13 +185,13 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                                 {
                                     BookingId = bookingId,
                                     OwnerId = boat.OwnerId,
-                                    Price = price* (decimal)boat.BoatPrices.PorcentPriceOwner
+                                    Price = Math.Round(price * (decimal)boat.BoatPrices.PorcentPriceOwner,2)
                                 });
                             }
                             else
                             {
                                 ownerInvoiceLines.FirstOrDefault(x => x.OwnerId == boat.OwnerId)
-                                    .Price = price * (decimal)boat.BoatPrices.PorcentPriceOwner;
+                                    .Price = Math.Round(price * (decimal)boat.BoatPrices.PorcentPriceOwner, 2);
                             }
                         }
                         if(ownerInvoiceLines.Count > 0)
@@ -208,7 +208,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                             {
                                 ServiceId = service.Id,
                                 BookingId = bookingId,
-                                Price = service.Price
+                                Price = Math.Round(service.Price,2)
                             });
                             totalAmount += service.Price;
                         }
@@ -222,7 +222,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                             {
                                 ActivityId = activity.Id,
                                 BookingId = bookingId,
-                                Price = activity.Price
+                                Price = Math.Round(activity.Price,2)
                             });
                             totalAmount += activity.Price;
                         }
@@ -233,7 +233,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                     {
                         BookingId = bookingId,
                         Currency = CurrencyEnum.EUR,
-                        TotalAmount = totalAmount,
+                        TotalAmount = Math.Round(totalAmount,2),
                     });
                     await databaseTransaction.CommitAsync();
                 }

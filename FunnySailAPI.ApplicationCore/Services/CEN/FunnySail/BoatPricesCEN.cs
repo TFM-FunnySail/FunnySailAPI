@@ -55,7 +55,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             if (days >= 1)
                 return boatPrices.DayBasePrice * (decimal)days + (decimal)boatPrices.Supplement;
 
-            return boatPrices.HourBasePrice * (decimal)hours + (decimal)boatPrices.Supplement;
+            return Math.Round(boatPrices.HourBasePrice * (decimal)hours + (decimal)boatPrices.Supplement,2);
         }
 
         public decimal CalculatePrice(BoatPricesEN boatPrices, DateTime initialDate, DateTime endDate)
