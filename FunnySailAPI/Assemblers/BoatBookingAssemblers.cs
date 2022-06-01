@@ -11,7 +11,9 @@ namespace FunnySailAPI.Assemblers
             BoatBookingOutputDTO boatBookingOutputDTO = new BoatBookingOutputDTO
             {
                 Id = boatBookingEN.BoatId,
-                Price = boatBookingEN.Price
+                Price = boatBookingEN.Price,
+                EntryDate = boatBookingEN.EntryDate,
+                DepartureDate = boatBookingEN.DepartureDate,
             };
 
             if(boatBookingEN.Boat?.BoatInfo != null)
