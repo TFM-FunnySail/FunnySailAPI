@@ -81,6 +81,11 @@ namespace FunnySailAPI.Assemblers
                 }
             }
 
+            if(boatEN.Owner != null)
+            {
+                boatOutput.Owner = UserAssemblers.Convert(boatEN.Owner);
+            }
+
 
             return boatOutput;
         }

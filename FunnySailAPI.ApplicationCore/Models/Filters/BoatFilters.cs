@@ -13,5 +13,6 @@ namespace FunnySailAPI.ApplicationCore.Models.Filters
         public DaysRangeFilter CreatedDaysRange { get; set; }
         public List<int> ExclusiveBoatId { get; set; }
         public List<int> BoatIdList { get; set; }
+        public string OwnerId { get; set; }
     }
 }

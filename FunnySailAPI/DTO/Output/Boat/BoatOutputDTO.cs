@@ -29,6 +29,7 @@ namespace FunnySailAPI.DTO.Output.Boat
         public MooringOutputDTO Mooring { get; set; }
         public List<BoatResourcesOutputDTO> BoatResources { get; set; }
         public List<RequiredBoatTitleOutputDTO> RequiredBoatTitles { get; set; }
+        public UserOutputDTO Owner { get; set; }
 
         public BoatOutputDTO()
         {

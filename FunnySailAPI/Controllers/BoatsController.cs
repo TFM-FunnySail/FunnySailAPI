@@ -53,6 +53,7 @@ namespace FunnySailAPI.Controllers
                                         .ThenInclude(x => x.Port)
                                         .Include(x => x.BoatResources)
                                         .ThenInclude(x=>x.Resource)
+                                        .Include(x=>x.Owner)
                      ))
                     .Select(x=> BoatAssemblers.Convert(x));
 
@@ -84,7 +85,9 @@ namespace FunnySailAPI.Controllers
                                          .Include(x => x.Mooring)
                                          .ThenInclude(x => x.Port)
                                          .Include(x => x.BoatResources)
-                                         .ThenInclude(x => x.Resource));
+                                         .ThenInclude(x => x.Resource)
+                                         .Include(x => x.Owner)
+                                         );
                 BoatOutputDTO boat;
                 if (initialDate != null && endDate != null)
                 {
@@ -127,6 +130,7 @@ namespace FunnySailAPI.Controllers
                                         .ThenInclude(x => x.Port)
                                         .Include(x => x.BoatResources)
                                         .ThenInclude(x => x.Resource)
+                                        .Include(x => x.Owner)
                      ))
                     .Select(x => BoatAssemblers.Convert(x,_unitOfWork.BoatPricesCEN.CalculatePrice(x.BoatPrices,initialDate,endDate)));
 

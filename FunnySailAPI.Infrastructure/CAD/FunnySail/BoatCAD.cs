@@ -112,6 +112,9 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
             if (boatFilters.BoatIdList?.Count > 0)
                 boats = boats.Where(x => boatFilters.BoatIdList.Contains(x.Id));
 
+            if (boatFilters.OwnerId != null)
+                boats = boats.Where(x => x.OwnerId == boatFilters.OwnerId);
+
             return boats;
         }
 
