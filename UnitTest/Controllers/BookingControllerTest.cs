@@ -71,11 +71,21 @@ namespace UnitTest.Controllers
         {
             var booking = _BookingController.CreateBooking(new AddBookingInputDTO {
                 ClientId = "1",
-                EntryDate = DateTime.UtcNow,
-                DepartureDate = DateTime.UtcNow,
                 TotalPeople = 10,
                 RequestCaptain = true,
-                BoatIds = new List<int> { 1, 2, 3}
+                Boats = new List<AddBoatBookingInputDTO> { new AddBoatBookingInputDTO { 
+                    BoatId = 1,
+                    DepartureDate = DateTime.UtcNow,
+                    EntryDate = DateTime.UtcNow,
+                },new AddBoatBookingInputDTO {
+                    BoatId = 2,
+                    DepartureDate = DateTime.UtcNow,
+                    EntryDate = DateTime.UtcNow,
+                },new AddBoatBookingInputDTO {
+                    BoatId = 3,
+                    DepartureDate = DateTime.UtcNow,
+                    EntryDate = DateTime.UtcNow,
+                } }
             });
 
             Assert.IsNotNull(booking); 

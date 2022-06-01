@@ -72,9 +72,11 @@ namespace UnitTest.Steps.CP_CEN.Booking
             _addBookingInputDTO = new AddBookingInputDTO
             {
                 ClientId = "1",
-                BoatIds = new List<int> { 1 },
-                EntryDate = DateTime.Now.AddDays(10),
-                DepartureDate = DateTime.Now.AddDays(11),
+                Boats = new List<AddBoatBookingInputDTO> { new AddBoatBookingInputDTO {
+                    BoatId = 1,
+                    EntryDate = DateTime.Now.AddDays(10),
+                    DepartureDate = DateTime.Now.AddDays(11),
+                } },
                 RequestCaptain = true,
                 TotalPeople = 10
             };
@@ -100,7 +102,6 @@ namespace UnitTest.Steps.CP_CEN.Booking
             Assert.AreEqual(_addBookingInputDTO.ClientId, _bookingEN.ClientId);
             Assert.AreEqual(_addBookingInputDTO.TotalPeople, _bookingEN.TotalPeople);
             Assert.AreEqual(_addBookingInputDTO.RequestCaptain, _bookingEN.RequestCaptain);
-            Assert.AreEqual(_addBookingInputDTO.DepartureDate, _bookingEN.DepartureDate);
         }
 
         [Given(@"los datos para reserva incompletos")]
@@ -109,9 +110,6 @@ namespace UnitTest.Steps.CP_CEN.Booking
             _addBookingInputDTO = new AddBookingInputDTO
             {
                 ClientId = null,
-                BoatIds = new List<int> { 1 },
-                EntryDate = DateTime.Now.AddDays(10),
-                DepartureDate = DateTime.Now.AddDays(11),
                 RequestCaptain = true,
                 TotalPeople = 10
             };
