@@ -15,6 +15,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -105,6 +106,19 @@ namespace FunnySailAPI.ApplicationCore.Services
         {
             await _authRefreshTokenCEN.RevokeToken(token, ipAddress);
         }
-        
+
+        public async Task ChangePassword(ApplicationUser user, ChangePasswordDTO changePasswordInput)
+        {
+            var changePasswordResult = await _userManager.ChangePasswordAsync(user, changePasswordInput.OldPassword, changePasswordInput.NewPassword);
+            if (!changePasswordResult.Succeeded)
+            {
+                string errors = String.Join($"{Environment.NewLine}",
+                    changePasswordResult.Errors?.Select(x => x.Description).ToList());
+
+                throw new DataValidationException(errors, errors);
+            }
+
+            await _signInManager.RefreshSignInAsync(user);
+        }
     }
 }

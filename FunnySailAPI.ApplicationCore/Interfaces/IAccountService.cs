@@ -16,5 +16,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces
         Task<AuthenticateResponseDTO> RefreshToken(string token, string ipAddress);
         Task<bool> IsOwnsToken(UsersEN user, string token);
         Task RevokeToken(string token, string v);
+        Task ChangePassword(ApplicationUser user, ChangePasswordDTO changePasswordInput);
     }
 }

@@ -3,6 +3,7 @@ using FunnySailAPI.ApplicationCore.Exceptions;
 using FunnySailAPI.ApplicationCore.Extensions;
 using FunnySailAPI.ApplicationCore.Interfaces;
 using FunnySailAPI.ApplicationCore.Models.DTO.Input.Account;
+using FunnySailAPI.ApplicationCore.Models.DTO.Input.User;
 using FunnySailAPI.ApplicationCore.Models.DTO.Output.Account;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.ApplicationCore.Models.Globals;
@@ -127,6 +128,28 @@ namespace FunnySailAPI.Controllers
                     new ErrorResponseDTO(ex));
             }
         }
+
+        [CustomAuthorize]
+        [HttpPut("change-password")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordDTO changePasswordInput)
+        {
+            try
+            {
+                await _accountService.ChangePassword(User.ApplicationUser,changePasswordInput);
+                return NoContent();
+            }
+            catch (DataValidationException dataValidation)
+            {
+                return StatusCode(StatusCodes.Status422UnprocessableEntity,
+                    new ErrorResponseDTO(dataValidation));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    new ErrorResponseDTO(ex));
+            }
+        }
+
 
         private void setTokenCookie(AuthenticateResponseDTO response)
         {
