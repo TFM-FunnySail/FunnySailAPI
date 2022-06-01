@@ -58,6 +58,14 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             return boatPrices.HourBasePrice * (decimal)hours + (decimal)boatPrices.Supplement;
         }
 
+        public decimal CalculatePrice(BoatPricesEN boatPrices, DateTime initialDate, DateTime endDate)
+        {
+            double hoursOfDifference = (endDate - initialDate).TotalHours;
+            double daysOfDifference = (endDate - initialDate).TotalDays;
+
+            return CalculatePrice(boatPrices, daysOfDifference, hoursOfDifference);
+        }
+
         public IBoatPricesCAD GetBoatPricesCAD()
         {
             return _boatPricesCAD;

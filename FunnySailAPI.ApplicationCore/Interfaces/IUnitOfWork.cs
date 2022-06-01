@@ -37,5 +37,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces
         public IOwnerInvoiceLineCEN OwnerInvoiceLineCEN { get; }
         public IBoatTitlesCEN BoatTitlesCEN { get; }
         public IBoatTypeCEN BoatTypeCEN { get; }
+        public IBoatPricesCEN BoatPricesCEN { get; }
     }
 }

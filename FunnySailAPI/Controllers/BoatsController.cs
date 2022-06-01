@@ -66,7 +66,7 @@ namespace FunnySailAPI.Controllers
 
         // GET: api/Boats/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<BoatOutputDTO>> GetBoat(int id)
+        public async Task<ActionResult<BoatOutputDTO>> GetBoat(int id, DateTime? initialDate, DateTime? endDate)
         {
             try
             {
@@ -85,8 +85,16 @@ namespace FunnySailAPI.Controllers
                                          .ThenInclude(x => x.Port)
                                          .Include(x => x.BoatResources)
                                          .ThenInclude(x => x.Resource));
+                BoatOutputDTO boat;
+                if (initialDate != null && endDate != null)
+                {
+                    boat = boats.Select(x => BoatAssemblers.Convert(x,_unitOfWork.BoatPricesCEN.CalculatePrice(x.BoatPrices,(DateTime)initialDate, (DateTime)endDate))).FirstOrDefault();
+                }
+                else
+                {
+                    boat = boats.Select(x => BoatAssemblers.Convert(x)).FirstOrDefault();
+                }
 
-                var boat = boats.Select(x => BoatAssemblers.Convert(x)).FirstOrDefault();
                 if (boat == null)
                 {
                     return NotFound();
@@ -120,7 +128,7 @@ namespace FunnySailAPI.Controllers
                                         .Include(x => x.BoatResources)
                                         .ThenInclude(x => x.Resource)
                      ))
-                    .Select(x => BoatAssemblers.Convert(x));
+                    .Select(x => BoatAssemblers.Convert(x,_unitOfWork.BoatPricesCEN.CalculatePrice(x.BoatPrices,initialDate,endDate)));
 
                 return new GenericResponseDTO<BoatOutputDTO>(boats, pagination.Limit, pagination.Offset, boatTotal);
             }

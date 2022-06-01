@@ -23,6 +23,7 @@ namespace FunnySailAPI.DTO.Output.Boat
         public int MotorPower { get; set; }
         public decimal? DayBasePrice { get; set; }
         public decimal? HourBasePrice { get; set; }
+        public decimal? Price { get; set; }
         public float? Supplement { get; set; }
         public BoatTypeOutputDTO BoatType { get; set; }
         public MooringOutputDTO Mooring { get; set; }

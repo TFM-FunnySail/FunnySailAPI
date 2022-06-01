@@ -84,5 +84,13 @@ namespace FunnySailAPI.Assemblers
 
             return boatOutput;
         }
+
+        public static BoatOutputDTO Convert(BoatEN boatEN,decimal price)
+        {
+            BoatOutputDTO boatOutput = Convert(boatEN);
+            boatOutput.Price = price;
+
+            return boatOutput;
+        }
     }
 }
