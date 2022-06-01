@@ -138,15 +138,24 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             {
                 try
                 {
-                    bookingId = await _bookingCEN.CreateBooking(new BookingEN
+                    BookingEN booking = new BookingEN
                     {
                         ClientId = addBookingInput.ClientId,
                         CreatedDate = DateTime.Today,
                         RequestCaptain = addBookingInput.RequestCaptain,
-                        TotalPeople = addBookingInput.TotalPeople,
-                        EntryDate = addBookingInput.Boats?.Min(x=>x.EntryDate),
-                        DepartureDate = addBookingInput.Boats?.Max(x=>x.DepartureDate),
-                    });
+                        TotalPeople = addBookingInput.TotalPeople
+                    };
+
+                    if(addBookingInput.Boats?.Count > 0)
+                    {
+                        if(addBookingInput.Boats.Any(x => x.EntryDate != null))
+                            booking.EntryDate = addBookingInput.Boats.Where(x => x.EntryDate != null).Min(x => x.EntryDate);
+                        
+                        if(addBookingInput.Boats.Any(x => x.DepartureDate != null))
+                            booking.DepartureDate = addBookingInput.Boats.Where(x => x.DepartureDate != null).Max(x => x.DepartureDate);
+                    }
+
+                    bookingId = await _bookingCEN.CreateBooking(booking);
 
                     BookingEN bookingEN = await _bookingCEN.GetBookingCAD().FindById(bookingId);
 
