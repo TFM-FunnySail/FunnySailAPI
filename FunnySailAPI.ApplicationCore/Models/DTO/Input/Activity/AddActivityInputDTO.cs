@@ -10,9 +10,6 @@ namespace FunnySailAPI.ApplicationCore.Models.DTO.Input.Activity
         [Required, StringLength(200)]
         public String Name { get; set; }
 
-        [Required]
-        public DateTime ActivityDate { get; set; }
-
         public bool Active { get; set; }
 
         [Required]

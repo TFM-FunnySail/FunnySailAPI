@@ -17,7 +17,6 @@ namespace FunnySailAPI.Assemblers
                 Active = activityEN.Active,
                 Description = activityEN.Description,
                 Name = activityEN.Name,
-                ActivityDate = activityEN.ActivityDate,
                 Price = activityEN.Price
             };
 

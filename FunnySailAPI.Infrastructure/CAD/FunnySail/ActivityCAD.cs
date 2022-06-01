@@ -22,9 +22,6 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
         public async Task<ActivityEN> FindByIdAllData(int activityId)
         {
             return await _dbContext.Activity
-                .Include(x => x.Active)
-                .Include(x => x.ActivityDate)
-                .Include(x => x.Description)
                 .FirstOrDefaultAsync(x => x.Id == activityId);
         }
 
@@ -69,12 +66,6 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
 
             if (activityFilters.MaxPrice != 0)
                 activities = activities.Where(x => x.Price < activityFilters.MaxPrice);
-            
-            if (activityFilters.InitialDate != null)
-                activities = activities.Where(x => x.ActivityDate >= activityFilters.InitialDate);
-
-            if (activityFilters.EndDate != null)
-                activities = activities.Where(x => x.ActivityDate < activityFilters.EndDate);
             
             if (activityFilters.Name != null)
                 activities = activities.Where(x => x.Name.Contains(activityFilters.Name));

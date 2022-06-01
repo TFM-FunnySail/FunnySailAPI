@@ -188,7 +188,8 @@ namespace UnitTest.FakeFactories
                 _UserCP,
                 _OwnerInvoiceLineCEN,
                 _BoatTitlesCEN,
-                _BoatTypeCEN
+                _BoatTypeCEN,
+                _BoatPricesCEN
                );
         }
     }

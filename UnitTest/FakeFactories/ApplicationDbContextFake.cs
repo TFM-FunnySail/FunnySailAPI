@@ -299,7 +299,6 @@ namespace UnitTest.FakeFactories
                 {
                     Id = 1,
                     Active = true,
-                    ActivityDate = DateTime.UtcNow,
                     Name = "Buceo",
                     Price = 330,
                     Description = "Actividad de prueba 1"
@@ -308,7 +307,6 @@ namespace UnitTest.FakeFactories
                 {
                     Id = 2,
                     Active = true,
-                    ActivityDate = DateTime.UtcNow,
                     Name = "Pesca",
                     Price = 430,
                     Description = "Actividad de prueba 2"
@@ -317,7 +315,6 @@ namespace UnitTest.FakeFactories
                 {
                     Id = 3,
                     Active = true,
-                    ActivityDate = DateTime.UtcNow,
                     Name = "Pesca",
                     Price = 350,
                     Description = "Actividad de prueba 3"
@@ -326,7 +323,6 @@ namespace UnitTest.FakeFactories
                 {
                     Id = 4,
                     Active = false,
-                    ActivityDate = DateTime.UtcNow,
                     Name = "Buceo",
                     Price = 280,
                     Description = "Actividad de prueba 4"
@@ -335,7 +331,6 @@ namespace UnitTest.FakeFactories
                 {
                     Id = 5,
                     Active = false,
-                    ActivityDate = DateTime.UtcNow,
                     Name = "Pesca",
                     Price = 250,
                     Description = "Actividad de prueba 5"

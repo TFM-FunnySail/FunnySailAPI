@@ -8,8 +8,6 @@ namespace FunnySailAPI.ApplicationCore.Models.Filters
     {
         public int ActivityId { get; set; }
         public bool? Active { get; set; }
-        public DateTime? InitialDate { get; set; }
-        public DateTime? EndDate { get; set; }
         public decimal MinPrice { get; set; }
         public decimal MaxPrice { get; set; }
         public string Name { get; set; }

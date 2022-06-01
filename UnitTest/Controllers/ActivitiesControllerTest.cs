@@ -99,8 +99,7 @@ namespace UnitTest.Controllers
                 Name = "actividad guapa",
                 Description = "descripcion guapisima",
                 Price = (decimal)12.21,
-                Active = true,
-                ActivityDate = DateTime.UtcNow
+                Active = true
             });
             Assert.IsNotNull(activities);
         }

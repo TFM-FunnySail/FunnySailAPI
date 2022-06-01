@@ -27,7 +27,6 @@ namespace UnitTest.Steps.CP_CEN.Activities
         private decimal _price;
         private string _description;
         private string _name;
-        private DateTime _activityDate;
 
         public CreateActivityStep(ScenarioContext scenarioContext)
         {
@@ -40,21 +39,19 @@ namespace UnitTest.Steps.CP_CEN.Activities
 
         }
 
-        [Given(@"con (.*), (.*),(.*) y (.*)")]
-        public void GivenConNombrePrecioYDescripcion(string name, string price, string desc, DateTime activityDate)
+        [Given(@"con (.*), (.*),(.*)")]
+        public void GivenConNombrePrecioYDescripcion(string name, string price, string desc)
         {
             _name = name;
             _description = desc;
             _price = Decimal.Parse(price);
-            _activityDate = activityDate;
         }
         
-        [Given(@"con precio (.*), (.*), (.*) y sin nombre")]
-        public void GivenConPrecioYSinNombre(string price, string desc, DateTime activityDate)
+        [Given(@"con precio (.*), (.*) y sin nombre")]
+        public void GivenConPrecioYSinNombre(string price, string desc)
         {
             _description = desc;
             _price = Decimal.Parse(price);
-            _activityDate = activityDate;
         }
         
         [When(@"se adiciona la actividad")]
@@ -67,8 +64,7 @@ namespace UnitTest.Steps.CP_CEN.Activities
                     Active = true,
                     Price = _price,
                     Description = _description,
-                    Name = _name,
-                    ActivityDate = _activityDate
+                    Name = _name
                 });
                 _newActivity = await _activityCAD.FindById(id);
             }
@@ -84,7 +80,6 @@ namespace UnitTest.Steps.CP_CEN.Activities
             Assert.AreEqual(_price, _newActivity.Price);
             Assert.AreEqual(_description, _newActivity.Description);
             Assert.AreEqual(_name, _newActivity.Name);
-            Assert.AreEqual(_activityDate, _newActivity.ActivityDate);
         }
         
         [Then(@"devuelve un error porque el nombre de la actividad es requerida")]

@@ -12,7 +12,6 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
     {
         [Key]
         public int Id { get; set; }
-        public DateTime ActivityDate { get; set; }
         public String Name { get; set; }
 
         public bool Active { get; set; }

@@ -79,7 +79,6 @@ namespace FunnySailAPI.Infrastructure.Initialize
                         {
                             Active = active,
                             Description = $"Actividad de prueba {index}",
-                            ActivityDate = DateTime.UtcNow,
                             Name = $"Actividad {index}",
                             Price = NextFloat(1, 100)
                         });

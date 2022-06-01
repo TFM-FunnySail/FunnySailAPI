@@ -40,7 +40,6 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
 
             ActivityEN dbActivity = await _activityCAD.AddAsync(new ActivityEN
             {
-                ActivityDate = addActivityInput.ActivityDate,
                 Name = addActivityInput.Name,
                 Price = addActivityInput.Price,
                 Description = addActivityInput.Description,
@@ -62,7 +61,6 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
                 throw new DataValidationException("Activity", "Actividad",
                     ExceptionTypesEnum.NotFound);
 
-            activity.ActivityDate = updateAcitivityInput.ActivityDate;
             activity.Name = updateAcitivityInput.Name;
             activity.Price = updateAcitivityInput.Price;
             activity.Description = updateAcitivityInput.Description;

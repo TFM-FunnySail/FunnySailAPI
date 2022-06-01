@@ -91,14 +91,13 @@ namespace UnitTest.Features.CP_CEN.Activity
             testRunner.CollectScenarioErrors();
         }
         
-        public virtual void AdicionoUnaActividad(string name, string price, string description, string activityDate, string[] exampleTags)
+        public virtual void AdicionoUnaActividad(string name, string price, string description, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("name", name);
             argumentsOfScenario.Add("price", price);
             argumentsOfScenario.Add("description", description);
-            argumentsOfScenario.Add("activityDate", activityDate);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adiciono una actividad", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 3
 this.ScenarioInitialize(scenarioInfo);
@@ -121,7 +120,7 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 4
- testRunner.Given(string.Format("con {0}, {1},{2} y {3}", name, price, description, activityDate), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given(string.Format("con {0}, {1},{2}", name, price, description), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 5
  testRunner.When("se adiciona la actividad", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -140,11 +139,10 @@ this.ScenarioInitialize(scenarioInfo);
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:name", "Kayak")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:price", "40")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:description", "Clases para aprender kayak")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:activityDate", "2022-02-21T14:00")]
         public virtual void AdicionoUnaActividad_Kayak()
         {
 #line 3
-this.AdicionoUnaActividad("Kayak", "40", "Clases para aprender kayak", "2022-02-21T14:00", ((string[])(null)));
+this.AdicionoUnaActividad("Kayak", "40", "Clases para aprender kayak", ((string[])(null)));
 #line hidden
         }
         
@@ -155,21 +153,19 @@ this.AdicionoUnaActividad("Kayak", "40", "Clases para aprender kayak", "2022-02-
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:name", "Surf")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:price", "50")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:description", "Clases para aprender surf")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:activityDate", "2022-02-02T11:00")]
         public virtual void AdicionoUnaActividad_Surf()
         {
 #line 3
-this.AdicionoUnaActividad("Surf", "50", "Clases para aprender surf", "2022-02-02T11:00", ((string[])(null)));
+this.AdicionoUnaActividad("Surf", "50", "Clases para aprender surf", ((string[])(null)));
 #line hidden
         }
         
-        public virtual void AdicionoUnaActividadSinNombre(string price, string description, string activityDate, string[] exampleTags)
+        public virtual void AdicionoUnaActividadSinNombre(string price, string description, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("price", price);
             argumentsOfScenario.Add("description", description);
-            argumentsOfScenario.Add("activityDate", activityDate);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Adiciono una actividad sin nombre", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 13
 this.ScenarioInitialize(scenarioInfo);
@@ -192,7 +188,7 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 14
- testRunner.Given(string.Format("con precio {0}, {1}, {2} y sin nombre", price, description, activityDate), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given(string.Format("con precio {0}, {1} y sin nombre", price, description), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 15
  testRunner.When("se adiciona la actividad", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -210,11 +206,10 @@ this.ScenarioInitialize(scenarioInfo);
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "40")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:price", "40")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:description", "Clases para aprender kayak")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:activityDate", "2022-02-21T14:00")]
         public virtual void AdicionoUnaActividadSinNombre_40()
         {
 #line 13
-this.AdicionoUnaActividadSinNombre("40", "Clases para aprender kayak", "2022-02-21T14:00", ((string[])(null)));
+this.AdicionoUnaActividadSinNombre("40", "Clases para aprender kayak", ((string[])(null)));
 #line hidden
         }
         
@@ -224,11 +219,10 @@ this.AdicionoUnaActividadSinNombre("40", "Clases para aprender kayak", "2022-02-
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "50")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:price", "50")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:description", "Clases para aprender surf")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:activityDate", "2022-02-02T11:00")]
         public virtual void AdicionoUnaActividadSinNombre_50()
         {
 #line 13
-this.AdicionoUnaActividadSinNombre("50", "Clases para aprender surf", "2022-02-02T11:00", ((string[])(null)));
+this.AdicionoUnaActividadSinNombre("50", "Clases para aprender surf", ((string[])(null)));
 #line hidden
         }
     }
