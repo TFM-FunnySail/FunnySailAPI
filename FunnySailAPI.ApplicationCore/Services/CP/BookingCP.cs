@@ -78,7 +78,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                 throw new DataValidationException("Client Id",
                     "Id Cliente",ExceptionTypesEnum.IsRequired);
 
-            if(addBookingInput.BoatIds.Count == 0 && addBookingInput.ActivityIds.Count == 0 && addBookingInput.ServiceIds.Count == 0)
+            if(addBookingInput.Boats.Count == 0 && addBookingInput.ActivityIds.Count == 0 && addBookingInput.ServiceIds.Count == 0)
                 throw new DataValidationException("Booking empty",
                    "La reserva debe tener al me.... ");
 
@@ -93,16 +93,21 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             IList<ActivityEN> activities = new List<ActivityEN>();
             IList<ServiceEN> services = new List<ServiceEN>();
 
-            if (addBookingInput.BoatIds?.Count > 0) 
+            if (addBookingInput.Boats?.Count > 0) 
             {
-                var boatsNotAvailable = await _boatCEN.GetBoatCAD().GetBoatIdsNotAvailable
-                    (addBookingInput.EntryDate, addBookingInput.DepartureDate,addBookingInput.BoatIds);
+                var boatsIds = addBookingInput.Boats.Select(x => x.BoatId).ToList();
 
-                if (boatsNotAvailable.Any(x => addBookingInput.BoatIds.Contains(x)))
-                    throw new DataValidationException($"The Boats {String.Join(",", boatsNotAvailable)} not avialable",
-                            $"Los barcos {String.Join(",",boatsNotAvailable)} no disponibles");
+                foreach(var boat in addBookingInput.Boats)
+                {
+                    var boatsNotAvailable = await _boatCEN.GetBoatCAD().GetBoatIdsNotAvailable
+                    (boat.EntryDate, boat.DepartureDate, new List<int> { boat.BoatId });
 
-                boats = await _boatCEN.GetAll(new BoatFilters { BoatIdList= addBookingInput.BoatIds},
+                    if (boatsNotAvailable.Count == 0)
+                        throw new DataValidationException($"The Boat {String.Join(",", boat.BoatId)} is not avialable",
+                                $"El barco {String.Join(",", boat.BoatId)} no está disponible");
+                }
+
+                boats = await _boatCEN.GetAll(new BoatFilters { BoatIdList= boatsIds },
                     new Pagination { Limit = 3000},null, 
                     source => source.Include(x => x.BoatInfo).Include(x=>x.BoatPrices)
                     );
@@ -111,13 +116,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
 
             if (addBookingInput.ServiceIds?.Count > 0) 
             {
-                var servicesNotAvailable = await _serviceCEN.GetServiceCAD().GetServiceIdsNotAvailable
-                    (addBookingInput.EntryDate, addBookingInput.DepartureDate, addBookingInput.ServiceIds);
-
-                if (servicesNotAvailable.Any(x=> addBookingInput.ServiceIds.Contains(x)))
-                    throw new DataValidationException($"The services {String.Join(",", servicesNotAvailable)} not avialable",
-                            $"Los servicios {String.Join(",", servicesNotAvailable)} no están disponibles para las fechas seleccionadas");
-
+                
                 services = await _serviceCEN.GetServiceCAD().GetServiceFilteredList(
                                     new ServiceFilters { ServiceIdList = addBookingInput.ServiceIds });
 
@@ -125,13 +124,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
 
             if (addBookingInput.ActivityIds?.Count > 0) 
             {
-                var activitiesNotAvailable = await _activityCEN.GetActivityCAD().GetActivityIdsNotAvailable
-                    (addBookingInput.EntryDate, addBookingInput.DepartureDate, addBookingInput.ActivityIds);
-
-                if (activitiesNotAvailable.Any(x => addBookingInput.ActivityIds.Contains(x)))
-                    throw new DataValidationException($"The activities {String.Join(",", activitiesNotAvailable)} are not avialable",
-                            $"Las actividades {String.Join(",", activitiesNotAvailable)} no están disponibles");
-
+                
                 activities = await _activityCEN.GetActivityCAD().GetServiceFilteredList(
                                     new ActivityFilters { ActivityIdList = addBookingInput.ActivityIds });
             }
@@ -140,9 +133,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                 throw new DataValidationException("You must create the order with at least one activity, service or boat",
                     "Debe crear la orden con al menos una actividad, servicio o embarcación");
 
-            double hoursOfDifference = (addBookingInput.DepartureDate - addBookingInput.EntryDate).TotalHours;
-            double daysOfDifference = (addBookingInput.DepartureDate - addBookingInput.EntryDate).TotalDays;
-
+            
             using (var databaseTransaction = _databaseTransactionFactory.BeginTransaction())
             {
                 try
@@ -152,9 +143,9 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                         ClientId = addBookingInput.ClientId,
                         CreatedDate = DateTime.Today,
                         RequestCaptain = addBookingInput.RequestCaptain,
-                        EntryDate = addBookingInput.EntryDate,
-                        DepartureDate = addBookingInput.DepartureDate,
-                        TotalPeople = addBookingInput.TotalPeople
+                        TotalPeople = addBookingInput.TotalPeople,
+                        EntryDate = addBookingInput.Boats?.Min(x=>x.EntryDate),
+                        DepartureDate = addBookingInput.Boats?.Max(x=>x.DepartureDate),
                     });
 
                     BookingEN bookingEN = await _bookingCEN.GetBookingCAD().FindById(bookingId);
@@ -166,6 +157,10 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                         
                         foreach (var boat in boats)
                         {
+                            AddBoatBookingInputDTO boatInput = addBookingInput.Boats.FirstOrDefault(x => x.BoatId == boat.Id);
+                            double hoursOfDifference = (boatInput.DepartureDate - boatInput.EntryDate).TotalHours;
+                            double daysOfDifference = (boatInput.DepartureDate - boatInput.EntryDate).TotalDays;
+
                             decimal price = _boatPricesCEN.CalculatePrice(boat.BoatPrices,daysOfDifference,hoursOfDifference);
                             await _boatBookingCEN.CreateBoatBooking(new BoatBookingEN
                             {

@@ -58,23 +58,20 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
 
         public async Task<List<int>> GetBoatIdsNotAvailable(DateTime initialDate, DateTime endDate)
         {
-            return await _dbContext.Bookings.
+            return await _dbContext.BoatBookings.
                 Where(x => (x.EntryDate >= initialDate && x.EntryDate <= endDate) ||
                 (x.DepartureDate > initialDate && x.DepartureDate <= endDate))
-                .Join(_dbContext.BoatBookings,
-                b => b.Id, bb => bb.BookingId,
-                (booking, boatBooking) => boatBooking.BoatId)
+                .Select(x=>x.BoatId)
                 .Distinct().ToListAsync();
         }
 
         public async Task<List<int>> GetBoatIdsNotAvailable(DateTime initialDate, DateTime endDate,List<int> ids)
         {
-            return await _dbContext.Bookings.
+            return await _dbContext.BoatBookings.
                 Where(x => (x.EntryDate >= initialDate && x.EntryDate <= endDate) ||
-                (x.DepartureDate > initialDate && x.DepartureDate <= endDate))
-                .Join(_dbContext.BoatBookings.Where(x=> ids.Contains(x.BoatId)),
-                b => b.Id, bb => bb.BookingId,
-                (booking, boatBooking) => boatBooking.BoatId)
+                (x.DepartureDate > initialDate && x.DepartureDate <= endDate)
+                && ids.Contains(x.BoatId))
+                .Select(x => x.BoatId)
                 .Distinct().ToListAsync();
         }
 
