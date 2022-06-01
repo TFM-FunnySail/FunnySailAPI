@@ -14,7 +14,7 @@ namespace FunnySailAPI.ApplicationCore.Models.DTO.Input.Booking
         public int? TotalPeople { get; set; }
         public bool? RequestCaptain { get; set; }
         public BookingStatusEnum? Status { get; set; }
-        public IList<int> BoatBookingIds { get; set; }
+        public IList<AddBoatBookingInputDTO> BoatBookingIds { get; set; }
         public IList<int> ServiceBookingIds { get; set; }
         public IList<int> ActivityBookingIds { get; set; }
     }

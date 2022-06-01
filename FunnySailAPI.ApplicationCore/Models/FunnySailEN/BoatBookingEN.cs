@@ -14,6 +14,9 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
         [Column(TypeName = "money")]
         public decimal Price { get; set; }
 
+        public DateTime EntryDate { get; set; }
+        public DateTime DepartureDate { get; set; }
+
         public BookingEN Booking { get; set; }
         public BoatEN Boat { get; set; }
     }

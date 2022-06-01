@@ -426,14 +426,15 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                     {
                         foreach (var boat in updateBookingInputDTO.BoatBookingIds)
                         {
-                            BoatPricesEN boatEN = await _boatPricesCEN.GetBoatPricesCAD().FindById(boat);
+                            BoatPricesEN boatEN = await _boatPricesCEN.GetBoatPricesCAD().FindById(boat.BoatId);
                             if (boatEN == null)
                                 throw new DataValidationException($"Boat {boat}", $"Embarcación {boat}",
                                     ExceptionTypesEnum.DontExists);
 
-                            if (!bookingEN.BoatBookings.Any(x => x.BoatId == boat))
+                            var boatBooking = bookingEN.BoatBookings.FirstOrDefault(x => x.BoatId == boat.BoatId);
+                            if (boatBooking == null)
                             {
-                                decimal price = CalculateBoatPriceInAOrder(bookingEN, boatEN);
+                                decimal price = CalculateBoatPriceInAOrder(boat, boatEN);
                                 bookingEN.BoatBookings.Add(new BoatBookingEN
                                 {
                                     BoatId = boatEN.BoatId,
@@ -441,13 +442,30 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                                 });
                                 extraTotalAmount += price;
                             }
+                            else
+                            {
+                                if(boat.EntryDate != boatBooking.EntryDate || boat.DepartureDate != boatBooking.DepartureDate)
+                                {
+                                    extraTotalAmount -= boatBooking.Price;
+                                    decimal price = CalculateBoatPriceInAOrder(boat, boatEN);
+
+                                    boatBooking.EntryDate = boatBooking.EntryDate;
+                                    boatBooking.DepartureDate = boatBooking.DepartureDate;
+                                    boatBooking.Price = price;
+                                    await _boatBookingCEN.GetBoatBookingCAD().Update(boatBooking);
+
+                                    extraTotalAmount += price;
+                                }
+                            }
                         }
 
+                        IList<int> boatBookingsIds = updateBookingInputDTO.BoatBookingIds.Select(x => x.BoatId).ToList();
+
                         extraTotalAmount -= bookingEN.BoatBookings.Where(x =>
-                        !updateBookingInputDTO.BoatBookingIds.Contains(x.BoatId)).Sum(x => x.Price);
+                        !boatBookingsIds.Contains(x.BoatId)).Sum(x => x.Price);
 
                         bookingEN.BoatBookings.RemoveAll(x =>
-                        !updateBookingInputDTO.BoatBookingIds.Contains(x.BoatId));
+                        !boatBookingsIds.Contains(x.BoatId));
                     }
 
                     if (extraTotalAmount != 0)
@@ -513,7 +531,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
             return bookingEN;
         }
 
-        public decimal CalculateBoatPriceInAOrder(BookingEN booking,BoatPricesEN boatPrices)
+        public decimal CalculateBoatPriceInAOrder(AddBoatBookingInputDTO booking,BoatPricesEN boatPrices)
         {
             double hoursOfDifference = (booking.DepartureDate - booking.EntryDate).TotalHours;
             double daysOfDifference = (booking.DepartureDate - booking.EntryDate).TotalDays;
