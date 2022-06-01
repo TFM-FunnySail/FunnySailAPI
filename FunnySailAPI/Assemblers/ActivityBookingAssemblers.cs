@@ -11,7 +11,7 @@ namespace FunnySailAPI.Assemblers
             ActivityBookingOutputDTO activyBookingOutputDTO = new ActivityBookingOutputDTO
             {
                 Id = activityBookingEN.ActivityId,
-                Price = activityBookingEN.Price
+                Price = Math.Round(activityBookingEN.Price, 2)
             };
 
             if(activityBookingEN.Activity != null)

@@ -1,5 +1,6 @@
 ﻿using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
 using FunnySailAPI.DTO.Output.OwnerInvoice;
+using System;
 
 namespace FunnySailAPI.Assemblers
 {
@@ -12,7 +13,7 @@ namespace FunnySailAPI.Assemblers
                 BookingId = ownerInvoiceEN.BookingId,
                 OwnerId = ownerInvoiceEN.OwnerId,
                 OwnerInvoiceId = ownerInvoiceEN.OwnerInvoiceId,
-                Price = ownerInvoiceEN.Price,
+                Price = Math.Round(ownerInvoiceEN.Price, 2),
             };
 
             if (ownerInvoiceEN.Owner != null)

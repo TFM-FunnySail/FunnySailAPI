@@ -17,7 +17,7 @@ namespace FunnySailAPI.Assemblers
             OwnerInvoiceOutputDTO ownerInvoiceOutput = new OwnerInvoiceOutputDTO
             {
                 Id = ownerInvoiceEN.Id,
-                Amount = ownerInvoiceEN.Amount,
+                Amount = Math.Round(ownerInvoiceEN.Amount,2),
                 Date = ownerInvoiceEN.Date,
                 IsCanceled = ownerInvoiceEN.IsCanceled,
                 IsPaid = ownerInvoiceEN.IsPaid,
@@ -44,7 +44,7 @@ namespace FunnySailAPI.Assemblers
                 {
                     BoatId = x.BoatId,
                     OwnerInvoiceId = x.OwnerInvoiceId,
-                    Price = x.Price,
+                    Price = Math.Round(x.Price, 2),
                     Id = x.Id,
                     Done = x.Done,
                     CreatedDate = x.CreatedDate,

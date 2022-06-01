@@ -17,12 +17,6 @@ namespace FunnySailAPI.Assemblers
                 Id = refund.Id,
             };
 
-           /* if (refund.ClientInvoice != null)
-            {
-                refund.ClientInvoice.Refunds = null;
-                refundOutput.ClientInvoice = ClientInvoiceAssemblers.Convert(refund.ClientInvoice);
-            }*/
-
             if(refund.Booking?.Client != null)
             {
                 refund.Booking.Client.Bookings = null;

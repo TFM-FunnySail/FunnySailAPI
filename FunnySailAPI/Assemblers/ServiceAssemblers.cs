@@ -17,7 +17,7 @@ namespace FunnySailAPI.Assemblers
                 Active = service.Active,
                 Description = service.Description,
                 Name = service.Name,
-                Price = service.Price
+                Price = Math.Round(service.Price, 2)
             };
 
             return serviceOutput;

@@ -2,6 +2,7 @@
 using FunnySailAPI.DTO.Output.ClientInvoice;
 using FunnySailAPI.DTO.Output.Refund;
 using FunnySailAPI.DTO.Output.User;
+using System;
 using System.Linq;
 
 namespace FunnySailAPI.Assemblers
@@ -13,7 +14,7 @@ namespace FunnySailAPI.Assemblers
             ClientInvoiceOutputDTO clientInvoiceOutput = new ClientInvoiceOutputDTO
             {
                 Id = clientInvoiceEN.Id,
-                TotalAmount = clientInvoiceEN.TotalAmount,
+                TotalAmount = Math.Round(clientInvoiceEN.TotalAmount, 2),
                 CreatedDate = clientInvoiceEN.CreatedDate,
                 Canceled = clientInvoiceEN.Canceled,
                 Paid = clientInvoiceEN.Paid,
@@ -28,7 +29,7 @@ namespace FunnySailAPI.Assemblers
                 clientInvoiceOutput.InvoiceLines = clientInvoiceEN.InvoiceLines.Select(x => new ClientInvoiceLinesOutputDTO
                 {
                     BookingId = x.BookingId,
-                    TotalAmount = x.TotalAmount,
+                    TotalAmount = Math.Round(x.TotalAmount, 2),
                     ClientInvoiceId = x.ClientInvoiceId,
                     Currency = x.Currency.ToString()
                 }).ToList();
@@ -40,7 +41,7 @@ namespace FunnySailAPI.Assemblers
                 clientInvoiceOutput.Refunds = clientInvoiceEN.Refunds.Select(x => new RefundOutputDTO
                 {
                     Id = x.Id,
-                    AmountToReturn = x.AmountToReturn,
+                    AmountToReturn = Math.Round(x.AmountToReturn, 2),
                     BookingId = x.BookingId,
                     Date = x.Date,
                     Description = x.Description

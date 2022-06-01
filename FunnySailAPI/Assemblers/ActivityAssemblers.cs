@@ -17,7 +17,7 @@ namespace FunnySailAPI.Assemblers
                 Active = activityEN.Active,
                 Description = activityEN.Description,
                 Name = activityEN.Name,
-                Price = activityEN.Price
+                Price = Math.Round(activityEN.Price, 2)
             };
 
             if(activityEN.ActivityResources != null)

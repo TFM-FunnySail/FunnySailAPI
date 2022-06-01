@@ -11,7 +11,7 @@ namespace FunnySailAPI.Assemblers
             BoatBookingOutputDTO boatBookingOutputDTO = new BoatBookingOutputDTO
             {
                 Id = boatBookingEN.BoatId,
-                Price = boatBookingEN.Price,
+                Price = Math.Round(boatBookingEN.Price,2),
                 EntryDate = boatBookingEN.EntryDate,
                 DepartureDate = boatBookingEN.DepartureDate,
             };

@@ -65,7 +65,7 @@ namespace FunnySailAPI.Assemblers
                 {
                     BookingId = booking.Id,
                     Currency = booking.InvoiceLine.Currency.ToString(),
-                    TotalAmount = booking.InvoiceLine.TotalAmount,
+                    TotalAmount = Math.Round(booking.InvoiceLine.TotalAmount, 2),
                 };
             }
 

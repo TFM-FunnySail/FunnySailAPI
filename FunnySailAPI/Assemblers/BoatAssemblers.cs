@@ -93,7 +93,7 @@ namespace FunnySailAPI.Assemblers
         public static BoatOutputDTO Convert(BoatEN boatEN,decimal price)
         {
             BoatOutputDTO boatOutput = Convert(boatEN);
-            boatOutput.Price = price;
+            boatOutput.Price = Math.Round(price,2);
 
             return boatOutput;
         }

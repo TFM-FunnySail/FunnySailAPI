@@ -14,7 +14,7 @@ namespace FunnySailAPI.Assemblers
             TechnicalServiceOutputDTO technicalServiceBoatOutput = new TechnicalServiceOutputDTO
             {
                 Id = technicalService.Id,
-                Price = technicalService.Price,
+                Price = Math.Round(technicalService.Price,2),
                 Description = technicalService.Description,
                 Active = technicalService.Active
             };
