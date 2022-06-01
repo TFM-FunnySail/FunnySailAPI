@@ -38,5 +38,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces
         public IBoatTitlesCEN BoatTitlesCEN { get; }
         public IBoatTypeCEN BoatTypeCEN { get; }
         public IBoatPricesCEN BoatPricesCEN { get; }
+        public IActivityCP ActivityCP { get; }
     }
 }

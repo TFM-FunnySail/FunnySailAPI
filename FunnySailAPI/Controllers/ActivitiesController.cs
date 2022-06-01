@@ -223,5 +223,32 @@ namespace FunnySailAPI.Controllers
             }
         }
 
+        //api/Activities/5/resource/image
+        [CustomAuthorize(UserRolesConstant.ADMIN)]
+        [HttpPost("{id}/resource/image")]
+        public async Task<IActionResult> PostUploadImage(int id, IFormFile imageFile, bool main)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                await _unitOfWork.ActivityCP.AddImage(id, imageFile, main);
+
+                return NoContent();
+            }
+            catch (DataValidationException dataValidation)
+            {
+                if (dataValidation.ExceptionType == ExceptionTypesEnum.NotFound)
+                    return NotFound();
+
+                return StatusCode(StatusCodes.Status422UnprocessableEntity, new ErrorResponseDTO(dataValidation));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
+
     }
 }

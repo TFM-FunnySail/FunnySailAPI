@@ -81,6 +81,7 @@ namespace UnitTest.FakeFactories
         private IOwnerInvoiceTypeFactory _OwnerInvoiceTypeFactory;
         private IBoatTitleCAD _BoatTitleCAD;
         private IBoatTitlesCEN _BoatTitlesCEN;
+        private IActivityCP _ActivityCP;
         public UnitOfWorkFake() {
             var applicationDbContextFake = new ApplicationDbContextFake();
             _DatabaseTransactionFactory = new DatabaseTransactionFactory
@@ -160,6 +161,7 @@ namespace UnitTest.FakeFactories
             _PortMooringCP = new PortMooringCP(_MooringCEN,_PortCEN);
             _RefundCP = new RefundCP(_RefundCEN, _DatabaseTransactionFactory);
             _TechnicalServiceCP = new TechnicalServiceCP(_TechnicalServiceCEN, _BoatCEN);
+            _ActivityCP = new ActivityCP(_ResourcesCEN, _DatabaseTransactionFactory,null,null);
 
             unitOfWork = new UnitOfWork(
                 _BoatCP,
@@ -189,7 +191,8 @@ namespace UnitTest.FakeFactories
                 _OwnerInvoiceLineCEN,
                 _BoatTitlesCEN,
                 _BoatTypeCEN,
-                _BoatPricesCEN
+                _BoatPricesCEN,
+                _ActivityCP
                );
         }
     }

@@ -87,6 +87,7 @@ namespace FunnySailAPI
             services.AddScoped<IRefundCAD, RefundCAD>();
             services.AddScoped<IAuthRefreshTokenCAD, AuthRefreshTokenCAD>();
             services.AddScoped<IBoatTitleCAD, BoatTitleCAD>();
+            services.AddScoped<IActivityResourcesCAD, ActivityResourceCAD>();
 
             #endregion
 
@@ -119,6 +120,7 @@ namespace FunnySailAPI
             services.AddScoped<IOwnerInvoiceCEN, OwnerInvoiceCEN>();
             services.AddScoped<IAuthRefreshTokenCEN, AuthRefreshTokenCEN>();
             services.AddScoped<IBoatTitlesCEN, BoatTitlesCEN>();
+            services.AddScoped<IActivityResourceCEN, ActivityResourceCEN>();
 
             #endregion
 
@@ -131,6 +133,7 @@ namespace FunnySailAPI
             services.AddScoped<IRefundCP, RefundCP>();
             services.AddScoped<IOwnerInvoiceCP, OwnerInvoiceCP>();
             services.AddScoped<IUserCP, UserCP>();
+            services.AddScoped<IActivityCP, ActivityCP>();
             #endregion
 
             #region GeneralServices
