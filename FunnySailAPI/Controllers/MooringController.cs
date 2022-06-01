@@ -46,8 +46,8 @@ namespace FunnySailAPI.Controllers
                     filters: filters,
                     pagination: pagination ?? new Pagination(),
                     includeProperties: source => source.Include(x => x.Port)
-
-                     ))
+                                                        .Include(x => x.Boat)
+                    ))
                     .Select(x => MooringAssemblers.Convert(x));
 
                 return new GenericResponseDTO<MooringOutputDTO>(moorings, pagination.Limit, pagination.Offset, mooringTotal);
@@ -71,7 +71,8 @@ namespace FunnySailAPI.Controllers
                 }, filters: new MooringFilters
                 {
                     MooringId = id
-                });
+                }, includeProperties: source => source.Include(x => x.Port)
+                                                         .Include(x => x.Boat));
 
                 var mooring = moorings.Select(x => MooringAssemblers.Convert(x)).FirstOrDefault();
                 if (mooring == null)

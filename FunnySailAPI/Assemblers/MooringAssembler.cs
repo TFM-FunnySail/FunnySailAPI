@@ -19,7 +19,8 @@ namespace FunnySailAPI.Assemblers
                 Id = mooringEN.Id,
                 PortId = mooringEN.PortId,
                 Type = mooringEN.Type,
-                Alias = mooringEN.Alias
+                Alias = mooringEN.Alias,
+                Available = mooringEN.Boat == null
             };
 
             if(mooringEN.Port != null)

@@ -20,5 +20,6 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
         public MooringEnum Type { get; set; }
 
         public PortEN Port { get; set; }
+        public BoatEN Boat { get; set; }
     }
 }

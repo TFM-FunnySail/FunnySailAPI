@@ -42,7 +42,8 @@ namespace FunnySailAPI.Controllers
                 var itemResults = (await _unitOfWork.PortCEN.GetAll(
                     filters: filters,
                     pagination: pagination ?? new Pagination(),
-                    includeProperties: source => source.Include(x => x.Moorings)))
+                    includeProperties: source => source.Include(x => x.Moorings)
+                                                        .ThenInclude(x=>x.Boat)))
                     .Select(x => PortAssemblers.Convert(x));
 
                 return new GenericResponseDTO<PortOutputDTO>(itemResults, pagination.Limit, pagination.Offset, total);
@@ -66,7 +67,8 @@ namespace FunnySailAPI.Controllers
                 }, filters: new PortFilters
                 {
                     Id = id
-                }, includeProperties: source => source.Include(x => x.Moorings));
+                }, includeProperties: source => source.Include(x => x.Moorings)
+                                                        .ThenInclude(x => x.Boat));
 
                 var port = itemResult.Select(x => PortAssemblers.Convert(x)).FirstOrDefault();
                 if (port == null)
