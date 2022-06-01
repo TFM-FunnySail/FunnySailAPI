@@ -83,6 +83,19 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             return await _boatCAD.Get(boats, orderBy, includeProperties, pagination);
         }
 
+        public async Task<int> GetAvailableBoatsTotal(DateTime initialDate, DateTime endDate)
+        {
+            List<int> idsNotAvailable = await _boatCAD.GetBoatIdsNotAvailable(initialDate, endDate);
+
+            IQueryable<BoatEN> boats = _boatCAD.GetBoatFiltered(new BoatFilters
+            {
+                Active = true,
+                ExclusiveBoatId = idsNotAvailable
+            });
+
+            return await _boatCAD.GetCounter(boats);
+        }
+
         public async Task<BoatEN> UpdateBoat(UpdateBoatInputDTO updateBoatInput)
         {
             BoatEN boat = await _boatCAD.FindById(updateBoatInput.BoatId);

@@ -117,7 +117,8 @@ namespace FunnySailAPI.Controllers
         {
             try
             {
-                var boatTotal = await _unitOfWork.BoatCEN.GetTotal();
+                var boatTotal = await _unitOfWork.BoatCEN.GetAvailableBoatsTotal(initialDate: initialDate,
+                                        endDate: endDate);
 
                 var boats = (await _unitOfWork.BoatCEN.GetAvailableBoats(pagination: pagination ?? new Pagination(),
                     initialDate: initialDate, 

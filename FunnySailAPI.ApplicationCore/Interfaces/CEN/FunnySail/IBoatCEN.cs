@@ -26,5 +26,6 @@ namespace FunnySailAPI.ApplicationCore.Interfaces.CEN.FunnySail
             Func<IQueryable<BoatEN>, IOrderedQueryable<BoatEN>> orderBy = null,
             Func<IQueryable<BoatEN>, IIncludableQueryable<BoatEN, object>> includeProperties = null);
         Task<int> GetTotal(BoatFilters filters = null);
+        Task<int> GetAvailableBoatsTotal(DateTime initialDate, DateTime endDate);
     }
 }
