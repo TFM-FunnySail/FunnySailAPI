@@ -425,7 +425,6 @@ namespace UnitTest.FakeFactories
                     DepartureDate = DateTime.Now.AddDays(10).AddHours(5),
                     TotalPeople = 10,
                     Paid = false,
-                    RequestCaptain = true,
                     Status = BookingStatusEnum.Booking,
                     InvoiceLine = new InvoiceLineEN{
                         BookingId = 1,

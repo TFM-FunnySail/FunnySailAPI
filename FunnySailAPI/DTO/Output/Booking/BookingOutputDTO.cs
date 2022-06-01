@@ -18,7 +18,6 @@ namespace FunnySailAPI.DTO.Output.Booking
         public DateTime? DepartureDate { get; set; }
         public int TotalPeople { get; set; }
         public bool Paid { get; set; }
-        public bool RequestCaptain { get; set; }
         public string Status { get; set; }
         public UserOutputDTO client { get; set; } 
         public IList<BoatBookingOutputDTO> BoatBookings { get; set; }

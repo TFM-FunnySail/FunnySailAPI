@@ -75,7 +75,7 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
                 query = query.Where(x => x.Paid == filters.Paid);
 
             if (filters.RequestCaptain != null)
-                query = query.Where(x => x.RequestCaptain == filters.RequestCaptain);
+                query = query.Include(x=>x.BoatBookings).Where(x => x.BoatBookings.Any(x=> x.RequestCaptain == filters.RequestCaptain));
 
             return query;
         }

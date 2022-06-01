@@ -72,19 +72,21 @@ namespace UnitTest.Controllers
             var booking = _BookingController.CreateBooking(new AddBookingInputDTO {
                 ClientId = "1",
                 TotalPeople = 10,
-                RequestCaptain = true,
                 Boats = new List<AddBoatBookingInputDTO> { new AddBoatBookingInputDTO { 
                     BoatId = 1,
                     DepartureDate = DateTime.UtcNow,
                     EntryDate = DateTime.UtcNow,
+                    RequestCaptain = true,
                 },new AddBoatBookingInputDTO {
                     BoatId = 2,
                     DepartureDate = DateTime.UtcNow,
                     EntryDate = DateTime.UtcNow,
+                    RequestCaptain = true,
                 },new AddBoatBookingInputDTO {
                     BoatId = 3,
                     DepartureDate = DateTime.UtcNow,
                     EntryDate = DateTime.UtcNow,
+                    RequestCaptain = true,
                 } }
             });
 

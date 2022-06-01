@@ -14,6 +14,7 @@ namespace FunnySailAPI.Assemblers
                 Price = Math.Round(boatBookingEN.Price,2),
                 EntryDate = boatBookingEN.EntryDate,
                 DepartureDate = boatBookingEN.DepartureDate,
+                RequestCaptain = boatBookingEN.RequestCaptain
             };
 
             if(boatBookingEN.Boat?.BoatInfo != null)

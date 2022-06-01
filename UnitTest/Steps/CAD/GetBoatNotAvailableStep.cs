@@ -65,7 +65,6 @@ namespace UnitTest.Steps.CAD
                  EntryDate = _initialDate,
                  Paid = false,
                  DepartureDate = _endDate.AddHours(-1),
-                 RequestCaptain = true,
                  Status = BookingStatusEnum.Booking,
                  TotalPeople = 2,
                  BoatBookings = new List<BoatBookingEN>

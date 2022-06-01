@@ -142,7 +142,6 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                     {
                         ClientId = addBookingInput.ClientId,
                         CreatedDate = DateTime.Today,
-                        RequestCaptain = addBookingInput.RequestCaptain,
                         TotalPeople = addBookingInput.TotalPeople
                     };
 
@@ -175,7 +174,8 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                             {
                                 BoatId = boat.Id,
                                 BookingId = bookingId,
-                                Price = price
+                                Price = price,
+                                RequestCaptain = boatInput.RequestCaptain
                             });
                             totalAmount += price;
 
@@ -426,9 +426,9 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                         !updateBookingInputDTO.ServiceBookingIds.Contains(x.ServiceId));
                     }
 
-                    if (updateBookingInputDTO.BoatBookingIds != null)
+                    if (updateBookingInputDTO.BoatBookings != null)
                     {
-                        foreach (var boat in updateBookingInputDTO.BoatBookingIds)
+                        foreach (var boat in updateBookingInputDTO.BoatBookings)
                         {
                             BoatPricesEN boatEN = await _boatPricesCEN.GetBoatPricesCAD().FindById(boat.BoatId);
                             if (boatEN == null)
@@ -442,7 +442,8 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                                 bookingEN.BoatBookings.Add(new BoatBookingEN
                                 {
                                     BoatId = boatEN.BoatId,
-                                    Price = price
+                                    Price = price,
+                                    RequestCaptain = boat.RequestCaptain
                                 });
                                 extraTotalAmount += price;
                             }
@@ -456,6 +457,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                                     boatBooking.EntryDate = boatBooking.EntryDate;
                                     boatBooking.DepartureDate = boatBooking.DepartureDate;
                                     boatBooking.Price = price;
+                                    boatBooking.RequestCaptain = boat.RequestCaptain;
                                     await _boatBookingCEN.GetBoatBookingCAD().Update(boatBooking);
 
                                     extraTotalAmount += price;
@@ -463,7 +465,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                             }
                         }
 
-                        IList<int> boatBookingsIds = updateBookingInputDTO.BoatBookingIds.Select(x => x.BoatId).ToList();
+                        IList<int> boatBookingsIds = updateBookingInputDTO.BoatBookings.Select(x => x.BoatId).ToList();
 
                         extraTotalAmount -= bookingEN.BoatBookings.Where(x =>
                         !boatBookingsIds.Contains(x.BoatId)).Sum(x => x.Price);
@@ -516,9 +518,6 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
 
                     if (updateBookingInputDTO.TotalPeople != null)
                         bookingEN.TotalPeople = (int)updateBookingInputDTO.TotalPeople;
-
-                    if (updateBookingInputDTO.RequestCaptain != null)
-                        bookingEN.RequestCaptain = (bool)updateBookingInputDTO.RequestCaptain;
 
 
                     bookingEN = await _bookingCEN.UpdateBooking(bookingEN);

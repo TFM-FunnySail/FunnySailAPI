@@ -12,5 +12,6 @@ namespace FunnySailAPI.DTO.Output.Booking
         public decimal Price { get; set; }
         public DateTime? EntryDate { get; set; }
         public DateTime? DepartureDate { get; set; }
+        public bool RequestCaptain { get; set; }
     }
 }

@@ -18,7 +18,6 @@ namespace FunnySailAPI.ApplicationCore.Models.FunnySailEN
         public DateTime? DepartureDate { get; set; }
         public int TotalPeople { get; set; }
         public bool Paid { get; set; }
-        public bool RequestCaptain { get; set; }
         public BookingStatusEnum Status { get; set; }
 
         public UsersEN Client { get; set; }
