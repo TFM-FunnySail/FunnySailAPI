@@ -37,12 +37,12 @@ namespace FunnySailAPI.Infrastructure.Initialize
         {
             try
             {
-                if ((await _dbContext.Database.GetPendingMigrationsAsync()).Count() > 0)
+                if (_dbContext.Database.GetPendingMigrations().Count() > 0)
                 {
-                    await _dbContext.Database.MigrateAsync();
+                     _dbContext.Database.Migrate();
                 }
 
-                if (! await _dbContext.Roles.AnyAsync(ro => ro.Name == UserRoleEnum.Admin.ToString()))
+                if (!  _dbContext.Roles.Any(ro => ro.Name == UserRoleEnum.Admin.ToString()))
                 {
                     await _roleManager.CreateAsync(new IdentityRole(UserRolesConstant.CLIENT));
                     await _roleManager.CreateAsync(new IdentityRole(UserRolesConstant.ADMIN));
@@ -70,19 +70,104 @@ namespace FunnySailAPI.Infrastructure.Initialize
                 
                 if(!await _dbContext.Activity.AnyAsync())
                 {
-                    int index = 1;
                     List<ActivityEN> activities = new List<ActivityEN>();
-                    for (; index <= 50; index++)
+
+                    activities.Add(new ActivityEN
                     {
-                        bool active = NextFloat(0, 1) > (decimal)0.5;
-                        activities.Add(new ActivityEN
+                        Active = true,
+                        Description = $"Paseo en catamarán con unas espectaculares vistas.",
+                        Name = $"Paseo en catamarán",
+                        Price = 10,
+                        ActivityResources = new List<ActivityResourcesEN>
                         {
-                            Active = active,
-                            Description = $"Actividad de prueba {index}",
-                            Name = $"Actividad {index}",
-                            Price = NextFloat(1, 100)
-                        });
-                    }
+                            new ActivityResourcesEN
+                            {
+                                Resource = new ResourcesEN
+                                {
+                                    Main = true,
+                                    Type = ResourcesEnum.Image,
+                                    Uri = "paseo_catamaran1.jpg"
+                                }
+                            },
+                            new ActivityResourcesEN
+                            {
+                                Resource = new ResourcesEN
+                                {
+                                    Main = false,
+                                    Type = ResourcesEnum.Image,
+                                    Uri = "paseo_catamaran2.jpg"
+                                }
+                            }
+                        }
+                    });
+
+                    activities.Add(new ActivityEN
+                    {
+                        Active = true,
+                        Description = $"Buceo en un espectacular banco de peces.",
+                        Name = $"Buceo",
+                        Price = 25,
+                        ActivityResources = new List<ActivityResourcesEN>
+                        {
+                            new ActivityResourcesEN
+                            {
+                                Resource = new ResourcesEN
+                                {
+                                    Main = true,
+                                    Type = ResourcesEnum.Image,
+                                    Uri = "buceo1.jpg"
+                                }
+                            },
+                            new ActivityResourcesEN
+                            {
+                                Resource = new ResourcesEN
+                                {
+                                    Main = false,
+                                    Type = ResourcesEnum.Image,
+                                    Uri = "buceo2.jpg"
+                                }
+                            },
+                            new ActivityResourcesEN
+                            {
+                                Resource = new ResourcesEN
+                                {
+                                    Main = false,
+                                    Type = ResourcesEnum.Image,
+                                    Uri = "buceo3.jpg"
+                                }
+                            }
+                        }
+                    });
+
+                    activities.Add(new ActivityEN
+                    {
+                        Active = true,
+                        Description = $"Carrera de motos acuáticas durante 1 hora.",
+                        Name = $"Motos acuáticas",
+                        Price = 22,
+                        ActivityResources = new List<ActivityResourcesEN>
+                        {
+                            new ActivityResourcesEN
+                            {
+                                Resource = new ResourcesEN
+                                {
+                                    Main = true,
+                                    Type = ResourcesEnum.Image,
+                                    Uri = "motos_acuaticas1.jpg"
+                                }
+                            },
+                            new ActivityResourcesEN
+                            {
+                                Resource = new ResourcesEN
+                                {
+                                    Main = false,
+                                    Type = ResourcesEnum.Image,
+                                    Uri = "motos_acuaticas2.jpg"
+                                }
+                            }
+                        }
+                    });
+
                     await _dbContext.Activity.AddRangeAsync(activities);
                     await _dbContext.SaveChangesAsync();
                 }
