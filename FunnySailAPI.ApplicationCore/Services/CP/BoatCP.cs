@@ -136,6 +136,8 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                         });
                     }
 
+                    await _userCEN.AddRole(addBoatInput.OwnerId, new[] { UserRolesConstant.BOAT_OWNER});
+
                     await databaseTransaction.CommitAsync();
                 }
                 catch (Exception ex)
