@@ -249,17 +249,52 @@ namespace FunnySailAPI.Infrastructure.Initialize
            
                 if (!await _dbContext.BoatTypes.AnyAsync())
                 {
-                    int index = 1;
                     List<BoatTypeEN> boats = new List<BoatTypeEN>();
-                    for (; index <= 10; index++)
+
+                    boats.AddRange(new List<BoatTypeEN>
                     {
-                        bool active = NextFloat(0, 1) > (decimal)0.5;
-                        boats.Add(new BoatTypeEN
+                        new BoatTypeEN
                         {
-                            Name = "Tipo prueba " + index,
-                            Description = "Desripcion tipo prueba " + index
-                        });
-                    }
+                            Name = "Velero",
+                            Description = ""
+                        },
+                        new BoatTypeEN
+                        {
+                            Name = "Lancha",
+                            Description = ""
+                        },
+                        new BoatTypeEN
+                        {
+                            Name = "Neumática",
+                            Description = ""
+                        },
+                        new BoatTypeEN
+                        {
+                            Name = "Catamarán",
+                            Description = ""
+                        },
+                        new BoatTypeEN
+                        {
+                            Name = "Goleta",
+                            Description = ""
+                        },
+                        new BoatTypeEN
+                        {
+                            Name = "Moto de agua",
+                            Description = ""
+                        },
+                        new BoatTypeEN
+                        {
+                            Name = "Casa flotante",
+                            Description = ""
+                        },
+                        new BoatTypeEN
+                        {
+                            Name = "Yate",
+                            Description = ""
+                        }
+                    });
+
                     await _dbContext.BoatTypes.AddRangeAsync(boats);
                     await _dbContext.SaveChangesAsync();
                 }
@@ -295,17 +330,6 @@ namespace FunnySailAPI.Infrastructure.Initialize
                         });
                     }
                     await _dbContext.Moorings.AddRangeAsync(moorings);
-                    await _dbContext.SaveChangesAsync();
-                }
-
-                if (!await _dbContext.Resources.AnyAsync())
-                {
-                    int index = 1;
-                    List<ResourcesEN> resources = new List<ResourcesEN>();
-                    for (; index <= 7; index++)
-                    {
-                        await _unitOfWork.ResourcesCEN.AddResources(false, 0, index.ToString()+ ".png");
-                    }
                     await _dbContext.SaveChangesAsync();
                 }
 
@@ -354,47 +378,192 @@ namespace FunnySailAPI.Infrastructure.Initialize
                     await _dbContext.SaveChangesAsync();
                 }
 
-                if (!await _dbContext.Boats.AnyAsync()) { 
-                    int index = 1;
+                if (!await _dbContext.Boats.AnyAsync()) {
 
-                    //  Listas vacias
-                    List<int> resourcesIds = new List<int>();
-                    List<int> requiredBoatTitles = new List<int>();
-                    
-                    for (; index <= 7; index++)
+                    IList<BoatTypeEN> boatsType = await _dbContext.BoatTypes.ToListAsync();
+                    var user = await _dbContext.Users.Include(x=>x.Users).FirstOrDefaultAsync();
+                    IList<BoatTitlesEN> requiredTitles = await _dbContext.BoatTitles.ToListAsync();
+
+                    _dbContext.Boats.AddRange(new List<BoatEN>
                     {
-                        requiredBoatTitles.Clear();
-                        if (index < 3)
+                        new BoatEN
                         {
-                            requiredBoatTitles.Add(1);
-                        }
-                        else
-                        {
-                            requiredBoatTitles.Add(2);
-                            requiredBoatTitles.Add(3);
-                        }
+                            Active = true,
+                            MooringId = 1,
+                            CreatedDate = DateTime.UtcNow,
+                            OwnerId = user.Id,
+                            BoatTypeId = boatsType.FirstOrDefault(x=>x.Name == "Lancha")?.Id ?? 1,
+                            BoatResources = new List<BoatResourceEN>
+                            {
+                                new BoatResourceEN
+                                {
+                                    Resource = new ResourcesEN
+                                    {
+                                        Main = true,
+                                        Uri = "1.png",
+                                        Type = ResourcesEnum.Image
+                                    }
+                                },new BoatResourceEN
+                                {
+                                    Resource = new ResourcesEN
+                                    {
+                                        Main = true,
+                                        Uri = "2.png",
+                                        Type = ResourcesEnum.Image
+                                    }
+                                }
+                            },
+                            BoatInfo = new BoatInfoEN
+                            {
+                              Capacity = 20,
+                              Description = @"Sin patrón y se requiere titulación náutica.
+Sundeck es la versión más familiar de la gama Flyer de Beneteau, y se caracteriza por un confort a bordo excepcional en una unidad de este tamaño. Con dos asientos de pilotaje, una amplia banqueta en popa y un solárium en proa, la Flyer 5.5 le destinan al puro descanso en el mar.
 
-                        await _unitOfWork.BoatCP.CreateBoat(new AddBoatInputDTO
+Plataformas de baño que hacen muy comodo el acceso al barco desde el mar.
+
+Equipamiento 
+Equipo de música, Radio FM, Bluetooth, USB, Agua dulce, Enchufe 12 volt
+Bimini, Altavoces de bañera, Mesa de cabina, Ducha exterior, Cojines de bañera, Escalera de baño, Solarium de proa
+
+Equipamiento de navegación
+GPS, Plotter, Sonda náutica, Radio VHF, Velocímetro, Ancla, Compás, Luces de Navegación",
+                              Name = "Lancha Beneteau Flyer 5.5 115CV",
+                              Length = 200,
+                              MotorPower = 115,
+                              Registration = "DSFKHAGK784854",
+                              Sleeve = 35,
+                            },
+                            BoatPrices = new BoatPricesEN
+                            {
+                                DayBasePrice = 400,
+                                HourBasePrice = (decimal)60.5,
+                                PorcentPriceOwner = 20,
+                                Supplement = 20
+                            },
+                            RequiredBoatTitles = requiredTitles.Select(x=> new RequiredBoatTitleEN
+                            {
+                                TitleId = x.TitleId
+                            }).ToList()
+                        },
+                        new BoatEN
                         {
-                            BoatTypeId = index,
-                            Name = "Embarcación prueba " + index,
-                            Capacity = index * 3,
-                            MotorPower = index * 20,
-                            Sleeve = index * 20,
-                            Supplement = 20,         
-                            Registration = "Reg prueba " + index,
-                            OwnerId = user1.Id,
-                            Description = "Descripción embarcación prueba " + index,
-                            DayBasePrice = NextInt(100, 300),
-                            HourBasePrice = NextInt(15, 30),
-                            Length = NextInt(40, 100),
-                            MooringId = index,
-                            MooringPoint = "Puerto prueba " + index,
-                            ResourcesIdList = resourcesIds,
-                            RequiredBoatTitles = requiredBoatTitles,
-                        });
-                    }
+                            Active = true,
+                            MooringId = 2,
+                            CreatedDate = DateTime.UtcNow,
+                            OwnerId = user.Id,
+                            BoatTypeId = boatsType.FirstOrDefault(x=>x.Name == "Yate")?.Id ?? 1,
+                            BoatResources = new List<BoatResourceEN>
+                            {
+                                new BoatResourceEN
+                                {
+                                    Resource = new ResourcesEN
+                                    {
+                                        Main = true,
+                                        Uri = "3.png",
+                                        Type = ResourcesEnum.Image
+                                    }
+                                },new BoatResourceEN
+                                {
+                                    Resource = new ResourcesEN
+                                    {
+                                        Main = true,
+                                        Uri = "4.png",
+                                        Type = ResourcesEnum.Image
+                                    }
+                                }
+                            },
+                            BoatInfo = new BoatInfoEN
+                            {
+                              Capacity = 30,
+                              Description = @"Bienvenidos a nuestro yate de más de 18 metros de eslora y 5 camarotes. 
+
+Navega en Barcelona con este estupendo Yate!
+
+COCTEL DE BIENVENIDA Y APERITIVO.
+
+# Incluidos en el precio
+- IVA
+- Seguros
+- Amarre en el puerto base",
+                              Name = "CUSTOM — TRAWLER 60' (2012)",
+                              Length = 500,
+                              MotorPower = 200,
+                              Registration = "YATAJV2176347",
+                              Sleeve = 90,
+                            },
+                            BoatPrices = new BoatPricesEN
+                            {
+                                DayBasePrice = 700,
+                                HourBasePrice = (decimal)125,
+                                PorcentPriceOwner = 25,
+                                Supplement = 50
+                            },
+                            RequiredBoatTitles = requiredTitles.Select(x=> new RequiredBoatTitleEN
+                            {
+                                TitleId = x.TitleId
+                            }).ToList()
+                        },
+                        new BoatEN
+                        {
+                            Active = true,
+                            MooringId = 3,
+                            CreatedDate = DateTime.UtcNow,
+                            OwnerId = user.Id,
+                            BoatTypeId = boatsType.FirstOrDefault(x=>x.Name == "Velero")?.Id ?? 1,
+                            BoatResources = new List<BoatResourceEN>
+                            {
+                                new BoatResourceEN
+                                {
+                                    Resource = new ResourcesEN
+                                    {
+                                        Main = true,
+                                        Uri = "5.png",
+                                        Type = ResourcesEnum.Image
+                                    }
+                                },new BoatResourceEN
+                                {
+                                    Resource = new ResourcesEN
+                                    {
+                                        Main = true,
+                                        Uri = "6.png",
+                                        Type = ResourcesEnum.Image
+                                    }
+                                },new BoatResourceEN
+                                {
+                                    Resource = new ResourcesEN
+                                    {
+                                        Main = true,
+                                        Uri = "7.png",
+                                        Type = ResourcesEnum.Image
+                                    }
+                                }
+                            },
+                            BoatInfo = new BoatInfoEN
+                            {
+                              Capacity = 30,
+                              Description = @"Alquiler de velero Dufour 430 con un casco muy moderno, diseñado por Umberto Felci, proporciona espacio abundante, especialmente cómodo para un barco de charter, logrando el equilibrio perfecto entre una apariencia muy estética y las dimensiones correctas para cada área. 3 amplias cabinas con salon convertible, 2 baños, salón con tragaluces grandes de cristal para mucha luz natural. Esto da como resultado en más espacio interior sin renunciar a amplios y seguros pasillos laterales en cubierta. Perfecto para que puedas disfrutar de tu alquiler de una embarcación en Barcelona.
+
+En cubierta, se convertirá en una excelente zona de vida y descanso al aire libre, ya que incorpora una plataforma de baño XXL, espacio de estiba en popa (acceso por plataforma de baño) y una espectacular zona de cocina en popa con cocina y barbacoa..
+Todo lo necesario para disfrutar de tus vacaciones en velero.",
+                              Name = "DUFOUR — DUFORN GID SEA 43 (2001)",
+                              Length = 300,
+                              MotorPower = 112,
+                              Registration = "DDKAB68942",
+                              Sleeve = 25,
+                            },
+                            BoatPrices = new BoatPricesEN
+                            {
+                                DayBasePrice = 250,
+                                HourBasePrice = (decimal)30,
+                                PorcentPriceOwner = 20,
+                                Supplement = 10
+                            }
+                        }
+                    });
+                    
                     await _dbContext.SaveChangesAsync();
+
+                    
                 }
 
             }
