@@ -37,12 +37,12 @@ namespace FunnySailAPI.Infrastructure.Initialize
         {
             try
             {
-                if (_dbContext.Database.GetPendingMigrations().Count() > 0)
+                if ((await _dbContext.Database.GetPendingMigrationsAsync()).Count() > 0)
                 {
-                    _dbContext.Database.Migrate();
+                    await _dbContext.Database.MigrateAsync();
                 }
 
-                if (!_dbContext.Roles.Any(ro => ro.Name == UserRoleEnum.Admin.ToString()))
+                if (! await _dbContext.Roles.AnyAsync(ro => ro.Name == UserRoleEnum.Admin.ToString()))
                 {
                     await _roleManager.CreateAsync(new IdentityRole(UserRolesConstant.CLIENT));
                     await _roleManager.CreateAsync(new IdentityRole(UserRolesConstant.ADMIN));
@@ -89,19 +89,37 @@ namespace FunnySailAPI.Infrastructure.Initialize
 
                 if (!await _dbContext.Services.AnyAsync())
                 {
-                    int index = 1;
                     List<ServiceEN> services = new List<ServiceEN>();
-                    for (; index <= 50; index++)
+
+                    services.Add(new ServiceEN
                     {
-                        bool active = NextFloat(0, 1) > (decimal)0.5;
-                        services.Add(new ServiceEN
-                        {
-                            Description = $"Desc {index}",
-                            Name = $"Servicio {index}",
-                            Active = active,
-                            Price = NextFloat(1, 100)
-                        });
-                    }
+                        Description = $"Una profesional de la limpieza se hará cargo de su camarote todos los días",
+                        Name = $"Limpieza de la embracación",
+                        Active = true,
+                        Price = (decimal)27
+                    });
+                    services.Add(new ServiceEN
+                    {
+                        Description = $"Todas las mañanas tendrá acceso a nuestro surtido desayuno",
+                        Name = $"Desayuno",
+                        Active = true,
+                        Price = (decimal)15.65
+                    });
+                    services.Add(new ServiceEN
+                    {
+                        Description = $"Tendrá acceso a nuestra wifi exclusiva",
+                        Name = $"Wifi",
+                        Active = true,
+                        Price = (decimal)35.23
+                    });
+                    services.Add(new ServiceEN
+                    {
+                        Description = $"Un mayordomo lo acompañará a donde vaya, y se hará cargo de todas sus necesidades",
+                        Name = $"Mayordomo",
+                        Active = true,
+                        Price = (decimal)64
+                    });
+
                     await _dbContext.Services.AddRangeAsync(services);
                     await _dbContext.SaveChangesAsync();
                 }
