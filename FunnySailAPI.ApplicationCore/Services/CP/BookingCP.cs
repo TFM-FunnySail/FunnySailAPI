@@ -105,6 +105,10 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                     if (boatsNotAvailable.Count == 0)
                         throw new DataValidationException($"The Boat {String.Join(",", boat.BoatId)} is not avialable",
                                 $"El barco {String.Join(",", boat.BoatId)} no está disponible");
+
+                    if (boat.EntryDate > boat.DepartureDate)
+                        throw new DataValidationException("Invalid dates", "Fechas inválidas");
+
                 }
 
                 boats = await _boatCEN.GetAll(new BoatFilters { BoatIdList= boatsIds },
@@ -175,7 +179,9 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                                 BoatId = boat.Id,
                                 BookingId = bookingId,
                                 Price = price,
-                                RequestCaptain = boatInput.RequestCaptain
+                                RequestCaptain = boatInput.RequestCaptain,
+                                DepartureDate = boatInput.DepartureDate,
+                                EntryDate = boatInput.EntryDate,
                             });
                             totalAmount += price;
 
@@ -435,6 +441,9 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                                 throw new DataValidationException($"Boat {boat}", $"Embarcación {boat}",
                                     ExceptionTypesEnum.DontExists);
 
+                            if (boat.EntryDate > boat.DepartureDate)
+                                throw new DataValidationException("Invalid dates","Fechas inválidas");
+
                             var boatBooking = bookingEN.BoatBookings.FirstOrDefault(x => x.BoatId == boat.BoatId);
                             if (boatBooking == null)
                             {
@@ -443,19 +452,23 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                                 {
                                     BoatId = boatEN.BoatId,
                                     Price = price,
-                                    RequestCaptain = boat.RequestCaptain
+                                    RequestCaptain = boat.RequestCaptain,
+                                    EntryDate = boat.EntryDate,
+                                    DepartureDate = boat.DepartureDate,
                                 });
                                 extraTotalAmount += price;
                             }
                             else
                             {
-                                if(boat.EntryDate != boatBooking.EntryDate || boat.DepartureDate != boatBooking.DepartureDate)
+                                if(boat.EntryDate != boatBooking.EntryDate || 
+                                    boat.DepartureDate != boatBooking.DepartureDate ||
+                                    boatBooking.RequestCaptain != boat.RequestCaptain)
                                 {
                                     extraTotalAmount -= boatBooking.Price;
                                     decimal price = CalculateBoatPriceInAOrder(boat, boatEN);
 
-                                    boatBooking.EntryDate = boatBooking.EntryDate;
-                                    boatBooking.DepartureDate = boatBooking.DepartureDate;
+                                    boatBooking.EntryDate = boat.EntryDate;
+                                    boatBooking.DepartureDate = boat.DepartureDate;
                                     boatBooking.Price = price;
                                     boatBooking.RequestCaptain = boat.RequestCaptain;
                                     await _boatBookingCEN.GetBoatBookingCAD().Update(boatBooking);
