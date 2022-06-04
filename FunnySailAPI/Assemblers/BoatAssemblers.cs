@@ -54,6 +54,7 @@ namespace FunnySailAPI.Assemblers
             {
                 boatOutput.BoatResources = boatEN.BoatResources.Select(x => new BoatResourcesOutputDTO
                 {
+                    Id = x.ResourceId,
                     Uri = x.Resource.Uri,
                     Main = x.Resource.Main,
                     Type = x.Resource.Type
