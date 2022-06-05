@@ -11,7 +11,6 @@ namespace FunnySailAPI.DTO.Output.Activity
     public class ActivityOutputDTO
     {
         public int Id { get; set; }
-        public DateTime ActivityDate { get; set; }
         public String Name { get; set; }
         public bool Active { get; set; }
         public decimal Price { get; set; }
