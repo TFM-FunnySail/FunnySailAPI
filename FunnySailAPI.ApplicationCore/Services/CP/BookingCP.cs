@@ -102,9 +102,11 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                     var boatsNotAvailable = await _boatCEN.GetBoatCAD().GetBoatIdsNotAvailable
                     (boat.EntryDate, boat.DepartureDate, new List<int> { boat.BoatId });
 
-                    if (boatsNotAvailable.Count == 0)
-                        throw new DataValidationException($"The Boat {String.Join(",", boat.BoatId)} is not avialable",
-                                $"El barco {String.Join(",", boat.BoatId)} no está disponible");
+                    var boatNotAvailable = await _boatCEN.GetBoatCAD().FindByIdAllData(boat.BoatId);
+
+                    if (boatsNotAvailable.Count > 0)
+                        throw new DataValidationException($"The Boat '{String.Join(",", boatNotAvailable.BoatInfo.Name)}' is not avialable",
+                                $"El barco '{ String.Join(",", boatNotAvailable.BoatInfo.Name)}' no está disponible");
 
                     if (boat.EntryDate > boat.DepartureDate)
                         throw new DataValidationException("Invalid dates", "Fechas inválidas");
