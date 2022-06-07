@@ -286,6 +286,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                     });
 
                     bookingEN.Paid = true;
+                    bookingEN.Status = BookingStatusEnum.Rented;
                     await _bookingCEN.UpdateBooking(bookingEN);
 
                     await databaseTransaction.CommitAsync();
