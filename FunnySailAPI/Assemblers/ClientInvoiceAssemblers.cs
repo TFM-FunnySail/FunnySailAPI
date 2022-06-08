@@ -22,7 +22,11 @@ namespace FunnySailAPI.Assemblers
             };
 
             if (clientInvoiceEN.Client != null)
+            {
+                clientInvoiceEN.Client.Invoices = null;
                 clientInvoiceOutput.Client = UserAssemblers.Convert(clientInvoiceEN.Client);
+            }
+                
 
             if (clientInvoiceEN.InvoiceLines != null)
             {
