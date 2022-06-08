@@ -1,6 +1,7 @@
 ﻿using FunnySailAPI.ApplicationCore.Interfaces.CAD.FunnySail;
 using FunnySailAPI.ApplicationCore.Models.Filters;
 using FunnySailAPI.ApplicationCore.Models.FunnySailEN;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,14 @@ namespace FunnySailAPI.Infrastructure.CAD.FunnySail
 
             if (technicalServiceFilters.MaxPrice != 0)
                 technicalServices = technicalServices.Where(x => x.Price < technicalServiceFilters.MaxPrice);
+
+            if(technicalServiceFilters.BoatId != 0)
+            {
+                technicalServices = technicalServices.
+                    Join(_dbContext.TechnicalServiceBoat.Where(b => b.BoatId == technicalServiceFilters.BoatId),
+                    s=>s.Id,t=>t.TechnicalServiceId,(s,t)=>s).Distinct().Select(x => x);
+
+            }
 
             return technicalServices;
         }
