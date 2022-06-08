@@ -285,6 +285,8 @@ namespace FunnySailAPI.ApplicationCore.Services.CP
                         TotalAmount = bookingEN.InvoiceLine.TotalAmount
                     });
 
+                    bookingEN.InvoiceLine.ClientInvoiceId = clientInvoice;
+
                     bookingEN.Paid = true;
                     bookingEN.Status = BookingStatusEnum.Rented;
                     await _bookingCEN.UpdateBooking(bookingEN);
