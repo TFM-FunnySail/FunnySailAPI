@@ -245,5 +245,28 @@ namespace FunnySailAPI.Controllers
             }
         }
 
+        // GET: api/Users/all
+        [CustomAuthorize(UserRolesConstant.ADMIN)]
+        [HttpGet("all")]
+        public async Task<ActionResult<IList<UserOutputDTO>>> GetAll([FromQuery] UsersFilters filters)
+        {
+            try
+            {
+                int total = await _unitOfWork.UserCEN.GetTotal(filters);
+                
+                var users = (await _unitOfWork.UserCEN.GetAll(
+                    filters: filters,
+                    includeProperties: source => source.Include(x => x.ApplicationUser)))
+                    .Select(x => UserAssemblers.Convert(x));
+
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDTO(ex));
+            }
+        }
+
+
     }
 }

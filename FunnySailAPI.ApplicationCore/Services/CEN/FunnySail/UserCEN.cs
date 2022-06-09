@@ -81,6 +81,7 @@ namespace FunnySailAPI.ApplicationCore.Services.CEN.FunnySail
             return await _userCAD.Get(query, orderBy, includeProperties, pagination);
         }
 
+
         public async Task AddRole(string id, string[] roles)
         {
             if (roles.Any(x=> !RolesHelpers.ExistRole(x)))
