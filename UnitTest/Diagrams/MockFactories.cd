@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="UnitTest.FakeFactories.ApplicationDbContextFake">
+    <Position X="0.5" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>CQIAAAAAAEQAAIABQEDABAAQAACAAAAkQEAAAABAIAA=</HashCode>
+      <FileName>FakeFactories\ApplicationDbContextFake.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnitTest.FakeFactories.AuthRefreshTokenCENMock">
+    <Position X="8" Y="4.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>FakeFactories\AuthRefreshTokenCENMock.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnitTest.FakeFactories.SignInManagerMock">
+    <Position X="7" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAgAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>FakeFactories\SignInManagerMock.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnitTest.FakeFactories.UnitOfWorkFake">
+    <Position X="4" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>CgACAAiAAyGMsAASyCAHSALcgHDaiEBASABRCAIiAAo=</HashCode>
+      <FileName>FakeFactories\UnitOfWorkFake.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnitTest.FakeFactories.UserManagerMock">
+    <Position X="7" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>EIAAAAAAQAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FakeFactories\UserManagerMock.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

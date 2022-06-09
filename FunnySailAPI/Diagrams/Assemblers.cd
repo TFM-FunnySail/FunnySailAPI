@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FunnySailAPI.Assemblers.ActivityAssemblers">
+    <Position X="2.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assemblers\ActivityAssemblers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Assemblers.ActivityBookingAssemblers">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assemblers\ActivityBookingAssemblers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Assemblers.BoatAssemblers">
+    <Position X="6.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assemblers\BoatAssemblers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Assemblers.BoatBookingAssemblers">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assemblers\BoatBookingAssemblers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Assemblers.BoatTitleAssemblers">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assemblers\BoatTitleAssemblers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Assemblers.BookingAssemblers">
+    <Position X="2.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assemblers\BookingAssemblers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Assemblers.ClientInvoiceAssemblers">
+    <Position X="4.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assemblers\ClientInvoiceAssemblers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Assemblers.EnumsAssemblers">
+    <Position X="6.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assemblers\EnumsAssemblers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Assemblers.MooringAssemblers">
+    <Position X="8" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assemblers\MooringAssembler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Assemblers.OwnerInvoiceAssemblers">
+    <Position X="9.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assemblers\OwnerInvoiceAssemblers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Assemblers.OwnerInvoiceLineAssemblers">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assemblers\OwnerInvoiceLineAssemblers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Assemblers.PortAssemblers">
+    <Position X="4.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assemblers\PortAssemblers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Assemblers.RefundAssemblers">
+    <Position X="6.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assemblers\RefundAssemblers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Assemblers.ReviewAssemblers">
+    <Position X="8" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assemblers\ReviewAssemblers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Assemblers.ServiceAssemblers">
+    <Position X="9.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assemblers\ServiceAssemblers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Assemblers.ServiceBookingAssemblers">
+    <Position X="2.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assemblers\ServiceBookingAssemblers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Assemblers.TechnicalServiceAssembler">
+    <Position X="4.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assemblers\TechnicalServiceAssembler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Assemblers.UserAssemblers">
+    <Position X="6.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assemblers\UserAssemblers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

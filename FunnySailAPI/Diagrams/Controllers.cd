@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FunnySailAPI.Controllers.AccountController" Collapsed="true">
+    <Position X="3.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAABQAAAgAAAABAACQAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Controllers\AccountController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Controllers.ActivitiesController" Collapsed="true">
+    <Position X="13" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAASAAEAAAgAEAQAgAAAAAAAAAAAEAIAAAAA=</HashCode>
+      <FileName>Controllers\ActivitiesController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Controllers.BaseController">
+    <Position X="17" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\BaseController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Controllers.BoatsController" Collapsed="true">
+    <Position X="19.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>RBAAggAAAQACAEAEAgAgAAEAQAAAAAAQIBAAAAAAAAA=</HashCode>
+      <FileName>Controllers\BoatsController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Controllers.BookingController" Collapsed="true">
+    <Position X="11.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAABAAAAAAAIgAAAAAAAAAAAAEAAAQAAAQIAAA=</HashCode>
+      <FileName>Controllers\BookingController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Controllers.ClientInvoiceController" Collapsed="true">
+    <Position X="14.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAgAAAQEAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\ClientInvoiceController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Controllers.MooringController" Collapsed="true">
+    <Position X="21" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAiAAAAAAAhAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\MooringController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Controllers.OwnerInvoiceController" Collapsed="true">
+    <Position X="11.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAQAAAAAAAQAAAAAiAAAQAAAIAAAAAAABACAAAAAAA=</HashCode>
+      <FileName>Controllers\OwnerInvoiceController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Controllers.PortController" Collapsed="true">
+    <Position X="16.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAgAAAAIAAAAAAAEACAgAAAAA=</HashCode>
+      <FileName>Controllers\PortController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Controllers.RefundsController" Collapsed="true">
+    <Position X="19.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Controllers\RefundsController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Controllers.ReviewsController" Collapsed="true">
+    <Position X="23" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAACgAAAAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>Controllers\ReviewsController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Controllers.ServicesController" Collapsed="true">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAARAAAAAAAAACgAAAQAAAAAAAAAAAAAAEAAAAEA=</HashCode>
+      <FileName>Controllers\ServicesController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Controllers.TechnicalServiceController" Collapsed="true">
+    <Position X="18.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAACBABAAAAgAAAQAAAgAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\TechnicalServiceController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FunnySailAPI.Controllers.UsersController" Collapsed="true">
+    <Position X="21" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAARAAAAAAAAAAAAAgAAQQAAIACAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Controllers\UsersController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
